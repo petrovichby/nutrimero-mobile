@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# native (managed workflow — prebuild output is disposable)
+ios/
+android/
+
+# builds & artifacts
+*.tsbuildinfo
+coverage/
+
+# env
+.env*.local
+
+# os
+.DS_Store
+
+# ide
+.idea/

@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Nutrimero Home Baker",
+    "slug": "nutrimero-home-baker",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "nutrimero-home-baker",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "org.nutrimero.homebaker",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "org.nutrimero.homebaker",
+      "adaptiveIcon": {
+        "backgroundColor": "#b9bf05",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    }
+  }
+}

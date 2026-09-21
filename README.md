@@ -11,7 +11,8 @@ App names are working titles pending trademark/store checks. Baking is the first
 
 ## Status
 
-**Ideation / pre-spec.** No code yet. The founding analysis lives in
+**Bootstrapped, pre-feature.** Monorepo scaffold with quality gates in place; no product features
+yet (feature work follows the spec-kit flow). The founding analysis lives in
 [`NUTRIMERO-MOBILE-IDEATION.md`](./NUTRIMERO-MOBILE-IDEATION.md) — product portfolio, tier structure and pricing, tech-stack decision, content and imagery policy, price-data strategy, backend deltas, compliance brief, branding, risks, and phasing.
 
 Key decisions already made (details and rationale in the ideation doc):
@@ -33,6 +34,25 @@ Key decisions already made (details and rationale in the ideation doc):
 | `nutrimero-web` | Next.js web client, source of the synced contract + i18n catalogs |
 | `nutrimero-docs` | Product truth, migration plan (mobile specced in `MIGRATION_PLAN.md` §2.4) |
 | `nutrimero-design` | Design corpus, tokens, and (future) mobile visual assets |
+
+## Quickstart
+
+```bash
+pnpm install
+pnpm contract:generate   # generate the typed client from contract/openapi.json (commit the result)
+pnpm start:home          # Metro for Nutrimero Home Baker (or start:pro)
+```
+
+Quality gate (mirrors `nutrimero-web`): `pnpm quality` = lint → format/style check → typecheck →
+unit tests → release-bundle export for both apps. CI (`.github/workflows/ci.yml`) additionally
+enforces the contract drift gate (regenerates the client from the committed snapshot and fails on
+diff) and a quickstart smoke job. `pnpm contract:sync` pulls a new snapshot from the sibling
+`nutrimero-api` checkout — a deliberate, reviewable diff, never run by CI.
+
+Layout: `apps/home-baker` + `apps/pro-baker` (thin Expo apps) · `packages/core` (generated API
+client, i18n catalogs + parity test) · `packages/ui` (design tokens per `docs/DESIGN.md`).
+Expo SDK 57 / React Native 0.86 / React 19.2 / TypeScript 6.0 / Biome 2.5 / Vitest 4, pnpm
+workspaces with `node-linker=hoisted`.
 
 ## Prerequisites before code
 

@@ -1,0 +1,15 @@
+{
+  "app": {
+    "homeBaker": {
+      "name": "Nutrimero Home Baker",
+      "tagline": "Profesionalios kepimo žinios namuose"
+    },
+    "proBaker": {
+      "name": "Nutrimero Pro Baker",
+      "tagline": "Jūsų receptai kepykloje"
+    }
+  },
+  "common": {
+    "offlineBanner": "Neprisijungę — rodomi išsaugoti duomenys"
+  }
+}

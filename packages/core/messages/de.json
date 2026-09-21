@@ -1,0 +1,15 @@
+{
+  "app": {
+    "homeBaker": {
+      "name": "Nutrimero Home Baker",
+      "tagline": "Professionelles Backwissen für zu Hause"
+    },
+    "proBaker": {
+      "name": "Nutrimero Pro Baker",
+      "tagline": "Deine Rezepte in der Backstube"
+    }
+  },
+  "common": {
+    "offlineBanner": "Offline — gespeicherte Daten werden angezeigt"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Nutrimero Pro Baker",
+    "slug": "nutrimero-pro-baker",
+    "version": "0.1.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "scheme": "nutrimero-pro-baker",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "org.nutrimero.probaker",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "org.nutrimero.probaker",
+      "adaptiveIcon": {
+        "backgroundColor": "#1b1f58",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    }
+  }
+}

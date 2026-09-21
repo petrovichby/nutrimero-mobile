@@ -1,0 +1,110 @@
+# The quality gate (Constitution mirror of nutrimero-web's CI): lint → format/style →
+# typecheck → unit tests → JS bundle export. Separate jobs cover the committed
+# contract snapshot / generated-client drift check and the documented quickstart
+# executed on a clean checkout.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format & style check
+        run: pnpm check
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests (Vitest)
+        run: pnpm test
+
+      # The mobile analogue of "build": Metro must be able to produce release JS
+      # bundles for both platforms in both apps. Native compilation happens on EAS,
+      # not in CI.
+      - name: Export release bundles (expo export, both apps)
+        run: pnpm build
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate the typed client from the committed contract snapshot
+        run: pnpm contract:generate
+
+      - name: Fail on generated-client drift (Constitution II)
+        run: |
+          if ! git diff --exit-code -- packages/core/src/api/generated contract/openapi.json; then
+            echo "::error::packages/core/src/api/generated/schema.d.ts is out of date with contract/openapi.json."
+            echo "::error::Run 'pnpm contract:generate' and commit the result (or 'pnpm contract:sync' if the API's contract changed)."
+            exit 1
+          fi
+
+  # The documented path must be executed, not only unit-tested: the README's
+  # quickstart commands on a clean checkout. For a mobile app the headless
+  # equivalent of "it starts" is Metro serving the bundle manifest.
+  quickstart-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: pnpm install (the README's first command)
+        run: pnpm install --frozen-lockfile
+
+      - name: Start Metro for Home Baker (the README's second command)
+        run: |
+          pnpm start:home > smoke-dev.log 2>&1 &
+          echo $! > smoke.pid
+        env:
+          CI: "1"
+
+      - name: curl the Expo manifest until Metro answers
+        run: >-
+          curl --fail --silent --show-error
+          --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors
+          -H 'expo-platform: ios'
+          -o /dev/null -w 'manifest -> %{http_code}\n'
+          localhost:8081/
+
+      - name: Print the Metro log on failure
+        if: failure()
+        run: cat smoke-dev.log
+
+      - name: Stop Metro
+        if: always()
+        run: kill "$(cat smoke.pid)" 2>/dev/null || true
