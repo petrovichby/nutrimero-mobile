@@ -1,7 +1,7 @@
 # Graphic assets checklist
 
 Tracked inventory of every visual asset the mobile apps need. Derived from
-[`nutrimero-mobile-ideation.md`](./nutrimero-mobile-ideation.md) §13.2 and §3.3.
+[`NUTRIMERO-MOBILE-IDEATION.md`](./NUTRIMERO-MOBILE-IDEATION.md) §13.2 and §3.3.
 
 Conventions:
 - Brand tokens: lime `#b9bf05`, navy `#1b1f58` (source of truth: `nutrimero-design` `_registry` / `nutrimero-web` `globals.css`).

@@ -12,7 +12,7 @@ App names are working titles pending trademark/store checks. Baking is the first
 ## Status
 
 **Ideation / pre-spec.** No code yet. The founding analysis lives in
-[`nutrimero-mobile-ideation.md`](./nutrimero-mobile-ideation.md) — product portfolio, tier structure and pricing, tech-stack decision, content and imagery policy, price-data strategy, backend deltas, compliance brief, branding, risks, and phasing.
+[`NUTRIMERO-MOBILE-IDEATION.md`](./NUTRIMERO-MOBILE-IDEATION.md) — product portfolio, tier structure and pricing, tech-stack decision, content and imagery policy, price-data strategy, backend deltas, compliance brief, branding, risks, and phasing.
 
 Key decisions already made (details and rationale in the ideation doc):
 

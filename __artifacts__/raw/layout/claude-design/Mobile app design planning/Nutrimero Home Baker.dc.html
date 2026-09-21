@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#ece8df;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#1f2028}a{color:#1b1f58}a:hover{color:#2f0100}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.6);max-width:406px}.dv-opt:target .dv-oid{background:#1b1f58;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}.phone{width:390px;height:844px;border-radius:44px;border:8px solid #17171a;background:#faf8f3;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(27,31,88,.18);display:flex;flex-direction:column}.phone.dark{background:#121428}.sb{height:47px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 8px;font:600 15px 'Plus Jakarta Sans',sans-serif;color:var(--text,#1f2028)}.scr{flex:1;min-height:0}.home{position:absolute;left:50%;bottom:8px;width:134px;height:5px;border-radius:3px;background:var(--text,#1f2028);opacity:.7;transform:translateX(-50%)}.dark{--bg:#121428;--surface:#1b1e40;--surface2:#242858;--text:#f3f1ea;--text2:#b3b6c9;--border:#353a6e;--struct:#8f95e6;--ox:#f2b3aa;--oxbg:#4a201c;--cream:#ede8dc}</style></helmet>
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Nutrimero Home Baker — style-setting pair (Recipes + Detail) plus Builder</span></div>
+  <div style="max-width:760px;margin:0 0 28px;padding:18px 20px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;font-size:13px;line-height:1.55;color:#3a3c46">
+    <div style="font-weight:700;color:#1f2028;margin-bottom:6px">Assumptions &amp; reasoning</div>
+    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+      <li>Brief's visual system is treated as fixed (Plus Jakarta Sans, Navy / Lime / Oxblood, 4–12pt radii). The attached "Organic" system conflicts, so only its warmth (cream ground) informed the illustration canvas.</li>
+      <li>Provenance badge: a small navy glyph (square = photo, circle = illustration) + text. Three treatments to compare: <a class="dv-oid" href="#1b">1b</a> chip on the image, <a class="dv-oid" href="#1c">1c</a> byline under the meta, <a class="dv-oid" href="#1d">1d</a> a stamp — reads as credential, not disclaimer.</li>
+      <li>Lime only on primary actions and "in pantry" marks, always with text or a check glyph; text on lime is olive #1d1e01. Allergens: oxblood glyph letter + name everywhere.</li>
+      <li>Dark scheme keeps the cream illustration canvas (brief: illustrations live on cream) and lifts navy to a periwinkle tint for structure so it clears 4.5:1.</li>
+      <li>Illustrations are placeholders (terracotta subject, navy line, one lime dot, monospace note) — drop the real editorial illustrations in later.</li>
+      <li><a class="dv-oid" href="#1a">1a</a> is a working prototype: tap a recipe → detail → scaler → baking mode → start a timer and watch the chip persist across tabs. Tweaks: scheme, locale, card layout, badge style, empty pantry.</li>
+    </ul>
+  </div>
+  <div class="dv-opts">
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Clickable prototype · Recipes → Detail → Baking mode · Builder tab. Use Tweaks for scheme / locale / layout / badge.</div>
+      <div class="phone {{ protoClass }}" style="{{ protoVars }}">
+        <div class="sb"><span>9:41</span><span style="display:flex;gap:5px;align-items:center"><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></span></div>
+        <div class="scr">
+          <sc-if value="{{ showRecipes }}" hint-placeholder-val="{{ true }}"><dc-import name="Recipes" layout="{{ layout }}" badge="{{ badge }}" locale="{{ locale }}" active-tab="recipes" timer-label="{{ timerLabel }}" on-open="{{ openRecipe }}" on-tab="{{ goTab }}" hint-size="100%,100%" style="height:100%"></dc-import></sc-if>
+          <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ false }}"><dc-import name="Detail" timer-label="{{ timerLabel }}" on-back="{{ back }}" on-start-timer="{{ startTimer }}" hint-size="100%,100%" style="height:100%"></dc-import></sc-if>
+          <sc-if value="{{ showBuilder }}" hint-placeholder-val="{{ false }}"><dc-import name="Builder" empty="{{ emptyPantry }}" timer-label="{{ timerLabel }}" on-open="{{ openRecipe }}" on-tab="{{ goTab }}" hint-size="100%,100%" style="height:100%"></dc-import></sc-if>
+          <sc-if value="{{ showOther }}" hint-placeholder-val="{{ false }}">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px;text-align:center;color:var(--text,#1f2028)">
+              <div style="font-size:22px;font-weight:700">{{ otherTitle }}</div>
+              <div style="font-size:15px;color:var(--text2,#5f616c)">Next round: Pantry, Shopping list, Paywall, Onboarding.</div>
+              <button onClick="{{ goRecipesBtn }}" style="margin-top:8px;height:48px;padding:0 20px;border:1.5px solid var(--struct,#1b1f58);border-radius:8px;background:none;color:var(--struct,#1b1f58);font:600 15px 'Plus Jakarta Sans',sans-serif;cursor:pointer">Back to Recipes</button>
+            </div>
+          </sc-if>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Recipes · 2-col grid · provenance as chip on the image (most scannable, competes a little with the Plus chip)</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Recipes" layout="grid" badge="chip" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Recipes · list · provenance as a byline under the meta (quietest; reads like an author credit). Shows the persistent timer chip.</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Recipes" layout="list" badge="line" timer-label="Buns proof · 44:12" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Recipes · featured stack · provenance as a stamp (most "credential"-like; boldest, one per card)</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Recipes" layout="stack" badge="stamp" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Recipes · German strings · dark scheme (long-word test: "Schokoladen-Sauerteigbrot", "Roggen-Kümmel-Kastenbrot")</div>
+      <div class="phone dark"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Recipes" layout="grid" badge="chip" locale="de" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Recipe detail · light · scaler + pantry states + nutrition open (interactive here too)</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Detail" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1g">
+      <div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Baking mode · dark · step 4 of 9 with scaled quantities; timer chip from step 3 still running</div>
+      <div class="phone dark"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Detail" mode="bake" initial-step="{{ four }}" timer-label="Bulk rise · 38:05" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1h">
+      <div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Builder · results ranked by match, swap hints, Premium AI entry with a real labeled preview (no blur)</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Builder" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+    <div class="dv-opt" id="1i">
+      <div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>Builder · empty pantry · one action</div>
+      <div class="phone"><div class="sb"><span>9:41</span><span style="width:16px;height:10px;border:1.5px solid currentColor;border-radius:2px"></span></div><div class="scr"><dc-import name="Builder" empty="{{ true }}" hint-size="100%,100%" style="height:100%"></dc-import></div><div class="home"></div></div>
+    </div>
+  </div>
+  <p class="dv-next">Try next: "go with <a class="dv-oid" href="#1b">1b</a> layout but the stamp from <a class="dv-oid" href="#1d">1d</a>" · "make the Plus chip lime with olive text" · "now Pantry, Shopping, Paywall, Onboarding in the approved style"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;scheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;locale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;de&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'de'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;cardLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;,&quot;stack&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;'grid'|'list'|'stack'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;badgeStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;chip&quot;,&quot;line&quot;,&quot;stamp&quot;],&quot;default&quot;:&quot;chip&quot;,&quot;tsType&quot;:&quot;'chip'|'line'|'stamp'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;emptyPantry&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+const DARK = { '--bg': '#121428', '--surface': '#1b1e40', '--surface2': '#242858', '--text': '#f3f1ea', '--text2': '#b3b6c9', '--border': '#353a6e', '--struct': '#8f95e6', '--ox': '#f2b3aa', '--oxbg': '#4a201c', '--cream': '#ede8dc' };
+const TITLES = { shopping: 'Shopping list', pantry: 'Pantry', more: 'More' };
+class Component extends DCLogic {
+  state = { tab: 'recipes', screen: 'recipes', timer: null, now: Date.now() };
+  componentDidMount() { this.iv = setInterval(() => this.state.timer && this.setState({ now: Date.now() }), 1000); }
+  componentWillUnmount() { clearInterval(this.iv); }
+  renderVals() {
+    const p = this.props, s = this.state, dark = (p.scheme || 'light') === 'dark';
+    let timerLabel = '';
+    if (s.timer) { const r = Math.max(0, Math.round((s.timer.endsAt - s.now) / 1000)); timerLabel = `${s.timer.name} · ${r ? String(Math.floor(r / 60)).padStart(2, '0') + ':' + String(r % 60).padStart(2, '0') : 'done'}`; }
+    return {
+      protoClass: dark ? 'dark' : '', protoVars: dark ? DARK : {},
+      layout: p.cardLayout || 'grid', badge: p.badgeStyle || 'chip', locale: p.locale || 'en', emptyPantry: !!p.emptyPantry,
+      showRecipes: s.tab === 'recipes' && s.screen === 'recipes', showDetail: s.screen === 'detail', showBuilder: s.tab === 'builder' && s.screen !== 'detail',
+      showOther: ['shopping', 'pantry', 'more'].includes(s.tab) && s.screen !== 'detail', otherTitle: TITLES[s.tab] || '',
+      openRecipe: () => this.setState({ screen: 'detail' }), back: () => this.setState({ screen: 'recipes' }),
+      goTab: t => this.setState({ tab: t, screen: 'recipes' }), goRecipesBtn: () => this.setState({ tab: 'recipes', screen: 'recipes' }),
+      startTimer: (name, mins) => this.setState({ timer: { name, endsAt: Date.now() + mins * 60000 }, now: Date.now() }),
+      timerLabel, four: 4
+    };
+  }
+}
+</script>
+</body>
+</html>

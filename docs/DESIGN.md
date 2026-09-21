@@ -154,7 +154,7 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 
 ## Imagery
 
-- Recipe illustrations: the approved style seed (see `asset-prompts.md`) is the canonical
+- Recipe illustrations: the approved style seed (see `docs/prompts/asset-prompts.md`) is the canonical
   reference — cream `illustration-canvas` background, 4:3, centered subject, no text baked into
   images (text belongs to the UI layer, where it localizes).
 - **Never photorealistic AI imagery, anywhere** (ideation doc §3.3). Real photos are labeled

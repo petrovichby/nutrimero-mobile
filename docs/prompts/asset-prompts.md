@@ -1,7 +1,7 @@
 # Generation prompts — immediate assets
 
 Prompts for Nano Banana (Gemini image generation). Scope: the immediate batch from
-[`ASSETS.md`](./ASSETS.md) — two app-icon masters and the recipe-illustration style seed.
+[`ASSETS.md`](../../ASSETS.md) — two app-icon masters and the recipe-illustration style seed.
 Everything generated here falls under the imagery policy (ideation doc §3.3): illustration
 style only, labeled provenance.
 
