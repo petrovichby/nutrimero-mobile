@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Pantry (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 6px 16px 10px;
+    flex: none;
+  }
+  .header .count { font-size: 13px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+  .add-field {
+    margin: 0 16px 10px;
+    height: 48px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 14px;
+    background: var(--surface-1);
+    border: 1px solid var(--outline);
+    border-radius: var(--r-xl);
+    color: var(--ink-2);
+    font-size: 15px;
+    flex: none;
+  }
+  .add-field .icon { width: 20px; height: 20px; }
+
+  .quick {
+    padding: 0 16px 6px;
+    flex: none;
+  }
+  .quick-label { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; color: var(--ink-2); padding-bottom: 8px; }
+  .quick-row { display: flex; gap: 8px; overflow: hidden; }
+  .quick-chip {
+    height: 44px; padding: 0 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    border-radius: var(--r-lg);
+    border: 1px dashed var(--outline-strong);
+    background: transparent;
+    color: var(--heading);
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    white-space: nowrap; cursor: pointer;
+  }
+  .quick-chip .icon-sm { width: 14px; height: 14px; }
+
+  .scroll { flex: 1; min-height: 0; overflow: hidden; }
+  .group-head {
+    padding: 14px 16px 4px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .group-head h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-2); }
+  .group-head .n { font-size: 12px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .items { padding: 0 16px; }
+  .item {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 48px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--outline);
+    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+  .item:last-child { border-bottom: none; }
+  .item .since { margin-left: auto; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; font-weight: 500; }
+
+  /* swipe-to-remove demonstration state: revealed action, name stays readable */
+  .item.swiped .item-inner {
+    width: calc(100% - 96px);
+  }
+  .item-inner {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; min-height: 48px;
+    background: var(--surface);
+    transition: transform 200ms ease-out;
+  }
+  .item-inner .since { margin-left: auto; }
+  .remove-action {
+    position: absolute; right: 0; top: 0; bottom: 1px;
+    width: 88px;
+    background: var(--destructive);
+    color: var(--on-destructive);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    font-size: 11px; font-weight: 700;
+    border: none; cursor: pointer; font-family: inherit;
+  }
+  .remove-action svg { width: 18px; height: 18px; }
+  .swipe-note { padding: 10px 16px 0; color: var(--ink-2); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10.5 3a7.5 7.5 0 1 0 4.55 13.45l4.25 4.25 1.8-1.8-4.25-4.25A7.5 7.5 0 0 0 10.5 3Zm0 2.6a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M9 2h6v2h5v2H4V4h5V2Z"/><path d="M6 7h12l-.8 12.6A2.5 2.5 0 0 1 14.7 22H9.3a2.5 2.5 0 0 1-2.5-2.4L6 7Zm4 3v8h1.5v-8H10Zm2.5 0v8H14v-8h-1.5Z" fill-rule="evenodd"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M11 5.4C9.4 4 7.2 3.2 4.8 3.2c-1 0-1.9.1-2.8.4v14.8c.9-.3 1.8-.4 2.8-.4 2.4 0 4.6.8 6.2 2.2V5.4Z"/><path d="M13 5.4C14.6 4 16.8 3.2 19.2 3.2c1 0 1.9.1 2.8.4v14.8c-.9-.3-1.8-.4-2.8-.4-2.4 0-4.6.8-6.2 2.2V5.4Z"/></symbol>
+  <symbol id="i-builder" viewBox="0 0 24 24"><circle cx="12" cy="4.9" r="1.8"/><rect x="8.75" y="7.6" width="6.5" height="4" rx="1.2"/><rect x="6" y="12.3" width="12" height="4" rx="1.2"/><rect x="3.5" y="17" width="17" height="4" rx="1.2"/></symbol>
+  <symbol id="i-basket" viewBox="0 0 24 24"><path d="M15.7 2.6 18.7 8H22v2H2V8h3.3l3-5.4 1.75 1L7.6 8h8.8l-2.45-4.4 1.75-1Z"/><path d="M3.6 11h16.8l-1.4 8.2A2.5 2.5 0 0 1 16.5 21h-9a2.5 2.5 0 0 1-2.5-1.8L3.6 11Z"/></symbol>
+  <symbol id="i-pantry" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 2.5h12A2.5 2.5 0 0 1 20.5 5v12.5a2 2 0 0 1-2 2h-.5v2h-2v-2H8v2H6v-2h-.5a2 2 0 0 1-2-2V5A2.5 2.5 0 0 1 6 2.5Zm5.3 2h1.4v13h-1.4v-13Zm-2.1 5.9h1.2v3.2H9.2v-3.2Zm4.4 0h1.2v3.2h-1.2v-3.2Z"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <header class="header">
+      <h1 class="headline-lg">Pantry</h1>
+      <span class="count data">23 items</span>
+    </header>
+
+    <div class="add-field" role="search" aria-label="Add an ingredient">
+      <svg class="icon" fill="currentColor"><use href="#i-search"/></svg>
+      Add an ingredient…
+    </div>
+
+    <div class="quick">
+      <div class="quick-label">QUICK-ADD STAPLES</div>
+      <div class="quick-row">
+        <button class="quick-chip"><svg class="icon-sm" fill="currentColor"><use href="#i-plus"/></svg>Vanilla sugar</button>
+        <button class="quick-chip"><svg class="icon-sm" fill="currentColor"><use href="#i-plus"/></svg>Almonds</button>
+        <button class="quick-chip"><svg class="icon-sm" fill="currentColor"><use href="#i-plus"/></svg>Raspberry jam</button>
+        <button class="quick-chip"><svg class="icon-sm" fill="currentColor"><use href="#i-plus"/></svg>Plums</button>
+      </div>
+    </div>
+
+    <div class="scroll">
+      <div class="group-head"><h2>Flours &amp; grains</h2><span class="n data">4</span></div>
+      <div class="items">
+        <div class="item"><div class="item-inner">Bread flour, type 550<span class="since">2 kg</span></div></div>
+        <div class="item"><div class="item-inner">Whole rye flour<span class="since">1 kg</span></div></div>
+        <div class="item swiped">
+          <button class="remove-action" aria-label="Remove spelt flour from pantry"><svg fill="currentColor"><use href="#i-trash"/></svg>Remove</button>
+          <div class="item-inner">Spelt flour<span class="since">500 g</span></div>
+        </div>
+        <div class="item"><div class="item-inner">Rolled oats<span class="since">500 g</span></div></div>
+      </div>
+
+      <div class="group-head"><h2>Sugars &amp; sweeteners</h2><span class="n data">2</span></div>
+      <div class="items">
+        <div class="item"><div class="item-inner">White sugar<span class="since">1 kg</span></div></div>
+        <div class="item"><div class="item-inner">Honey<span class="since">250 g</span></div></div>
+      </div>
+
+      <div class="group-head"><h2>Dairy &amp; eggs</h2><span class="n data">3</span></div>
+      <div class="items">
+        <div class="item"><div class="item-inner">Butter<span class="since">250 g</span></div></div>
+        <div class="item"><div class="item-inner">Eggs<span class="since">×6</span></div></div>
+        <div class="item"><div class="item-inner">Milk<span class="since">1 l</span></div></div>
+      </div>
+
+      <div class="group-head"><h2>Baking essentials</h2><span class="n data">4</span></div>
+      <div class="items">
+        <div class="item"><div class="item-inner">Dry yeast<span class="since">×3 sachets</span></div></div>
+        <div class="item"><div class="item-inner">Sourdough starter<span class="since">active</span></div></div>
+      </div>
+
+      <p class="swipe-note">Swipe an item left to remove it.</p>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="Main navigation">
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-book"/></svg></span>Recipes</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-builder"/></svg></span>Builder</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-basket"/></svg></span>Shopping</button>
+    <button class="tab" aria-selected="true"><span class="tab-pill"><svg fill="currentColor"><use href="#i-pantry"/></svg></span>Pantry</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-dots"/></svg></span>More</button>
+  </nav>
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

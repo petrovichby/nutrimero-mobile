@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Onboarding 2: Dietary profile (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ob-top {
+    flex: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 8px 0 16px;
+    min-height: 44px;
+  }
+  .ob-dots { display: flex; gap: 6px; }
+  .ob-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--surface-2); }
+  .ob-dot.on { background: var(--navy); width: 20px; }
+  .ob-skip {
+    border: none; background: none; cursor: pointer;
+    min-height: 44px; padding: 0 12px;
+    font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink-2);
+  }
+  .ob-body { flex: 1; min-height: 0; padding: 18px 20px 0; display: flex; flex-direction: column; }
+  .ob-body h1 { margin-bottom: 6px; }
+  .ob-body > p { color: var(--ink-2); margin-bottom: 18px; }
+
+  .diet-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .diet-chip {
+    height: 48px; padding: 0 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--outline);
+    border-radius: var(--r-xl);
+    background: var(--surface);
+    font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer;
+  }
+  .diet-chip svg { width: 20px; height: 20px; color: var(--ink-2); }
+  .diet-chip[aria-pressed="true"] {
+    border-color: var(--navy);
+    background: var(--surface-1);
+    color: var(--heading);
+  }
+  .diet-chip[aria-pressed="true"] svg { color: var(--heading); }
+
+  .privacy {
+    margin-top: 22px;
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--lime-soft);
+    border: 1px solid var(--tier-line);
+    border-radius: var(--r-xl);
+    padding: 12px 14px;
+  }
+  .privacy svg { width: 20px; height: 20px; color: var(--tier-ink); flex: none; margin-top: 1px; }
+  .privacy p { font-size: 13px; line-height: 18px; color: var(--ink); }
+  .privacy b { font-weight: 700; }
+
+  .ob-note { margin-top: auto; padding-bottom: 12px; font-size: 12.5px; color: var(--ink-2); }
+  .dock { flex: none; padding: 10px 16px 8px; background: var(--surface); }
+  .dock .btn-primary { width: 100%; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gluten-free" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-2.5 2-4.5 4.5-4.5C16.5 10 14.5 12 12 12z"/><path d="M12 12c0-2.5-2-4.5-4.5-4.5C7.5 10 9.5 12 12 12z"/><path d="M12 7.5C12 5 14 3 16.5 3 16.5 5.5 14.5 7.5 12 7.5z"/><path d="M12 7.5C12 5 10 3 7.5 3 7.5 5.5 9.5 7.5 12 7.5z"/><path d="M4 20 20 4"/></symbol>
+  <symbol id="i-lactose-free" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/><path d="M4 20 20 4"/></symbol>
+  <symbol id="i-vegan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c1 8-2 13-6 15s-8 1-9-1 0-6 4-9 8-4 11-5z"/><path d="M5 20c3-5 7-9 12-12"/></symbol>
+  <symbol id="i-vegt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4 3-6 8-6 0 4-3 6-8 6z"/><path d="M12 15c0-3-2-5-6-5 0 3 2 5 6 5z"/></symbol>
+  <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 8.3C6.5 6 9 4.5 12 4.5s5.5 1.5 5.5 3.8l-.3 1.2H6.8l-.3-1.2z"/><path d="M7 11.5h10c-.3 4-2.3 7.2-5 8.9-2.7-1.7-4.7-4.9-5-8.9z"/></symbol>
+  <symbol id="i-egg-free" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-3.6 0-6.5-2.7-6.5-7C5.5 9.5 8.5 3 12 3s6.5 6.5 6.5 11c0 4.3-2.9 7-6.5 7z"/><path d="M4 20 20 4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7 10V8a5 5 0 0 1 10 0v2h.5A2.5 2.5 0 0 1 20 12.5v7A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5v-7A2.5 2.5 0 0 1 6.5 10H7Zm2.4 0h5.2V8a2.6 2.6 0 1 0-5.2 0v2Z"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <div class="ob-top">
+      <div class="ob-dots" aria-label="Step 2 of 3"><span class="ob-dot"></span><span class="ob-dot on"></span><span class="ob-dot"></span></div>
+      <button class="ob-skip">Skip</button>
+    </div>
+
+    <div class="ob-body">
+      <h1 class="headline-lg">Anything we should watch for?</h1>
+      <p class="body-md">We’ll flag recipes that don’t fit and suggest substitutions that do.</p>
+
+      <div class="diet-grid" role="group" aria-label="Dietary and allergen profile">
+        <button class="diet-chip" aria-pressed="false"><svg><use href="#i-gluten-free"/></svg>Gluten-free</button>
+        <button class="diet-chip" aria-pressed="true"><svg><use href="#i-lactose-free"/></svg>Lactose-free</button>
+        <button class="diet-chip" aria-pressed="true"><svg><use href="#i-nut"/></svg>Nut allergy</button>
+        <button class="diet-chip" aria-pressed="false"><svg><use href="#i-egg-free"/></svg>Egg-free</button>
+        <button class="diet-chip" aria-pressed="false"><svg><use href="#i-vegan"/></svg>Vegan</button>
+        <button class="diet-chip" aria-pressed="false"><svg><use href="#i-vegt"/></svg>Vegetarian</button>
+      </div>
+
+      <div class="privacy">
+        <svg fill="currentColor"><use href="#i-lock"/></svg>
+        <p><b>Stays on your device.</b> Your dietary profile is never uploaded or used for anything but filtering what you see.</p>
+      </div>
+
+      <p class="ob-note">Allergen flags come from verified ingredient declarations — always check your product labels too.</p>
+    </div>
+
+    <div class="dock">
+      <button class="btn-primary">Continue</button>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

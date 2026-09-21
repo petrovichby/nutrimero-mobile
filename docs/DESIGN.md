@@ -1,6 +1,6 @@
 ---
 name: Nutrimero Mobile
-status: draft 0.1.0 — pending ratification; binding for this repo once ratified
+status: draft 0.2.0 — pending ratification; binding for this repo once ratified
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
   Full light/dark token ramps are inherited verbatim from the web DESIGN.md frontmatter and the
@@ -9,8 +9,14 @@ colors-note: >
 colors-mobile:
   app-accent-home: '#b9bf05'   # Home Baker chrome accent = secondary (lime-forward)
   app-accent-pro: '#1b1f58'    # Pro Baker chrome accent = primary (navy-forward)
-  illustration-canvas: '#f7f4ec'  # cream background of all recipe illustrations (style seed)
+  illustration-canvas: '#f7f4ec'  # cream background of all recipe illustrations (scheme-fixed)
   floor-surface: '#0b0e32'     # navy-deep; Floor Mode runs dark regardless of OS scheme
+  destructive: {light: '#8c2318', dark: '#a03325', on: '#ffffff'}  # oxblood family — swipe-remove, delete; never Material red
+  tier-chip:
+    light: {bg: '#eef0cf', ink: '#3a3d01', line: '#c9cd6a'}   # lime-tinted container, dark-olive ink
+    dark: {bg: '#2c2f14', ink: '#d9de62', line: '#565a18'}
+    on-lime: {bg: '#1d1e01', ink: '#b9bf05'}                  # tier chip sitting on a lime primary surface
+  provenance-on-image: {bg: '#f8e9e4', ink: '#57180c', line: '#e4c4ba'}  # scheme-fixed like the cream plate it sits on
 typography:
   fontFamily: Plus Jakarta Sans (expo-font, weights 400/500/600/700)
   headline-lg: {fontSize: 28, fontWeight: '700', lineHeight: 36, letterSpacing: -0.01em}
@@ -122,8 +128,16 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   (constitution V): `Illustration (AI)` / `Photo — baked by Markus` / `Community photo`.
   Exclusive recipes carry a lock/tier chip; locked content shows a real preview, never a blurred
   tease (no dark patterns).
-- **Provenance & tier badges:** label-sm on `secondary-container`/`surface-container-high`
-  chips; text + glyph, color never alone. Founder badge renders the number ("Founder #37").
+- **Provenance & tier badges:** text + glyph, color never alone.
+  *Provenance:* on an illustration (featured banner, detail hero) — a small chip in the
+  scheme-fixed `provenance-on-image` colors, top-right corner of the image (bottom-left on
+  the detail hero, where the share control owns the top-right); in index rows — a
+  `surface-container`-family chip beside the allergen glyphs ("Illustration (AI)" with
+  sparkle glyph / "Photo" with camera glyph).
+  *Tier:* one treatment everywhere — label-sm on the `tier-chip` lime-tinted container;
+  locked content adds a lock glyph to the same chip, never a different chip. On a lime
+  primary surface use the `tier-chip.on-lime` variant (olive field, lime ink). Founder badge
+  renders the number on navy ("Founder #37 of 100") with the medal glyph.
 - **Quantity stepper:** the workhorse of scaling — 44pt +/− targets, direct text entry on tap,
   `data-mono` value, unit label from the FID unit catalog, never a bare number.
 - **Timers:** persistent chip while running (any screen), `accessibilityLiveRegion`/VoiceOver
@@ -141,7 +155,8 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   one sentence of guidance, one action. Empty pantry and empty cupboard states are onboarding
   moments, not dead ends.
 - **Buttons:** primary = `secondary` lime fill with `on-secondary` near-black text (inherited
-  lime rule); secondary = navy outline; destructive = `error` with confirmation step. One
+  lime rule); secondary = navy outline; destructive = the `destructive` role pair (oxblood
+  family, both schemes — e.g. the swipe-remove action) with confirmation step or undo. One
   primary action per screen.
 
 ## Typography rules
@@ -154,13 +169,28 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 
 ## Imagery
 
-- Recipe illustrations: the approved style seed (see `docs/prompts/asset-prompts.md`) is the canonical
-  reference — cream `illustration-canvas` background, 4:3, centered subject, no text baked into
-  images (text belongs to the UI layer, where it localizes).
+- Recipe illustrations: **monochrome ink-engraving style** (chosen 2026-09-21 from the
+  Home Baker comp set) — sepia/ink line work with visible hatching on the cream
+  `illustration-canvas`, 4:3, centered subject, generous negative space, no text baked into
+  images (text belongs to the UI layer, where it localizes). Canonical reference set:
+  `nutrimero-mobile/__artifacts__/raw/illustration/variant2/` (generation is seed-conditioned
+  on that set; prompt templates in the comp set's `assets/GENERATION-PROMPTS.md`).
+  Illustration plates stay cream in **both** schemes — in dark mode the cream plate is the
+  intended contrast anchor, never re-tinted. Known trade-off, accepted: monochrome does not
+  differentiate flavors visually (e.g. chocolate crumb); the title carries flavor.
+  The earlier warm-color flat-illustration seed (`docs/prompts/asset-prompts.md` §3) is
+  superseded for recipe imagery; its palette language lives on in UI accents only.
 - **Never photorealistic AI imagery, anywhere** (ideation doc §3.3). Real photos are labeled
   and celebrated, not mixed in silently.
-- Icons: single glyph family derived from the app-icon loaf glyph language; filled style at
-  small sizes, 24pt default grid, exported from `nutrimero-design`.
+- Icons: two owned families, per web ADR-0008 (no library icons for domain symbols).
+  **UI chrome glyphs:** filled style, 24pt grid — tab set as built in the comp set: open book
+  (Recipes), tiered cake (Builder), basket (Shopping), double-door cupboard (Pantry), dots
+  (More); labels always visible.
+  **Diet & allergen glyphs:** the owned stroke set shared with `nutrimero-web`
+  (`nutrimero-design/004 Recipe Screens`) — 2px stroke, round caps: wheat (gluten), droplet
+  (lactose/milk), egg, nut, leaf (vegan), sprout (vegetarian). **Strike grammar:** the
+  diagonal strike path (`M4 20 20 4`) means "-free"/suitability; without the strike the glyph
+  means "contains". Never mix the two meanings on one surface without the text naming it.
 
 ## Motion
 
@@ -183,6 +213,14 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 
 ## Amendment log
 
+- 0.2.0 (2026-09-21) — ratified from the Home Baker v1 comp set
+  (`__artifacts__/raw/layout/impeccable/`), amended at Aliaksandr's direction: recipe imagery
+  style replaced with the monochrome ink-engraving set (variant2) with cream plates
+  scheme-fixed; new mobile color roles `destructive` (oxblood family, light+dark),
+  `tier-chip` (incl. `on-lime` variant) and `provenance-on-image`; provenance/tier badge
+  placement and one-chip-treatment rule; icon section split into UI chrome glyphs (filled,
+  incl. the built tab set) and the owned diet/allergen stroke set shared with the web, with
+  the strike ("-free") grammar; destructive button role bound to the new pair.
 - 0.1.0 (2026-09-21) — initial draft, pre-UI: token inheritance, per-app temperaments, Floor
   Mode, provenance badges, core component rules. Pending ratification by Aliaksandr; expected
   to be amended heavily once the first real screens exist.

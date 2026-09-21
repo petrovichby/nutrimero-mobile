@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Paywall (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .topbar { padding: 2px 8px 0; flex: none; }
+  .content { flex: 1; min-height: 0; overflow: hidden; padding: 0 16px; display: flex; flex-direction: column; }
+  .content h1 { margin: 2px 0 12px; }
+
+  .plan {
+    border: 1.5px solid var(--outline);
+    border-radius: var(--r-xl);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: var(--surface);
+  }
+  .plan[aria-checked="true"] {
+    border-color: var(--navy);
+    background: var(--surface-1);
+  }
+  .plan-top { display: flex; align-items: baseline; gap: 8px; }
+  .plan-top h2 { font-size: 17px; font-weight: 700; color: var(--heading); }
+  .plan-top .price { margin-left: auto; font-size: 17px; font-weight: 700; color: var(--heading); font-variant-numeric: tabular-nums; }
+  .plan-top .per { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .plan-what { margin-top: 3px; font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  .plan-feats { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .feat { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 500; color: var(--ink); }
+  .feat svg { width: 13px; height: 13px; color: var(--heading); flex: none; }
+
+  .founders { position: relative; }
+  .founders .counter {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 22px; padding: 0 8px; border-radius: var(--r-md);
+    background: var(--allergen-bg); color: var(--allergen-ink);
+    border: 1px solid var(--allergen-line);
+    font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .founder-badge {
+    margin-top: 8px;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 10px 5px 6px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 11.5px; font-weight: 700;
+  }
+  .founder-badge svg { width: 18px; height: 18px; }
+
+  .terms { font-size: 12px; line-height: 17px; color: var(--ink-2); padding: 2px 2px 0; }
+
+  .dock {
+    flex: none;
+    padding: 10px 16px 8px;
+    border-top: 1px solid var(--outline);
+    background: var(--surface);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .dock .btn-primary, .dock .btn-secondary { width: 100%; height: 50px; font-size: 16px; white-space: nowrap; }
+  .restore {
+    border: none; background: none; cursor: pointer;
+    min-height: 44px;
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4 6.4 5Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9.5 16.2 5.8 12.5l-1.8 1.8 5.5 5.5L20 9.3l-1.8-1.8-8.7 8.7Z"/></symbol>
+  <symbol id="i-medal" viewBox="0 0 24 24"><path d="M12 2l2.4 2 3.1-.4 1.2 2.9 2.9 1.2-.4 3.1 2 2.4-2 2.4.4 3.1-2.9 1.2-1.2 2.9-3.1-.4-2.4 2-2.4-2-3.1.4-1.2-2.9-2.9-1.2.4-3.1-2-2.4 2-2.4-.4-3.1 2.9-1.2L6.5 3.6l3.1.4L12 2z"/><path d="M9.8 12.7l1.7 1.7 3.6-3.9" fill="none" stroke="#b9bf05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <div class="topbar">
+      <button class="icon-btn" aria-label="Close"><svg fill="currentColor"><use href="#i-close"/></svg></button>
+    </div>
+
+    <div class="content">
+      <h1 class="headline-lg">Bake more, pay honestly</h1>
+
+      <div role="radiogroup" aria-label="Plans">
+        <div class="plan" role="radio" aria-checked="false">
+          <div class="plan-top"><h2>Plus</h2><span class="price data">€14.99<span class="per"> / year</span></span></div>
+          <p class="plan-what">The recipes. New pro-curated drops every month, offline, all calculators.</p>
+          <div class="plan-feats">
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>~10 new recipes / month</span>
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>Full offline</span>
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>Unlimited builder</span>
+          </div>
+        </div>
+
+        <div class="plan" role="radio" aria-checked="true">
+          <div class="plan-top"><h2>Premium</h2><span class="price data">€34.99<span class="per"> / year</span></span></div>
+          <p class="plan-what">Everything in Plus, and your shopping done: prices, carts, AI recipes.</p>
+          <div class="plan-feats">
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>Store price estimates</span>
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>Online cart handoff</span>
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>AI recipes, 50 / month</span>
+            <span class="feat"><svg fill="currentColor"><use href="#i-check"/></svg>Price alerts</span>
+          </div>
+        </div>
+
+        <div class="plan founders" role="radio" aria-checked="false">
+          <div class="plan-top"><h2>Founders’ Lifetime</h2><span class="price data">€120<span class="per"> once</span></span></div>
+          <p class="plan-what">All Premium features in Home Baker, for the app’s lifetime. 100 numbered seats, never repeated.</p>
+          <div class="plan-feats" style="align-items:center">
+            <span class="counter data">23 of 100 left</span>
+            <span class="founder-badge"><svg fill="#b9bf05"><use href="#i-medal"/></svg>Founder #78 of 100</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="terms">Renews yearly at the shown price until you cancel. Cancel anytime in one tap under More → Subscription — it works, no questions asked. Founders’ Lifetime is a one-time purchase and never renews.</p>
+    </div>
+
+    <div class="dock">
+      <button class="btn-primary">Continue with Premium — €34.99/yr</button>
+      <button class="btn-secondary">Not now — keep the free app</button>
+      <button class="restore">Restore purchases</button>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

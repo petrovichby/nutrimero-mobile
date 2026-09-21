@@ -1,0 +1,288 @@
+/* Nutrimero Home Baker — comp system
+   Visual authority: docs/DESIGN.md (draft 0.1.0). Phone frame 390×844, safe area 744. */
+
+:root {
+  /* brand — fixed */
+  --lime: #b9bf05;
+  --on-lime: #1d1e01;
+  --navy: #1b1f58;
+  --oxblood: #2f0100;
+  --canvas: #f7f4ec;            /* illustration plates stay cream in both schemes */
+
+  /* light scheme */
+  --surface: #fbfaf4;
+  --surface-1: #f2f0e6;
+  --surface-2: #e9e6d8;
+  --ink: #24263a;
+  --ink-2: #5a5d72;
+  --ink-3: #83869b;
+  --heading: #1b1f58;
+  --outline: #ddd9c9;
+  --outline-strong: #b4b1a0;
+  --allergen-bg: #f8e9e4;
+  --allergen-ink: #57180c;
+  --allergen-line: #e4c4ba;
+  --chip-bg: #f2f0e6;
+  --chip-selected-bg: #1b1f58;
+  --chip-selected-ink: #ffffff;
+  --tier-bg: #eef0cf;
+  --tier-ink: #3a3d01;
+  --tier-line: #c9cd6a;
+  --destructive: #8c2318;   /* oxblood family, not Material red */
+  --on-destructive: #ffffff;
+  --navy-soft: #e8e9f3;
+  --navy-soft-ink: #1b1f58;
+  --lime-soft: #eff0d3;
+  --scrim: rgba(27, 31, 88, 0.10);
+  --shadow: 0 6px 18px rgba(27, 31, 88, 0.12);
+
+  --r-sm: 2px; --r: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px;
+}
+
+[data-scheme="dark"] {
+  --surface: #10122a;
+  --surface-1: #191c3c;
+  --surface-2: #23264c;
+  --ink: #ecebf6;
+  --ink-2: #b5b5d1;
+  --ink-3: #9092b0;
+  --heading: #ecebf6;
+  --outline: #34375f;
+  --outline-strong: #50537f;
+  --allergen-bg: #38180f;
+  --allergen-ink: #f6bcab;
+  --allergen-line: #6b3325;
+  --chip-bg: #191c3c;
+  --chip-selected-bg: #ecebf6;
+  --chip-selected-ink: #1b1f58;
+  --tier-bg: #2c2f14;
+  --tier-ink: #d9de62;
+  --tier-line: #565a18;
+  --destructive: #a03325;
+  --on-destructive: #ffffff;
+  --navy-soft: #23264c;
+  --navy-soft-ink: #cdd0f0;
+  --lime-soft: #2c2f14;
+  --scrim: rgba(0, 0, 0, 0.35);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { background: #3a3d4d; }
+[data-scheme="dark"] { background: #05060f; }
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--lime); color: var(--on-lime); }
+:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+[data-scheme="dark"] :focus-visible { outline-color: var(--lime); }
+
+/* ---------- phone frame ---------- */
+.phone {
+  width: 390px;
+  height: 844px;
+  color: var(--ink); /* re-resolve scheme vars inside the frame, not at body */
+  background: var(--surface);
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+}
+
+.statusbar {
+  height: 50px;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 26px 6px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.statusbar svg { display: block; }
+
+.screen {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.home-indicator {
+  flex: none;
+  height: 24px;
+  display: grid;
+  place-items: center;
+}
+.home-indicator::after {
+  content: "";
+  width: 134px; height: 5px;
+  border-radius: 999px;
+  background: var(--ink);
+  opacity: 0.85;
+}
+
+/* ---------- type roles (docs/DESIGN.md) ---------- */
+.headline-lg { font-size: 28px; font-weight: 700; line-height: 36px; letter-spacing: -0.01em; color: var(--heading); }
+.headline-md { font-size: 22px; font-weight: 600; line-height: 30px; color: var(--heading); }
+.headline-sm { font-size: 18px; font-weight: 600; line-height: 26px; color: var(--ink); }
+.body-lg { font-size: 17px; font-weight: 400; line-height: 26px; }
+.body-md { font-size: 15px; font-weight: 400; line-height: 22px; }
+.body-sm { font-size: 13px; font-weight: 400; line-height: 18px; }
+.label-md { font-size: 12px; font-weight: 600; line-height: 16px; letter-spacing: 0.02em; }
+.label-sm { font-size: 11px; font-weight: 700; line-height: 14px; }
+.data { font-variant-numeric: tabular-nums; font-weight: 500; }
+
+/* ---------- shared components ---------- */
+.icon { width: 20px; height: 20px; flex: none; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.icon-sm { width: 16px; height: 16px; flex: none; }
+
+.icon-btn {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border: none; background: transparent; border-radius: var(--r-lg);
+  color: var(--heading); cursor: pointer;
+}
+.icon-btn:active { background: var(--surface-1); }
+.icon-btn svg { width: 24px; height: 24px; }
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 24px; padding: 0 9px;
+  border-radius: var(--r-md);
+  font-size: 11px; font-weight: 700; line-height: 1;
+  white-space: nowrap;
+}
+.chip .icon-sm { width: 13px; height: 13px; }
+/* tier badge (DESIGN.md: label-sm on secondary-container chip) — one treatment everywhere */
+.chip-plus { background: var(--tier-bg); color: var(--tier-ink); border: 1px solid var(--tier-line); }
+/* the tier chip on a lime (primary) surface: olive field, lime ink — same family, readable on lime */
+.btn-primary .chip-plus { background: var(--on-lime); color: var(--lime); border-color: transparent; }
+.chip-provenance { background: var(--navy-soft); color: var(--navy-soft-ink); }
+/* on-image badge sits on the scheme-fixed cream plate, so its colors are fixed too
+   (matches the allergen-chip treatment: oxblood ink on warm rose) */
+.chip-provenance-onimage {
+  background: #f8e9e4; color: #57180c; border: 1px solid #e4c4ba;
+  height: 18px; padding: 0 6px; font-size: 9px; gap: 3px;
+}
+.chip-provenance-onimage .icon-sm { width: 10px; height: 10px; }
+.chip-allergen {
+  background: var(--allergen-bg); color: var(--allergen-ink);
+  border: 1px solid var(--allergen-line);
+  height: 28px; padding: 0 10px; font-size: 12px; font-weight: 600;
+}
+
+/* category chips (44pt target via padding on the tap area) */
+.cat-row {
+  display: flex; gap: 8px;
+  padding: 4px 16px 12px;
+  overflow: hidden;
+  flex: none;
+}
+.cat {
+  height: 44px; padding: 0 16px;
+  display: inline-flex; align-items: center;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--outline);
+  background: var(--chip-bg);
+  color: var(--ink);
+  font-size: 14px; font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.cat[aria-pressed="true"] {
+  background: var(--chip-selected-bg);
+  color: var(--chip-selected-ink);
+  border-color: var(--chip-selected-bg);
+}
+
+/* illustration plates */
+.plate {
+  background: var(--canvas);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  position: relative;
+  flex: none;
+}
+.plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* meta row */
+.meta {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--ink-2); font-size: 13px; line-height: 18px; font-weight: 500;
+}
+.meta .icon-sm { color: var(--ink-3); }
+.meta .dot { width: 3px; height: 3px; border-radius: 999px; background: var(--outline-strong); }
+
+/* allergen glyph cluster (glyph + accessible name, tooltip title) */
+.allergens { display: inline-flex; align-items: center; gap: 4px; }
+.allergen-glyph {
+  width: 22px; height: 22px; border-radius: var(--r-md);
+  background: var(--allergen-bg); color: var(--allergen-ink);
+  border: 1px solid var(--allergen-line);
+  display: grid; place-items: center;
+}
+.allergen-glyph svg { width: 13px; height: 13px; }
+
+/* buttons */
+.btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 52px; padding: 0 20px;
+  border: none; border-radius: var(--r-xl);
+  background: var(--lime); color: var(--on-lime);
+  font-family: inherit; font-size: 17px; font-weight: 700;
+  cursor: pointer;
+}
+.btn-secondary {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 52px; padding: 0 20px;
+  border: 1.5px solid var(--navy); border-radius: var(--r-xl);
+  background: transparent; color: var(--heading);
+  font-family: inherit; font-size: 17px; font-weight: 600;
+  cursor: pointer;
+}
+[data-scheme="dark"] .btn-secondary { border-color: var(--outline-strong); color: var(--ink); }
+
+/* ---------- tab bar ---------- */
+.tabbar {
+  flex: none;
+  display: flex;
+  border-top: 1px solid var(--outline);
+  background: var(--surface);
+  padding-top: 6px;
+}
+.tab {
+  flex: 1; height: 54px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  border: none; background: none; cursor: pointer;
+  color: var(--ink-3);
+  font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.01em;
+}
+.tab svg { width: 24px; height: 24px; }
+.tab[aria-selected="true"] { color: var(--heading); }
+.tab[aria-selected="true"] .tab-pill {
+  background: var(--lime-soft);
+}
+.tab-pill {
+  width: 48px; height: 28px; border-radius: 999px;
+  display: grid; place-items: center;
+}

@@ -1,0 +1,79 @@
+{
+  "title": "Recipes home — choose the composition",
+  "question": "The visual world is fixed (lime/navy/cream, Plus Jakarta Sans, illustration-forward). This choice is structure only, for the style-setting Recipes tab. The roll leads with the Cookbook index.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Cookbook Index",
+      "kicker": "THE ROLL",
+      "lineage": "the index pages of a working cookbook",
+      "thesis": "The recipe shelf as a dense, scannable index — every row a complete fact: illustration, title, time, allergens, provenance.",
+      "palette": ["#f7f4ec", "#1b1f58", "#b9bf05", "#2f0100"],
+      "materials": ["cream illustration thumbs", "tonal surface bands", "tabular figures"],
+      "viewport": "Masthead 'Rezepte', a restrained September-drop banner with Plus chip, category chip row, then editorial list rows: 4:3 illustration left, title/meta/allergen glyphs/provenance badge right. Tab bar with visible labels.",
+      "risk": "The monthly drop reads quieter than 'featured on top' ambition — the banner must earn attention through illustration, not size.",
+      "raised": [
+        {"from": "cyclorama-dawn (declined)", "raise": "Sections hold as strict horizontal bands; every state named in text, never color alone."}
+      ],
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "masthead · Rezepte", "x": 0, "y": 0, "w": 12, "h": 2},
+        {"label": "September-Drop banner + Plus chip", "x": 0, "y": 2, "w": 12, "h": 3, "accent": true},
+        {"label": "category chips (scroll)", "x": 0, "y": 5, "w": 12, "h": 2},
+        {"label": "illu 4:3", "x": 0, "y": 7, "w": 3, "h": 3},
+        {"label": "title · meta · allergens · provenance", "x": 3, "y": 7, "w": 9, "h": 3},
+        {"label": "recipe row", "x": 0, "y": 10, "w": 12, "h": 3},
+        {"label": "recipe row", "x": 0, "y": 13, "w": 12, "h": 3},
+        {"label": "recipe row", "x": 0, "y": 16, "w": 12, "h": 3},
+        {"label": "recipe row", "x": 0, "y": 19, "w": 12, "h": 3},
+        {"label": "tab bar · Recipes Builder Shopping Pantry More", "x": 0, "y": 22, "w": 12, "h": 2, "accent": true}
+      ]}
+    },
+    {
+      "id": "utility-first",
+      "label": "Utility First",
+      "lineage": "the tool wall of a well-run kitchen",
+      "thesis": "Search and categories lead; the drop and the grid follow — the tab opens as a tool, not a magazine.",
+      "palette": ["#f7f4ec", "#1b1f58", "#b9bf05", "#2f0100"],
+      "materials": ["category tiles with flat icons", "cream illustration cards", "tonal surfaces"],
+      "viewport": "Search field on top, a 3×2 illustrated category tile grid, the September-drop card mid-screen with Plus chip, then a 2-column recipe grid. Tab bar with visible labels.",
+      "risk": "A tool-first opening cools the warm domestic temperament — reads instrument-panel unless the tiles carry real illustration warmth.",
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "search", "x": 0, "y": 0, "w": 12, "h": 2},
+        {"label": "category tiles 3×2", "x": 0, "y": 2, "w": 12, "h": 6},
+        {"label": "September-Drop card + Plus chip", "x": 0, "y": 8, "w": 12, "h": 4, "accent": true},
+        {"label": "recipe card", "x": 0, "y": 12, "w": 6, "h": 5},
+        {"label": "recipe card", "x": 6, "y": 12, "w": 6, "h": 5},
+        {"label": "recipe card", "x": 0, "y": 17, "w": 6, "h": 5},
+        {"label": "recipe card", "x": 6, "y": 17, "w": 6, "h": 5},
+        {"label": "tab bar · labels visible", "x": 0, "y": 22, "w": 12, "h": 2, "accent": true}
+      ]}
+    },
+    {
+      "id": "monthly-cover",
+      "label": "Monthly Cover",
+      "lineage": "a baking periodical's monthly cover on the kitchen shelf",
+      "thesis": "The September drop is the cover of the month — one tall illustrated card owns the opening viewport; the cadence is the brand.",
+      "palette": ["#f7f4ec", "#1b1f58", "#b9bf05", "#2f0100"],
+      "materials": ["full-card cream illustration", "low-anchored caption strip", "tonal surfaces"],
+      "viewport": "Masthead 'September-Drop', a tall cover card (~40% of viewport) with the drop's illustration, Plus chip and provenance badge, caption anchored low; category chips; 2-column illustrated grid below. Tab bar with visible labels.",
+      "risk": "The cover pushes the browsing grid below the fold — regular users pay one extra scroll every visit.",
+      "raised": [
+        {"from": "vertical-feed (declined)", "raise": "The cover card commits fully — illustration owns the card edge to edge, caption and badges anchored low, nothing floating mid-card."}
+      ],
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "masthead · September-Drop", "x": 0, "y": 0, "w": 12, "h": 2},
+        {"label": "cover illustration (drop recipe)", "x": 0, "y": 2, "w": 12, "h": 7, "accent": true},
+        {"label": "caption · Plus chip · provenance", "x": 0, "y": 9, "w": 12, "h": 2, "accent": true},
+        {"label": "category chips (scroll)", "x": 0, "y": 11, "w": 12, "h": 2},
+        {"label": "recipe card", "x": 0, "y": 13, "w": 6, "h": 5},
+        {"label": "recipe card", "x": 6, "y": 13, "w": 6, "h": 5},
+        {"label": "recipe card", "x": 0, "y": 18, "w": 6, "h": 4},
+        {"label": "recipe card", "x": 6, "y": 18, "w": 6, "h": 4},
+        {"label": "tab bar · labels visible", "x": 0, "y": 22, "w": 12, "h": 2, "accent": true}
+      ]}
+    }
+  ],
+  "reroll": true,
+  "steer": true,
+  "buildPath": {"value": "code"}
+}

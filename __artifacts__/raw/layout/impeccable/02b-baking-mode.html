@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Baking mode (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 8px 0 8px;
+  }
+  .topbar .recipe { font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--ink-2); }
+  .topbar .pos { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--heading); padding-right: 12px; }
+
+  .progress {
+    display: flex; gap: 4px;
+    padding: 8px 16px 0;
+  }
+  .seg { flex: 1; height: 4px; border-radius: 999px; background: var(--surface-2); }
+  .seg.done { background: var(--lime); }
+
+  .step-body { flex: 1; padding: 20px 20px 0; overflow: hidden; }
+  .step-title { font-size: 26px; font-weight: 700; line-height: 34px; letter-spacing: -0.01em; color: var(--heading); }
+  .step-text { margin-top: 12px; font-size: 17px; line-height: 26px; color: var(--ink); }
+
+  .qty-card {
+    margin-top: 20px;
+    background: var(--surface-1);
+    border-radius: var(--r-xl);
+    padding: 6px 16px;
+  }
+  .qty-row {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--outline);
+  }
+  .qty-row:last-child { border-bottom: none; }
+  .qty {
+    font-size: 30px; font-weight: 700; line-height: 34px;
+    font-variant-numeric: tabular-nums;
+    color: var(--heading);
+    min-width: 108px;
+    text-align: right;
+  }
+  .qty .unit { font-size: 17px; font-weight: 600; color: var(--ink-2); }
+  .qty-name { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .qty-name .note { color: var(--ink-2); font-size: 14px; }
+
+  .timer-chip {
+    margin-top: 16px;
+    display: flex; align-items: center; gap: 12px;
+    background: var(--lime-soft);
+    border: 1px solid var(--lime);
+    border-radius: var(--r-xl);
+    padding: 10px 14px;
+  }
+  .timer-chip .icon { color: var(--heading); width: 24px; height: 24px; }
+  .timer-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .timer-time { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--heading); line-height: 26px; }
+  .timer-chip .spacer { flex: 1; }
+  .pause-btn {
+    width: 44px; height: 44px; border-radius: 999px; cursor: pointer;
+    border: none; background: var(--lime); color: var(--on-lime);
+    display: grid; place-items: center;
+  }
+  .pause-btn svg { width: 18px; height: 18px; }
+
+  .step-nav {
+    flex: none;
+    display: flex; gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--outline);
+    background: var(--surface);
+  }
+  .step-nav .btn-secondary { flex: 1; height: 56px; }
+  .step-nav .btn-primary { flex: 1.6; height: 56px; }
+  .btn-primary svg, .btn-secondary svg { width: 20px; height: 20px; }
+  .btn-primary .flip { transform: rotate(180deg); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4 6.4 5Z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.7 19.2 7.5 12l7.2-7.2 1.8 1.8L11.1 12l5.4 5.4-1.8 1.8Z"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><path d="M9 1h6v2H9V1Z"/><path fill-rule="evenodd" d="M12 4.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm0 2.5a6 6 0 1 1 0 12 6 6 0 0 1 0-12Z"/><path d="M11 8h2v5.5h-2V8Z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7V5Zm6.5 0H17v14h-3.5V5Z"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <div class="topbar">
+      <button class="icon-btn" aria-label="Exit baking mode"><svg fill="currentColor"><use href="#i-close"/></svg></button>
+      <span class="recipe">CHOCOLATE SOURDOUGH</span>
+      <span class="pos" aria-label="Step 3 of 9">3 / 9</span>
+    </div>
+    <div class="progress" aria-hidden="true">
+      <span class="seg done"></span><span class="seg done"></span><span class="seg done"></span>
+      <span class="seg"></span><span class="seg"></span><span class="seg"></span>
+      <span class="seg"></span><span class="seg"></span><span class="seg"></span>
+    </div>
+
+    <div class="step-body">
+      <h1 class="step-title">Mix to a shaggy dough</h1>
+      <p class="step-text">Add the water-and-starter mixture to the flours and cocoa. Mix by hand until no dry flour remains — it will look rough. That’s right.</p>
+
+      <div class="qty-card" aria-label="Amounts for this step">
+        <div class="qty-row"><span class="qty">350 <span class="unit">g</span></span><span class="qty-name">water <span class="note">28 °C</span></span></div>
+        <div class="qty-row"><span class="qty">90 <span class="unit">g</span></span><span class="qty-name">ripe starter</span></div>
+        <div class="qty-row"><span class="qty">420 <span class="unit">g</span></span><span class="qty-name">bread flour, type 550</span></div>
+        <div class="qty-row"><span class="qty">80 <span class="unit">g</span></span><span class="qty-name">whole rye flour</span></div>
+        <div class="qty-row"><span class="qty">25 <span class="unit">g</span></span><span class="qty-name">cocoa powder</span></div>
+      </div>
+
+      <div class="timer-chip" role="timer" aria-label="Autolyse timer, 39 minutes 12 seconds remaining">
+        <svg class="icon" fill="currentColor"><use href="#i-timer"/></svg>
+        <span>
+          <div class="timer-name">Autolyse</div>
+          <div class="timer-time">39:12</div>
+        </span>
+        <span class="spacer"></span>
+        <button class="pause-btn" aria-label="Pause timer"><svg fill="currentColor"><use href="#i-pause"/></svg></button>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn-secondary"><svg fill="currentColor"><use href="#i-back"/></svg>Back</button>
+      <button class="btn-primary">Next step<svg class="flip" fill="currentColor"><use href="#i-back"/></svg></button>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

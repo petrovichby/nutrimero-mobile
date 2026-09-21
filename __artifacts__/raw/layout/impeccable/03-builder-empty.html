@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Builder, empty pantry (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 16px 10px;
+    flex: none;
+  }
+  .empty {
+    flex: 1; min-height: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 0 40px;
+  }
+  .empty-art {
+    width: 220px; height: 165px;
+    background: var(--canvas);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .empty-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .empty h2 { margin-bottom: 8px; }
+  .empty p { color: var(--ink-2); max-width: 26ch; }
+  .empty .btn-primary { margin-top: 22px; width: 100%; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M11 5.4C9.4 4 7.2 3.2 4.8 3.2c-1 0-1.9.1-2.8.4v14.8c.9-.3 1.8-.4 2.8-.4 2.4 0 4.6.8 6.2 2.2V5.4Z"/><path d="M13 5.4C14.6 4 16.8 3.2 19.2 3.2c1 0 1.9.1 2.8.4v14.8c-.9-.3-1.8-.4-2.8-.4-2.4 0-4.6.8-6.2 2.2V5.4Z"/></symbol>
+  <symbol id="i-builder" viewBox="0 0 24 24"><circle cx="12" cy="4.9" r="1.8"/><rect x="8.75" y="7.6" width="6.5" height="4" rx="1.2"/><rect x="6" y="12.3" width="12" height="4" rx="1.2"/><rect x="3.5" y="17" width="17" height="4" rx="1.2"/></symbol>
+  <symbol id="i-basket" viewBox="0 0 24 24"><path d="M15.7 2.6 18.7 8H22v2H2V8h3.3l3-5.4 1.75 1L7.6 8h8.8l-2.45-4.4 1.75-1Z"/><path d="M3.6 11h16.8l-1.4 8.2A2.5 2.5 0 0 1 16.5 21h-9a2.5 2.5 0 0 1-2.5-1.8L3.6 11Z"/></symbol>
+  <symbol id="i-pantry" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 2.5h12A2.5 2.5 0 0 1 20.5 5v12.5a2 2 0 0 1-2 2h-.5v2h-2v-2H8v2H6v-2h-.5a2 2 0 0 1-2-2V5A2.5 2.5 0 0 1 6 2.5Zm5.3 2h1.4v13h-1.4v-13Zm-2.1 5.9h1.2v3.2H9.2v-3.2Zm4.4 0h1.2v3.2h-1.2v-3.2Z"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <header class="header">
+      <h1 class="headline-lg">Builder</h1>
+    </header>
+
+    <div class="empty">
+      <div class="empty-art">
+        <img src="assets/ill-empty-pantry.png" alt="Engraved illustration of an open, almost-empty kitchen cupboard with a single jar and a few crumbs">
+      </div>
+      <h2 class="headline-md">Your pantry is empty</h2>
+      <p class="body-md">Tell us what’s on your baking shelf and we’ll show you what you can bake tonight.</p>
+      <button class="btn-primary">Fill your pantry</button>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="Main navigation">
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-book"/></svg></span>Recipes</button>
+    <button class="tab" aria-selected="true"><span class="tab-pill"><svg fill="currentColor"><use href="#i-builder"/></svg></span>Builder</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-basket"/></svg></span>Shopping</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-pantry"/></svg></span>Pantry</button>
+    <button class="tab" aria-selected="false"><span class="tab-pill"><svg fill="currentColor"><use href="#i-dots"/></svg></span>More</button>
+  </nav>
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>

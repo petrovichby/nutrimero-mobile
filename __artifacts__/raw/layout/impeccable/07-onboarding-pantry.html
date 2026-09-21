@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nutrimero Home Baker — Onboarding 3: Pantry seeding (light, en)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ob-top {
+    flex: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 8px 0 16px;
+    min-height: 44px;
+  }
+  .ob-dots { display: flex; gap: 6px; }
+  .ob-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--surface-2); }
+  .ob-dot.on { background: var(--navy); width: 20px; }
+  .ob-skip {
+    border: none; background: none; cursor: pointer;
+    min-height: 44px; padding: 0 12px;
+    font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink-2);
+  }
+  .ob-body { flex: 1; min-height: 0; padding: 18px 20px 0; display: flex; flex-direction: column; }
+  .ob-body h1 { margin-bottom: 6px; }
+  .ob-body > p { color: var(--ink-2); margin-bottom: 18px; }
+
+  .staples { display: flex; flex-wrap: wrap; gap: 10px; }
+  .staple {
+    height: 44px; padding: 0 14px;
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1.5px solid var(--outline);
+    border-radius: var(--r-xl);
+    background: var(--surface);
+    font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--ink);
+    cursor: pointer;
+  }
+  .staple svg { width: 15px; height: 15px; flex: none; }
+  .staple[aria-pressed="true"] {
+    border-color: var(--lime);
+    background: var(--lime-soft);
+    color: var(--tier-ink);
+  }
+  .count-line { margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .ob-note { margin-top: auto; padding-bottom: 12px; font-size: 12.5px; color: var(--ink-2); }
+  .dock { flex: none; padding: 10px 16px 8px; background: var(--surface); }
+  .dock .btn-primary { width: 100%; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9.5 16.2 5.8 12.5l-1.8 1.8 5.5 5.5L20 9.3l-1.8-1.8-8.7 8.7Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></symbol>
+</svg>
+
+<div class="phone" data-scheme="light">
+  <div class="statusbar">
+    <span>9:41</span>
+    <svg width="70" height="13" viewBox="0 0 70 13" fill="currentColor" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="7" rx="1"/><rect x="10" y="3.5" width="3" height="9.5" rx="1"/><rect x="15" y="1" width="3" height="12" rx="1"/>
+      <path d="M28.5 5.2a8.6 8.6 0 0 1 11 0l-1.6 1.9a6.1 6.1 0 0 0-7.8 0l-1.6-1.9Zm2.7 3.2a4.4 4.4 0 0 1 5.6 0L34 12l-2.8-3.6Z"/>
+      <rect x="46" y="1.5" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+      <rect x="48" y="3.5" width="14" height="6" rx="1.6"/>
+      <path d="M67.5 5v3a2.4 2.4 0 0 0 0-3Z" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="screen">
+    <div class="ob-top">
+      <div class="ob-dots" aria-label="Step 3 of 3"><span class="ob-dot"></span><span class="ob-dot"></span><span class="ob-dot on"></span></div>
+      <button class="ob-skip">Skip</button>
+    </div>
+
+    <div class="ob-body">
+      <h1 class="headline-lg">What’s on your baking shelf?</h1>
+      <p class="body-md">Tap what you have — 30 seconds now, real recipe matches forever.</p>
+
+      <div class="staples" role="group" aria-label="Common staples">
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Wheat flour</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Sugar</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Butter</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Eggs</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Dry yeast</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Baking powder</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Vanilla sugar</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Cocoa powder</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Honey</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Almonds</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Salt</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Dark chocolate</button>
+        <button class="staple" aria-pressed="true"><svg fill="currentColor"><use href="#i-check"/></svg>Milk</button>
+        <button class="staple" aria-pressed="false"><svg fill="currentColor"><use href="#i-plus"/></svg>Rolled oats</button>
+      </div>
+
+      <p class="count-line data">8 items in your pantry so far</p>
+
+      <p class="ob-note">You can add anything else later — the pantry is built for a 30-second weekly update, not bookkeeping.</p>
+    </div>
+
+    <div class="dock">
+      <button class="btn-primary">Done — show what I can bake</button>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+</body>
+</html>
