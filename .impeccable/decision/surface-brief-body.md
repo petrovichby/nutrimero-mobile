@@ -72,3 +72,30 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
   badge placement rules, icon families + strike grammar. Engraved empty-pantry raster
   (ill-empty-pantry.png) delivered by the user and wired into the Builder empty state.
   No open handoffs remain.
+
+## Splash + vintage pass (2026-09-22)
+
+User-pinned era: the app should resemble a 1950s–60s cookbook. Decisions (question round):
+one period display face admitted for brand moments only (splash title, screen mastheads,
+paywall headline) — body/UI stays Plus Jakarta Sans; vintage touch on existing screens is
+LIGHT (plate frames, rules, ornaments — layout/chips/buttons/ergonomics untouched); splash
+copy = name + tagline ("The home baker's companion").
+
+SPLASH CONTRACT — THESIS: the app opens as its own mid-century cookbook cover; refuses the
+logo-on-gradient splash default. OWN-WORLD: navy masthead band with reversed lockup (script
+face), cream field with the engraved sourdough plate in a double-rule frame, one thin lime
+printer's rule; lime rationed to the only moving element (loading dots — Rietveld raise,
+declined challenger). FIRST VIEWPORT: band ~34%, plate centered, tagline in tracked caps,
+foot colophon nutrimero.org + three loading dots. FORM: Split-Band Cover, rank 2/7, seed
+98c84526 (user picked over the dealt lead Recipe Card). Display face: Yellowtail (Google
+Fonts), brand moments only. FINISH: same line as the set contract.
+- 2026-09-22 — Warm-palette EXPERIMENT (user-directed, pending eyeball approval): the current
+  navy/lime world is pinned for Pro Baker; two warm Home Baker candidates built in
+  `experiment-warm/` — A "Crust & Butter" (rust #7a3520 structure, butter-gold #dfa621
+  action) and B "Hearth" (espresso #4a2c1a structure, terracotta #cd6f45 action) — on
+  01-recipes (both) + 02-recipe-detail (A). Engravings/type/honesty devices unchanged;
+  allergen + destructive roles stay semantic. DESIGN.md deliberately NOT amended; the
+  experiment is not canon until the user approves.
+- 2026-09-22 — Warm experiment APPROVED: "Crust & Butter" (A) applied globally to all Home
+  Baker frames (light + newly derived warm-brown dark ramp); navy/lime pinned to Pro Baker;
+  experiment-warm/ retired; DESIGN.md amended to 0.4.0.

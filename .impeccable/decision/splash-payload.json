@@ -1,0 +1,63 @@
+{
+  "title": "Splash screen — choose the composition",
+  "question": "Era pinned: 1950s–60s cookbook. World fixed (cream/navy/lime, engravings, one new display face for brand moments). This choice is the splash composition. The roll leads with the Recipe Card.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Recipe Card",
+      "kicker": "THE ROLL",
+      "lineage": "the handwritten kitchen index card, 'From the kitchen of …'",
+      "thesis": "The app introduces itself as a recipe card from its own box — the most personal object of the 1950s kitchen.",
+      "palette": ["#f7f4ec", "#1b1f58", "#b9bf05", "#e4dcc8"],
+      "materials": ["ruled index card", "navy header band", "rubber-stamp loaf mark", "paper grain"],
+      "viewport": "Cream ground; one centered vintage index card: navy header band with 'Nutrimero' lockup, script 'Home Baker' sitting on the card's ruled lines, tagline on the rule below, loaf mark stamped bottom-right. Loading dots render as pencil dots on the last rule.",
+      "risk": "A card-on-ground composition uses less of the viewport than a full-bleed cover — the object must be exquisite or the screen reads sparse.",
+      "raised": [
+        {"from": "rietveld-sliding-house (declined)", "raise": "Color is rationed to the one thing that moves: lime appears only in the loading dots; everything else is navy ink on cream."}
+      ],
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "cream ground", "x": 0, "y": 0, "w": 12, "h": 5},
+        {"label": "navy header band · Nutrimero", "x": 1, "y": 5, "w": 10, "h": 2, "accent": true},
+        {"label": "ruled card · script 'Home Baker' + tagline on rules", "x": 1, "y": 7, "w": 10, "h": 8},
+        {"label": "loaf stamp", "x": 8, "y": 12, "w": 3, "h": 3},
+        {"label": "loading dots on last rule", "x": 4, "y": 16, "w": 4, "h": 1, "accent": true},
+        {"label": "colophon · nutrimero.org", "x": 2, "y": 21, "w": 8, "h": 1}
+      ]}
+    },
+    {
+      "id": "flour-sack",
+      "label": "Flour-Sack Print",
+      "lineage": "two-color kitchen textile prints and printed flour sacking",
+      "thesis": "The opening is a printed kitchen cloth — a repeating wheat print with the brand as its woven-in label.",
+      "palette": ["#f7f4ec", "#1b1f58", "#b9bf05"],
+      "materials": ["repeating two-color wheat print", "central roundel label", "double-rule border"],
+      "viewport": "Full-bleed repeating wheat-sprig print (navy + a lime accent sprig every nth repeat) on cream; centered circular label disc with double rule carrying the loaf mark, 'Nutrimero Home Baker' and the tagline; loading dots below the disc.",
+      "risk": "A repeating pattern at phone scale flirts with wallpaper — the print must stay sparse and the label must dominate.",
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "repeating wheat print (full bleed)", "x": 0, "y": 0, "w": 12, "h": 24},
+        {"label": "roundel label · mark + name + tagline", "x": 2.5, "y": 8, "w": 7, "h": 7, "accent": true},
+        {"label": "loading dots", "x": 4, "y": 16, "w": 4, "h": 1, "accent": true}
+      ]}
+    },
+    {
+      "id": "split-band",
+      "label": "Split-Band Cover",
+      "lineage": "mid-century cookbook covers with horizontal color bands",
+      "thesis": "The app opens as its own book cover — masthead band, engraved plate, one thin lime rule.",
+      "palette": ["#1b1f58", "#f7f4ec", "#b9bf05"],
+      "materials": ["navy masthead band", "engraved loaf plate", "thin lime band", "colophon foot"],
+      "viewport": "Top: navy band with reversed 'Nutrimero' and script 'Home Baker'. Middle: cream field with the engraved sourdough plate centered, tagline beneath. A thin lime band as the printer's rule. Foot: colophon and loading dots.",
+      "risk": "Closest to the category's default splash (logo band over image) — the band proportions and the engraving must carry the era or it reads generic.",
+      "wireframe": {"cols": 12, "rows": 24, "regions": [
+        {"label": "navy masthead · Nutrimero / script Home Baker", "x": 0, "y": 0, "w": 12, "h": 6, "accent": true},
+        {"label": "engraved loaf plate", "x": 2, "y": 8, "w": 8, "h": 8},
+        {"label": "tagline", "x": 2, "y": 16, "w": 8, "h": 1},
+        {"label": "thin lime band", "x": 0, "y": 18, "w": 12, "h": 0.5, "accent": true},
+        {"label": "colophon + loading dots", "x": 2, "y": 21, "w": 8, "h": 2}
+      ]}
+    }
+  ],
+  "reroll": true,
+  "steer": true,
+  "buildPath": {"value": "code"}
+}

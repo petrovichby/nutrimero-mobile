@@ -50,16 +50,48 @@ Design intent that static HTML cannot carry; binds the React Native implementati
 - **07 Onboarding:** step transitions slide 220 ms (Reduce Motion ⇒ cut); selection cards
   and staple chips announce checked state; the units conversion card updates its rows to
   match the selected system.
+- **00 Splash:** static cover; the only motion is the three loading dots filling in sequence
+  (400 ms cadence, lime — the one moving element). Exit = 250 ms crossfade into the Recipes
+  tab; Reduce Motion ⇒ instant cut. The splash is Expo's static splash plus this brief
+  composed moment; it never blocks longer than load requires and is not a timed ad.
+  **Scheme-fixed:** the cover is a physical object — navy band and cream field render
+  identically in light and dark OS schemes (like the cream illustration plates); status bar
+  is light-content always. **Loader semantics:** the dots are an indeterminate loader — RN
+  `accessibilityRole="progressbar"` with no value, `accessibilityState={{busy: true}}`,
+  announced once as "Loading"; the HTML comp's `role="progressbar"` without `aria-valuenow`
+  is the equivalent indeterminate form.
+
+## Vintage kit (1950s–60s cookbook, added 2026-09-22)
+
+- Display face **Pacifico** (Google Fonts, 400) for brand moments ONLY: splash title,
+  screen mastheads (Recipes/Builder/Pantry/Shopping), paywall headline. Never in body, rows,
+  buttons, chips, or any Operate control. RN: load via expo-font next to Plus Jakarta Sans.
+  Chosen over Yellowtail for charset coverage (user requirement): Pacifico ships Latin,
+  Latin-Ext, Cyrillic, Cyrillic-Ext, Vietnamese — covers en/de/lt today and Cyrillic-script
+  markets later; it is also a period-true revival of 1950s American brush lettering.
+- `.plate` / hero illustrations carry a printed-plate inner hairline frame (navy at 28%,
+  5px inset). The splash cover plate uses the stronger double rule (border + offset outline).
+- `.fleuron` printer's divider (rule–diamond–rule) marks ceremonial moments (splash, paywall)
+  — not list sections.
+- **On-image provenance = a rubber-stamp impression:** Stardos Stencil 700, all-caps
+  "AI ILLUSTRATION" (localized), single unrounded 1px border, rotate(−5°), corporate navy
+  ink (#1b1f58 — text and border) on faint cream.
+  Text-only (user direction); the row chips keep their glyph. Stardos Stencil ships
+  Latin-only — pick a Cyrillic-capable stencil fallback before shipping Cyrillic locales.
+- Layout, chips, buttons, targets, and all Operate ergonomics are untouched by the vintage
+  pass (user decision: light touch).
 
 ## Scheme rules proven in the comps
 
 - Illustration plates stay cream `#f7f4ec` in both schemes (DESIGN.md: illustration-canvas
   is scheme-fixed).
-- Dark surfaces are navy-deep (`#10122a` family), not neutral gray; shadows go black in dark,
-  navy-tinted in light.
-- Lime never carries white text; tier chips sit on the lime-tinted container
-  (`--tier-bg`) with dark-olive ink, one treatment for included and locked (lock glyph added
-  when locked).
+- Home Baker (approved 2026-09-22): warm "Crust & Butter" palette — rust structure #7a3520,
+  butter-gold action #dfa621; dark surfaces are warm chocolate browns (#201510 family), never
+  neutral gray or navy; shadows go black in dark, rust-tinted in light. Pro Baker keeps
+  navy/lime.
+- The action color never carries white text (gold inherits lime's guard: near-black #251a02);
+  tier chips sit on the gold-tinted container (`--tier-bg`) with dark-honey ink, one
+  treatment for included and locked (lock glyph added when locked).
 
 ## Diet & allergen glyphs (canonical source: nutrimero-design / nutrimero-web)
 

@@ -2,75 +2,77 @@
    Visual authority: docs/DESIGN.md (draft 0.1.0). Phone frame 390×844, safe area 744. */
 
 :root {
-  /* brand — fixed */
-  --lime: #b9bf05;
-  --on-lime: #1d1e01;
-  --navy: #1b1f58;
+  /* Home Baker "Crust & Butter" world (approved 2026-09-22).
+     Action role keeps the historical --lime/--on-lime var names; the values are butter-gold.
+     Pro Baker retains the navy/lime world — its comps will pin the original values. */
+  --lime: #dfa621;    /* action: butter gold */
+  --on-lime: #251a02;
+  --navy: #7a3520;    /* structure: rust sepia */
   --oxblood: #2f0100;
   --canvas: #f7f4ec;            /* illustration plates stay cream in both schemes */
 
   /* light scheme */
-  --surface: #fbfaf4;
-  --surface-1: #f2f0e6;
-  --surface-2: #e9e6d8;
-  --ink: #24263a;
-  --ink-2: #5a5d72;
-  --ink-3: #83869b;
-  --heading: #1b1f58;
-  --outline: #ddd9c9;
-  --outline-strong: #b4b1a0;
+  --surface: #fbf7ee;
+  --surface-1: #f4ebd9;
+  --surface-2: #ecdfc6;
+  --ink: #362a1f;
+  --ink-2: #6f6150;
+  --ink-3: #97876f;
+  --heading: #6d2f1b;
+  --outline: #e3d7bd;
+  --outline-strong: #b8a888;
   --allergen-bg: #f8e9e4;
   --allergen-ink: #57180c;
   --allergen-line: #e4c4ba;
-  --chip-bg: #f2f0e6;
-  --chip-selected-bg: #1b1f58;
+  --chip-bg: #f4ebd9;
+  --chip-selected-bg: #7a3520;
   --chip-selected-ink: #ffffff;
-  --tier-bg: #eef0cf;
-  --tier-ink: #3a3d01;
-  --tier-line: #c9cd6a;
+  --tier-bg: #f6ecd0;
+  --tier-ink: #4a3405;
+  --tier-line: #d9c27a;
   --destructive: #8c2318;   /* oxblood family, not Material red */
   --on-destructive: #ffffff;
-  --navy-soft: #e8e9f3;
-  --navy-soft-ink: #1b1f58;
-  --lime-soft: #eff0d3;
-  --scrim: rgba(27, 31, 88, 0.10);
-  --shadow: 0 6px 18px rgba(27, 31, 88, 0.12);
+  --navy-soft: #f3e4d3;
+  --navy-soft-ink: #6d2f1b;
+  --lime-soft: #f6ecd0;
+  --scrim: rgba(109, 47, 27, 0.10);
+  --shadow: 0 6px 18px rgba(109, 47, 27, 0.14);
 
   --r-sm: 2px; --r: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px;
 }
 
 [data-scheme="dark"] {
-  --surface: #10122a;
-  --surface-1: #191c3c;
-  --surface-2: #23264c;
-  --ink: #ecebf6;
-  --ink-2: #b5b5d1;
-  --ink-3: #9092b0;
-  --heading: #ecebf6;
-  --outline: #34375f;
-  --outline-strong: #50537f;
+  --surface: #201510;
+  --surface-1: #2b1d14;
+  --surface-2: #382619;
+  --ink: #f2ebe1;
+  --ink-2: #cdbda9;
+  --ink-3: #a4917b;
+  --heading: #f2ebe1;
+  --outline: #4a3826;
+  --outline-strong: #6e5741;
   --allergen-bg: #38180f;
   --allergen-ink: #f6bcab;
   --allergen-line: #6b3325;
-  --chip-bg: #191c3c;
-  --chip-selected-bg: #ecebf6;
-  --chip-selected-ink: #1b1f58;
-  --tier-bg: #2c2f14;
-  --tier-ink: #d9de62;
-  --tier-line: #565a18;
+  --chip-bg: #2b1d14;
+  --chip-selected-bg: #f2ebe1;
+  --chip-selected-ink: #6d2f1b;
+  --tier-bg: #3e3110;
+  --tier-ink: #e9cb6b;
+  --tier-line: #6e5a1c;
   --destructive: #a03325;
   --on-destructive: #ffffff;
-  --navy-soft: #23264c;
-  --navy-soft-ink: #cdd0f0;
-  --lime-soft: #2c2f14;
+  --navy-soft: #382619;
+  --navy-soft-ink: #ecd7bd;
+  --lime-soft: #3e3110;
   --scrim: rgba(0, 0, 0, 0.35);
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { background: #3a3d4d; }
-[data-scheme="dark"] { background: #05060f; }
+html { background: #3d3228; }
+[data-scheme="dark"] { background: #0b0705; }
 
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -147,6 +149,35 @@ body {
 .label-sm { font-size: 11px; font-weight: 700; line-height: 14px; }
 .data { font-variant-numeric: tabular-nums; font-weight: 500; }
 
+/* ---------- vintage kit (1950s–60s cookbook, light touch) ---------- */
+/* brand moments only: splash title, screen mastheads, paywall headline */
+.masthead-script {
+  font-family: "Pacifico", cursive;
+  font-size: 31px; font-weight: 400; line-height: 46px;
+  letter-spacing: 0;
+  color: var(--heading);
+}
+/* engraved-plate frame: inner hairline like a printed book plate */
+.plate::after, .hero::after {
+  content: "";
+  position: absolute; inset: 5px;
+  border: 1px solid rgba(122, 53, 32, 0.3);
+  border-radius: 0;  /* printed rules have square corners (matches splash frame + stamp) */
+  pointer-events: none;
+}
+/* printer's fleuron divider */
+.fleuron {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  color: var(--outline-strong);
+}
+.fleuron::before, .fleuron::after {
+  content: ""; height: 1px; width: 36px; background: currentColor;
+}
+.fleuron .diamond {
+  width: 7px; height: 7px; background: currentColor;
+  transform: rotate(45deg); border-radius: 1px;
+}
+
 /* ---------- shared components ---------- */
 .icon { width: 20px; height: 20px; flex: none; }
 .sr-only {
@@ -177,14 +208,28 @@ body {
 .chip-plus { background: var(--tier-bg); color: var(--tier-ink); border: 1px solid var(--tier-line); }
 /* the tier chip on a lime (primary) surface: olive field, lime ink — same family, readable on lime */
 .btn-primary .chip-plus { background: var(--on-lime); color: var(--lime); border-color: transparent; }
-.chip-provenance { background: var(--navy-soft); color: var(--navy-soft-ink); }
-/* on-image badge sits on the scheme-fixed cream plate, so its colors are fixed too
-   (matches the allergen-chip treatment: oxblood ink on warm rose) */
-.chip-provenance-onimage {
-  background: #f8e9e4; color: #57180c; border: 1px solid #e4c4ba;
-  height: 18px; padding: 0 6px; font-size: 9px; gap: 3px;
+/* in-row provenance: same stamp grammar, navy ink on the surface */
+.chip-provenance {
+  background: transparent; color: var(--ink-2);
+  border: 1px solid var(--outline-strong);
+  border-radius: var(--r-sm);
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
 }
-.chip-provenance-onimage .icon-sm { width: 10px; height: 10px; }
+/* on-image badge: a rubber-stamp impression (vintage kit) — stencil face, thin double
+   border, tilted at the corner; oxblood ink, faint cream backdrop for legibility over the
+   engraving hatching. Scheme-fixed like the plate it sits on. Text-only by user direction. */
+.chip-provenance-onimage {
+  font-family: "Stardos Stencil", serif; font-weight: 700;
+  background: rgba(251, 247, 238, 0.6);
+  color: rgba(122, 53, 32, 0.92);           /* rust structure ink */
+  border: 1px solid rgba(122, 53, 32, 0.8);  /* single unrounded border */
+  border-radius: 0;
+  height: auto; padding: 1px 4px;
+  font-size: 8px; line-height: 11px;
+  letter-spacing: 0.14em; text-indent: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(5deg);
+}
 .chip-allergen {
   background: var(--allergen-bg); color: var(--allergen-ink);
   border: 1px solid var(--allergen-line);
