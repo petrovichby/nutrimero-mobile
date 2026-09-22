@@ -1,7 +1,15 @@
 import { messages } from "@nutrimero/core";
 import { tokens } from "@nutrimero/ui";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+
+// Keep the native splash up until the root view has laid out. There is no async boot
+// work yet; once font/entitlement loading exists, the hideAsync call moves behind it.
+SplashScreen.preventAutoHideAsync();
+// DESIGN.md motion rules: 150–250 ms; a fade is not a movement, so it is acceptable
+// under reduced motion — no extra handling needed.
+SplashScreen.setOptions({ fade: true, duration: 200 });
 
 // Bootstrap placeholder — replaced by the first specced feature. Locale resolution is
 // hardwired to "en" until the i18n runtime is chosen (Constitution IX gates the catalogs,
@@ -10,7 +18,7 @@ const t = messages.en;
 
 export function AppRoot() {
   return (
-    <View style={styles.container}>
+    <View onLayout={() => SplashScreen.hideAsync()} style={styles.container}>
       <Text accessibilityRole="header" style={styles.name}>
         {t.app.homeBaker.name}
       </Text>

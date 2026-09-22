@@ -10,6 +10,8 @@
     "includes": [
       "**",
       "!node_modules",
+      "!.claude",
+      "!.impeccable",
       "!dist",
       "!coverage",
       "!.expo",

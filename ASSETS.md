@@ -46,7 +46,7 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## 3. Splash screens — blocks M1 beta
 
-- [ ] Home Baker splash (Expo config), light + dark
+- [x] Home Baker splash (Expo config), light + dark
 - [ ] Pro Baker splash, light + dark
 
 ## 4. Store listing assets — blocks store submission (M1/M2)

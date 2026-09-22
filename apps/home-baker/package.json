@@ -5,8 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
     "bundle": "expo export --platform ios --platform android --output-dir dist"
   },
@@ -14,6 +14,7 @@
     "@nutrimero/core": "workspace:*",
     "@nutrimero/ui": "workspace:*",
     "expo": "~57.0.24",
+    "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-native": "0.86.3"
