@@ -16,7 +16,9 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## 1. App icons — blocks M1 beta
 
 ### Nutrimero Home Baker
-- [ ] iOS master icon 1024×1024 (light)
+- [~] iOS master icon 1024×1024 (light) — warm "Crust & Butter" concept draft approved-style at
+  `__artifacts__/raw/icon/icon-home-warm.png` (gold field / rust loaf / fleuron, provenance
+  embedded); human-finished vector pass still owed, exact tokens #dfa621/#7a3520 pinned there
 - [ ] iOS dark variant
 - [ ] iOS tinted variant (grayscale, transparent bg)
 - [ ] Android adaptive: foreground layer (108dp grid, safe zone respected)
