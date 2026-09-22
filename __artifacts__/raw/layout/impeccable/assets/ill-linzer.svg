@@ -2,15 +2,15 @@
   <defs>
     <filter id="grain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.106  0 0 0 0 0.122  0 0 0 0 0.345  0.4 0.4 0.4 0 -0.62"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.478  0 0 0 0 0.208  0 0 0 0 0.125  0.4 0.4 0.4 0 -0.62"/>
     </filter>
   </defs>
   <rect width="400" height="300" fill="#f7f4ec"/>
 
   <!-- shadow + plate -->
-  <ellipse cx="200" cy="252" rx="130" ry="12" fill="#1b1f58" opacity="0.10"/>
+  <ellipse cx="200" cy="252" rx="130" ry="12" fill="#7a3520" opacity="0.10"/>
   <circle cx="200" cy="164" r="116" fill="#f0e8d4"/>
-  <circle cx="200" cy="164" r="116" fill="none" stroke="#1b1f58" stroke-width="2.5" opacity="0.55"/>
+  <circle cx="200" cy="164" r="116" fill="none" stroke="#7a3520" stroke-width="2.5" opacity="0.55"/>
   <circle cx="200" cy="164" r="98" fill="none" stroke="#d8ccae" stroke-width="2"/>
 
   <!-- back cookies -->
@@ -34,7 +34,7 @@
     <circle cx="192" cy="204" r="20" fill="#b8422c"/>
     <path d="M181 195 Q188 189 196 191" fill="none" stroke="#d86a4a" stroke-width="4" stroke-linecap="round"/>
     <!-- lime leaf on the jam -->
-    <path d="M204 190 C210 182 220 179 228 181 C224 189 216 194 208 194 Z" fill="#b9bf05"/>
+    <path d="M204 190 C210 182 220 179 228 181 C224 189 216 194 208 194 Z" fill="#dfa621"/>
   </g>
 
   <!-- powdered sugar -->

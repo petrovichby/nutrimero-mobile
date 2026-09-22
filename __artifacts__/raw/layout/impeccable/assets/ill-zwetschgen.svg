@@ -2,19 +2,19 @@
   <defs>
     <filter id="grain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.106  0 0 0 0 0.122  0 0 0 0 0.345  0.4 0.4 0.4 0 -0.62"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.478  0 0 0 0 0.208  0 0 0 0 0.125  0.4 0.4 0.4 0 -0.62"/>
     </filter>
   </defs>
   <rect width="400" height="300" fill="#f7f4ec"/>
 
   <!-- shadow + parchment -->
-  <ellipse cx="200" cy="248" rx="132" ry="12" fill="#1b1f58" opacity="0.10"/>
+  <ellipse cx="200" cy="248" rx="132" ry="12" fill="#7a3520" opacity="0.10"/>
   <rect x="88" y="70" width="224" height="170" rx="6" fill="#efe6d2" transform="rotate(-2 200 155)"/>
   <rect x="88" y="70" width="224" height="170" rx="6" fill="none" stroke="#d8ccae" stroke-width="2" transform="rotate(-2 200 155)"/>
 
   <!-- cake slab -->
   <rect x="112" y="92" width="176" height="132" rx="10" fill="#e2b874" transform="rotate(-2 200 158)"/>
-  <rect x="112" y="92" width="176" height="132" rx="10" fill="none" stroke="#1b1f58" stroke-width="2" opacity="0.4" transform="rotate(-2 200 158)"/>
+  <rect x="112" y="92" width="176" height="132" rx="10" fill="none" stroke="#7a3520" stroke-width="2" opacity="0.4" transform="rotate(-2 200 158)"/>
 
   <!-- plum wedges, 3 x 3 -->
   <g transform="rotate(-2 200 158)">
@@ -51,7 +51,7 @@
       <circle cx="238" cy="214" r="3.2"/>
     </g>
     <!-- lime leaf detail -->
-    <path d="M212 122 C218 114 228 111 236 113 C232 121 224 126 216 126 Z" fill="#b9bf05"/>
+    <path d="M212 122 C218 114 228 111 236 113 C232 121 224 126 216 126 Z" fill="#dfa621"/>
   </g>
 
   <rect width="400" height="300" filter="url(#grain)" opacity="0.35"/>

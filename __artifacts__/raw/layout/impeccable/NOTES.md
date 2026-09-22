@@ -74,8 +74,8 @@ Design intent that static HTML cannot carry; binds the React Native implementati
 - `.fleuron` printer's divider (rule–diamond–rule) marks ceremonial moments (splash, paywall)
   — not list sections.
 - **On-image provenance = a rubber-stamp impression:** Stardos Stencil 700, all-caps
-  "AI ILLUSTRATION" (localized), single unrounded 1px border, rotate(−5°), corporate navy
-  ink (#1b1f58 — text and border) on faint cream.
+  "AI ILLUSTRATION" (localized), single unrounded 1px border, rotate(5°), structure-colored
+  ink (rust #7a3520 since the warm retheme — text and border) on faint cream.
   Text-only (user direction); the row chips keep their glyph. Stardos Stencil ships
   Latin-only — pick a Cyrillic-capable stencil fallback before shipping Cyrillic locales.
 - Layout, chips, buttons, targets, and all Operate ergonomics are untouched by the vintage

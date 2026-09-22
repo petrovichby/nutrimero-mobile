@@ -2,24 +2,24 @@
   <defs>
     <filter id="grain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.106  0 0 0 0 0.122  0 0 0 0 0.345  0.4 0.4 0.4 0 -0.62"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.478  0 0 0 0 0.208  0 0 0 0 0.125  0.4 0.4 0.4 0 -0.62"/>
     </filter>
   </defs>
   <rect width="400" height="300" fill="#f7f4ec"/>
 
   <!-- shadow -->
-  <ellipse cx="202" cy="240" rx="128" ry="15" fill="#1b1f58" opacity="0.10"/>
+  <ellipse cx="202" cy="240" rx="128" ry="15" fill="#7a3520" opacity="0.10"/>
 
   <!-- linen cloth -->
   <path d="M58 238 Q92 204 152 208 L252 208 Q314 202 344 236 Q300 254 202 256 Q104 254 58 238 Z" fill="#ece4d2"/>
-  <path d="M74 236 Q120 214 170 214" fill="none" stroke="#1b1f58" stroke-width="4.5" opacity="0.45" stroke-linecap="round"/>
-  <path d="M232 214 Q286 212 326 234" fill="none" stroke="#1b1f58" stroke-width="4.5" opacity="0.45" stroke-linecap="round"/>
+  <path d="M74 236 Q120 214 170 214" fill="none" stroke="#7a3520" stroke-width="4.5" opacity="0.45" stroke-linecap="round"/>
+  <path d="M232 214 Q286 212 326 234" fill="none" stroke="#7a3520" stroke-width="4.5" opacity="0.45" stroke-linecap="round"/>
   <path d="M96 246 Q160 238 220 240" fill="none" stroke="#c9bfa4" stroke-width="3" opacity="0.8" stroke-linecap="round"/>
 
   <!-- boule -->
   <path d="M94 212 C88 150 132 96 201 92 C270 96 314 150 308 212 C300 227 252 236 201 236 C150 236 102 227 94 212 Z" fill="#4a2b1f"/>
   <ellipse cx="201" cy="144" rx="96" ry="54" fill="#664032" opacity="0.85"/>
-  <path d="M94 212 C88 150 132 96 201 92 C270 96 314 150 308 212" fill="none" stroke="#1b1f58" stroke-width="2" opacity="0.35"/>
+  <path d="M94 212 C88 150 132 96 201 92 C270 96 314 150 308 212" fill="none" stroke="#7a3520" stroke-width="2" opacity="0.35"/>
 
   <!-- scores showing crumb -->
   <path d="M136 156 C158 130 188 115 216 113 C194 128 166 150 148 167 C143 164 139 160 136 156 Z" fill="#b06a3f"/>
@@ -40,11 +40,11 @@
   <circle cx="152" cy="126" r="1.8" fill="#f0e3c8" opacity="0.8"/>
 
   <!-- lime wheat sprig -->
-  <path d="M84 208 C86 180 94 162 108 148" fill="none" stroke="#9aa004" stroke-width="2.5" stroke-linecap="round"/>
-  <ellipse cx="104" cy="150" rx="4.2" ry="7.5" fill="#b9bf05" transform="rotate(38 104 150)"/>
-  <ellipse cx="96" cy="162" rx="4.2" ry="7.5" fill="#b9bf05" transform="rotate(24 96 162)"/>
-  <ellipse cx="90" cy="176" rx="4.2" ry="7.5" fill="#b9bf05" transform="rotate(12 90 176)"/>
-  <ellipse cx="112" cy="140" rx="3.6" ry="6.5" fill="#b9bf05" transform="rotate(50 112 140)"/>
+  <path d="M84 208 C86 180 94 162 108 148" fill="none" stroke="#a97e14" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="104" cy="150" rx="4.2" ry="7.5" fill="#dfa621" transform="rotate(38 104 150)"/>
+  <ellipse cx="96" cy="162" rx="4.2" ry="7.5" fill="#dfa621" transform="rotate(24 96 162)"/>
+  <ellipse cx="90" cy="176" rx="4.2" ry="7.5" fill="#dfa621" transform="rotate(12 90 176)"/>
+  <ellipse cx="112" cy="140" rx="3.6" ry="6.5" fill="#dfa621" transform="rotate(50 112 140)"/>
 
   <rect width="400" height="300" filter="url(#grain)" opacity="0.35"/>
 </svg>
