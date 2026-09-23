@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-23
 
-**Status**: Draft — gate 1 (coordinator reads before anything is planned)
+**Status**: Gate 1 PASSED with rulings (coordinator, 2026-09-23) — see Clarifications
 
 **Input**: Coordinator assignment "002-pro-label-desk": the read-only Label desk on tablet —
 products, the declarations grid, the label preview, and the issued-label match check (the api
@@ -221,7 +221,8 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **Many issued labels** (unpaged in the api): the list stays usable at 100+ items per product.
 - **German UI at 1.3× text**: grid cells and gap sentences wrap, never clip meaning.
 - **Session expired**: the next read re-authenticates silently via refresh; if refresh fails, the
-  sign-in screen appears and saved labels remain readable after re-sign-in as the same person.
+  sign-in screen appears. Saved labels remain readable after re-sign-in **only as the same
+  person**; a sign-in by a different account performs the FR-022 wipe first (FR-001a).
 - **Storage full / cache write fails**: online use is unaffected; Saved labels shows what it could
   keep and says it could not save the rest.
 - **Clock skew**: "as of" and "checked at" times display in device time zone from server
@@ -236,19 +237,29 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-001**: The desk MUST let an existing Nutrimero account sign in with email and password, and
   sign out; registration, invitation acceptance and password recovery are not offered in-app — the
   sign-in screen points to nutrimero.org for them.
+- **FR-001a**: When an account signs in on a device that holds another account's session data or
+  saved labels, the FR-022 wipe MUST complete before anything is read for the new account.
+- **FR-001b**: Sign-in, sign-out and bakery choice are shared session capability (not Pro-only).
+  Sign-out and account erase MUST delete the session layer's own data and then invoke every wiper
+  the app has registered, so each app decides what else goes (this honours Home 001's FR-011/012
+  as a contract; the Pro app registers the saved-labels wiper).
 - **FR-002**: After sign-in the desk MUST act in exactly one bakery at a time; a member of several
   bakeries MUST choose one, and MUST be able to switch from within the desk. The last chosen bakery
   is remembered on the device.
 - **FR-003**: The desk MUST NOT consult or display the company's Hobby Mode toggles; Pro behaves
-  the same whatever their value.
+  the same whatever their value. This stands on a verified api fact: `declarationsEnabled` lives in
+  the company record only and gates no route (016 FR-039, OQ-38); the plan's contract check pins it
+  so an api change surfaces through the drift gate.
 
 **Products & readiness**
 
 - **FR-004**: The desk MUST list the bakery's active products with name, product number (if any)
   and, for each active assigned label type, a readiness summary taken from the api's declarations
   (ready, or the count of incomplete required categories).
-- **FR-005**: The list MUST let the user find a product by name or number. Whether this filters
-  server-side or over the loaded list is settled at gate 1 (see Contract check B2).
+- **FR-005**: The list MUST let the user find a product by name or number by filtering the loaded
+  list on the device (gate 1, Q3-A), within a stated bound: the plan names how many pages the desk
+  loads before filtering and what the user sees past that bound. Server-side search replaces this
+  when `/products?q=` ships (B2).
 
 **Declarations grid**
 
@@ -266,9 +277,12 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-010**: The preview MUST render the api's label rendering for product × label type × label
   language, section by section and run by run, applying emphasis exactly where the api marks it,
   and MUST NOT alter, reorder, join, translate or re-round any text or figure.
-- **FR-011**: Label language MUST be selectable from the EU label languages, independently of UI
-  language; the default is the label language last used on the device, else the one matching the
-  UI language.
+- **FR-011**: Label language MUST be selectable independently of UI language. The list offered MUST
+  be only languages whose support can be proven from a source the plan names; the api's `language`
+  parameter is a free string (no enum, no listing endpoint), so until the api serves such a list
+  (ask B11) the desk offers en-US plus the UI languages the vocabulary is tested against — never a
+  hardcoded list of 24. The default is the label language last used on the device, else the one
+  matching the UI language when offered, else en-US.
 - **FR-012**: Nutrition values MUST show the api's rounded figure and unit; each value's
   full-precision source figure and rounding rule MUST be reachable from it.
 - **FR-013**: Rendering gaps and notices MUST be listed with the preview; a region without a label
@@ -301,7 +315,8 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
   MUST refresh automatically on foreground and on reconnect.
 - **FR-021**: Products, grids and previews are online-only: offline they MUST show an offline state
   with retry, and MUST NOT be served from any saved copy.
-- **FR-022**: On sign-out, all saved labels and session data MUST be deleted from the device; when
+- **FR-022**: On sign-out, account erase, or sign-in by a different account (FR-001a), all saved
+  labels and session data MUST be deleted from the device; when
   the api reports loss of membership or bakery archival, that bakery's saved labels MUST be
   deleted. Saved labels MUST be excluded from OS-level cloud/device backups.
 
@@ -309,8 +324,9 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 
 - **FR-023**: Whether the bakery's plan includes the desk MUST come from the server's entitlement
   answer; the app MUST NOT decide it. A plan without the desk shows a plain, non-blurred
-  explanation with a decline path of equal weight; no purchase flow ships here. Behavior while the
-  api serves no entitlement answer: see Q2.
+  explanation with a decline path of equal weight; no purchase flow ships here. While the api
+  serves no entitlement answer, the states are built and **store release waits** (gate 1, Q2-A);
+  no ungated fallback is planned.
 
 **Navigation, language, accessibility**
 
@@ -376,11 +392,32 @@ Checked against `nutrimero-api` `origin/main` `4a4356b` (104 paths). This repo's
 | B5 | FR-010–014 | ✅ `/products/{id}/labels/{ruleSetId}?language=` | Always 200 for a held product; gaps not errors |
 | B6 | FR-015 | 🟡 `/products/{id}/labels/{ruleSetId}/issued` — per label type, unpaged, full payloads | A product's full history needs one read per label type; bounded by offered EU label types. Ask (non-blocking): per-product issued list or paging |
 | B7 | FR-016/017 | ✅ `/issued-labels/{issuedId}` with `differsFromCurrent` | Verdict only on the single read (019 R9) |
-| B8 | FR-023 | ❌ no entitlements service | Ask: per-company entitlement answer (IDEATION §7). See Q2 |
+| B8 | FR-023 | ❌ no entitlements service | Ask: per-company entitlement answer for Pro. The api service must model both scopes — per-user for Home (IDEATION §7), per-bakery for Pro (§5.3). Queued by the coordinator after api 020 P1 |
 | B9 | FR-022 | ✅ `INSUFFICIENT_ROLE` / 404 / `COMPANY_ARCHIVED` refusals | Drives cache deletion |
 | B10 | — | watch: api 020 (declaration name) in flight | May add the food name to renderings; the desk renders whatever sections arrive (FR-010) |
+| B11 | FR-011 | ❌ no list of label languages; `language` is a free string (2–35 chars, default en-US) | Ask: a listing of languages the label vocabulary holds. Until then FR-011's proven-only list |
+| B12 | FR-003 | ✅ (by absence) `declarationsEnabled` on the company schema only; no route gates on it | Pinned in the plan's contract check |
 
-## Clarifications — questions carried with defaults
+## Clarifications
+
+### Gate 1 rulings — coordinator, 2026-09-23
+
+- **Q1 → (A) approved.** 002 owns sign-in, sign-out and the bakery chooser/switcher as shared
+  session capability in `packages/core`, announced to the Home lane through the coordinator before
+  merge (III seam). Conditions: (1) the session layer honours Home's FR-011 wipe as a contract —
+  core wipes its own data and calls app-registered wipers (FR-001b); (2) a sign-in by a different
+  account performs the FR-022 wipe before anything is read (FR-001a); (3) the secure token store
+  is judged at plan time under XI honestly — a new dependency category stops for an ADR.
+- **Q2 → (A) approved as the build.** FR-023's states are built and render the server's answer;
+  store release waits until the api serves one. (B), an internal-track pilot, is the owner's
+  decision and is **not planned** until his word arrives. Entitlements must model per-user (Home)
+  and per-bakery (Pro) scopes; this spec's per-company answer is the correct Pro-side statement.
+- **Q3 → (A) approved** with a stated bound (FR-005). `q` on `/products` is queued on the api
+  (small change on 015; branded-products already has `q`). B6 is queued as non-blocking.
+- **Label languages**: no source exists for "24" — FR-011 rewritten to a proven-only list; ask B11.
+- **FR-003** pinned to the verified fact (B12).
+
+### Questions as carried to gate 1 (record)
 
 **Q1 — Does 002 own sign-in and the bakery chooser?**
 Default **(A) Yes, minimal**: email/password sign-in, sign-out, bakery chooser/switcher — built as
@@ -424,8 +461,7 @@ the api lane. Alternative: (B) no search until B2 ships (list only, sorted by na
 
 - Accounts, bakeries, products, assignments and issued labels are created on the web platform;
   the desk reads them. Pilot bakeries use the web for every write in this feature.
-- The EU label languages offered are those the api's label vocabulary covers (24); the language
-  list comes from reference data, not a hardcoded list.
+- The label-language list is proven-only (FR-011); its source is named in the plan.
 - Gap sentences are composed from catalog templates per gap kind with server-provided names
   (ingredient, recipe, nutrient) inserted — the app never invents gap content.
 - Food-symbol wording is not part of the rendering (019 FR-018/035); the desk shows localized
