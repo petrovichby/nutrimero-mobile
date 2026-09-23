@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #
-# contract-sync.sh — pull the latest openapi.json snapshot from the sibling
-# nutrimero-api checkout and regenerate the typed client from it.
+# contract-sync.sh — snapshot openapi.json from the sibling nutrimero-api
+# checkout's origin/main (via `git show`, never its working tree), record the api
+# commit in contract/SOURCE, and regenerate the typed client from it.
 #
 # Manual, on purpose (mirrors nutrimero-web's ADR-0002): a contract change is a
-# deliberate, reviewable diff — review contract/openapi.json and
+# deliberate, reviewable diff — review contract/openapi.json, contract/SOURCE and
 # packages/core/src/api/generated/schema.d.ts, then commit them together.
 # CI never runs this script; its "contract" job re-runs `pnpm contract:generate`
 # against the already-committed snapshot and fails on drift (Constitution II).
