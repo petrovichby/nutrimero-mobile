@@ -19,13 +19,17 @@ describe("resolveLocale", () => {
     expect(resolveLocale([])).toBe("en");
   });
 
-  it("renders English for be and uk until their faces are vendored (design G-2, phase 3c)", () => {
-    expect(resolveLocale(["be-BY", "de"])).toBe("en");
-    expect(resolveLocale(["uk-UA"])).toBe("en");
+  it("renders be and uk in their own locale (faces vendored, G-1/G-2)", () => {
+    expect(resolveLocale(["be-BY", "de"])).toBe("be");
+    expect(resolveLocale(["uk-UA"])).toBe("uk");
   });
 
-  it("renders be and uk once every locale is renderable", () => {
-    expect(resolveLocale(["be-BY"], LOCALES)).toBe("be");
-    expect(resolveLocale(["uk-UA"], LOCALES)).toBe("uk");
+  it("still falls back to English for a UI locale a caller has not made renderable", () => {
+    expect(
+      resolveLocale(
+        ["uk-UA"],
+        LOCALES.filter((locale) => locale !== "uk"),
+      ),
+    ).toBe("en");
   });
 });

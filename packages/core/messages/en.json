@@ -128,5 +128,10 @@
       "symbolsNote": "Food symbols are shown by name here; they are not part of the label text",
       "noEngine": "There is no label engine for this region yet, so no label text can be shown"
     }
+  },
+  "provenance": {
+    "stamp": {
+      "aiIllustration": "AI illustration"
+    }
   }
 }

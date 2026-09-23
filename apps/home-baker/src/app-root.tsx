@@ -1,5 +1,7 @@
 import { createTranslator, pluralRuleMismatches, resolveLocale } from "@nutrimero/core";
-import { tokens } from "@nutrimero/ui";
+import { tokens, uiFace } from "@nutrimero/ui";
+import { fontAssets } from "@nutrimero/ui/native";
+import { useFonts } from "expo-font";
 import { getLocales } from "expo-localization";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -8,7 +10,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { ready } from "./boot";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
-// settled and the root view has laid out. Font loading joins `ready` in phase 3c.
+// settled, the bundled faces are loaded, and the root view has laid out — so no text ever paints
+// in a platform font (DESIGN.md: no platform-default fallbacks).
 SplashScreen.preventAutoHideAsync();
 // DESIGN.md motion rules: 150–250 ms; a fade is not a movement, so it is acceptable
 // under reduced motion — no extra handling needed.
@@ -25,10 +28,14 @@ if (__DEV__) {
 
 // Bootstrap placeholder — replaced by 001's first-run screens (phase 5). The locale is read
 // once at launch; reacting to a system-language change while running is phase 5's to decide.
-const t = createTranslator(resolveLocale(getLocales().map((locale) => locale.languageTag)));
+const locale = resolveLocale(getLocales().map((tag) => tag.languageTag));
+const t = createTranslator(locale);
 
 export function AppRoot() {
   const [booted, setBooted] = useState(false);
+  // A font that fails to load must not strand the user on the splash; text then falls back,
+  // which the dev build makes visible rather than hiding.
+  const [fontsLoaded, fontError] = useFonts(fontAssets);
 
   useEffect(() => {
     // A store failure must not strand the user on the splash: reads fall back to their defaults,
@@ -36,16 +43,18 @@ export function AppRoot() {
     ready.catch(() => undefined).finally(() => setBooted(true));
   }, []);
 
-  if (!booted) {
+  if (!booted || (!fontsLoaded && !fontError)) {
     return null;
   }
 
   return (
     <View onLayout={() => SplashScreen.hideAsync()} style={styles.container}>
-      <Text accessibilityRole="header" style={styles.name}>
+      <Text accessibilityRole="header" style={[styles.name, { fontFamily: uiFace(locale, "700") }]}>
         {t("app.homeBaker.name")}
       </Text>
-      <Text style={styles.tagline}>{t("app.homeBaker.tagline")}</Text>
+      <Text style={[styles.tagline, { fontFamily: uiFace(locale) }]}>
+        {t("app.homeBaker.tagline")}
+      </Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
     color: tokens.color.primary,
     fontSize: tokens.type.headlineLg.fontSize,
     lineHeight: tokens.type.headlineLg.lineHeight,
-    fontWeight: tokens.type.headlineLg.fontWeight,
+    // No fontWeight: the registered face (uiFace(locale, "700")) is the weight.
   },
   tagline: {
     color: tokens.color.onSurface,
