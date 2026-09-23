@@ -143,6 +143,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Change your own colour-scheme and language preferences */
+        patch: operations["MeController_updatePreferences"];
+        trace?: never;
+    };
     "/api/v1/me/deactivate": {
         parameters: {
             query?: never;
@@ -589,6 +606,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/fid/declaration-rule-sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Declaration rule-sets: the platform vocabulary, the same for every company */
+        get: operations["FidController_declarationRuleSets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fid/declaration-rule-sets/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One declaration rule-set */
+        get: operations["FidController_declarationRuleSet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/fid/food-types": {
         parameters: {
             query?: never;
@@ -596,7 +647,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Food types — keyed by id, because names repeat */
+        /** Food types — keyed by id, because codes repeat */
         get: operations["FidController_foodTypes"];
         put?: never;
         post?: never;
@@ -963,6 +1014,788 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/branded-products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Branded products, shared across every company */
+        get: operations["BrandedProductsController_list"];
+        put?: never;
+        /** Contribute a branded product to the shared layer */
+        post: operations["BrandedProductsController_contribute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/branded-products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One branded product, with provenance on every value */
+        get: operations["BrandedProductsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/vendors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** This company's vendors — and only this company's */
+        get: operations["VendorsController_list"];
+        put?: never;
+        /** Add a place this company buys from */
+        post: operations["VendorsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/vendors/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Correct a vendor’s name */
+        patch: operations["VendorsController_rename"];
+        trace?: never;
+    };
+    "/api/v1/vendors/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retire a vendor this company no longer buys from */
+        post: operations["VendorsController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/prices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What this item costs, at every vendor it is bought from */
+        get: operations["PricesController_list"];
+        put?: never;
+        /** Record what this item costs at a vendor */
+        post: operations["PricesController_record"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/prices/{priceId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop buying this item at this vendor */
+        post: operations["PricesController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** This company's purchased items — and only this company's */
+        get: operations["PurchasedItemsController_list"];
+        put?: never;
+        /**
+         * Record something this company buys
+         * @description A `brandedProductId` may name an `active` or a `pending` branded product. One that is `superseded` or `withdrawn` is refused with `VALIDATION_FAILED`, carrying an issue at `brandedProductId` coded `SUPERSEDED` or `WITHDRAWN` (011 FR-009a). The refusal is at create only: an item whose record was retired after it was linked keeps that link and states it.
+         */
+        post: operations["PurchasedItemsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One purchased item, with its link resolved */
+        get: operations["PurchasedItemsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Change this company's own fields on a purchased item */
+        patch: operations["PurchasedItemsController_patch"];
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/adopt-successor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Move this item to the corrected version of its shared record */
+        post: operations["PurchasedItemsController_adoptSuccessor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/overrides": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record this company's value for one delivered field */
+        post: operations["PurchasedItemsController_setOverride"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/company-values": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record this company's own value where its link delivers none */
+        post: operations["PurchasedItemsController_recordCompanyValue"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/overrides/{overrideId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw this company's value, keeping the record of it */
+        post: operations["PurchasedItemsController_withdrawOverride"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive a purchased item, keeping it resolvable */
+        post: operations["PurchasedItemsController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/composition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What this article is made of: M60b's text or breakdown, as recorded */
+        get: operations["CompositionController_read"];
+        put?: never;
+        /** Record this article's composition, as text or as a breakdown */
+        post: operations["CompositionController_record"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/purchased-items/{id}/composition/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw this company's composition record, keeping the record of it */
+        post: operations["CompositionController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** This company's recipes — and only this company's */
+        get: operations["RecipesController_list"];
+        put?: never;
+        /** Compose a recipe */
+        post: operations["RecipesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One recipe, with what goes in */
+        get: operations["RecipesController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Correct a recipe's own fields */
+        patch: operations["RecipesController_patch"];
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every version of this recipe, oldest first */
+        get: operations["RecipesController_lineage"];
+        put?: never;
+        /** Create the next version, copying what this one holds */
+        post: operations["RecipesController_createVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retire a recipe, keeping it resolvable */
+        post: operations["RecipesController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/components": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add something a recipe is made of */
+        post: operations["RecipeComponentsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/components/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Put a recipe's components in a new order, as one act */
+        post: operations["RecipeComponentsController_reorder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/components/{componentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Correct a component's quantity, unit or place */
+        patch: operations["RecipeComponentsController_patch"];
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/components/{componentId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Take a component out, keeping it resolvable */
+        post: operations["RecipeComponentsController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/steps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a step — an action, what it takes, and what it consumes */
+        post: operations["RecipeStepsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/steps/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Put a recipe's steps in a new order, as one act */
+        post: operations["RecipeStepsController_reorder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/steps/{stepId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Correct a step, or move it in the order */
+        patch: operations["RecipeStepsController_patch"];
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/steps/{stepId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Take a step out, keeping it resolvable */
+        post: operations["RecipeStepsController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipe-actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every action a recipe step can name, with its parameters */
+        get: operations["RecipeActionsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/allergens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A recipe's 66 allergen subjects and four dietary states, with what is missing */
+        get: operations["CalculationsController_allergens"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/nutrition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A recipe's nutrition per 100 g and per portion, with what is missing */
+        get: operations["CalculationsController_nutrition"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** This company's products — and only this company's */
+        get: operations["ProductsController_list"];
+        put?: never;
+        /** List a product this company sells */
+        post: operations["ProductsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One product, and what it is made of */
+        get: operations["ProductsController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Correct a product's listing */
+        patch: operations["ProductsController_patch"];
+        trace?: never;
+    };
+    "/api/v1/products/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retire a product this company no longer sells */
+        post: operations["ProductsController_archive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/compositions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What a product has been made of, and what it will be */
+        get: operations["ProductsController_history"];
+        put?: never;
+        /** Record what a product is made of, now or from a date */
+        post: operations["ProductsController_record"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/declarations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What a product must declare, and whether it can */
+        get: operations["DeclarationsController_grid"];
+        put?: never;
+        /** Declare a product for a platform rule-set */
+        post: operations["DeclarationsController_assign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/declarations/{ruleSetId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw a product from a rule-set */
+        post: operations["DeclarationsController_unassign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/declarations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** This company's declared products, and what each is missing */
+        get: operations["DeclarationsController_overview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/ingredient-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A product's ingredient list, and what keeps it from being declarable */
+        get: operations["IngredientListController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/ingredient-list/choices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a choice about a line of a product's ingredient list */
+        post: operations["IngredientListController_record"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/ingredient-list/choices/{choiceId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw a choice from a product’s ingredient list */
+        post: operations["IngredientListController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/labels/{ruleSetId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A product's label text for one rule-set, in one language */
+        get: operations["LabelTextController_label"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/labels/{ruleSetId}/issued": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A product's issued labels for one rule-set */
+        get: operations["IssuedLabelsController_list"];
+        put?: never;
+        /** Issue a product's label for a rule-set and language */
+        post: operations["IssuedLabelsController_issue"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/issued-labels/{issuedId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One issued label, with whether it still matches the current recipe */
+        get: operations["IssuedLabelsController_read"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/issued-labels/{issuedId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw an issued label */
+        post: operations["IssuedLabelsController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -976,7 +1809,7 @@ export interface components {
         ErrorResponse: {
             error: {
                 /** @enum {string} */
-                code: "AUTHENTICATION_FAILED" | "TOKEN_INVALID" | "REFRESH_TOKEN_INVALID" | "EMAIL_ALREADY_REGISTERED" | "PASSWORD_TOO_WEAK" | "RESET_TOKEN_INVALID" | "ACCOUNT_ERASED" | "COMPANY_CONTEXT_REQUIRED" | "MEMBERSHIP_REQUIRED" | "INSUFFICIENT_ROLE" | "NOT_FOUND" | "COMPANY_ARCHIVED" | "LAST_ADMIN" | "ALREADY_MEMBER" | "INVITATION_INVALID" | "JOIN_CODE_INVALID" | "MEMBERSHIP_NOT_ACTIVE" | "REQUEST_NOT_PENDING" | "VALIDATION_FAILED" | "RATE_LIMITED" | "INTERNAL_ERROR";
+                code: "AUTHENTICATION_FAILED" | "TOKEN_INVALID" | "REFRESH_TOKEN_INVALID" | "EMAIL_ALREADY_REGISTERED" | "PASSWORD_TOO_WEAK" | "RESET_TOKEN_INVALID" | "ACCOUNT_ERASED" | "COMPANY_CONTEXT_REQUIRED" | "MEMBERSHIP_REQUIRED" | "INSUFFICIENT_ROLE" | "NOT_FOUND" | "COMPANY_ARCHIVED" | "LAST_ADMIN" | "ALREADY_MEMBER" | "INVITATION_INVALID" | "JOIN_CODE_INVALID" | "MEMBERSHIP_NOT_ACTIVE" | "REQUEST_NOT_PENDING" | "BARCODE_ALREADY_REGISTERED" | "PURCHASED_ITEM_BARCODE_TAKEN" | "UNIT_NOT_PACKAGEABLE" | "WEIGHT_PER_PACKAGE_REQUIRED" | "VALUE_NOT_OVERRIDABLE" | "OVERRIDE_NOT_ACTIVE" | "NO_SUCCESSOR" | "SUCCESSOR_CHANGED" | "VENDOR_NAME_TAKEN" | "PRICE_NOT_ACTIVE" | "PRICE_CHANGED" | "COMPONENT_TARGET_INVALID" | "RECIPE_NESTING_REFUSED" | "RECIPE_ACTION_UNKNOWN" | "RECIPE_CODE_TAKEN" | "PRODUCT_NUMBER_TAKEN" | "DECLARATION_INCOMPLETE" | "VALIDATION_FAILED" | "RATE_LIMITED" | "INTERNAL_ERROR";
                 details: {
                     [key: string]: unknown;
                 };
@@ -1064,6 +1897,11 @@ export interface operations {
                             displayName: string | null;
                             /** @enum {string} */
                             status: "active" | "deactivated" | "erased";
+                            preferences: {
+                                /** @enum {string} */
+                                colorScheme: "light" | "dark" | "system";
+                                language: string | null;
+                            };
                         };
                         company: {
                             /** Format: uuid */
@@ -1076,6 +1914,11 @@ export interface operations {
                             expiresIn: number;
                             /** @constant */
                             tokenType: "Bearer";
+                            preferences: {
+                                /** @enum {string} */
+                                colorScheme: "light" | "dark" | "system";
+                                language: string | null;
+                            };
                         };
                     };
                 };
@@ -1183,6 +2026,11 @@ export interface operations {
                         expiresIn: number;
                         /** @constant */
                         tokenType: "Bearer";
+                        preferences: {
+                            /** @enum {string} */
+                            colorScheme: "light" | "dark" | "system";
+                            language: string | null;
+                        };
                     };
                 };
             };
@@ -1277,6 +2125,11 @@ export interface operations {
                         expiresIn: number;
                         /** @constant */
                         tokenType: "Bearer";
+                        preferences: {
+                            /** @enum {string} */
+                            colorScheme: "light" | "dark" | "system";
+                            language: string | null;
+                        };
                     };
                 };
             };
@@ -1561,6 +2414,11 @@ export interface operations {
                             displayName: string | null;
                             /** @enum {string} */
                             status: "active" | "deactivated" | "erased";
+                            preferences: {
+                                /** @enum {string} */
+                                colorScheme: "light" | "dark" | "system";
+                                language: string | null;
+                            };
                         };
                         memberships: {
                             /** Format: uuid */
@@ -1586,6 +2444,86 @@ export interface operations {
                             /** @constant */
                             code: "TOKEN_INVALID";
                             details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    MeController_updatePreferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    colorScheme?: "light" | "dark" | "system";
+                    language?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        preferences: {
+                            /** @enum {string} */
+                            colorScheme: "light" | "dark" | "system";
+                            language: string | null;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
                         };
                     };
                 };
@@ -3945,6 +4883,11 @@ export interface operations {
                             displayName: string | null;
                             /** @enum {string} */
                             status: "active" | "deactivated" | "erased";
+                            preferences: {
+                                /** @enum {string} */
+                                colorScheme: "light" | "dark" | "system";
+                                language: string | null;
+                            };
                         };
                         membership: {
                             /** Format: uuid */
@@ -3963,6 +4906,11 @@ export interface operations {
                             expiresIn: number;
                             /** @constant */
                             tokenType: "Bearer";
+                            preferences: {
+                                /** @enum {string} */
+                                colorScheme: "light" | "dark" | "system";
+                                language: string | null;
+                            };
                         };
                     };
                 };
@@ -4764,6 +5712,7 @@ export interface operations {
                         items: {
                             id: number;
                             name: string | null;
+                            polarity: ("virtue" | "presence") | null;
                         }[];
                         total: number;
                         limit: number;
@@ -4841,6 +5790,206 @@ export interface operations {
                     "application/json": {
                         id: number;
                         name: string | null;
+                        polarity: ("virtue" | "presence") | null;
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FidController_declarationRuleSets: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                language?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            id: string;
+                            name: string | null;
+                            /** @enum {string} */
+                            region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                            categories: ("allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols")[];
+                            nutrientIds: number[];
+                            symbolIds: number[];
+                            /** @enum {string} */
+                            availability: "offered" | "background";
+                            /** @enum {string} */
+                            status: "active" | "retired";
+                            provenance: {
+                                source: string;
+                                /** @enum {string} */
+                                method: "DELIVERED" | "DERIVED";
+                                /** @enum {string} */
+                                confidence: "HIGH" | "MEDIUM" | "LOW";
+                                comment: string | null;
+                            };
+                        }[];
+                        total: number;
+                        limit: number;
+                        offset: number;
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    FidController_declarationRuleSet: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        name: string | null;
+                        /** @enum {string} */
+                        region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                        categories: ("allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols")[];
+                        nutrientIds: number[];
+                        symbolIds: number[];
+                        /** @enum {string} */
+                        availability: "offered" | "background";
+                        /** @enum {string} */
+                        status: "active" | "retired";
+                        provenance: {
+                            source: string;
+                            /** @enum {string} */
+                            method: "DELIVERED" | "DERIVED";
+                            /** @enum {string} */
+                            confidence: "HIGH" | "MEDIUM" | "LOW";
+                            comment: string | null;
+                        };
                     };
                 };
             };
@@ -4929,6 +6078,7 @@ export interface operations {
                         items: {
                             id: number;
                             code: string;
+                            name: string | null;
                         }[];
                         total: number;
                         limit: number;
@@ -4987,7 +6137,9 @@ export interface operations {
     };
     FidController_foodType: {
         parameters: {
-            query?: never;
+            query?: {
+                language?: string;
+            };
             header?: never;
             path: {
                 id: string;
@@ -5002,13 +6154,9 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        items: {
-                            id: number;
-                            code: string;
-                        }[];
-                        total: number;
-                        limit: number;
-                        offset: number;
+                        id: number;
+                        code: string;
+                        name: string | null;
                     };
                 };
             };
@@ -5040,6 +6188,25 @@ export interface operations {
                     };
                 };
             };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
             500: {
                 headers: {
                     [name: string]: unknown;
@@ -5061,7 +6228,6 @@ export interface operations {
             query?: {
                 limit?: number;
                 offset?: number;
-                language?: string;
             };
             header?: never;
             path?: never;
@@ -5151,13 +6317,8 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        items: {
-                            id: number;
-                            code: string;
-                        }[];
-                        total: number;
-                        limit: number;
-                        offset: number;
+                        id: number;
+                        code: string;
                     };
                 };
             };
@@ -5383,7 +6544,6 @@ export interface operations {
             query?: {
                 limit?: number;
                 offset?: number;
-                language?: string;
             };
             header?: never;
             path?: never;
@@ -5474,14 +6634,9 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        items: {
-                            id: number;
-                            locale: string;
-                            fallbackLocale: string | null;
-                        }[];
-                        total: number;
-                        limit: number;
-                        offset: number;
+                        id: number;
+                        locale: string;
+                        fallbackLocale: string | null;
                     };
                 };
             };
@@ -6601,7 +7756,15 @@ export interface operations {
             query?: {
                 limit?: number;
                 offset?: number;
-                language?: string;
+                q?: string;
+                foodTypeId?: number[];
+                ingredientClass?: ("natural_raw_material" | "branded_product")[];
+                vegan?: ("yes" | "no" | "unknown" | "depends_on_brand")[];
+                vegetarian?: ("yes" | "no" | "unknown" | "depends_on_brand")[];
+                lactoseFree?: ("yes" | "no" | "unknown" | "depends_on_brand")[];
+                glutenFree?: ("yes" | "no" | "unknown" | "depends_on_brand")[];
+                sort?: "name" | "fidId";
+                order?: "asc" | "desc";
             };
             header?: never;
             path?: never;
@@ -6632,10 +7795,33 @@ export interface operations {
                                 /** @enum {string} */
                                 glutenFree: "yes" | "no" | "unknown" | "depends_on_brand";
                             };
+                            physicalDataReviewStatus: ("AUTO" | "REVIEWED") | null;
+                            physicalDataConfidence: ("HIGH" | "MEDIUM" | "LOW") | null;
                         }[];
                         total: number;
                         limit: number;
                         offset: number;
+                        didYouMean: {
+                            fidId: string;
+                            name: string;
+                            matchedName: string;
+                            matchedFidId: string;
+                            /** @enum {string} */
+                            relationship: "DUPLICATE_OF" | "NORMALIZED_TO" | "FORM_OR_STATE_VARIANT_OF" | "MOVED_TO_BRANDED_PRODUCT" | "RELATED_TO";
+                            reasonCode: string | null;
+                        }[] | null;
+                        movedTo: {
+                            matchedFidId: string;
+                            matchedName: string;
+                            reasonCode: string | null;
+                            /** @enum {string} */
+                            relationship: "DUPLICATE_OF" | "NORMALIZED_TO" | "FORM_OR_STATE_VARIANT_OF" | "MOVED_TO_BRANDED_PRODUCT" | "RELATED_TO";
+                            brandedProduct: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                            };
+                        }[] | null;
                     };
                 };
             };
@@ -6723,6 +7909,8 @@ export interface operations {
                             /** @enum {string} */
                             glutenFree: "yes" | "no" | "unknown" | "depends_on_brand";
                         };
+                        physicalDataReviewStatus: ("AUTO" | "REVIEWED") | null;
+                        physicalDataConfidence: ("HIGH" | "MEDIUM" | "LOW") | null;
                         latinName: string | null;
                         latinAdditional: string | null;
                         referenceUrl: string | null;
@@ -6736,9 +7924,18 @@ export interface operations {
                             name: string | null;
                             /** @enum {string} */
                             state: "yes" | "no" | "unknown" | "depends_on_brand";
+                            regions: {
+                                eu: string | null;
+                                usa: string | null;
+                                canada: string | null;
+                                japan: string | null;
+                                southKorea: string | null;
+                                auNz: string | null;
+                            };
                         }[];
                         nutrition: {
                             known: boolean;
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
                             values: {
                                 nutrientId: number;
                                 name: string | null;
@@ -6758,6 +7955,13 @@ export interface operations {
                             reasonCode: string | null;
                             comment: string | null;
                             canonicalFidId: string | null;
+                            canonicalName: string | null;
+                            relationship: ("DUPLICATE_OF" | "NORMALIZED_TO" | "FORM_OR_STATE_VARIANT_OF" | "MOVED_TO_BRANDED_PRODUCT" | "RELATED_TO") | null;
+                            brandedProduct: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                            } | null;
                         } | null;
                         physicalForms: {
                             status: ("MAPPED" | "NOT_REQUIRED" | "NOT_APPLICABLE") | null;
@@ -6765,7 +7969,10 @@ export interface operations {
                                 id: string;
                                 code: string;
                                 family: string;
+                                name: string | null;
                                 relevance: string;
+                                /** @enum {string} */
+                                relevanceClass: "DEFAULT" | "COMMON" | "POSSIBLE" | "INHERENT" | "OTHER";
                                 isDefault: boolean;
                                 isCommon: boolean;
                                 volumeProfileRelevant: boolean;
@@ -6776,7 +7983,10 @@ export interface operations {
                             items: {
                                 id: string;
                                 code: string;
+                                name: string | null;
                                 relevance: string;
+                                /** @enum {string} */
+                                relevanceClass: "DEFAULT" | "COMMON" | "POSSIBLE" | "INHERENT" | "OTHER";
                                 isInherent: boolean;
                                 stateGroup: string;
                                 exclusiveWithinGroup: boolean;
@@ -6793,7 +8003,7 @@ export interface operations {
                                 densityGPerMl: string;
                                 source: string;
                                 /** @enum {string} */
-                                method: "MEASURED" | "CALCULATED" | "LITERATURE";
+                                method: "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
                                 /** @enum {string} */
                                 confidence: "HIGH" | "MEDIUM" | "LOW";
                             }[];
@@ -6802,12 +8012,23 @@ export interface operations {
                                 physicalFormId: string;
                                 preparationStateId: string;
                                 pieceSizeClassId: string;
+                                pieceSizeClassName: string | null;
                                 massGMean: string;
                                 massGMin: string | null;
                                 massGMax: string | null;
                                 source: string;
                                 /** @enum {string} */
-                                method: "MEASURED" | "CALCULATED" | "LITERATURE";
+                                method: "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
+                                /** @enum {string} */
+                                confidence: "HIGH" | "MEDIUM" | "LOW";
+                            }[];
+                            waterContent: {
+                                id: string;
+                                preparationStateId: string;
+                                waterGPer100g: string;
+                                source: string;
+                                /** @enum {string} */
+                                method: "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
                                 /** @enum {string} */
                                 confidence: "HIGH" | "MEDIUM" | "LOW";
                             }[];
@@ -6863,6 +8084,13548 @@ export interface operations {
                                     code: string;
                                 }[];
                             };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BrandedProductsController_list: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                q?: string;
+                barcode?: string;
+                producer?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            producer: string | null;
+                            barcode: string | null;
+                            barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            originFidId: string | null;
+                            /** @enum {string} */
+                            status: "pending" | "active" | "superseded" | "withdrawn";
+                        }[];
+                        total: number;
+                        limit: number;
+                        offset: number;
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BrandedProductsController_contribute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    producer?: string | null;
+                    barcode?: string | null;
+                    barcodeSymbology?: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                    source?: string | null;
+                    names?: {
+                        languageId: number;
+                        name: string;
+                    }[];
+                    allergens?: {
+                        allergenId: number;
+                        /** @enum {string} */
+                        state: "yes" | "no" | "unknown";
+                        /** @default null */
+                        source?: string | null;
+                        /** @default null */
+                        method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                        /** @default null */
+                        confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                        /** @default null */
+                        comment?: string | null;
+                    }[];
+                    nutrition?: {
+                        nutrientId: number;
+                        amount: string;
+                        /** @enum {string} */
+                        basis: "per_100g" | "per_100ml";
+                        /** @default null */
+                        source?: string | null;
+                        /** @default null */
+                        method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                        /** @default null */
+                        confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                        /** @default null */
+                        comment?: string | null;
+                    }[];
+                    composition?: {
+                        /** @constant */
+                        state: "text";
+                        /** @description The sub-ingredients as the pack prints them; carried, never computed from */
+                        text: string;
+                        locale: string;
+                        provenance?: {
+                            source?: string;
+                            /** @enum {string} */
+                            method?: "DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
+                            /** @enum {string} */
+                            confidence?: "HIGH" | "MEDIUM" | "LOW";
+                            comment?: string;
+                        };
+                    } | {
+                        /** @constant */
+                        state: "breakdown";
+                        components: {
+                            wording: string;
+                            fidId?: string | null;
+                            /** @description An exact percentage of the whole article, as a decimal string */
+                            percentage: string;
+                            origins?: {
+                                oil?: string[];
+                                meat?: {
+                                    origin?: string[];
+                                    born?: string[];
+                                    reared?: string[];
+                                    slaughtered?: string[];
+                                };
+                            };
+                            children?: {
+                                wording: string;
+                                fidId?: string | null;
+                                /** @description An exact percentage of the whole article, as a decimal string */
+                                percentage: string;
+                                origins?: {
+                                    oil?: string[];
+                                    meat?: {
+                                        origin?: string[];
+                                        born?: string[];
+                                        reared?: string[];
+                                        slaughtered?: string[];
+                                    };
+                                };
+                                children?: {
+                                    wording: string;
+                                    fidId?: string | null;
+                                    /** @description An exact percentage of the whole article, as a decimal string */
+                                    percentage: string;
+                                    origins?: {
+                                        oil?: string[];
+                                        meat?: {
+                                            origin?: string[];
+                                            born?: string[];
+                                            reared?: string[];
+                                            slaughtered?: string[];
+                                        };
+                                    };
+                                    children?: {
+                                        wording: string;
+                                        fidId?: string | null;
+                                        /** @description An exact percentage of the whole article, as a decimal string */
+                                        percentage: string;
+                                        origins?: {
+                                            oil?: string[];
+                                            meat?: {
+                                                origin?: string[];
+                                                born?: string[];
+                                                reared?: string[];
+                                                slaughtered?: string[];
+                                            };
+                                        };
+                                        children?: {
+                                            wording: string;
+                                            fidId?: string | null;
+                                            /** @description An exact percentage of the whole article, as a decimal string */
+                                            percentage: string;
+                                            origins?: {
+                                                oil?: string[];
+                                                meat?: {
+                                                    origin?: string[];
+                                                    born?: string[];
+                                                    reared?: string[];
+                                                    slaughtered?: string[];
+                                                };
+                                            };
+                                            children?: {
+                                                wording: string;
+                                                fidId?: string | null;
+                                                /** @description An exact percentage of the whole article, as a decimal string */
+                                                percentage: string;
+                                                origins?: {
+                                                    oil?: string[];
+                                                    meat?: {
+                                                        origin?: string[];
+                                                        born?: string[];
+                                                        reared?: string[];
+                                                        slaughtered?: string[];
+                                                    };
+                                                };
+                                                children?: {
+                                                    wording: string;
+                                                    fidId?: string | null;
+                                                    /** @description An exact percentage of the whole article, as a decimal string */
+                                                    percentage: string;
+                                                    origins?: {
+                                                        oil?: string[];
+                                                        meat?: {
+                                                            origin?: string[];
+                                                            born?: string[];
+                                                            reared?: string[];
+                                                            slaughtered?: string[];
+                                                        };
+                                                    };
+                                                    children?: {
+                                                        wording: string;
+                                                        fidId?: string | null;
+                                                        /** @description An exact percentage of the whole article, as a decimal string */
+                                                        percentage: string;
+                                                        origins?: {
+                                                            oil?: string[];
+                                                            meat?: {
+                                                                origin?: string[];
+                                                                born?: string[];
+                                                                reared?: string[];
+                                                                slaughtered?: string[];
+                                                            };
+                                                        };
+                                                    }[];
+                                                }[];
+                                            }[];
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                        provenance?: {
+                            source?: string;
+                            /** @enum {string} */
+                            method?: "DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
+                            /** @enum {string} */
+                            confidence?: "HIGH" | "MEDIUM" | "LOW";
+                            comment?: string;
+                        };
+                    };
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        originFidId: string | null;
+                        /** @enum {string} */
+                        status: "pending" | "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        contributedBy: string | null;
+                        contributedAt: string;
+                        source: string | null;
+                        names: {
+                            languageId: number;
+                            name: string;
+                        }[];
+                        allergens: {
+                            source: string | null;
+                            method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                            confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                            comment: string | null;
+                            allergenId: number;
+                            /** @enum {string} */
+                            state: "yes" | "no" | "unknown" | "depends_on_brand";
+                        }[];
+                        /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                        nutrition: {
+                            source: string | null;
+                            method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                            confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                            comment: string | null;
+                            nutrientId: number;
+                            amount: string;
+                            /** @enum {string} */
+                            basis: "per_100g" | "per_100ml";
+                        }[];
+                        composition: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                        }) | null;
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "BARCODE_ALREADY_REGISTERED";
+                            details: {
+                                /** Format: uuid */
+                                brandedProductId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    BrandedProductsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        originFidId: string | null;
+                        /** @enum {string} */
+                        status: "pending" | "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        contributedBy: string | null;
+                        contributedAt: string;
+                        source: string | null;
+                        names: {
+                            languageId: number;
+                            name: string;
+                        }[];
+                        allergens: {
+                            source: string | null;
+                            method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                            confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                            comment: string | null;
+                            allergenId: number;
+                            /** @enum {string} */
+                            state: "yes" | "no" | "unknown" | "depends_on_brand";
+                        }[];
+                        /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                        nutrition: {
+                            source: string | null;
+                            method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                            confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                            comment: string | null;
+                            nutrientId: number;
+                            amount: string;
+                            /** @enum {string} */
+                            basis: "per_100g" | "per_100ml";
+                        }[];
+                        composition: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                        }) | null;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    VendorsController_list: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        vendors: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            /** @enum {string} */
+                            status: "active" | "archived";
+                            createdAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    VendorsController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        createdAt: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VENDOR_NAME_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                vendorId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    VendorsController_rename: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        createdAt: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VENDOR_NAME_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                vendorId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    VendorsController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        createdAt: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PricesController_list: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        prices: {
+                            /** Format: uuid */
+                            id: string;
+                            vendor: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                            vendorArticleNumber: string | null;
+                            amount: string;
+                            currency: string;
+                            basisQuantity: string;
+                            basisUnitId: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "withdrawn";
+                            supersedesId: string | null;
+                            recordedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PricesController_record: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    vendorId: string;
+                    amount: string;
+                    currency: string;
+                    vendorArticleNumber?: string | null;
+                    /** @default 1 */
+                    basisQuantity?: string;
+                    basisUnitId?: string | null;
+                    supersedesId?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        vendor: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            /** @enum {string} */
+                            status: "active" | "archived";
+                        };
+                        vendorArticleNumber: string | null;
+                        amount: string;
+                        currency: string;
+                        basisQuantity: string;
+                        basisUnitId: string | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        recordedAt: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PRICE_CHANGED";
+                            details: {
+                                /** Format: uuid */
+                                vendorId: string;
+                                expectedSupersedesId: string | null;
+                                currentSupersedesId: string | null;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PricesController_withdraw: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                priceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        vendor: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            /** @enum {string} */
+                            status: "active" | "archived";
+                        };
+                        vendorArticleNumber: string | null;
+                        amount: string;
+                        currency: string;
+                        basisQuantity: string;
+                        basisUnitId: string | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        recordedAt: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PRICE_NOT_ACTIVE";
+                            details: {
+                                /** Format: uuid */
+                                priceId: string;
+                                status: string;
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_list: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                q?: string;
+                barcode?: string;
+                linked?: "branded" | "fid" | "none";
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            producer: string | null;
+                            resolvedProducer: string | null;
+                            /** @enum {string} */
+                            status: "active" | "archived";
+                            barcode: string | null;
+                            barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            tags: string[];
+                            link: {
+                                /** @enum {string} */
+                                kind: "branded_product" | "fid_ingredient";
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                            } | null;
+                        }[];
+                        total: number;
+                        limit: number;
+                        offset: number;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    brandedProductId?: string | null;
+                    fidId?: string | null;
+                    producer?: string | null;
+                    barcode?: string | null;
+                    barcodeSymbology?: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                    tags?: string[];
+                    packageUnitId?: string | null;
+                    packageQuantity?: string | null;
+                    contentUnitId?: string | null;
+                    contentAmount?: string | null;
+                    weightPerPackage?: string | null;
+                    specificWeight?: string | null;
+                    drainedWeight?: string | null;
+                    sourceKind?: string | null;
+                    sourceName?: string | null;
+                    sourceRecordId?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PURCHASED_ITEM_BARCODE_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "UNIT_NOT_PACKAGEABLE";
+                            details: {
+                                unitId: string | null;
+                                unitType: string;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "WEIGHT_PER_PACKAGE_REQUIRED";
+                            details: {
+                                unitId: string | null;
+                                unitType: string;
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_get: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_patch: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    producer?: string | null;
+                    barcode?: string | null;
+                    barcodeSymbology?: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                    tags?: string[];
+                    packageUnitId?: string | null;
+                    packageQuantity?: string | null;
+                    contentUnitId?: string | null;
+                    contentAmount?: string | null;
+                    weightPerPackage?: string | null;
+                    specificWeight?: string | null;
+                    drainedWeight?: string | null;
+                    sourceKind?: string | null;
+                    sourceName?: string | null;
+                    sourceRecordId?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PURCHASED_ITEM_BARCODE_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "UNIT_NOT_PACKAGEABLE";
+                            details: {
+                                unitId: string | null;
+                                unitType: string;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "WEIGHT_PER_PACKAGE_REQUIRED";
+                            details: {
+                                unitId: string | null;
+                                unitType: string;
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_adoptSuccessor: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    successorId?: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NO_SUCCESSOR";
+                            details: {
+                                brandedProductId: string | null;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "SUCCESSOR_CHANGED";
+                            details: {
+                                /** Format: uuid */
+                                brandedProductId: string;
+                                /** Format: uuid */
+                                expectedSuccessorId: string;
+                                /** Format: uuid */
+                                currentSuccessorId: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_setOverride: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    family: "name";
+                    value: string;
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "producer";
+                    value: string;
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "barcode";
+                    value: string;
+                    /** @enum {string} */
+                    symbology: "EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14";
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "localized_name";
+                    memberKey: number;
+                    value: string;
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "allergen";
+                    memberKey: number;
+                    /** @enum {string} */
+                    state: "yes" | "no" | "unknown";
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "nutrient";
+                    memberKey: number;
+                    amount: string;
+                    /** @enum {string} */
+                    basis: "per_100g" | "per_100ml";
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALUE_NOT_OVERRIDABLE";
+                            details: {
+                                family: string;
+                                memberKey: number | null;
+                                /** @enum {string} */
+                                reason: "MEMBER_UNKNOWN" | "NOT_DELIVERED";
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_recordCompanyValue: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    family: "localized_name";
+                    memberKey: number;
+                    value: string;
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "allergen";
+                    memberKey: number;
+                    /** @enum {string} */
+                    state: "yes" | "no" | "unknown";
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                } | {
+                    /** @constant */
+                    family: "nutrient";
+                    memberKey: number;
+                    amount: string;
+                    /** @enum {string} */
+                    basis: "per_100g" | "per_100ml";
+                    source?: string | null;
+                    method?: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                    confidence?: ("HIGH" | "MEDIUM" | "LOW") | null;
+                    comment?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_withdrawOverride: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                overrideId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "OVERRIDE_NOT_ACTIVE";
+                            details: {
+                                /** Format: uuid */
+                                overrideId: string;
+                                status: string;
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    PurchasedItemsController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        producer: string | null;
+                        resolvedProducer: string | null;
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        barcode: string | null;
+                        barcodeSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                        tags: string[];
+                        link: {
+                            /** @enum {string} */
+                            kind: "branded_product" | "fid_ingredient";
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                name: string;
+                            } | null;
+                        } | null;
+                        package: {
+                            unitId: string | null;
+                            quantity: string | null;
+                            contentUnitId: string | null;
+                            contentAmount: string | null;
+                            weightPerPackage: string | null;
+                            specificWeight: string | null;
+                            drainedWeight: string | null;
+                        };
+                        source: {
+                            kind: string | null;
+                            name: string | null;
+                            recordId: string | null;
+                            fetchedAt: string | null;
+                        };
+                        createdAt: string;
+                        updatedAt: string;
+                        values: {
+                            name: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            producer: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                            } | null;
+                            barcode: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                symbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                                deliveredSymbology: ("EAN_8" | "UPC_A" | "EAN_13" | "ITF_14" | "GTIN_14") | null;
+                            } | null;
+                            localizedNames: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                languageId: number;
+                            }[];
+                            allergens: {
+                                /** @enum {string} */
+                                value: "yes" | "no" | "unknown" | "depends_on_brand";
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: ("yes" | "no" | "unknown" | "depends_on_brand") | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                allergenId: number;
+                            }[];
+                            /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                            nutrition: {
+                                value: string;
+                                /** @enum {string} */
+                                origin: "source" | "overridden" | "company";
+                                delivered: string | null;
+                                provenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                deliveredProvenance: {
+                                    source: string | null;
+                                    method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                    confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                    comment: string | null;
+                                } | null;
+                                nutrientId: number;
+                                /** @enum {string} */
+                                basis: "per_100g" | "per_100ml";
+                            }[];
+                        };
+                        overrides: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            deliveredValue: string | null;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                        companyValues: {
+                            /** Format: uuid */
+                            id: string;
+                            /** @enum {string} */
+                            family: "name" | "producer" | "barcode" | "localized_name" | "allergen" | "nutrient";
+                            memberKey: number | null;
+                            field: string;
+                            companyValue: string;
+                            /** Format: uuid */
+                            changedBy: string;
+                            changedAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    CompositionController_read: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        origin: ("source" | "overridden" | "company") | null;
+                        value: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        delivered: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        marks: {
+                            stateChanged: boolean;
+                            components: {
+                                localId: string | null;
+                                /** @enum {string} */
+                                mark: "unchanged" | "changed" | "added" | "removed";
+                            }[];
+                        } | null;
+                        disagreements: {
+                            at: {
+                                localId: string;
+                            } | "article";
+                            allergenId: number;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    CompositionController_record: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    state: "text";
+                    /** @description The sub-ingredients as the pack prints them; carried, never computed from */
+                    text: string;
+                    locale: string;
+                    provenance?: {
+                        source?: string;
+                        /** @enum {string} */
+                        method?: "DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
+                        /** @enum {string} */
+                        confidence?: "HIGH" | "MEDIUM" | "LOW";
+                        comment?: string;
+                    };
+                } | {
+                    /** @constant */
+                    state: "breakdown";
+                    components: {
+                        localId?: string;
+                        wording: string;
+                        fidId?: string | null;
+                        /** @description An exact percentage of the whole article, as a decimal string */
+                        percentage: string;
+                        origins?: {
+                            oil?: string[];
+                            meat?: {
+                                origin?: string[];
+                                born?: string[];
+                                reared?: string[];
+                                slaughtered?: string[];
+                            };
+                        };
+                        children?: {
+                            localId?: string;
+                            wording: string;
+                            fidId?: string | null;
+                            /** @description An exact percentage of the whole article, as a decimal string */
+                            percentage: string;
+                            origins?: {
+                                oil?: string[];
+                                meat?: {
+                                    origin?: string[];
+                                    born?: string[];
+                                    reared?: string[];
+                                    slaughtered?: string[];
+                                };
+                            };
+                            children?: {
+                                localId?: string;
+                                wording: string;
+                                fidId?: string | null;
+                                /** @description An exact percentage of the whole article, as a decimal string */
+                                percentage: string;
+                                origins?: {
+                                    oil?: string[];
+                                    meat?: {
+                                        origin?: string[];
+                                        born?: string[];
+                                        reared?: string[];
+                                        slaughtered?: string[];
+                                    };
+                                };
+                                children?: {
+                                    localId?: string;
+                                    wording: string;
+                                    fidId?: string | null;
+                                    /** @description An exact percentage of the whole article, as a decimal string */
+                                    percentage: string;
+                                    origins?: {
+                                        oil?: string[];
+                                        meat?: {
+                                            origin?: string[];
+                                            born?: string[];
+                                            reared?: string[];
+                                            slaughtered?: string[];
+                                        };
+                                    };
+                                    children?: {
+                                        localId?: string;
+                                        wording: string;
+                                        fidId?: string | null;
+                                        /** @description An exact percentage of the whole article, as a decimal string */
+                                        percentage: string;
+                                        origins?: {
+                                            oil?: string[];
+                                            meat?: {
+                                                origin?: string[];
+                                                born?: string[];
+                                                reared?: string[];
+                                                slaughtered?: string[];
+                                            };
+                                        };
+                                        children?: {
+                                            localId?: string;
+                                            wording: string;
+                                            fidId?: string | null;
+                                            /** @description An exact percentage of the whole article, as a decimal string */
+                                            percentage: string;
+                                            origins?: {
+                                                oil?: string[];
+                                                meat?: {
+                                                    origin?: string[];
+                                                    born?: string[];
+                                                    reared?: string[];
+                                                    slaughtered?: string[];
+                                                };
+                                            };
+                                            children?: {
+                                                localId?: string;
+                                                wording: string;
+                                                fidId?: string | null;
+                                                /** @description An exact percentage of the whole article, as a decimal string */
+                                                percentage: string;
+                                                origins?: {
+                                                    oil?: string[];
+                                                    meat?: {
+                                                        origin?: string[];
+                                                        born?: string[];
+                                                        reared?: string[];
+                                                        slaughtered?: string[];
+                                                    };
+                                                };
+                                                children?: {
+                                                    localId?: string;
+                                                    wording: string;
+                                                    fidId?: string | null;
+                                                    /** @description An exact percentage of the whole article, as a decimal string */
+                                                    percentage: string;
+                                                    origins?: {
+                                                        oil?: string[];
+                                                        meat?: {
+                                                            origin?: string[];
+                                                            born?: string[];
+                                                            reared?: string[];
+                                                            slaughtered?: string[];
+                                                        };
+                                                    };
+                                                }[];
+                                            }[];
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                    }[];
+                    provenance?: {
+                        source?: string;
+                        /** @enum {string} */
+                        method?: "DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE";
+                        /** @enum {string} */
+                        confidence?: "HIGH" | "MEDIUM" | "LOW";
+                        comment?: string;
+                    };
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        origin: ("source" | "overridden" | "company") | null;
+                        value: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        delivered: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        marks: {
+                            stateChanged: boolean;
+                            components: {
+                                localId: string | null;
+                                /** @enum {string} */
+                                mark: "unchanged" | "changed" | "added" | "removed";
+                            }[];
+                        } | null;
+                        disagreements: {
+                            at: {
+                                localId: string;
+                            } | "article";
+                            allergenId: number;
+                        }[];
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        origin: ("source" | "overridden" | "company") | null;
+                        value: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        delivered: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        marks: {
+                            stateChanged: boolean;
+                            components: {
+                                localId: string | null;
+                                /** @enum {string} */
+                                mark: "unchanged" | "changed" | "added" | "removed";
+                            }[];
+                        } | null;
+                        disagreements: {
+                            at: {
+                                localId: string;
+                            } | "article";
+                            allergenId: number;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    CompositionController_withdraw: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        origin: ("source" | "overridden" | "company") | null;
+                        value: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        delivered: ({
+                            /** @constant */
+                            state: "text";
+                            text: string;
+                            locale: string;
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        } | {
+                            /** @constant */
+                            state: "breakdown";
+                            /** @description Pre-order: a parent, then its children by position */
+                            components: {
+                                localId: string;
+                                parentLocalId: string | null;
+                                position: number;
+                                wording: string;
+                                fidId: string | null;
+                                percentage: string;
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                };
+                            }[];
+                            id: string;
+                            provenance: {
+                                source: string | null;
+                                method: ("DECLARED" | "MEASURED" | "CALCULATED" | "LITERATURE" | "ESTIMATE") | null;
+                                confidence: ("HIGH" | "MEDIUM" | "LOW") | null;
+                                comment: string | null;
+                            };
+                            setBy: string;
+                            setAt: string;
+                        }) | null;
+                        marks: {
+                            stateChanged: boolean;
+                            components: {
+                                localId: string | null;
+                                /** @enum {string} */
+                                mark: "unchanged" | "changed" | "added" | "removed";
+                            }[];
+                        } | null;
+                        disagreements: {
+                            at: {
+                                localId: string;
+                            } | "article";
+                            allergenId: number;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_list: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        recipes: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            code: string | null;
+                            groupName: string | null;
+                            portions: number | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                            version: number;
+                            createdAt: string;
+                        }[];
+                        total: number;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        code: string | null;
+                        groupName: string | null;
+                        portions: number | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                        version: number;
+                        createdAt: string;
+                        portionSize: string | null;
+                        portionUnitId: string | null;
+                        weightChange: string | null;
+                        finishedWeight: string | null;
+                        basedOnRecipeId: string | null;
+                        supersedesId: string | null;
+                        successor: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                        } | null;
+                        archivedAt: string | null;
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_get: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        code: string | null;
+                        groupName: string | null;
+                        portions: number | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                        version: number;
+                        createdAt: string;
+                        portionSize: string | null;
+                        portionUnitId: string | null;
+                        weightChange: string | null;
+                        finishedWeight: string | null;
+                        basedOnRecipeId: string | null;
+                        supersedesId: string | null;
+                        successor: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                        } | null;
+                        archivedAt: string | null;
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_patch: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    code?: string | null;
+                    groupName?: string | null;
+                    portions?: number | null;
+                    portionSize?: string | null;
+                    portionUnitId?: string | null;
+                    weightChange?: string | null;
+                    finishedWeight?: string | null;
+                    basedOnRecipeId?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        code: string | null;
+                        groupName: string | null;
+                        portions: number | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                        version: number;
+                        createdAt: string;
+                        portionSize: string | null;
+                        portionUnitId: string | null;
+                        weightChange: string | null;
+                        finishedWeight: string | null;
+                        basedOnRecipeId: string | null;
+                        supersedesId: string | null;
+                        successor: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                        } | null;
+                        archivedAt: string | null;
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "RECIPE_CODE_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                recipeId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_lineage: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        versions: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                            name: string;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                            supersedesId: string | null;
+                            createdAt: string;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_createVersion: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        code: string | null;
+                        groupName: string | null;
+                        portions: number | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                        version: number;
+                        createdAt: string;
+                        portionSize: string | null;
+                        portionUnitId: string | null;
+                        weightChange: string | null;
+                        finishedWeight: string | null;
+                        basedOnRecipeId: string | null;
+                        supersedesId: string | null;
+                        successor: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                        } | null;
+                        archivedAt: string | null;
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipesController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        code: string | null;
+                        groupName: string | null;
+                        portions: number | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                        version: number;
+                        createdAt: string;
+                        portionSize: string | null;
+                        portionUnitId: string | null;
+                        weightChange: string | null;
+                        finishedWeight: string | null;
+                        basedOnRecipeId: string | null;
+                        supersedesId: string | null;
+                        successor: {
+                            /** Format: uuid */
+                            id: string;
+                            version: number;
+                        } | null;
+                        archivedAt: string | null;
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeComponentsController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                    fidId?: string | null;
+                    purchasedItemId?: string | null;
+                    subRecipeId?: string | null;
+                    quantity?: string | null;
+                    unitId?: string | null;
+                    physicalFormId?: string | null;
+                    preparationStateId?: string | null;
+                    /** @enum {string} */
+                    massBasis?: "packaged_content" | "drained_weight";
+                    position?: number;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        /** @enum {string} */
+                        target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                        ingredient: {
+                            fidId: string;
+                            name: string | null;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        purchasedItem: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        subRecipe: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            version: number;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        quantity: string | null;
+                        unitId: string | null;
+                        physicalFormId: string | null;
+                        preparationStateId: string | null;
+                        /** @enum {string} */
+                        massBasis: "packaged_content" | "drained_weight";
+                        position: number;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPONENT_TARGET_INVALID";
+                            details: {
+                                /** @enum {string} */
+                                reason: "NONE" | "SEVERAL" | "NOT_FOUND";
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "RECIPE_NESTING_REFUSED";
+                            details: {
+                                /** @enum {string} */
+                                reason: "CYCLE" | "TOO_DEEP";
+                                depth: number;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeComponentsController_reorder: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    componentIds: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        components: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            /** @enum {string} */
+                            target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                            ingredient: {
+                                fidId: string;
+                                name: string | null;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            subRecipe: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                version: number;
+                                status: string;
+                                successor: {
+                                    id: string;
+                                    version?: number;
+                                    name?: string;
+                                } | null;
+                            } | null;
+                            quantity: string | null;
+                            unitId: string | null;
+                            physicalFormId: string | null;
+                            preparationStateId: string | null;
+                            /** @enum {string} */
+                            massBasis: "packaged_content" | "drained_weight";
+                            position: number;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeComponentsController_patch: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                componentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    quantity?: string | null;
+                    unitId?: string | null;
+                    physicalFormId?: string | null;
+                    preparationStateId?: string | null;
+                    /** @enum {string} */
+                    massBasis?: "packaged_content" | "drained_weight";
+                    position?: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        /** @enum {string} */
+                        target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                        ingredient: {
+                            fidId: string;
+                            name: string | null;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        purchasedItem: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        subRecipe: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            version: number;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        quantity: string | null;
+                        unitId: string | null;
+                        physicalFormId: string | null;
+                        preparationStateId: string | null;
+                        /** @enum {string} */
+                        massBasis: "packaged_content" | "drained_weight";
+                        position: number;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeComponentsController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                componentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        /** @enum {string} */
+                        target: "fid_ingredient" | "purchased_item" | "sub_recipe";
+                        ingredient: {
+                            fidId: string;
+                            name: string | null;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        purchasedItem: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        subRecipe: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            version: number;
+                            status: string;
+                            successor: {
+                                id: string;
+                                version?: number;
+                                name?: string;
+                            } | null;
+                        } | null;
+                        quantity: string | null;
+                        unitId: string | null;
+                        physicalFormId: string | null;
+                        preparationStateId: string | null;
+                        /** @enum {string} */
+                        massBasis: "packaged_content" | "drained_weight";
+                        position: number;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeStepsController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    actionId: string;
+                    parameters?: {
+                        parameter: string;
+                        value: string;
+                    }[];
+                    components?: {
+                        /** Format: uuid */
+                        componentId: string;
+                        quantity?: string | null;
+                    }[];
+                    annotation?: string | null;
+                    ccpCheckpoint?: string | null;
+                    position?: number;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        position: number;
+                        action: {
+                            id: string;
+                            name: string;
+                        };
+                        parameters: {
+                            parameter: string;
+                            value: string | null;
+                        }[];
+                        components: {
+                            /** Format: uuid */
+                            componentId: string;
+                            localId: string;
+                            quantity: string | null;
+                        }[];
+                        ccpCheckpoint: string | null;
+                        annotation: string | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "RECIPE_ACTION_UNKNOWN";
+                            details: {
+                                actionId: string;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeStepsController_reorder: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    stepIds: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        steps: {
+                            /** Format: uuid */
+                            id: string;
+                            localId: string;
+                            position: number;
+                            action: {
+                                id: string;
+                                name: string;
+                            };
+                            parameters: {
+                                parameter: string;
+                                value: string | null;
+                            }[];
+                            components: {
+                                /** Format: uuid */
+                                componentId: string;
+                                localId: string;
+                                quantity: string | null;
+                            }[];
+                            ccpCheckpoint: string | null;
+                            annotation: string | null;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "archived";
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeStepsController_patch: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                stepId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    parameters?: {
+                        parameter: string;
+                        value: string;
+                    }[];
+                    components?: {
+                        /** Format: uuid */
+                        componentId: string;
+                        quantity?: string | null;
+                    }[];
+                    annotation?: string | null;
+                    ccpCheckpoint?: string | null;
+                    position?: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        position: number;
+                        action: {
+                            id: string;
+                            name: string;
+                        };
+                        parameters: {
+                            parameter: string;
+                            value: string | null;
+                        }[];
+                        components: {
+                            /** Format: uuid */
+                            componentId: string;
+                            localId: string;
+                            quantity: string | null;
+                        }[];
+                        ccpCheckpoint: string | null;
+                        annotation: string | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "RECIPE_ACTION_UNKNOWN";
+                            details: {
+                                actionId: string;
+                            };
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeStepsController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                stepId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        localId: string;
+                        position: number;
+                        action: {
+                            id: string;
+                            name: string;
+                        };
+                        parameters: {
+                            parameter: string;
+                            value: string | null;
+                        }[];
+                        components: {
+                            /** Format: uuid */
+                            componentId: string;
+                            localId: string;
+                            quantity: string | null;
+                        }[];
+                        ccpCheckpoint: string | null;
+                        annotation: string | null;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "archived";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    RecipeActionsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        actions: {
+                            id: string;
+                            name: string;
+                            parameters: string[];
+                        }[];
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    CalculationsController_allergens: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        recipeId: string;
+                        allergens: {
+                            allergenId: number;
+                            /** @enum {string} */
+                            state: "yes" | "no" | "unknown" | "depends_on_brand";
+                        }[];
+                        dietary: {
+                            /** @enum {string} */
+                            vegan: "yes" | "no" | "unknown" | "depends_on_brand";
+                            /** @enum {string} */
+                            vegetarian: "yes" | "no" | "unknown" | "depends_on_brand";
+                            /** @enum {string} */
+                            lactoseFree: "yes" | "no" | "unknown" | "depends_on_brand";
+                            /** @enum {string} */
+                            glutenFree: "yes" | "no" | "unknown" | "depends_on_brand";
+                        };
+                        incomplete: boolean;
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                                nutrientId?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            occurrences: {
+                                path: {
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    CalculationsController_nutrition: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        recipeId: string;
+                        finishedWeight: {
+                            grams: string | null;
+                            /** @enum {string} */
+                            origin: "entered" | "derived" | "raw";
+                            weightChange: string | null;
+                            derivedGrams: string | null;
+                        };
+                        portions: number | null;
+                        /** @description Ordered by the nutrient vocabulary's order, each nutrient's position (FR-007d): Regulation 1169/2011 Annex XV's declaration order, then Annex XIII, then the regional nutrients. Clients render in the order served. */
+                        per100g: {
+                            nutrientId: number;
+                            value: string;
+                            coveredGrams: string;
+                            uncoveredGrams: string;
+                        }[];
+                        perPortion: {
+                            nutrientId: number;
+                            value: string;
+                            coveredGrams: string;
+                            uncoveredGrams: string;
+                        }[] | null;
+                        perPortionAbsentBecause: string | null;
+                        incomplete: boolean;
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                                nutrientId?: number;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            occurrences: {
+                                path: {
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_list: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                recipeId?: string;
+                purchasedItemId?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        products: {
+                            /** Format: uuid */
+                            id: string;
+                            name: string;
+                            number: string | null;
+                            groupName: string | null;
+                            tags: string[];
+                            /** @enum {string} */
+                            status: "active" | "archived";
+                            composition: ({
+                                /** @constant */
+                                kind: "recipe";
+                                /** Format: uuid */
+                                entryId: string;
+                                effectiveFrom: string | null;
+                                recipe: {
+                                    /** Format: uuid */
+                                    id: string;
+                                    version: number;
+                                    name: string;
+                                    /** @enum {string} */
+                                    status: "active" | "superseded" | "archived";
+                                    /** Format: uuid */
+                                    namedVersionId: string;
+                                };
+                            } | {
+                                /** @constant */
+                                kind: "purchased_item";
+                                /** Format: uuid */
+                                entryId: string;
+                                effectiveFrom: string | null;
+                                purchasedItem: {
+                                    /** Format: uuid */
+                                    id: string;
+                                    name: string;
+                                    /** @enum {string} */
+                                    status: "active" | "archived";
+                                };
+                            }) | null;
+                        }[];
+                        total: number;
+                        limit: number;
+                        offset: number;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    number?: string | null;
+                    groupName?: string | null;
+                    tags?: string[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PRODUCT_NUMBER_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                productId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_get: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_patch: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    number?: string | null;
+                    groupName?: string | null;
+                    tags?: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "PRODUCT_NUMBER_TAKEN";
+                            details: {
+                                /** Format: uuid */
+                                productId: string;
+                                name: string;
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_archive: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_history: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        entries: {
+                            /** Format: uuid */
+                            id: string;
+                            position: number;
+                            /** @enum {string} */
+                            kind: "recipe" | "purchased_item";
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            } | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            } | null;
+                            effectiveFrom: string | null;
+                            /** @enum {string} */
+                            state: "past" | "current" | "upcoming";
+                            reselection: boolean;
+                            /** Format: uuid */
+                            recordedByUserId: string;
+                            recordedAt: string;
+                        }[];
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    ProductsController_record: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    kind: "recipe";
+                    /** Format: uuid */
+                    recipeId: string;
+                    effectiveFrom?: string;
+                } | {
+                    /** @constant */
+                    kind: "purchased_item";
+                    /** Format: uuid */
+                    purchasedItemId: string;
+                    effectiveFrom?: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        name: string;
+                        number: string | null;
+                        groupName: string | null;
+                        tags: string[];
+                        /** @enum {string} */
+                        status: "active" | "archived";
+                        archivedAt: string | null;
+                        createdAt: string;
+                        composition: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        upcoming: ({
+                            /** @constant */
+                            kind: "recipe";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            recipe: {
+                                /** Format: uuid */
+                                id: string;
+                                version: number;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "superseded" | "archived";
+                                /** Format: uuid */
+                                namedVersionId: string;
+                            };
+                        } | {
+                            /** @constant */
+                            kind: "purchased_item";
+                            /** Format: uuid */
+                            entryId: string;
+                            effectiveFrom: string | null;
+                            purchasedItem: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                status: "active" | "archived";
+                            };
+                        }) | null;
+                        currentAsOf: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DeclarationsController_grid: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        incomplete: boolean;
+                        currentAsOf: string;
+                        ruleSets: {
+                            ruleSetId: string;
+                            /** @enum {string} */
+                            region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                            cells: {
+                                /** @enum {string} */
+                                category: "allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols";
+                                required: boolean;
+                                complete: boolean;
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    occurrences: {
+                                        path: {
+                                            recipeId: string;
+                                            componentLocalId: string;
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DeclarationsController_assign: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ruleSetId: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        incomplete: boolean;
+                        currentAsOf: string;
+                        ruleSets: {
+                            ruleSetId: string;
+                            /** @enum {string} */
+                            region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                            cells: {
+                                /** @enum {string} */
+                                category: "allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols";
+                                required: boolean;
+                                complete: boolean;
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    occurrences: {
+                                        path: {
+                                            recipeId: string;
+                                            componentLocalId: string;
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        incomplete: boolean;
+                        currentAsOf: string;
+                        ruleSets: {
+                            ruleSetId: string;
+                            /** @enum {string} */
+                            region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                            cells: {
+                                /** @enum {string} */
+                                category: "allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols";
+                                required: boolean;
+                                complete: boolean;
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    occurrences: {
+                                        path: {
+                                            recipeId: string;
+                                            componentLocalId: string;
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DeclarationsController_unassign: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                ruleSetId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        incomplete: boolean;
+                        currentAsOf: string;
+                        ruleSets: {
+                            ruleSetId: string;
+                            /** @enum {string} */
+                            region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                            cells: {
+                                /** @enum {string} */
+                                category: "allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols";
+                                required: boolean;
+                                complete: boolean;
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    occurrences: {
+                                        path: {
+                                            recipeId: string;
+                                            componentLocalId: string;
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    DeclarationsController_overview: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /** Format: uuid */
+                            productId: string;
+                            incomplete: boolean;
+                            currentAsOf: string;
+                            ruleSets: {
+                                ruleSetId: string;
+                                /** @enum {string} */
+                                region: "eu1" | "eu2" | "usa" | "canada" | "japan" | "south_korea" | "au_nz";
+                                cells: {
+                                    /** @enum {string} */
+                                    category: "allergens" | "additives" | "nutrition" | "ingredients" | "food_symbols";
+                                    required: boolean;
+                                    complete: boolean;
+                                    gaps: {
+                                        /** @enum {string} */
+                                        kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                        datum: {
+                                            type: string;
+                                        } & {
+                                            [key: string]: unknown;
+                                        };
+                                        target: {
+                                            type: string;
+                                        } & {
+                                            [key: string]: unknown;
+                                        };
+                                        occurrences: {
+                                            path: {
+                                                recipeId: string;
+                                                componentLocalId: string;
+                                            }[];
+                                        }[];
+                                    }[];
+                                }[];
+                            }[];
+                        }[];
+                        total: number;
+                        limit: number;
+                        offset: number;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IngredientListController_list: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        currentAsOf: string;
+                        finishedWeight: ({
+                            grams: string | null;
+                            origin: string;
+                        } & {
+                            [key: string]: unknown;
+                        }) | null;
+                        lines: {
+                            route: string;
+                            routes: string[];
+                            identity: {
+                                /** @constant */
+                                type: "fid_ingredient";
+                                fidId: string;
+                            } | {
+                                /** @constant */
+                                type: "purchased_item";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                            } | {
+                                /** @constant */
+                                type: "sub_recipe";
+                                /** Format: uuid */
+                                recipeId: string;
+                            } | {
+                                /** @constant */
+                                type: "merged";
+                                /** Format: uuid */
+                                choiceId: string;
+                            } | {
+                                /** @constant */
+                                type: "article_component";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                localId: string;
+                            };
+                            designation: string | null;
+                            /** @enum {string} */
+                            designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                            locale: string | null;
+                            grams: string | null;
+                            perHundredFinished: string | null;
+                            shareOfMix: string | null;
+                            underTwoPercent: boolean | null;
+                            unplaced: boolean;
+                            hidden: boolean;
+                            addedWater: boolean;
+                            omittable: boolean;
+                            additive: boolean;
+                            eNumber: string | null;
+                            labelForm: {
+                                allergens: ("contains" | "name") | null;
+                                additive: ("name" | "e_number") | null;
+                            };
+                            quid: {
+                                /** @enum {string} */
+                                form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                value: string;
+                            } | null;
+                            allergens: {
+                                allergenId: number;
+                                /** @enum {string} */
+                                state: "yes" | "no" | "unknown" | "depends_on_brand";
+                            }[];
+                            additiveClassId: number | null;
+                            compound: boolean;
+                            composition: ({
+                                /** @constant */
+                                state: "text";
+                                text: string;
+                                locale: string;
+                            } | {
+                                /** @constant */
+                                state: "breakdown";
+                            }) | null;
+                            notices: "composition_as_text"[];
+                            origins: {
+                                oil: string[];
+                                meat: {
+                                    origin: string[];
+                                    born: string[];
+                                    reared: string[];
+                                    slaughtered: string[];
+                                };
+                            } | null;
+                            choices: string[];
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                target: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                path: {
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                            members: {
+                                route: string;
+                                routes: string[];
+                                identity: {
+                                    /** @constant */
+                                    type: "fid_ingredient";
+                                    fidId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "purchased_item";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "sub_recipe";
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "merged";
+                                    /** Format: uuid */
+                                    choiceId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "article_component";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                    localId: string;
+                                };
+                                designation: string | null;
+                                /** @enum {string} */
+                                designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                                locale: string | null;
+                                grams: string | null;
+                                perHundredFinished: string | null;
+                                shareOfMix: string | null;
+                                underTwoPercent: boolean | null;
+                                unplaced: boolean;
+                                hidden: boolean;
+                                addedWater: boolean;
+                                omittable: boolean;
+                                additive: boolean;
+                                eNumber: string | null;
+                                labelForm: {
+                                    allergens: ("contains" | "name") | null;
+                                    additive: ("name" | "e_number") | null;
+                                };
+                                quid: {
+                                    /** @enum {string} */
+                                    form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                    value: string;
+                                } | null;
+                                allergens: {
+                                    allergenId: number;
+                                    /** @enum {string} */
+                                    state: "yes" | "no" | "unknown" | "depends_on_brand";
+                                }[];
+                                additiveClassId: number | null;
+                                compound: boolean;
+                                composition: ({
+                                    /** @constant */
+                                    state: "text";
+                                    text: string;
+                                    locale: string;
+                                } | {
+                                    /** @constant */
+                                    state: "breakdown";
+                                }) | null;
+                                notices: "composition_as_text"[];
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                } | null;
+                                choices: string[];
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    path: {
+                                        recipeId: string;
+                                        componentLocalId: string;
+                                    }[];
+                                }[];
+                                members: ({
+                                    route: string;
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            }[];
+                        }[];
+                        subRecipes: string[];
+                        dormant: string[];
+                        notApplied: {
+                            /** Format: uuid */
+                            choiceId: string;
+                            /** @enum {string} */
+                            reason: "not_under_two_percent" | "carries_allergen" | "kind_not_applicable";
+                        }[];
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            path: {
+                                recipeId: string;
+                                componentLocalId: string;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IngredientListController_record: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    kind: "rename";
+                    route: string;
+                    locale: string;
+                    designation: string;
+                } | {
+                    /** @constant */
+                    kind: "hide";
+                    route: string;
+                } | {
+                    /** @constant */
+                    kind: "compound";
+                    route: string;
+                } | {
+                    /** @constant */
+                    kind: "only_name";
+                    route: string;
+                } | {
+                    /** @constant */
+                    kind: "quid";
+                    route: string;
+                } | {
+                    /** @constant */
+                    kind: "merge";
+                    members: string[];
+                } | {
+                    /** @constant */
+                    kind: "additive_category";
+                    route: string;
+                    additiveClassId: number;
+                } | {
+                    /** @constant */
+                    kind: "minor_order";
+                    members: string[];
+                } | {
+                    /** @constant */
+                    kind: "additive_form";
+                    route: string;
+                    /** @enum {string} */
+                    additiveForm: "name" | "e_number";
+                } | {
+                    /** @constant */
+                    kind: "contains_statement";
+                    route: string;
+                } | {
+                    /** @constant */
+                    kind: "name_reveals";
+                    route: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        currentAsOf: string;
+                        finishedWeight: ({
+                            grams: string | null;
+                            origin: string;
+                        } & {
+                            [key: string]: unknown;
+                        }) | null;
+                        lines: {
+                            route: string;
+                            routes: string[];
+                            identity: {
+                                /** @constant */
+                                type: "fid_ingredient";
+                                fidId: string;
+                            } | {
+                                /** @constant */
+                                type: "purchased_item";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                            } | {
+                                /** @constant */
+                                type: "sub_recipe";
+                                /** Format: uuid */
+                                recipeId: string;
+                            } | {
+                                /** @constant */
+                                type: "merged";
+                                /** Format: uuid */
+                                choiceId: string;
+                            } | {
+                                /** @constant */
+                                type: "article_component";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                localId: string;
+                            };
+                            designation: string | null;
+                            /** @enum {string} */
+                            designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                            locale: string | null;
+                            grams: string | null;
+                            perHundredFinished: string | null;
+                            shareOfMix: string | null;
+                            underTwoPercent: boolean | null;
+                            unplaced: boolean;
+                            hidden: boolean;
+                            addedWater: boolean;
+                            omittable: boolean;
+                            additive: boolean;
+                            eNumber: string | null;
+                            labelForm: {
+                                allergens: ("contains" | "name") | null;
+                                additive: ("name" | "e_number") | null;
+                            };
+                            quid: {
+                                /** @enum {string} */
+                                form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                value: string;
+                            } | null;
+                            allergens: {
+                                allergenId: number;
+                                /** @enum {string} */
+                                state: "yes" | "no" | "unknown" | "depends_on_brand";
+                            }[];
+                            additiveClassId: number | null;
+                            compound: boolean;
+                            composition: ({
+                                /** @constant */
+                                state: "text";
+                                text: string;
+                                locale: string;
+                            } | {
+                                /** @constant */
+                                state: "breakdown";
+                            }) | null;
+                            notices: "composition_as_text"[];
+                            origins: {
+                                oil: string[];
+                                meat: {
+                                    origin: string[];
+                                    born: string[];
+                                    reared: string[];
+                                    slaughtered: string[];
+                                };
+                            } | null;
+                            choices: string[];
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                target: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                path: {
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                            members: {
+                                route: string;
+                                routes: string[];
+                                identity: {
+                                    /** @constant */
+                                    type: "fid_ingredient";
+                                    fidId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "purchased_item";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "sub_recipe";
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "merged";
+                                    /** Format: uuid */
+                                    choiceId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "article_component";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                    localId: string;
+                                };
+                                designation: string | null;
+                                /** @enum {string} */
+                                designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                                locale: string | null;
+                                grams: string | null;
+                                perHundredFinished: string | null;
+                                shareOfMix: string | null;
+                                underTwoPercent: boolean | null;
+                                unplaced: boolean;
+                                hidden: boolean;
+                                addedWater: boolean;
+                                omittable: boolean;
+                                additive: boolean;
+                                eNumber: string | null;
+                                labelForm: {
+                                    allergens: ("contains" | "name") | null;
+                                    additive: ("name" | "e_number") | null;
+                                };
+                                quid: {
+                                    /** @enum {string} */
+                                    form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                    value: string;
+                                } | null;
+                                allergens: {
+                                    allergenId: number;
+                                    /** @enum {string} */
+                                    state: "yes" | "no" | "unknown" | "depends_on_brand";
+                                }[];
+                                additiveClassId: number | null;
+                                compound: boolean;
+                                composition: ({
+                                    /** @constant */
+                                    state: "text";
+                                    text: string;
+                                    locale: string;
+                                } | {
+                                    /** @constant */
+                                    state: "breakdown";
+                                }) | null;
+                                notices: "composition_as_text"[];
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                } | null;
+                                choices: string[];
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    path: {
+                                        recipeId: string;
+                                        componentLocalId: string;
+                                    }[];
+                                }[];
+                                members: ({
+                                    route: string;
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            }[];
+                        }[];
+                        subRecipes: string[];
+                        dormant: string[];
+                        notApplied: {
+                            /** Format: uuid */
+                            choiceId: string;
+                            /** @enum {string} */
+                            reason: "not_under_two_percent" | "carries_allergen" | "kind_not_applicable";
+                        }[];
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            path: {
+                                recipeId: string;
+                                componentLocalId: string;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        currentAsOf: string;
+                        finishedWeight: ({
+                            grams: string | null;
+                            origin: string;
+                        } & {
+                            [key: string]: unknown;
+                        }) | null;
+                        lines: {
+                            route: string;
+                            routes: string[];
+                            identity: {
+                                /** @constant */
+                                type: "fid_ingredient";
+                                fidId: string;
+                            } | {
+                                /** @constant */
+                                type: "purchased_item";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                            } | {
+                                /** @constant */
+                                type: "sub_recipe";
+                                /** Format: uuid */
+                                recipeId: string;
+                            } | {
+                                /** @constant */
+                                type: "merged";
+                                /** Format: uuid */
+                                choiceId: string;
+                            } | {
+                                /** @constant */
+                                type: "article_component";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                localId: string;
+                            };
+                            designation: string | null;
+                            /** @enum {string} */
+                            designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                            locale: string | null;
+                            grams: string | null;
+                            perHundredFinished: string | null;
+                            shareOfMix: string | null;
+                            underTwoPercent: boolean | null;
+                            unplaced: boolean;
+                            hidden: boolean;
+                            addedWater: boolean;
+                            omittable: boolean;
+                            additive: boolean;
+                            eNumber: string | null;
+                            labelForm: {
+                                allergens: ("contains" | "name") | null;
+                                additive: ("name" | "e_number") | null;
+                            };
+                            quid: {
+                                /** @enum {string} */
+                                form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                value: string;
+                            } | null;
+                            allergens: {
+                                allergenId: number;
+                                /** @enum {string} */
+                                state: "yes" | "no" | "unknown" | "depends_on_brand";
+                            }[];
+                            additiveClassId: number | null;
+                            compound: boolean;
+                            composition: ({
+                                /** @constant */
+                                state: "text";
+                                text: string;
+                                locale: string;
+                            } | {
+                                /** @constant */
+                                state: "breakdown";
+                            }) | null;
+                            notices: "composition_as_text"[];
+                            origins: {
+                                oil: string[];
+                                meat: {
+                                    origin: string[];
+                                    born: string[];
+                                    reared: string[];
+                                    slaughtered: string[];
+                                };
+                            } | null;
+                            choices: string[];
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                target: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                path: {
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                            members: {
+                                route: string;
+                                routes: string[];
+                                identity: {
+                                    /** @constant */
+                                    type: "fid_ingredient";
+                                    fidId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "purchased_item";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "sub_recipe";
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "merged";
+                                    /** Format: uuid */
+                                    choiceId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "article_component";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                    localId: string;
+                                };
+                                designation: string | null;
+                                /** @enum {string} */
+                                designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                                locale: string | null;
+                                grams: string | null;
+                                perHundredFinished: string | null;
+                                shareOfMix: string | null;
+                                underTwoPercent: boolean | null;
+                                unplaced: boolean;
+                                hidden: boolean;
+                                addedWater: boolean;
+                                omittable: boolean;
+                                additive: boolean;
+                                eNumber: string | null;
+                                labelForm: {
+                                    allergens: ("contains" | "name") | null;
+                                    additive: ("name" | "e_number") | null;
+                                };
+                                quid: {
+                                    /** @enum {string} */
+                                    form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                    value: string;
+                                } | null;
+                                allergens: {
+                                    allergenId: number;
+                                    /** @enum {string} */
+                                    state: "yes" | "no" | "unknown" | "depends_on_brand";
+                                }[];
+                                additiveClassId: number | null;
+                                compound: boolean;
+                                composition: ({
+                                    /** @constant */
+                                    state: "text";
+                                    text: string;
+                                    locale: string;
+                                } | {
+                                    /** @constant */
+                                    state: "breakdown";
+                                }) | null;
+                                notices: "composition_as_text"[];
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                } | null;
+                                choices: string[];
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    path: {
+                                        recipeId: string;
+                                        componentLocalId: string;
+                                    }[];
+                                }[];
+                                members: ({
+                                    route: string;
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            }[];
+                        }[];
+                        subRecipes: string[];
+                        dormant: string[];
+                        notApplied: {
+                            /** Format: uuid */
+                            choiceId: string;
+                            /** @enum {string} */
+                            reason: "not_under_two_percent" | "carries_allergen" | "kind_not_applicable";
+                        }[];
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            path: {
+                                recipeId: string;
+                                componentLocalId: string;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IngredientListController_withdraw: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                choiceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        productId: string;
+                        currentAsOf: string;
+                        finishedWeight: ({
+                            grams: string | null;
+                            origin: string;
+                        } & {
+                            [key: string]: unknown;
+                        }) | null;
+                        lines: {
+                            route: string;
+                            routes: string[];
+                            identity: {
+                                /** @constant */
+                                type: "fid_ingredient";
+                                fidId: string;
+                            } | {
+                                /** @constant */
+                                type: "purchased_item";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                            } | {
+                                /** @constant */
+                                type: "sub_recipe";
+                                /** Format: uuid */
+                                recipeId: string;
+                            } | {
+                                /** @constant */
+                                type: "merged";
+                                /** Format: uuid */
+                                choiceId: string;
+                            } | {
+                                /** @constant */
+                                type: "article_component";
+                                /** Format: uuid */
+                                purchasedItemId: string;
+                                localId: string;
+                            };
+                            designation: string | null;
+                            /** @enum {string} */
+                            designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                            locale: string | null;
+                            grams: string | null;
+                            perHundredFinished: string | null;
+                            shareOfMix: string | null;
+                            underTwoPercent: boolean | null;
+                            unplaced: boolean;
+                            hidden: boolean;
+                            addedWater: boolean;
+                            omittable: boolean;
+                            additive: boolean;
+                            eNumber: string | null;
+                            labelForm: {
+                                allergens: ("contains" | "name") | null;
+                                additive: ("name" | "e_number") | null;
+                            };
+                            quid: {
+                                /** @enum {string} */
+                                form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                value: string;
+                            } | null;
+                            allergens: {
+                                allergenId: number;
+                                /** @enum {string} */
+                                state: "yes" | "no" | "unknown" | "depends_on_brand";
+                            }[];
+                            additiveClassId: number | null;
+                            compound: boolean;
+                            composition: ({
+                                /** @constant */
+                                state: "text";
+                                text: string;
+                                locale: string;
+                            } | {
+                                /** @constant */
+                                state: "breakdown";
+                            }) | null;
+                            notices: "composition_as_text"[];
+                            origins: {
+                                oil: string[];
+                                meat: {
+                                    origin: string[];
+                                    born: string[];
+                                    reared: string[];
+                                    slaughtered: string[];
+                                };
+                            } | null;
+                            choices: string[];
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                target: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                path: {
+                                    recipeId: string;
+                                    componentLocalId: string;
+                                }[];
+                            }[];
+                            members: {
+                                route: string;
+                                routes: string[];
+                                identity: {
+                                    /** @constant */
+                                    type: "fid_ingredient";
+                                    fidId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "purchased_item";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "sub_recipe";
+                                    /** Format: uuid */
+                                    recipeId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "merged";
+                                    /** Format: uuid */
+                                    choiceId: string;
+                                } | {
+                                    /** @constant */
+                                    type: "article_component";
+                                    /** Format: uuid */
+                                    purchasedItemId: string;
+                                    localId: string;
+                                };
+                                designation: string | null;
+                                /** @enum {string} */
+                                designationOrigin: "reference" | "article" | "recipe" | "rename" | "composition" | "absent";
+                                locale: string | null;
+                                grams: string | null;
+                                perHundredFinished: string | null;
+                                shareOfMix: string | null;
+                                underTwoPercent: boolean | null;
+                                unplaced: boolean;
+                                hidden: boolean;
+                                addedWater: boolean;
+                                omittable: boolean;
+                                additive: boolean;
+                                eNumber: string | null;
+                                labelForm: {
+                                    allergens: ("contains" | "name") | null;
+                                    additive: ("name" | "e_number") | null;
+                                };
+                                quid: {
+                                    /** @enum {string} */
+                                    form: "percent_at_use" | "percent_of_finished" | "grams_per_100g_finished";
+                                    value: string;
+                                } | null;
+                                allergens: {
+                                    allergenId: number;
+                                    /** @enum {string} */
+                                    state: "yes" | "no" | "unknown" | "depends_on_brand";
+                                }[];
+                                additiveClassId: number | null;
+                                compound: boolean;
+                                composition: ({
+                                    /** @constant */
+                                    state: "text";
+                                    text: string;
+                                    locale: string;
+                                } | {
+                                    /** @constant */
+                                    state: "breakdown";
+                                }) | null;
+                                notices: "composition_as_text"[];
+                                origins: {
+                                    oil: string[];
+                                    meat: {
+                                        origin: string[];
+                                        born: string[];
+                                        reared: string[];
+                                        slaughtered: string[];
+                                    };
+                                } | null;
+                                choices: string[];
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    target: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    path: {
+                                        recipeId: string;
+                                        componentLocalId: string;
+                                    }[];
+                                }[];
+                                members: ({
+                                    route: string;
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            }[];
+                        }[];
+                        subRecipes: string[];
+                        dormant: string[];
+                        notApplied: {
+                            /** Format: uuid */
+                            choiceId: string;
+                            /** @enum {string} */
+                            reason: "not_under_two_percent" | "carries_allergen" | "kind_not_applicable";
+                        }[];
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            target: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            path: {
+                                recipeId: string;
+                                componentLocalId: string;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    LabelTextController_label: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                ruleSetId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ruleSetId: string;
+                        language: string;
+                        engine: "eu" | null;
+                        sections: ({
+                            /** @enum {string} */
+                            kind: "heading" | "lines" | "statement";
+                            runs: {
+                                text: string;
+                                emphasis: boolean;
+                            }[];
+                        } | {
+                            /** @constant */
+                            kind: "nutrition";
+                            heading: {
+                                text: string;
+                                emphasis: boolean;
+                            }[];
+                            basis: {
+                                text: string;
+                                emphasis: boolean;
+                            }[];
+                            rows: {
+                                nutrientId: number;
+                                runs: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                ofWhich: boolean;
+                                values: {
+                                    rounded: string;
+                                    unit: string;
+                                    source: string;
+                                    rule: string;
+                                }[];
+                            }[];
+                        })[];
+                        text: string;
+                        gaps: {
+                            /** @enum {string} */
+                            kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                            datum: {
+                                type: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            route: string | null;
+                        }[];
+                        notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                        figures: {
+                            at: string;
+                            source: string;
+                            rounded: string;
+                            rule: string;
+                        }[];
+                        symbolIds: number[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IssuedLabelsController_list: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                ruleSetId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            productId: string;
+                            ruleSetId: string;
+                            language: string;
+                            /** @enum {string} */
+                            status: "active" | "superseded" | "withdrawn";
+                            supersedesId: string | null;
+                            text: string;
+                            rendering: {
+                                ruleSetId: string;
+                                language: string;
+                                engine: "eu" | null;
+                                sections: ({
+                                    /** @enum {string} */
+                                    kind: "heading" | "lines" | "statement";
+                                    runs: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                } | {
+                                    /** @constant */
+                                    kind: "nutrition";
+                                    heading: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    basis: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    rows: {
+                                        nutrientId: number;
+                                        runs: {
+                                            text: string;
+                                            emphasis: boolean;
+                                        }[];
+                                        ofWhich: boolean;
+                                        values: {
+                                            rounded: string;
+                                            unit: string;
+                                            source: string;
+                                            rule: string;
+                                        }[];
+                                    }[];
+                                })[];
+                                text: string;
+                                gaps: {
+                                    /** @enum {string} */
+                                    kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                    datum: {
+                                        type: string;
+                                    } & {
+                                        [key: string]: unknown;
+                                    };
+                                    route: string | null;
+                                }[];
+                                notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                                figures: {
+                                    at: string;
+                                    source: string;
+                                    rounded: string;
+                                    rule: string;
+                                }[];
+                                symbolIds: number[];
+                            };
+                            structure: {
+                                [key: string]: unknown;
+                            };
+                            references: {
+                                compositionEntryId: string | null;
+                                recipeIds: string[];
+                                purchasedItemIds: string[];
+                                compositionRecordIds: string[];
+                                choiceIds: string[];
+                            };
+                            /** Format: uuid */
+                            issuedBy: string;
+                            issuedAt: string;
+                            withdrawnBy: string | null;
+                            withdrawnAt: string | null;
+                        }[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IssuedLabelsController_issue: {
+        parameters: {
+            query?: {
+                language?: string;
+            };
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                id: string;
+                ruleSetId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: uuid */
+                        productId: string;
+                        ruleSetId: string;
+                        language: string;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        text: string;
+                        rendering: {
+                            ruleSetId: string;
+                            language: string;
+                            engine: "eu" | null;
+                            sections: ({
+                                /** @enum {string} */
+                                kind: "heading" | "lines" | "statement";
+                                runs: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                            } | {
+                                /** @constant */
+                                kind: "nutrition";
+                                heading: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                basis: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                rows: {
+                                    nutrientId: number;
+                                    runs: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    ofWhich: boolean;
+                                    values: {
+                                        rounded: string;
+                                        unit: string;
+                                        source: string;
+                                        rule: string;
+                                    }[];
+                                }[];
+                            })[];
+                            text: string;
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                route: string | null;
+                            }[];
+                            notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                            figures: {
+                                at: string;
+                                source: string;
+                                rounded: string;
+                                rule: string;
+                            }[];
+                            symbolIds: number[];
+                        };
+                        structure: {
+                            [key: string]: unknown;
+                        };
+                        references: {
+                            compositionEntryId: string | null;
+                            recipeIds: string[];
+                            purchasedItemIds: string[];
+                            compositionRecordIds: string[];
+                            choiceIds: string[];
+                        };
+                        /** Format: uuid */
+                        issuedBy: string;
+                        issuedAt: string;
+                        withdrawnBy: string | null;
+                        withdrawnAt: string | null;
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: uuid */
+                        productId: string;
+                        ruleSetId: string;
+                        language: string;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        text: string;
+                        rendering: {
+                            ruleSetId: string;
+                            language: string;
+                            engine: "eu" | null;
+                            sections: ({
+                                /** @enum {string} */
+                                kind: "heading" | "lines" | "statement";
+                                runs: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                            } | {
+                                /** @constant */
+                                kind: "nutrition";
+                                heading: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                basis: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                rows: {
+                                    nutrientId: number;
+                                    runs: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    ofWhich: boolean;
+                                    values: {
+                                        rounded: string;
+                                        unit: string;
+                                        source: string;
+                                        rule: string;
+                                    }[];
+                                }[];
+                            })[];
+                            text: string;
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                route: string | null;
+                            }[];
+                            notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                            figures: {
+                                at: string;
+                                source: string;
+                                rounded: string;
+                                rule: string;
+                            }[];
+                            symbolIds: number[];
+                        };
+                        structure: {
+                            [key: string]: unknown;
+                        };
+                        references: {
+                            compositionEntryId: string | null;
+                            recipeIds: string[];
+                            purchasedItemIds: string[];
+                            compositionRecordIds: string[];
+                            choiceIds: string[];
+                        };
+                        /** Format: uuid */
+                        issuedBy: string;
+                        issuedAt: string;
+                        withdrawnBy: string | null;
+                        withdrawnAt: string | null;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "DECLARATION_INCOMPLETE";
+                            details: {
+                                ruleSetId: string;
+                                categories: string[];
+                            };
+                        };
+                    };
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IssuedLabelsController_read: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                issuedId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: uuid */
+                        productId: string;
+                        ruleSetId: string;
+                        language: string;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        text: string;
+                        rendering: {
+                            ruleSetId: string;
+                            language: string;
+                            engine: "eu" | null;
+                            sections: ({
+                                /** @enum {string} */
+                                kind: "heading" | "lines" | "statement";
+                                runs: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                            } | {
+                                /** @constant */
+                                kind: "nutrition";
+                                heading: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                basis: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                rows: {
+                                    nutrientId: number;
+                                    runs: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    ofWhich: boolean;
+                                    values: {
+                                        rounded: string;
+                                        unit: string;
+                                        source: string;
+                                        rule: string;
+                                    }[];
+                                }[];
+                            })[];
+                            text: string;
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                route: string | null;
+                            }[];
+                            notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                            figures: {
+                                at: string;
+                                source: string;
+                                rounded: string;
+                                rule: string;
+                            }[];
+                            symbolIds: number[];
+                        };
+                        structure: {
+                            [key: string]: unknown;
+                        };
+                        references: {
+                            compositionEntryId: string | null;
+                            recipeIds: string[];
+                            purchasedItemIds: string[];
+                            compositionRecordIds: string[];
+                            choiceIds: string[];
+                        };
+                        /** Format: uuid */
+                        issuedBy: string;
+                        issuedAt: string;
+                        withdrawnBy: string | null;
+                        withdrawnAt: string | null;
+                        differsFromCurrent: boolean;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INTERNAL_ERROR";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    IssuedLabelsController_withdraw: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The company being acted in */
+                "X-Company-Id": string;
+            };
+            path: {
+                issuedId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id: string;
+                        /** Format: uuid */
+                        productId: string;
+                        ruleSetId: string;
+                        language: string;
+                        /** @enum {string} */
+                        status: "active" | "superseded" | "withdrawn";
+                        supersedesId: string | null;
+                        text: string;
+                        rendering: {
+                            ruleSetId: string;
+                            language: string;
+                            engine: "eu" | null;
+                            sections: ({
+                                /** @enum {string} */
+                                kind: "heading" | "lines" | "statement";
+                                runs: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                            } | {
+                                /** @constant */
+                                kind: "nutrition";
+                                heading: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                basis: {
+                                    text: string;
+                                    emphasis: boolean;
+                                }[];
+                                rows: {
+                                    nutrientId: number;
+                                    runs: {
+                                        text: string;
+                                        emphasis: boolean;
+                                    }[];
+                                    ofWhich: boolean;
+                                    values: {
+                                        rounded: string;
+                                        unit: string;
+                                        source: string;
+                                        rule: string;
+                                    }[];
+                                }[];
+                            })[];
+                            text: string;
+                            gaps: {
+                                /** @enum {string} */
+                                kind: "not_recorded" | "cannot_be_held" | "mass_unresolvable";
+                                datum: {
+                                    type: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                route: string | null;
+                            }[];
+                            notices: ("text_language_differs" | "emphasis_inside_text_unverified" | "category_singular")[];
+                            figures: {
+                                at: string;
+                                source: string;
+                                rounded: string;
+                                rule: string;
+                            }[];
+                            symbolIds: number[];
+                        };
+                        structure: {
+                            [key: string]: unknown;
+                        };
+                        references: {
+                            compositionEntryId: string | null;
+                            recipeIds: string[];
+                            purchasedItemIds: string[];
+                            compositionRecordIds: string[];
+                            choiceIds: string[];
+                        };
+                        /** Format: uuid */
+                        issuedBy: string;
+                        issuedAt: string;
+                        withdrawnBy: string | null;
+                        withdrawnAt: string | null;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_CONTEXT_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "VALIDATION_FAILED";
+                            details: {
+                                issues?: {
+                                    path: string[];
+                                    code: string;
+                                }[];
+                            };
+                        };
+                    };
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "TOKEN_INVALID";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "INSUFFICIENT_ROLE";
+                            details: {
+                                required: ("admin" | "editor" | "viewer")[];
+                            };
+                        };
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "MEMBERSHIP_REQUIRED";
+                            details: Record<string, never>;
+                        };
+                    } | {
+                        error: {
+                            /** @constant */
+                            code: "NOT_FOUND";
+                            details: Record<string, never>;
+                        };
+                    };
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error: {
+                            /** @constant */
+                            code: "COMPANY_ARCHIVED";
+                            details: Record<string, never>;
                         };
                     };
                 };
