@@ -1,0 +1,230 @@
+name: Nutrimero Professional
+colors:
+  surface: '#fbfafc'
+  surface-dim: '#dddbe1'
+  surface-bright: '#fbfafc'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f5f4f8'
+  surface-container: '#f0eef4'
+  surface-container-high: '#eae8ef'
+  surface-container-highest: '#e5e3ea'
+  on-surface: '#1b1820'
+  on-surface-variant: '#474351'
+  inverse-surface: '#322f37'
+  inverse-on-surface: '#f1eff5'
+  outline: '#79767f'
+  outline-variant: '#cac6d2'
+  surface-tint: '#505595'
+  primary: '#1b1f58'
+  on-primary: '#ffffff'
+  primary-container: '#141742'
+  on-primary-container: '#8489cd'
+  inverse-primary: '#bdc1ff'
+  secondary: '#b9bf05'
+  on-secondary: '#1d1e01'
+  secondary-container: '#fbfdc4'
+  on-secondary-container: '#606303'
+  tertiary: '#2f0100'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#490504'
+  on-tertiary-container: '#c57977'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#e0e2ff'
+  primary-fixed-dim: '#bdc1ff'
+  on-primary-fixed: '#141742'
+  on-primary-fixed-variant: '#3b3f7d'
+  secondary-fixed: '#eff623'
+  secondary-fixed-dim: '#d8df07'
+  on-secondary-fixed: '#2b2d01'
+  on-secondary-fixed-variant: '#606303'
+  tertiary-fixed: '#ffd7d6'
+  tertiary-fixed-dim: '#ffaaa8'
+  on-tertiary-fixed: '#300403'
+  on-tertiary-fixed-variant: '#6f2725'
+  background: '#fbfafc'
+  on-background: '#1b1820'
+  surface-variant: '#e5e3ea'
+  navy-deep: '#0b0e32'
+  slate-surface: '#f9f8fb'
+  slate-border: '#e4e1ea'
+  page: '#f0eef4'
+  card: '#ffffff'
+  strip: '#f5f4f8'
+  focus-ring: '#1d62ed'
+  brand-canvas: 'transparent'
+  success: '#1e7d38'
+  on-success: '#ffffff'
+  success-container: '#d6f5dd'
+  on-success-container: '#0c5223'
+colors-dark:
+  surface: '#141217'
+  surface-dim: '#141217'
+  surface-bright: '#36323e'
+  surface-container-lowest: '#0c0b0f'
+  surface-container-low: '#1b191f'
+  surface-container: '#211f26'
+  surface-container-high: '#2a2730'
+  surface-container-highest: '#312e38'
+  on-surface: '#e4e0eb'
+  on-surface-variant: '#c7c3d0'
+  inverse-surface: '#e4e0eb'
+  inverse-on-surface: '#322f37'
+  outline: '#928d9a'
+  outline-variant: '#474351'
+  surface-tint: '#bdc1ff'
+  primary: '#bdc1ff'
+  on-primary: '#141742'
+  primary-container: '#3b3f7d'
+  on-primary-container: '#e0e2ff'
+  inverse-primary: '#454a92'
+  secondary: '#b9bf05'
+  on-secondary: '#1d1e01'
+  secondary-container: '#606303'
+  on-secondary-container: '#f8fb9d'
+  tertiary: '#ffaaa8'
+  on-tertiary: '#490504'
+  tertiary-container: '#6f2725'
+  on-tertiary-container: '#ffd7d6'
+  error: '#ffb4ab'
+  on-error: '#690005'
+  error-container: '#93000a'
+  on-error-container: '#ffdad6'
+  primary-fixed: '#e0e2ff'
+  primary-fixed-dim: '#bdc1ff'
+  on-primary-fixed: '#141742'
+  on-primary-fixed-variant: '#3b3f7d'
+  secondary-fixed: '#eff623'
+  secondary-fixed-dim: '#d8df07'
+  on-secondary-fixed: '#2b2d01'
+  on-secondary-fixed-variant: '#606303'
+  tertiary-fixed: '#ffd7d6'
+  tertiary-fixed-dim: '#ffaaa8'
+  on-tertiary-fixed: '#300403'
+  on-tertiary-fixed-variant: '#6f2725'
+  background: '#141217'
+  on-background: '#e4e0eb'
+  surface-variant: '#312e38'
+  navy-deep: '#0b0e32'
+  slate-surface: '#1b191f'
+  slate-border: '#2a2730'
+  page: '#141217'
+  card: '#211f26'
+  strip: '#2a2730'
+  focus-ring: '#8ab1ff'
+  brand-canvas: '#e0e2ff'
+  success: '#86d99a'
+  on-success: '#06341a'
+  success-container: '#1d5c31'
+  on-success-container: '#c9f2d3'
+font:
+  family: 'Plus Jakarta Sans'
+  # The stack the corpus has emitted on all 62 screens since normalization,
+  # unanimous and, until now, unruled.
+  stack: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+  # Every weight the type scale calls for. 500 exists only for `data-mono`.
+  weights: [400, 500, 600, 700]
+  # A surface requests the weights IT renders, not the full set.
+  delivery: 'webfont, subset to the weights the surface renders'
+  hosting: 'self-hosted'
+typography:
+  headline-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 24px
+    fontWeight: '700'
+    lineHeight: 32px
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 28px
+  headline-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 16px
+    fontWeight: '600'
+    lineHeight: 24px
+  body-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: 22px
+  body-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 14px
+    fontWeight: '400'
+    lineHeight: 20px
+  body-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 18px
+  label-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 12px
+    fontWeight: '600'
+    lineHeight: 16px
+    letterSpacing: 0.02em
+  label-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 11px
+    fontWeight: '700'
+    lineHeight: 14px
+  data-mono:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 13px
+    fontWeight: '500'
+    lineHeight: 18px
+    letterSpacing: -0.01em
+  identifier:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 13px
+    fontWeight: '600'
+    lineHeight: 18px
+    letterSpacing: 0.04em
+  mode-badge:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 10px
+    fontWeight: '700'
+    lineHeight: 12px
+    letterSpacing: 0.04em
+  hint:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 11px
+    fontWeight: '400'
+    lineHeight: 15px
+    letterSpacing: 0
+rounded:
+  xs: 0.125rem
+  sm: 0.25rem
+  md: 0.375rem
+  lg: 0.5rem
+  xl: 0.75rem
+  full: 9999px
+spacing:
+  unit: 4px
+  compact-gutter: 8px
+  standard-padding: 12px
+  container-margin: 24px
+  table-row-height: 32px
+zIndex:
+  sticky: 10
+  overlay: 20
+  popover: 30
+shadow:
+  overlay: '0 4px 12px rgb(0 0 0 / 0.16)'
+filter:
+  brand-edge: 'drop-shadow(0.3px 0 0 light-dark(transparent, var(--on-surface-variant))) drop-shadow(-0.3px 0 0 light-dark(transparent, var(--on-surface-variant))) drop-shadow(0 0.3px 0 light-dark(transparent, var(--on-surface-variant))) drop-shadow(0 -0.3px 0 light-dark(transparent, var(--on-surface-variant)))'
+motion:
+  reduced-fade: 150ms
+  ease-settle: 'cubic-bezier(0.16, 1, 0.3, 1)'
+  feedback: 120ms      # press, focus ring, hover colour — acknowledge, never perform
+  state: 240ms         # a state making its case: a notice, a banner, a jumped-to record
+  arrive: 480ms        # the one authored entrance per document load
+  stagger-step: 80ms   # between siblings arriving as a set
+  stagger-cap: 360ms   # no sibling waits longer, however long the list
+  travel-in: 12px      # an element arriving from below
+  travel-down: 8px     # an element settling from above
+  press-depth: 1px     # the only transform a control makes under the pointer
