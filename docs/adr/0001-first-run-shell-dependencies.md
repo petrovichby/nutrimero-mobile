@@ -5,7 +5,7 @@
 
 **Scope**: ruled by the coordinator as **the shared ADR** for navigation, secure store, locale
 and i18n runtime across both apps (home 001, pro 002). The pro lane's secure-store conditions
-(002 research R4) are folded in below.
+(002 research R4, coordinator-checked) are folded in below.
 
 ## Context
 
@@ -44,15 +44,18 @@ One secure-store adapter in `packages/core` serves both the pro lane's session (
    active), and `AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY` (002 R4's first proposal) is deprecated in
    SDK 57's `expo-secure-store`. The class is set once in the shared adapter, not per call; **a
    background read, if one ever appears, is an amendment to this ADR, not a per-call option.**
-2. **Android backup.** `android.allowBackup: false` in each app's `app.json`, and the
+2. **Android backup.** `android.allowBackup: false` in **both** apps' `app.json`, and the
    `expo-secure-store` config plugin's `configureAndroidBackup` enabled so SecureStore's shared
-   preferences are excluded from Auto Backup even if backup is later re-enabled (the SDK 57 docs
-   warn a restored SecureStore fails to decrypt). Nothing we store is restorable by design.
+   preferences are excluded from Auto Backup even if backup is later re-enabled. Reason: the
+   Keystore keys that encrypt the entries go with uninstall, so a restored entry cannot be
+   decrypted (SDK 57 docs warn of the same). Nothing we store is restorable by design.
 3. **Reinstall orphan clear.** SDK 57 docs: data "will persist across app uninstallations if the
    app is reinstalled with the same bundle ID". On launch, **before any read — and before the pro
-   session's account comparison (002 FR-001a)** — if the install marker (a file in the app's
+   session's `userId` comparison (002 FR-001a)** — if the install marker (a file in the app's
    document directory, written with `expo-file-system`, removed by uninstall) is absent, the
-   adapter clears every key it owns, session tokens included, then writes the marker.
+   adapter clears every key it owns, session tokens included, then writes the marker. The clear
+   finishes before *any* read: an orphaned Keychain `userId` would otherwise make a fresh install
+   look like the same person and skip the session wipe.
 4. **No values in logs**, crash reports or analytics; the adapter logs key names at most.
 5. **Size.** The SDK 57 docs state no fixed limit: "Large payloads can be rejected by the
    underlying platform. Historically, some iOS releases refused values above roughly 2048
@@ -67,8 +70,13 @@ One secure-store adapter in `packages/core` serves both the pro lane's session (
    | Pro access token | HS256 JWT `{sub, gen, iat, exp}` | ≈ 250 bytes |
 
    Each package asserts its own keys' maximal serialized size ≤ 2048 bytes in a unit test.
-6. **Key names** use only alphanumerics, `.`, `-`, `_` (SDK 57 constraint); namespaced per owner
-   (`nutrimero.home.*`, `nutrimero.session.*`).
+6. **Key names** use only alphanumerics, `.`, `-`, `_` (SDK 57 constraint); namespaced per owner:
+   - `nutrimero.session.*` (session layer, pro 002): `accessToken`, `refreshToken`, `userId`,
+     `activeCompanyId`, `pendingWipe`, plus pro's per-bakery markers;
+   - `nutrimero.home.*` (Home 001): `units`, `dietaryProfile`, `pantrySeed`, `onboarding`.
+
+   None of these values is ever logged (condition 4). If a Home value ever approaches the budget
+   (e.g. a larger pantry), it is split across keys rather than raising the limit.
 
 ## Consequences
 
