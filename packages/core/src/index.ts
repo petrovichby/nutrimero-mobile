@@ -1,3 +1,5 @@
+// The main entry stays Node-loadable: nothing exported here may import a native module.
+// Platform adapters live in the `@nutrimero/core/native` entry (src/native.ts).
 export type { ApiClient, ApiClientOptions } from "./api/client";
 export { createApiClient } from "./api/client";
 export type { ApiErrorCode, ClassifiedError, ErrorKind } from "./api/errors";
@@ -14,8 +16,6 @@ export type { WipeOutcome } from "./device-store/fresh-install";
 export { ensureFreshInstallWiped } from "./device-store/fresh-install";
 export type { InstallMarker } from "./device-store/install-marker";
 export { createMemoryMarker } from "./device-store/install-marker";
-export { fileInstallMarker } from "./device-store/install-marker-file";
-export { secureStoreAdapter } from "./device-store/secure-store-adapter";
 export type {
   EntitlementAnswer,
   EntitlementPort,
