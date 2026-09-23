@@ -94,8 +94,10 @@ are **stops** until that ADR is approved at gate 2.
   exists, the snapshot is taken from a **local** api instance checked out at `contract/SOURCE`'s
   commit and seeded with `fid:import` — never production. `--api-commit` is then a fact by
   construction; the script still refuses unless it equals `contract/SOURCE`.
-- **Test**: every manifest staple resolves with names in all seven UI locales (a locale FID lacks
-  fails and is ruled, never hand-filled); every mapped allergen code
+- **Test**: every manifest staple resolves; its names are asserted in all seven UI locales — en, de,
+  hu required; lt, pl, be, uk reported as "pending translation run" until api `feat/021` is
+  imported (spec FR-017's temporary fallback: the UI shows English), any other gap fails and is
+  ruled, never hand-filled; every mapped allergen code
   resolves; the header carries a 40-hex api commit. A hand edit is a suppression-class violation
   (XII) — the file header says so and the PR template for regeneration shows the command used.
 - **Open content item**: the 14 FID ids are chosen by querying `/fid/ingredients?q=` during

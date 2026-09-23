@@ -163,8 +163,9 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
   path until a settings feature exists.
 - **No recipes to evaluate yet**: 001 builds and tests the fit evaluation (FR-018) but shows no
   fit flags — there are no recipes until 003, which displays them.
-- **Snapshot staple missing a locale name**: shows the en FID name; a missing staple fails the
-  build (FR-017), never the user.
+- **Snapshot staple missing a locale name**: shows the en FID name — today the expected case for
+  lt, pl, be and uk until api `feat/021`'s translation run is imported (FR-017's temporary
+  fallback); a missing staple fails the build (FR-017), never the user.
 - **Storage write fails**: the user is told the answer could not be saved and may continue;
   onboarding is re-offered on next launch.
 - **Reduce Motion**: splash exit and step transitions become instant cuts.
@@ -195,7 +196,8 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
   the product-label disclaimer.
 - **FR-007**: The pantry step MUST present the 14 staples of `07-onboarding-pantry`, each
   identified by its FID ingredient and named from the FID snapshot in the user's language, with a
-  live count, stored on the device.
+  live count, stored on the device. A staple whose name the snapshot lacks in the UI locale is
+  shown in English (the temporary fallback under FR-017).
 - **FR-008**: Onboarding MUST be recorded as completed when the last step is finished or skipped,
   and resume at the first unfinished step if interrupted.
 
@@ -224,8 +226,16 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 - **FR-015**: The snapshot MUST carry, in its header, the api commit it was taken at.
 - **FR-016**: The app MUST NOT refresh FID data at runtime in 001 (no session exists to do it
   with) until a guest-read policy exists.
-- **FR-017**: A test MUST prove every staple's FID id resolves in the snapshot with names in all
-  seven UI locales; a locale FID lacks fails the test and is ruled (owner), never filled by hand.
+- **FR-017**: A test MUST prove every staple's FID id resolves in the snapshot and MUST assert its
+  names in all seven UI locales. en, de and hu MUST be present; **lt, pl, be and uk are marked
+  "pending translation run"** rather than failing the build while the fallback below stands. Any
+  other missing locale fails the test and is ruled (owner); nothing is ever filled by hand.
+  **Temporary fallback (coordinator ruling 2026-09-23; tied to api `feat/021`)**: FID ingredient
+  names in **lt, pl, be and uk** arrive by the api's machine-translation run (`feat/021`, after
+  `fix/002` and S1). Until that run is imported, the snapshot has no names in those four locales,
+  and a staple whose name is missing in the UI locale is shown **in English** — never hand-filled.
+  When the run lands, the snapshot is regenerated and this clause is retired with its own dated
+  entry.
   A hand edit to the snapshot is a suppression-class violation (Constitution XII).
 - **FR-018 (owner's ruling, 2026-09-23)**: The dietary option → FID mapping is: Gluten-free ⇒
   cereals containing gluten; Lactose-free ⇒ milk (incl. lactose); Nut allergy ⇒ tree nuts **and**
@@ -309,8 +319,9 @@ build time, against the contract-typed responses.
 - **SC-003**: The dietary profile and pantry seed are absent from device backups and from every
   log and crash report.
 - **SC-004**: After "Clear my data on this device", zero onboarding data remains on the device.
-- **SC-005**: Every staple resolves in the FID snapshot in all seven UI locales (build-time test), and
-  the snapshot names the api commit it came from.
+- **SC-005**: Every staple resolves in the FID snapshot (build-time test) with names in en, de and hu,
+  and in lt, pl, be and uk once api `feat/021` is imported (until then asserted as "pending
+  translation run"); the snapshot names the api commit it came from.
 - **SC-006**: Every screen in scope passes a VoiceOver and a TalkBack walkthrough and renders
   without clipped meaning at 1.3× text size in all seven UI locales (be and uk measured in Onest).
 - **SC-007**: Zero user-facing strings outside the seven catalogs; the catalogs have identical
@@ -318,6 +329,10 @@ build time, against the contract-typed responses.
 
 ## Dependencies
 
+- **api `feat/021`** (machine-translated FID ingredient names in lt, pl, be, uk; after `fix/002`
+  and S1): not blocking. Until it is imported the pantry step shows those locales' staple names in
+  English (FR-017's temporary fallback); on import, regenerate the snapshot and retire the fallback
+  with a dated entry.
 - **DESIGN.md 0.5.0** (design-mobile lane authors `mobile/AMENDMENTS.md` in nutrimero-design; the
   Home lane ports it into `docs/DESIGN.md` by PR, with the PRODUCT.md staleness the census found).
   The splash is re-drawn there (real logo, smaller, owner-approved first — D-5); FR-001 builds
