@@ -1,0 +1,15 @@
+{
+  "app": {
+    "homeBaker": {
+      "name": "Nutrimero Home Baker",
+      "tagline": "Professzionális sütési tudás otthonra"
+    },
+    "proBaker": {
+      "name": "Nutrimero Pro Baker",
+      "tagline": "A receptjeid a pékségben"
+    }
+  },
+  "common": {
+    "offlineBanner": "Offline — mentett adatok láthatók"
+  }
+}
