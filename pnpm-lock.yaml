@@ -290,6 +290,16 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
 
+  packages/features/diet-profile:
+    dependencies:
+      '@nutrimero/feature-home-data':
+        specifier: workspace:*
+        version: link:../home-data
+    devDependencies:
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
   packages/features/home-data:
     dependencies:
       '@nutrimero/core':
