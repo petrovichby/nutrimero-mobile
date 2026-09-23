@@ -24,9 +24,9 @@ delivery phases map as follows:
 
 | Tag | Clears when |
 |---|---|
-| ⛔SYNC | PR #5 (contract sync, api `4a4356b`) merged to `main` and rebased into `lane/pro-baker` |
-| ⛔ADR1 | ADR 0001 (Home; expo-router, expo-secure-store, expo-localization, use-intl) ruled and its dependencies landed on `main` |
-| ⛔ADR2 | ADR 0002 (this lane; expo-sqlite, expo-network, and the FR-019 amendment) ruled |
+| ~~⛔SYNC~~ ✅ | **Cleared**: PR #5 merged as `fab871e`, and the lane was rebased (T001) |
+| ⛔ADR1 | **PR #4 merges with ADR 0001 `Accepted`** (Home; expo-router, expo-secure-store, expo-localization, use-intl). This does not wait for Home's phase 3. Whichever lane's PR lands first installs `expo-secure-store` and widens `pnpm-workspace.yaml`; the other lane rebases |
+| ~~⛔ADR2~~ ✅ | **Cleared**: ADR 0002 accepted 2026-09-23 (saved labels in the default, backed-up directory; FR-019 unchanged; FR-022's backup clause removed for saved labels) |
 | ⛔DESIGN | the design-mobile lane's Label desk pass approved (screen inventory 1–9) |
 
 **Git discipline** (constitution XII):
@@ -40,15 +40,15 @@ delivery phases map as follows:
 
 ---
 
-## Phase 1: Setup (⛔SYNC, ⛔ADR1)
+## Phase 1: Setup (⛔ADR1)
 
 **Purpose**: make the workspace ready for a feature pack and the shared session work.
 
-- [ ] T001 Rebase `lane/pro-baker` onto `main` after PR #5 merges. Confirm `pnpm contract:generate` produces no diff and that `packages/core/src/api/generated/schema.d.ts` contains O1–O11 from `specs/002-pro-label-desk/contracts/api-consumption.md`
-- [ ] T002 Add `packages/features/*` to `pnpm-workspace.yaml`, if ADR 0001 / Home have not already done it. This is a shared file, so it goes in the seam announcement (T011)
+- [x] T001 Rebase `lane/pro-baker` onto `main` after PR #5 merges. *(Done 2026-09-23: rebased onto `fab871e`; `pnpm contract:generate` gives no diff; O1–O11 present.)* Confirm `pnpm contract:generate` produces no diff and that `packages/core/src/api/generated/schema.d.ts` contains O1–O11 from `specs/002-pro-label-desk/contracts/api-consumption.md`
+- [ ] T002 Add `packages/features/*` to `pnpm-workspace.yaml`, unless Home's PR #4 landed it first (then rebase instead). This is a shared file, so it goes in the seam announcement (T011)
 - [ ] T003 Create the feature pack `packages/features/labels/` with `package.json` (`@nutrimero/feature-labels`, private, `main: src/index.ts`, `typecheck` script, deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`), `tsconfig.json` extending `../../../tsconfig.base.json`, and `src/index.ts`
 - [ ] T004 [P] Add `@nutrimero/feature-labels: workspace:*` to `apps/pro-baker/package.json` and run `pnpm install`, so the lockfile updates
-- [ ] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only, each recorded from a real api response at `4a4356b`:
+- [ ] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only. Each is recorded from a **local** api at `contract/SOURCE`'s commit (`4a4356b`), seeded with `fid:import`, the same rule as Home's snapshot. **Never from production.** The recording script and seed commit are noted in `__fixtures__/README.md`. Fixtures:
   - a counter-card grid (complete)
   - a packaging grid (Additives `cannot_be_held`, P-02)
   - a no-composition grid
@@ -60,13 +60,13 @@ delivery phases map as follows:
 
 ---
 
-## Phase 2: Foundational — shared session, client, entitlement, release block (⛔SYNC, ⛔ADR1)
+## Phase 2: Foundational — shared session, client, entitlement, release block (⛔ADR1)
 
 **Purpose**: the `packages/core` capability from `contracts/session-core.md`. Every story needs
 it. **No user-story work starts before this checkpoint.**
 
 - [ ] T006 [P] Write `packages/core/src/api/errors.ts` + `errors.test.ts`. It classifies generated error envelopes into `unauthorized | insufficientRole | notFound | companyArchived | validation | network | unknown`, and covers pinned fact P5
-- [ ] T007 [P] Write `packages/core/src/session/token-store.ts`: a port plus the `expo-secure-store` adapter per ADR 0001's conditions (`WHEN_UNLOCKED_THIS_DEVICE_ONLY`, the reinstall-marker clear before any read, no value logging). Add `token-store.test.ts` covering the port contract with an in-memory fake
+- [ ] T007 [P] Write `packages/core/src/session/token-store.ts`: a port plus the `expo-secure-store` adapter (install `expo-secure-store` only if Home's PR #4 has not) per ADR 0001's conditions (`WHEN_UNLOCKED_THIS_DEVICE_ONLY`, the reinstall-marker clear before any read, no value logging). Add `token-store.test.ts` covering the port contract with an in-memory fake
 - [ ] T008 Write `packages/core/src/session/wipe.ts` + `wipe.test.ts` (R10):
   - `registerWiper(name, fn)` and an ordered, isolated wipe sequence
   - `pendingWipe` set before the wipe and cleared only when every wiper succeeds
@@ -78,12 +78,12 @@ it. **No user-story work starts before this checkpoint.**
   - single-flight refresh on 401 via O2, with the rotated refresh token persisted
   - wire it into `packages/core/src/api/client.ts` without changing `createApiClient`'s existing signature for Home
 - [ ] T010 Write `packages/core/src/session/session.ts`, `company.ts` + `session.test.ts` (depends on T007–T009), following the data-model Session state machine:
-  - `signIn` via O1 then O4, with the **different-`userId` wipe before any read** (FR-001a)
+  - `signIn` via O1 then O4, with the **wipe before any read when the `userId` differs or none is stored** (FR-001a; ADR 0002 relies on the missing-id case, and the tests cover both)
   - `signOut` runs the wipe, then best-effort O3
   - `chooseCompany` rejects ids that are not memberships
   - `onMembershipLost` fires on the O4 diff, `COMPANY_ARCHIVED` or a company 404
   - export it all from `packages/core/src/index.ts`
-- [ ] T011 Send the **seam announcement** to the coordinator for the Home lane (III). It lists the `packages/core` surface (T006–T010, T012), `pnpm-workspace.yaml` (T002), and the new `packages/features/labels`. Record the coordinator's acknowledgement in the PR body. **The phase-1 PR does not open before this**
+- [ ] T011 Send the **seam announcement block** to the coordinator when PR A is ready (III). Home has already read `contracts/session-core.md`; the coordinator acknowledges in one line. It lists the `packages/core` surface (T006–T010, T012), `pnpm-workspace.yaml` (T002), and the new `packages/features/labels`. Record the coordinator's acknowledgement in the PR body. **The phase-1 PR does not open before this**
 - [ ] T012 [P] Write `packages/core/src/entitlements/entitlement.ts` + `entitlement.test.ts` (R9):
   - a port returning `included | not_included | unavailable`
   - the stub adapter always returns `unavailable`
@@ -150,7 +150,7 @@ with every gap named.
 **Independent Test**: `quickstart.md` Q3 and Q4.
 
 - [ ] T026 [P] [US2] Write `packages/features/labels/src/model/label-languages.ts` + `label-languages.test.ts` (R1):
-  - the proven set is en-US (`labels.e2e-spec.ts:210`), de-DE (`:211`) and mt-MT (`:303`/`:359`), each with `provenBy`
+  - the proven set is en-US, de-DE and mt-MT, each with `provenBy` = **spec file › describe › test title** (verbatim titles in research R1; never line numbers)
   - the test **fails if any entry lacks a citation**
   - the default is the last used language, else the UI match if offered, else en-US
   - lt-LT and hu-HU are absent
@@ -192,26 +192,26 @@ with every gap named.
 
 ---
 
-## Phase 6: User Story 4 — Saved labels on the floor with no signal (P2) (⛔ADR2)
+## Phase 6: User Story 4 — Saved labels on the floor with no signal (P2)
 
 **Goal**: issued labels persist per bakery and are readable offline. Everything else shows an
 offline state.
 
 **Independent Test**: `quickstart.md` Q8 and Q9.
 
-- [ ] T033 [US4] Install `expo-sqlite` and `expo-network` via `npx expo install` in `packages/features/labels`, and add the expo-sqlite plugin plus `android.allowBackup: false` to `apps/pro-baker/app.config.ts` (ADR 0002)
+- [ ] T033 [US4] Install `expo-sqlite` and `expo-network` via `npx expo install` in `packages/features/labels`, and add the expo-sqlite plugin to `apps/pro-baker/app.config.ts` (ADR 0002). `android.allowBackup: false` comes from ADR 0001; set it here if PR #4 did not
 - [ ] T034 [US4] Write `packages/features/labels/src/store/saved-labels.ts` + `saved-labels.test.ts` (data model: Saved label):
   - one table keyed (companyId, issuedId) with a JSON document, **no verdict column**; the test asserts the schema has none
   - upsert on every O10/O11 read
   - list grouped by product
   - `purgeCompany`, `purgeAll`
-  - iOS database in the caches directory (`Paths.cache`)
+  - database in expo-sqlite's default directory (ADR 0002, as accepted)
   - the test runs against the port with an in-memory fake
-- [ ] T035 [US4] Write `packages/features/labels/src/store/eviction-notice.ts` + test (ADR 0002): a per-bakery "labels were saved" marker in the secure store. If the store is empty while the marker is set, the "device cleared saved labels" notice shows once and the marker clears
+- T035 — **Dropped** (ADR 0002 accepted: saved labels live in the durable default directory, so there is no eviction and no notice). The ID is retained so later IDs stay stable.
 - [ ] T036 [US4] Write `packages/features/labels/src/store/status-refresh.ts` + test (FR-020): on app foreground and on the `expo-network` reconnect event, re-read each saved label via O11 for its status only, update `status` and `statusConfirmedAt`, and never store the verdict
 - [ ] T037 [US4] Register the saved-labels wiper (`purgeAll`) and the `onMembershipLost` → `purgeCompany` handler in `apps/pro-baker/src/wiring.ts` (FR-022)
 - [ ] T038 [US4] Wire T030's loaders to upsert into the store (FR-019)
-- [ ] T039 [US4] (⛔DESIGN) Write `packages/features/labels/src/screens/saved-labels.tsx`: grouped by product, "status as of", "Match check needs a connection", and the eviction notice. Offline launch opens here (US4-1). Write `packages/features/labels/src/screens/offline-state.tsx` for list, grid and preview with retry (FR-021)
+- [ ] T039 [US4] (⛔DESIGN) Write `packages/features/labels/src/screens/saved-labels.tsx`: grouped by product, "status as of", "Match check needs a connection". Offline launch opens here (US4-1). Write `packages/features/labels/src/screens/offline-state.tsx` for list, grid and preview with retry (FR-021)
 
 ---
 
@@ -245,13 +245,13 @@ switch and membership loss.
 ## Dependencies & execution order
 
 ```text
-⛔SYNC + ⛔ADR1 → Phase 1 → Phase 2 (T006,T007,T012,T014 ∥ → T008 → T009 → T010 → T011 → T013) ─┐
+⛔ADR1 (PR #4) → Phase 1 → Phase 2 (T006,T007,T012,T014 ∥ → T008 → T009 → T010 → T011 → T013) ─┐
                                                                                              │
    ┌─────────────────────────────────────────────────────────────────────────────────────────┘
    ├─ US1 model (T015–T020) ── ⛔DESIGN ─→ US1 screens (T021–T025) ─┐
    ├─ US2 model (T026–T028) ── ⛔DESIGN ─→ T029                      ├─→ US5 (T040–T042) → Polish
    ├─ US3 (T030–T031) ──────── ⛔DESIGN ─→ T032                      │
-   └─ ⛔ADR2 → US4 (T033–T038) ─ ⛔DESIGN ─→ T039 ──────────────────┘
+   └─ US4 (T033–T038) ─ ⛔DESIGN ─→ T039 ──────────────────┘
 ```
 
 - **The US1–US3 model tasks are independent of each other** and can start in parallel as soon as
@@ -272,11 +272,11 @@ switch and membership loss.
 1. **MVP = Phase 1 + Phase 2 + US1** (readiness and grid). This is shippable to internal builds
    under the `unavailable` banner. The store profile cannot build (T013), by design.
 2. Add US2 (preview), then US3 (match check). Each is demonstrable on its own.
-3. US4 lands when ADR 0002 is ruled. US5's wipe tests close the feature.
+3. US4 follows (ADR 0002 is accepted). US5's wipe tests close the feature.
 4. **PR slicing** (proposed):
    - PR A: Phases 1–2, the shared core, after the seam acknowledgement
    - PR B: the US1–US3 models
    - PR C: screens, after the design pass
-   - PR D: US4, after ADR 0002
+   - PR D: US4
    - PR E: US5 + Polish
    - Each PR must be CI-green and stop for the coordinator's sweep.

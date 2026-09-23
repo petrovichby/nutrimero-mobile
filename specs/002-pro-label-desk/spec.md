@@ -311,9 +311,6 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 
 - **FR-019**: Every issued label the desk loads MUST be saved on the device, per bakery, and be
   readable offline in full under Saved labels.
-  *Proposed amendment (ADR 0002, pending the coordinator's word):* "…unless the device clears
-  them under storage pressure, which the desk states". On iOS, SDK 57 offers no backup-exclusion
-  path outside the caches directory.
 - **FR-020**: Saved labels MUST show the time their status was last confirmed by the api; statuses
   MUST refresh automatically on foreground and on reconnect.
 - **FR-021**: Products, grids and previews are online-only: offline they MUST show an offline state
@@ -321,7 +318,11 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-022**: On sign-out, account erase, or sign-in by a different account (FR-001a), all saved
   labels and session data MUST be deleted from the device; when
   the api reports loss of membership or bakery archival, that bakery's saved labels MUST be
-  deleted. Saved labels MUST be excluded from OS-level cloud/device backups.
+  deleted. *Amended 2026-09-23 (ADR 0002 accepted):* the clause "Saved labels MUST be excluded
+  from OS-level cloud/device backups" is removed. Saved labels are copies of documents already
+  printed on packs, not confidential data. Session data stays excluded through the secure store.
+  A backup restored to another device carries no session, so FR-001a's wipe runs at first
+  sign-in.
 
 **Tier (Constitution VII)**
 

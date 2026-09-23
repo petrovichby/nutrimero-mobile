@@ -21,9 +21,19 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
 **Decision.**
 - The desk's label-language list is a **proven set**. A language enters only when an api
   **rendering** test (one that asserts rendered content) exercises it (gate 2 ruling):
-  - `en-US`: `src/label-text/labels.e2e-spec.ts:210` (EU1 packaging nutrition in English)
-  - `de-DE`: `src/label-text/labels.e2e-spec.ts:211`, and `issuing.e2e-spec.ts:126`
-  - `mt-MT`: `src/label-text/labels.e2e-spec.ts:303` and `:359` (EU1 packaging rendered in Maltese)
+  Citations are **by test title**, not by line (coordinator ruling: lines move, and titles are
+  the api's own names for what is proven):
+  - `en-US` and `de-DE`: `src/label-text/labels.e2e-spec.ts` › "a product label, read (019 US1,
+    US2, US4, US5)" › "US2: the decimal mark is the label language s, at the same figures
+    (FR-020)" (title verbatim). `de-DE` is also cited in `issuing.e2e-spec.ts` › "an issued
+    label (019 US3)" › "reads a rendering today, which is what makes the red below mean
+    something".
+  - `mt-MT`: `labels.e2e-spec.ts` › same describe › "US5: a term the language does not hold is
+    a gap, and no other language is printed", and "US5: an origin renders its country by name,
+    and the seed has a name for every one of them".
+  - **Note on mt-MT:** Maltese renders with an honest `not_recorded/label_term per_100g` gap on
+    packaging, because that term is authored for English and German only. The desk shows it as
+    a gap, as FR-013 requires.
 - **Checked and excluded at gate 2**: `hu-HU` and `lt-LT` appear in the label suites only at
   `src/label-text/query-cost.e2e-spec.ts:420`. That test issues twenty counter cards in twenty
   locales and asserts query counts and list length, never rendered content, so it is not a
@@ -117,13 +127,18 @@ and stops for an ADR.
 **Finding.**
 - Saved labels are immutable JSON documents: frozen rendering, structure, text, and status
   fields. Expect tens to a few hundred per bakery.
-- They must be grouped by product, purged per bakery, and excluded from OS backups (FR-022).
+- They must be grouped by product and purged per bakery (FR-022). Backup inclusion was ruled at
+  ADR 0002's acceptance: saved labels are included, and session data is excluded.
 
 **Gate 2: authored by this lane as ADR 0002** (`docs/adr/0002-saved-label-document-store.md`):
 `expo-sqlite` plus `expo-network`, Pro-only.
-- SDK 57 documents no iOS backup-exclusion path, so the ADR takes the stated fallback: the
-  caches directory plus disclosed eviction.
-- That fallback proposes an FR-019 amendment, pending the coordinator's word.
+- **Accepted 2026-09-23, with the backup question ruled the other way**:
+  - Saved labels are non-confidential copies of printed packs, so they live in expo-sqlite's
+    default (backed-up) directory.
+  - FR-022's exclusion clause is amended out for them.
+  - FR-019 is unchanged.
+  - The caches-directory proposal is kept in the ADR as the fallback, if the owner overturns
+    the ruling.
 
 *Original judgement, kept for the record:* a local database or document store is a new
 dependency category and stops for an ADR.
@@ -205,7 +220,8 @@ full rendering and structure.
 
 **Decision.**
 - The session layer stores the last signed-in user id in the secure store.
-- On a successful sign-in, if the returned user id differs from the stored one:
+- On a successful sign-in, if the returned user id differs from the stored one, **or no user id
+  is stored** (a fresh install, or a backup restored to another device: ADR 0002):
   1. core wipes its own data;
   2. core awaits every app-registered wiper, in registration order, each isolated so one
      failure does not skip the rest;

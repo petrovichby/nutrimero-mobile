@@ -8,7 +8,7 @@ in implementation.
 
 | Member | Behavior |
 |---|---|
-| `signIn(email, password)` | O1. If the returned user differs from the stored `userId`, runs the **wipe sequence** before resolving (FR-001a). Resolves to the signed-in state with memberships from O4. |
+| `signIn(email, password)` | O1. If the returned user differs from the stored `userId`, **or no `userId` is stored**, runs the **wipe sequence** before resolving (FR-001a; ADR 0002 relies on the missing-id case). Resolves to the signed-in state with memberships from O4. |
 | `signOut()` | Runs the wipe sequence, then best-effort O3. Resolves to signed-out even offline. |
 | `registerWiper(name, fn)` | Called at app start. `fn` must be idempotent. Wipers run after core's own wipe, in registration order, each isolated. |
 | `activeCompany` / `chooseCompany(id)` | FR-002. Rejects an id not in the current memberships. |

@@ -39,7 +39,7 @@ from the rule-set id.
 
 **Transitions:**
 - `signedOut` → (sign-in, same `userId`) → `signedIn(company?)`
-- `signedOut` → (sign-in, different `userId`) → `wiping` → `signedIn(company?)`
+- `signedOut` → (sign-in, different or no stored `userId`) → `wiping` → `signedIn(company?)`
 - `signedIn` → (sign-out \| erase) → `wiping` → `signedOut`
 - `signedIn` → (refresh fails) → `expired` → (sign-in) → as above
 - On launch, if `pendingWipe` → `wiping` before any read.
@@ -72,14 +72,15 @@ from the rule-set id.
   - `/me` no longer lists that membership;
   - a read returns `COMPANY_ARCHIVED`, or 404 on the company;
   - the session wipe runs (all companies).
-- The store lives outside OS backups (R5).
+- The store is **included** in OS backups (ADR 0002, as accepted). A restore to another device
+  carries no session, so the first sign-in wipes the store (R10).
 
 **Transitions (status):** `active → superseded | withdrawn`, `superseded → withdrawn`. The app
 mirrors whatever the api reports and never infers a transition.
 
 ### Label-language set (bundled data; `packages/features/labels`)
 
-- A list of `{ tag, provenBy: '<api rendering-test path:line>' }`. Today it holds en-US, de-DE and
+- A list of `{ tag, provenBy: '<api spec file › describe › test title>' }`. Today it holds en-US, de-DE and
   mt-MT (R1, gate 2).
 - Adding an entry without a `provenBy` citation fails a unit test.
 - It is replaced by the api listing when B11 ships.

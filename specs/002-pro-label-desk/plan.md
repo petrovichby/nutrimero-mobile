@@ -6,9 +6,10 @@
 
 **Status**: **Gate 2 PASSED with rulings** (coordinator, 2026-09-23; see *Gate 2 rulings*
 below). Nothing is implemented.
-- Phase 1 waits on **PR #5** (contract sync, api `4a4356b`) merging and on **ADR 0001** (Home)
-  being ruled.
-- Phase 3 waits on **ADR 0002** (this lane).
+- PR #5 (contract sync) merged as `fab871e`, and the lane is rebased (T001 done).
+- Phase 1 waits only on **PR #4** merging with **ADR 0001 `Accepted`**.
+- **ADR 0002 is accepted.** Saved labels live in the default (backed-up) directory, FR-019 is
+  unchanged, and FR-022's backup clause is removed for saved labels.
 
 ## Summary
 
@@ -40,7 +41,7 @@ What the plan avoids:
 |---|---|
 | **Language/Version** | TypeScript 6.0 (strict), React 19.2, React Native 0.86 |
 | **Primary Dependencies** | Existing: Expo SDK 57, `openapi-fetch` 0.17, generated types (`openapi-typescript` 7). **ADR 0001** (shared, Home-owned): `expo-router`, `expo-secure-store`, `expo-localization`, `use-intl`. **ADR 0002** (this lane): `expo-sqlite`, `expo-network` |
-| **Storage** | Secure store: tokens, `userId`, `pendingWipe`. Local store: saved issued labels, per company, outside OS backups (R5). Nothing else persisted (FR-021) |
+| **Storage** | Secure store: tokens, `userId`, `pendingWipe`. Local store: saved issued labels, per company, in expo-sqlite's default (backed-up) directory (ADR 0002, as accepted). Nothing else persisted (FR-021) |
 | **Testing** | Vitest (existing) for every pure module: session, wipe, error classifier, filter, readiness, gap sentences, rendering equality, language set, pinned contract facts. Screens are validated by `quickstart.md` Q1–Q16 and the VoiceOver/TalkBack audit |
 | **Target Platform** | iOS and iPadOS, and Android (phone and tablet) via Expo; **13" tablet first** |
 | **Project Type** | Mobile app in a pnpm monorepo (thin app + shared packages) |
@@ -59,7 +60,7 @@ What the plan avoids:
 | III | Core + packs, shared seam | ✅ **seam announcement required** | Session goes into `packages/core`, the desk into `packages/features/labels`, and `apps/pro-baker` stays thin. The `packages/*` additions (`contracts/session-core.md`) are announced to Home through the coordinator before merge |
 | IV | FID-only allergen/nutrition | ✅ | Emphasis, statements and figures come only from the api rendering (FR-014). There is no local derivation path, pinned by a test that the preview renders only `sections` |
 | V | Honest provenance | ✅ n/a | No imagery. The FR-023 plan-lacks state has no dark pattern (equal-weight decline, no blur) |
-| VI | Privacy by architecture | ✅ | No dietary profile involved. Bakery data is purged on sign-out, account switch and membership loss, and kept out of OS backups |
+| VI | Privacy by architecture | ✅ | No dietary profile involved. Bakery data is purged on sign-out, account switch and membership loss. Session data stays out of backups via the secure store. Saved labels (non-confidential copies of printed packs) are backed up, and a restore elsewhere is wiped at first sign-in (ADR 0002) |
 | VII | Entitlements server-side | ✅ | An entitlement port renders the server state; its only implementation returns `unavailable`; a non-dismissible banner shows while it returns `unavailable` (G2-Q1-A). The **store build fails at config evaluation** while the adapter is the stub (R9); this is mechanical, not a checklist |
 | VIII | Offline read-only, first-class | ⚠️ **justified deviation** | Saved issued labels are the offline cache, refreshed by re-reading. There is **no delta sync** because the api has none, and other data is online-only by the coordinator's 002 ruling. See Complexity Tracking |
 | IX | Multilingual | ✅ | All strings come from the catalogs. Label-type names are catalog keys by id. Gap sentences use catalog templates. The label language is separate from the UI language |
@@ -132,10 +133,10 @@ apps/pro-baker/src/
 
 | Phase | Content | Blocked by |
 |---|---|---|
-| **0** | Nothing to build. Wait for PR #5 (contract sync) to merge and ADR 0001 to be ruled | coordinator |
-| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port (+ exported source), the P1–P6 contract tests, `apps/pro-baker/app.config.ts` + `eas.json` with the **store-profile build failure** and its test. The seam announcement is sent before the PR opens | PR #5 + ADR 0001 |
+| **0** | Nothing to build. PR #5 is merged (`fab871e`, T001 done); wait for PR #4 with ADR 0001 `Accepted` | coordinator |
+| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port (+ exported source), the P1–P6 contract tests, `apps/pro-baker/app.config.ts` + `eas.json` with the **store-profile build failure** and its test. The seam announcement is sent before the PR opens | PR #4 (ADR 0001 Accepted) |
 | **2** | `packages/features/labels/model`: readiness, gap sentences, rendering view model, language set, bounded filter, with fixture tests (SC-002/003) | phase 1 types |
-| **3** | Saved-labels store, purge rules, backup exclusion (verified on device), and status refresh on foreground/reconnect | ADR 0002 (and the FR-019 amendment it proposes) |
+| **3** | Saved-labels store, purge rules, and status refresh on foreground/reconnect | ADR 0002 (**Accepted**) |
 | **4** | Screens 1–9 per the approved design; navigation shell; wiring | the design pass + ADR 0001 (expo-router) |
 | **5** | Accessibility audit (VoiceOver/TalkBack, 1.3×, keyboard), de/lt catalog review, quickstart Q1–Q16 on tablet and phone | phase 4 |
 | **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. Enforced mechanically: the store profile fails to build while the adapter is the stub | api B8 |
@@ -146,7 +147,7 @@ apps/pro-baker/src/
   store build profile fails at build time while the adapter is the stub (R9).
 - **G2-Q2 → the proven set stands.**
   - Checked at the coordinator's request: hu-HU is **not** rendering-proven (query-cost test only).
-  - Applying the same criterion **adds mt-MT** (rendering-proven, `labels.e2e-spec.ts:303/359`).
+  - Applying the same criterion **adds mt-MT** (rendering-proven; cited by test title in R1).
   - The set is therefore en-US, de-DE and mt-MT (R1).
   - B11b (lt-LT) is queued on the api after 020 P1; lt-LT enters with its citation when it lands.
   - B11 remains the durable ask.
