@@ -411,7 +411,7 @@ Checked against `nutrimero-api` `origin/main` `4a4356b` (104 paths). This repo's
 | B6 | FR-015 | 🟡 `/products/{id}/labels/{ruleSetId}/issued` — per label type, unpaged, full payloads | A product's full history needs one read per label type; bounded by offered EU label types. Ask (non-blocking): per-product issued list or paging |
 | B7 | FR-016/017 | ✅ `/issued-labels/{issuedId}` with `differsFromCurrent` | Verdict only on the single read (019 R9) |
 | B8 | FR-023 | ❌ no entitlements service | Ask: per-company entitlement answer for Pro. The api service must model both scopes — per-user for Home (IDEATION §7), per-bakery for Pro (§5.3). Queued by the coordinator after api 020 P1 |
-| B9 | FR-022 | ✅ `INSUFFICIENT_ROLE` / 404 / `COMPANY_ARCHIVED` refusals | Drives cache deletion |
+| B9 | FR-022 | ✅ `COMPANY_ARCHIVED` / `MEMBERSHIP_REQUIRED` / `MEMBERSHIP_NOT_ACTIVE` refusals (a plain `NOT_FOUND` is not a lost bakery) | Drives cache deletion |
 | B10 | — | watch: api 020 (declaration name) in flight | May add the food name to renderings; the desk renders whatever sections arrive (FR-010) |
 | B11 | FR-011 | ❌ no list of label languages; `language` is a free string (2–35 chars, default en-US) | Ask: a listing of languages the label vocabulary holds. Until then FR-011's proven-only list |
 | B12 | FR-003 | ✅ (by absence) `declarationsEnabled` on the company schema only; no route gates on it | Pinned in the plan's contract check |

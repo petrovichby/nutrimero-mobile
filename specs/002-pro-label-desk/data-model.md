@@ -70,7 +70,8 @@ from the rule-set id.
   frozen parts are identical, so only status and withdrawal fields differ.
 - Rows for a company are deleted when:
   - `/me` no longer lists that membership;
-  - a read returns `COMPANY_ARCHIVED`, or 404 on the company;
+  - a read returns `COMPANY_ARCHIVED`, `MEMBERSHIP_REQUIRED` or `MEMBERSHIP_NOT_ACTIVE` (never a
+    plain `NOT_FOUND`);
   - the session wipe runs (all companies).
 - The store is **included** in OS backups (ADR 0002, as accepted). A restore to another device
   carries no session, so the first sign-in wipes the store (R10).

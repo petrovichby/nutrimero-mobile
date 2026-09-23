@@ -13,7 +13,7 @@ standalone contract-sync PR (number to be named by the coordinator).
 |---|---|---|---|---|
 | O1 | `POST /api/v1/auth/login` | — | FR-001 | n/a |
 | O2 | `POST /api/v1/auth/refresh` | — | session refresh | n/a |
-| O3 | `POST /api/v1/auth/logout` | bearer | FR-001 | best-effort; the local wipe proceeds regardless |
+| O3 | `POST /api/v1/auth/logout` | — (the body carries the refresh token) | FR-001 | best-effort; the local wipe proceeds regardless |
 | O4 | `GET /api/v1/me` | bearer | FR-002, membership loss (FR-022) | no |
 | O5 | `GET /api/v1/fid/declaration-rule-sets` | bearer | label types, R7 | no |
 | O6 | `GET /api/v1/products?limit=200&offset=…` | bearer, `X-Company-Id` | FR-004/005 (≤ 5 pages) | no |
@@ -36,7 +36,7 @@ standalone contract-sync PR (number to be named by the coordinator).
 | P2 | **`declarationsEnabled` is on the company schema only and gates no route** (016 FR-039; api test `src/declarations/boundaries.spec.ts:159`) | Contract test: no response schema of O5–O11 varies on, or references, the toggle. The desk never reads `companies/current` (B12, FR-003) |
 | P3 | O11 carries `differsFromCurrent`; O10 does not | Contract test on both generated types. If O10 gains it, R8 is revisited, not silently used |
 | P4 | O9 always answers 200 for a held product; unrenderable content arrives as `gaps` / `engine: null` | Fixture tests. The UI treats non-200 as an error state and never as "no label" |
-| P5 | Refusals the desk acts on: `401` (refresh), `403 INSUFFICIENT_ROLE` (not expected, since all reads are allowed for viewers; shown as an error), `404` (not found or other company), `409 COMPANY_ARCHIVED` (purge + switch) | Error classifier unit tests against the generated error envelope |
+| P5 | Refusals the desk acts on: `401` (refresh), `403 INSUFFICIENT_ROLE` (not expected, since all reads are allowed for viewers; shown as an error), `404 NOT_FOUND` (a missing resource only; **never** treated as a lost bakery), `MEMBERSHIP_REQUIRED` / `MEMBERSHIP_NOT_ACTIVE` (lost membership: purge + switch), `COMPANY_ARCHIVED` (purge + switch) | `packages/core/src/api/errors.ts` classifies with a `Record` keyed by the contract's error-code enum, so an added code fails typecheck. Covered by `errors.test.ts` *(implemented in PR A)* |
 | P6 | Packaging rule-sets require `additives`; that cell is `cannot_be_held` by design (P-02) | No app logic depends on it (FR-018). A fixture keeps the "not issuable yet" rendering honest |
 
 ## Asks raised to the api lane (none block phase 1)
