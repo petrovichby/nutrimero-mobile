@@ -11,15 +11,19 @@ coordinator. Signatures are indicative; types come from the modules themselves.
 resolveLocale(deviceLocales: readonly string[]): Locale            // "de" | "lt" | "en"
 createTranslator(locale: Locale): Translator                        // typed keys from en.json
 
-// device store (expo-secure-store behind a typed adapter)
-interface DeviceStoreAdapter { get(key): Promise<string | null>; set(key, value): Promise<void>; delete(key): Promise<void> }
-createDeviceStore(adapter: DeviceStoreAdapter): DeviceStore        // typed get/set per key in data-model.md
-DeviceStore.wipeAll(): Promise<void>                                // Home's single wipe path (idempotent)
-ensureFreshInstallWiped(store, marker): Promise<void>              // reinstall rule — shared with the
-                                                                    // pro session store (ADR 0001 condition 2)
+// device store — ADOPTED from pro 002's PR A (packages/core/src/device-store/), not forked:
+//   DeviceStoreAdapter {get, set, delete} · secureStoreAdapter (Keychain class set once, key
+//   alphabet, 2,048-byte budget, key names only in errors) · createMemoryAdapter ·
+//   fileInstallMarker / createMemoryMarker · ensureFreshInstallWiped(marker, wipe) — ONE call for
+//   all owners, made by core before session.restore().
+// Home adds only its typed namespace over that adapter:
+createHomeStore(adapter: DeviceStoreAdapter): HomeStore            // typed get/set per key in data-model.md
+HomeStore.wipeAll(): Promise<void>                                  // Home's single wipe path (idempotent)
 
-// consumed from pro 002's session core (specs/002-pro-label-desk/contracts/session-core.md)
-registerWiper("home.deviceData", () => deviceStore.wipeAll())       // FR-011/012 via core's wipe sequence
+// consumed from pro 002's session core (createSession({client, store, marker}))
+session.registerWiper("home.deviceData", () => homeStore.wipeAll()) // registered BEFORE session.restore(),
+                                                                    // so the orphan clear covers Home keys;
+                                                                    // FR-011/012 via core's wipe sequence
 
 // units
 formatQuantity(value, unit, system: Units, locale): string          // shared formatter (IX)
@@ -50,7 +54,9 @@ Screens: `CoverScreen`, `UnitsStep`, `DietStep`, `PantryStep`, `RecipesConnectOn
 
 ## apps/home-baker
 
-`app/` route files re-exporting the screens (thin, III) · `app.json`: static splash `#f7f4ec`
+`app/` route files re-exporting the screens (thin, III) · `package.json` lists `expo-secure-store`
+and `expo-file-system` itself (autolinking and config plugins resolve from the app, not core) ·
+`app.json`: static splash `#f7f4ec`
 both schemes, `android.allowBackup: false`, plugins (`expo-router`, `expo-secure-store` with `configureAndroidBackup`,
 `expo-font`, `expo-localization`, `expo-splash-screen`).
 

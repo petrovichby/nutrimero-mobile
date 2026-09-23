@@ -127,10 +127,13 @@ sheet); 14 staples; 6 dietary options.
 - **3a** `packages/core`: `resolveLocale`, `createTranslator` (use-intl), catalog additions for
   every 001 string in all seven catalogs (lane-authored, owner-reviewed), `formatQuantity`, and a
   dev-build startup check of Hermes' `Intl.PluralRules` for all seven. Depends on #8.
-- **3b** `packages/core`: `DeviceStore` over the shared secure-store adapter, `wipeAll`, the
-  reinstall rule (shared with the pro session store); tests with an in-memory adapter. Registers
-  `home.deviceData` with session core's `registerWiper` if 002 has merged, else ships
-  unregistered and whichever PR merges second wires it.
+- **3b** Builds **on** pro PR A's `packages/core/src/device-store/` and `session/` (after PR A
+  merges; adopted, not forked): a typed Home namespace (`createHomeStore`) over
+  `DeviceStoreAdapter`, `wipeAll`, tests with `createMemoryAdapter`. The reinstall rule is core's
+  single `ensureFreshInstallWiped(marker, wipe)`; Home registers `home.deviceData` with
+  `session.registerWiper` **before** `session.restore()`. `apps/home-baker/package.json` lists
+  `expo-secure-store` and `expo-file-system`. Rebase onto PR A's `pnpm-workspace.yaml`
+  (`packages/features/*`) rather than re-adding it.
 - **3c** `packages/ui`: fonts (vendored OFL files + licenses; Latin faces only until the owner
   rules a Cyrillic-capable face via design-mobile — this lane does not pick one), `Screen`, `Masthead`, `Button`,
   `SelectionCard`, `ToggleChip`, `EmptyState`, `OfflineBanner`, `ConfirmSheet`, `TabBar`,
