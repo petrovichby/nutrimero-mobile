@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Glyph } from "../glyphs/glyph";
+import type { FilledGlyphName } from "../glyphs/glyph-data";
 import { useTheme } from "../theme/provider";
 import { tokens } from "../tokens";
 import { textRole } from "./text-style";
@@ -8,8 +9,8 @@ import { textRole } from "./text-style";
 export interface TabItem {
   key: string;
   label: string;
-  /** The owned filled chrome glyph (DESIGN.md *Imagery*), drawn by the caller in the given colour. */
-  icon: (color: string) => ReactNode;
+  /** The owned filled chrome glyph (DESIGN.md *Imagery*): book, builder, basket, pantry, dots. */
+  glyph: FilledGlyphName;
 }
 
 /**
@@ -55,7 +56,7 @@ export function TabBar({
             style={styles.tab}
           >
             <View style={[styles.pill, selected && { backgroundColor: color.actionSoft }]}>
-              {item.icon(ink)}
+              <Glyph name={item.glyph} color={ink} />
             </View>
             <Text
               numberOfLines={2}
