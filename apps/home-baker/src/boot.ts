@@ -1,4 +1,9 @@
-import { createApiClient, createSession } from "@nutrimero/core";
+import {
+  createApiClient,
+  createDevicePreferences,
+  createSession,
+  registerDevicePreferences,
+} from "@nutrimero/core";
 import { fileInstallMarker, secureStoreAdapter } from "@nutrimero/core/native";
 import { createHomeStore, registerHomeWiper } from "@nutrimero/feature-home-data";
 
@@ -18,6 +23,11 @@ export const session = createSession({
 
 export const homeStore = createHomeStore(secureStoreAdapter);
 
+export const devicePreferences = createDevicePreferences(secureStoreAdapter);
+
 registerHomeWiper(session, homeStore);
+// Device preferences (the interface language) are cleared on reinstall only — never by sign-out,
+// erase or "Clear my data" (001 FR-027).
+registerDevicePreferences(session);
 
 export const ready = session.restore();

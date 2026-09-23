@@ -9,14 +9,17 @@ export const FALLBACK_LOCALE: Locale = "en";
 export const RENDERED_LOCALES: readonly Locale[] = LOCALES;
 
 /**
- * The UI locale for a device's preferred languages (BCP 47 tags, most preferred first). The first
- * tag whose language is a UI locale decides: a rendered locale is used as is, an unrendered one
- * falls back to English. No UI locale in the list also means English.
+ * The UI locale (Constitution IX 1.2.0). The user's in-app choice, when stored, decides first
+ * (rule 2). Otherwise the device's preferred languages (BCP 47 tags, most preferred first) do: the
+ * first tag whose language is a UI locale decides, a rendered locale is used as is, an unrendered
+ * one falls back to English; no UI locale in the list also means English (rule 1).
  */
 export function resolveLocale(
+  override: Locale | null,
   deviceLanguageTags: readonly string[],
   rendered: readonly Locale[] = RENDERED_LOCALES,
 ): Locale {
+  if (override !== null && rendered.includes(override)) return override;
   for (const tag of deviceLanguageTags) {
     const language = tag.toLowerCase().split(/[-_]/)[0];
     const locale = LOCALES.find((candidate) => candidate === language);
