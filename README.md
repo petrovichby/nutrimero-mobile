@@ -48,7 +48,10 @@ unit tests → release-bundle export for both apps. CI (`.github/workflows/ci.ym
 enforces the contract drift gate (regenerates the client from the committed snapshot and fails on
 diff) and a quickstart smoke job. `pnpm contract:sync` pulls a new snapshot from the sibling
 `nutrimero-api` checkout's `origin/main` (not its working tree) and records the api commit in
-`contract/SOURCE` — a deliberate, reviewable diff, never run by CI.
+`contract/SOURCE` — a deliberate, reviewable diff, never run by CI. Design tokens follow the same shape:
+`pnpm tokens:generate` writes `packages/ui/src/tokens.generated.ts` from `docs/DESIGN.md` and the
+committed web-ramp snapshot (`docs/design-sources/`, refreshed by `pnpm design:sync`); a test fails
+on any drift, so the generated file is never edited by hand.
 
 Layout: `apps/home-baker` + `apps/pro-baker` (thin Expo apps) · `packages/core` (generated API
 client, i18n catalogs + parity test) · `packages/ui` (design tokens per `docs/DESIGN.md`).

@@ -1,7 +1,7 @@
 {
   "name": "nutrimero-mobile",
   "version": "0.1.0",
-  "description": "nutrimero-mobile — Expo/React Native apps (Home Baker, Pro Baker) consuming nutrimero-api's committed OpenAPI contract",
+  "description": "nutrimero-mobile \u2014 Expo/React Native apps (Home Baker, Pro Baker) consuming nutrimero-api's committed OpenAPI contract",
   "private": true,
   "license": "UNLICENSED",
   "engines": {
@@ -20,12 +20,15 @@
     "build": "pnpm -r run bundle",
     "quality": "pnpm lint && pnpm check && pnpm typecheck && pnpm test && pnpm build",
     "contract:sync": "scripts/contract-sync.sh",
-    "contract:generate": "openapi-typescript contract/openapi.json -o packages/core/src/api/generated/schema.d.ts"
+    "contract:generate": "openapi-typescript contract/openapi.json -o packages/core/src/api/generated/schema.d.ts",
+    "tokens:generate": "node scripts/tokens-generate.mts",
+    "design:sync": "scripts/design-sync.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
     "openapi-typescript": "^7.13.0",
     "typescript": "~6.0.3",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "yaml": "^2.9.1"
   }
 }

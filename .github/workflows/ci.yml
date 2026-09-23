@@ -40,6 +40,10 @@ jobs:
       - name: No suppressions (Constitution XII)
         run: pnpm vitest run scripts/no-suppressions.test.ts
 
+      # Also run by `pnpm test`; named so the gate shows in the checks list.
+      - name: Design tokens match DESIGN.md (Constitution X)
+        run: pnpm vitest run scripts/tokens-generate.test.ts
+
       # The mobile analogue of "build": Metro must be able to produce release JS
       # bundles for both platforms in both apps. Native compilation happens on EAS,
       # not in CI.
