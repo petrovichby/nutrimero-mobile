@@ -94,7 +94,7 @@ specs/002-pro-label-desk/
 packages/core/src/
 ├── api/
 │   ├── client.ts                # existing; gains middleware wiring
-│   ├── middleware.ts            # bearer, X-Company-Id, single-flight refresh
+│   ├── middleware.ts            # bearer + GET-only retry after single-flight refresh (NO X-Company-Id — see Amendments)
 │   └── errors.ts                # typed classification (P5)
 ├── session/
 │   ├── session.ts               # signIn/signOut/state machine (data-model: Session)
@@ -178,6 +178,25 @@ apps/pro-baker/src/
 - **G2-Q3 — ADR ownership for the shared categories.** R5 (local store) and R6 (navigation, and
   the i18n/locale module) are also needed by Home 001. Which lane authors each ADR, and which
   merges first? This lane has drafted the options in `research.md` and holds.
+
+## Amendments from implementation (PR A, acknowledged by the coordinator 2026-09-23)
+
+- **A1: `X-Company-Id` is an explicit, compiler-enforced parameter, not middleware injection.**
+  The generated types make the header a **required parameter** on all 70 company-scoped
+  operations, so every call passes `session.companyHeaders()` and a missing header is a compile
+  error. Middleware injection would duplicate that guarantee at runtime and hide it from the
+  types. The coordinator accepted this as better than the plan. **Do not restore header injection
+  in the middleware.**
+- **A2: membership loss is signalled only by `MEMBERSHIP_REQUIRED`, `MEMBERSHIP_NOT_ACTIVE` and
+  `COMPANY_ARCHIVED`**, never by a plain `NOT_FOUND`. A missing resource is not a lost bakery
+  (B9, data model, P5).
+- **A3: the fresh-install clear is one call for all owners.** `ensureFreshInstallWiped(marker,
+  wipe)` runs inside `session.restore()`, and wipers register before `restore()`
+  (`contracts/session-core.md`).
+- **A4: only GETs are retried after a token refresh.** Writes are never replayed.
+- **A5: `packages/core/tsconfig.json` gains `lib: ["ESNext", "DOM"]`**, for the fetch-API types
+  (`Request`, `Response`, `Headers`). This is additive, not a relaxation: it adds ambient types
+  only and weakens no check.
 
 ## Complexity Tracking
 

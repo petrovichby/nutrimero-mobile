@@ -45,10 +45,10 @@ delivery phases map as follows:
 **Purpose**: make the workspace ready for a feature pack and the shared session work.
 
 - [x] T001 Rebase `lane/pro-baker` onto `main` after PR #5 merges. *(Done 2026-09-23: rebased onto `fab871e`; `pnpm contract:generate` gives no diff; O1–O11 present.)* Confirm `pnpm contract:generate` produces no diff and that `packages/core/src/api/generated/schema.d.ts` contains O1–O11 from `specs/002-pro-label-desk/contracts/api-consumption.md`
-- [ ] T002 Add `packages/features/*` to `pnpm-workspace.yaml`, unless Home's PR #4 landed it first (then rebase instead). This is a shared file, so it goes in the seam announcement (T011)
-- [ ] T003 Create the feature pack `packages/features/labels/` with `package.json` (`@nutrimero/feature-labels`, private, `main: src/index.ts`, `typecheck` script, deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`), `tsconfig.json` extending `../../../tsconfig.base.json`, and `src/index.ts`
-- [ ] T004 [P] Add `@nutrimero/feature-labels: workspace:*` to `apps/pro-baker/package.json` and run `pnpm install`, so the lockfile updates
-- [ ] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only. Each is recorded from a **local** api at `contract/SOURCE`'s commit (`4a4356b`), seeded with `fid:import`, the same rule as Home's snapshot. **Never from production.** The recording script and seed commit are noted in `__fixtures__/README.md`. Fixtures:
+- [x] T002 Add `packages/features/*` to `pnpm-workspace.yaml`, unless Home's PR #4 landed it first (then rebase instead). This is a shared file, so it goes in the seam announcement (T011) *(Done in PR A: `packages/features/*` added — this lane landed first.)*
+- [x] T003 Create the feature pack `packages/features/labels/` with `package.json` (`@nutrimero/feature-labels`, private, `main: src/index.ts`, `typecheck` script, deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`), `tsconfig.json` extending `../../../tsconfig.base.json`, and `src/index.ts` *(Done in PR A: an empty pack.)*
+- [x] T004 [P] Add `@nutrimero/feature-labels: workspace:*` to `apps/pro-baker/package.json` and run `pnpm install`, so the lockfile updates *(Done in PR A.)*
+- [ ] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only. Each is recorded from a **local** api at `contract/SOURCE`'s commit (`4a4356b`), seeded with `fid:import`, the same rule as Home's snapshot. **Never from production.** The recording script and seed commit are noted in `__fixtures__/README.md`. Fixtures: *(Moved to PR B: the core tests use inline data typed by the generated types; recorded fixtures serve the models.)*
   - a counter-card grid (complete)
   - a packaging grid (Additives `cannot_be_held`, P-02)
   - a no-composition grid
@@ -65,31 +65,31 @@ delivery phases map as follows:
 **Purpose**: the `packages/core` capability from `contracts/session-core.md`. Every story needs
 it. **No user-story work starts before this checkpoint.**
 
-- [ ] T006 [P] Write `packages/core/src/api/errors.ts` + `errors.test.ts`. It classifies generated error envelopes into `unauthorized | insufficientRole | notFound | companyArchived | validation | network | unknown`, and covers pinned fact P5
-- [ ] T007 [P] Write `packages/core/src/session/token-store.ts`: a port plus the `expo-secure-store` adapter (install `expo-secure-store` only if Home's PR #4 has not) per ADR 0001's conditions (`WHEN_UNLOCKED_THIS_DEVICE_ONLY`, the reinstall-marker clear before any read, no value logging). Add `token-store.test.ts` covering the port contract with an in-memory fake
-- [ ] T008 Write `packages/core/src/session/wipe.ts` + `wipe.test.ts` (R10):
+- [x] T006 [P] Write `packages/core/src/api/errors.ts` + `errors.test.ts`. It classifies generated error envelopes into `unauthorized | insufficientRole | notFound | companyArchived | validation | network | unknown`, and covers pinned fact P5 *(Done in PR A.)*
+- [x] T007 [P] Write `packages/core/src/session/token-store.ts`: a port plus the `expo-secure-store` adapter (install `expo-secure-store` only if Home's PR #4 has not) per ADR 0001's conditions (`WHEN_UNLOCKED_THIS_DEVICE_ONLY`, the reinstall-marker clear before any read, no value logging). Add `token-store.test.ts` covering the port contract with an in-memory fake *(Done in PR A. The adapter is `packages/core/src/device-store/secure-store-adapter.ts`; the port is `DeviceStoreAdapter` in `adapter.ts`, named per Home's contract.)*
+- [x] T008 Write `packages/core/src/session/wipe.ts` + `wipe.test.ts` (R10): *(Done in PR A.)*
   - `registerWiper(name, fn)` and an ordered, isolated wipe sequence
   - `pendingWipe` set before the wipe and cleared only when every wiper succeeds
   - the sequence resumes on launch
   - tests prove core's own wipe runs first, one failing wiper does not skip the others, and a failure keeps `pendingWipe`
-- [ ] T009 Write `packages/core/src/api/middleware.ts` + `middleware.test.ts` (depends on T006 and T007):
+- [x] T009 Write `packages/core/src/api/middleware.ts` + `middleware.test.ts` (depends on T006 and T007): *(Done in PR A. **Change from plan:** no `X-Company-Id` injection; the generated types require the header on every company-scoped operation, so callers pass `session.companyHeaders()`. Only GETs are retried after a refresh.)*
   - bearer header
   - `X-Company-Id` on company-scoped paths only
   - single-flight refresh on 401 via O2, with the rotated refresh token persisted
   - wire it into `packages/core/src/api/client.ts` without changing `createApiClient`'s existing signature for Home
-- [ ] T010 Write `packages/core/src/session/session.ts`, `company.ts` + `session.test.ts` (depends on T007–T009), following the data-model Session state machine:
+- [x] T010 Write `packages/core/src/session/session.ts`, `company.ts` + `session.test.ts` (depends on T007–T009), following the data-model Session state machine: *(Done in PR A.)*
   - `signIn` via O1 then O4, with the **wipe before any read when the `userId` differs or none is stored** (FR-001a; ADR 0002 relies on the missing-id case, and the tests cover both)
   - `signOut` runs the wipe, then best-effort O3
   - `chooseCompany` rejects ids that are not memberships
   - `onMembershipLost` fires on the O4 diff, `COMPANY_ARCHIVED` or a company 404
   - export it all from `packages/core/src/index.ts`
 - [ ] T011 Send the **seam announcement block** to the coordinator when PR A is ready (III). Home has already read `contracts/session-core.md`; the coordinator acknowledges in one line. It lists the `packages/core` surface (T006–T010, T012), `pnpm-workspace.yaml` (T002), and the new `packages/features/labels`. Record the coordinator's acknowledgement in the PR body. **The phase-1 PR does not open before this**
-- [ ] T012 [P] Write `packages/core/src/entitlements/entitlement.ts` + `entitlement.test.ts` (R9):
+- [x] T012 [P] Write `packages/core/src/entitlements/entitlement.ts` + `entitlement.test.ts` (R9): *(Done in PR A. The source lives in `source.json`, so the build-time config can read it.)*
   - a port returning `included | not_included | unavailable`
   - the stub adapter always returns `unavailable`
   - `ENTITLEMENT_SOURCE` is exported as `'stub'`
-- [ ] T013 Convert `apps/pro-baker/app.json` to `apps/pro-baker/app.config.ts` (same values). Add `apps/pro-baker/eas.json` with `development`, `internal` and `store` profiles. The config **throws at evaluation** when `process.env.EAS_BUILD_PROFILE === 'store'` and `ENTITLEMENT_SOURCE === 'stub'` (G2-Q1, mechanical block). Add `apps/pro-baker/src/app-config.test.ts`, which asserts that it throws under a simulated store profile and evaluates cleanly otherwise
-- [ ] T014 [P] Write `packages/core/src/api/contract-facts.test.ts`: the type-level and fixture assertions for pinned facts:
+- [x] T013 Convert `apps/pro-baker/app.json` to `apps/pro-baker/app.config.ts` (same values). Add `apps/pro-baker/eas.json` with `development`, `internal` and `store` profiles. The config **throws at evaluation** when `process.env.EAS_BUILD_PROFILE === 'store'` and `ENTITLEMENT_SOURCE === 'stub'` (G2-Q1, mechanical block). Add `apps/pro-baker/src/app-config.test.ts`, which asserts that it throws under a simulated store profile and evaluates cleanly otherwise *(Done in PR A. Verified with the real Expo CLI: `EAS_BUILD_PROFILE=store npx expo config` refuses.)*
+- [x] T014 [P] Write `packages/core/src/api/contract-facts.test.ts`: the type-level and fixture assertions for pinned facts: *(Done in PR A. P1–P4 are type-level and negative-controlled; P5 is the exhaustive `Record` in `errors.ts`.)*
   - P1: O9's `language` is a free string
   - P2: no O5–O11 response references `declarationsEnabled`, and the desk never calls `companies/current`
   - P3: `differsFromCurrent` is on O11, not O10
@@ -124,7 +124,7 @@ with every gap named.
   - exposes `{ rows, loaded, total, bounded }` for the "first 1,000 of N" line
   - tested at 1,200 rows
 - [ ] T018 [P] [US1] Write `packages/features/labels/src/model/label-types.ts` + `label-types.test.ts`: offered rule-sets from O5, with display names as catalog keys `labels.labelType.<id>` falling back to the api name (FR-025)
-- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing for the new locales is Home's; rebase onto it, and do not create it here
+- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing is on `main` (#8: the seven catalogs, the `LOCALES` export, and parity and plural tests); add the keys to every locale in `LOCALES`, and do not create plumbing here
 - [ ] T020 [US1] Write `packages/features/labels/src/data/products.ts`: loaders over the session client for O6 and O7 (parallel after the first page reveals `total`) and O8. Online-only, with no persistence (FR-021)
 
 ### Screens (⛔DESIGN, ⛔ADR1 for expo-router and use-intl)
