@@ -112,7 +112,9 @@ packages/features/labels/        # new feature pack (@nutrimero/feature-labels)
 │   └── product-filter.ts        # bounded filter (R2)
 ├── src/store/saved-labels.ts    # repository over the persistence port (R5)
 ├── src/screens/                 # inventory 3–8, after the design pass
-└── test/                        # Vitest + api-shaped fixtures typed by generated types
+├── src/__fixtures__/            # api-shaped fixtures typed by generated types
+└── (tests colocated as src/**/*.test.ts, per vitest.config.ts; the workspace gains
+    `packages/features/*` in pnpm-workspace.yaml — seam item)
 
 apps/pro-baker/src/
 ├── app-root.tsx                 # navigation shell (ADR R6), sign-in, bakery chooser
