@@ -1,13 +1,18 @@
-import { createTranslator, pluralRuleMismatches, resolveLocale } from "@nutrimero/core";
+import {
+  createTranslator,
+  type Locale,
+  pluralRuleMismatches,
+  resolveLocale,
+} from "@nutrimero/core";
 import { tokens, uiFace } from "@nutrimero/ui";
 import { fontAssets } from "@nutrimero/ui/native";
 import { useFonts } from "expo-font";
 import { getLocales } from "expo-localization";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ready } from "./boot";
+import { devicePreferences, ready } from "./boot";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
 // settled, the bundled faces are loaded, and the root view has laid out — so no text ever paints
@@ -26,13 +31,15 @@ if (__DEV__) {
   }
 }
 
-// Bootstrap placeholder — replaced by 001's first-run screens (phase 5). The locale is read
-// once at launch; reacting to a system-language change while running is phase 5's to decide.
-const locale = resolveLocale(getLocales().map((tag) => tag.languageTag));
-const t = createTranslator(locale);
+// Bootstrap placeholder — replaced by 001's first-run screens (phase 5).
+const deviceLanguageTags = () => getLocales().map((tag) => tag.languageTag);
 
 export function AppRoot() {
   const [booted, setBooted] = useState(false);
+  // The locale is state, so the in-app choice (FR-026, IX 1.2.0) re-renders in place — no restart.
+  // It starts from the system and takes the stored choice once boot has run the reinstall clear.
+  const [locale, setLocale] = useState<Locale>(() => resolveLocale(null, deviceLanguageTags()));
+  const t = useMemo(() => createTranslator(locale), [locale]);
   // A font that fails to load must not strand the user on the splash; text then falls back,
   // which the dev build makes visible rather than hiding.
   const [fontsLoaded, fontError] = useFonts(fontAssets);
@@ -40,7 +47,11 @@ export function AppRoot() {
   useEffect(() => {
     // A store failure must not strand the user on the splash: reads fall back to their defaults,
     // and first run surfaces the "could not be saved" state (001 edge cases) in phase 5.
-    ready.catch(() => undefined).finally(() => setBooted(true));
+    ready
+      .then(() => devicePreferences.uiLocale())
+      .then((choice) => setLocale(resolveLocale(choice, deviceLanguageTags())))
+      .catch(() => undefined)
+      .finally(() => setBooted(true));
   }, []);
 
   if (!booted || (!fontsLoaded && !fontError)) {

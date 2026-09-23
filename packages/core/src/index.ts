@@ -17,6 +17,12 @@ export type { WipeOutcome } from "./device-store/fresh-install";
 export { ensureFreshInstallWiped } from "./device-store/fresh-install";
 export type { InstallMarker } from "./device-store/install-marker";
 export { createMemoryMarker } from "./device-store/install-marker";
+export {
+  createDevicePreferences,
+  DEVICE_PREFERENCE_KEYS,
+  type DevicePreferences,
+  registerDevicePreferences,
+} from "./device-store/preferences";
 export type {
   EntitlementAnswer,
   EntitlementPort,
