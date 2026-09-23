@@ -26,7 +26,8 @@ pro-side assignment. Not a spec, not a plan; nothing here is decided until the o
    an owner decision.
 3. **In practice, only counter cards can be issued today.** Every `*_packaging` rule-set requires
    `additives`, and that cell is hard-coded to `cannot_be_held`
-   (`nutrimero-api/src/declarations/completeness.ts`, 016 FR-018). So issuing any packaging label
+   (`nutrimero-api/src/declarations/completeness.ts`, 016 FR-018, kept by 017's amendment, SC-007;
+   verified by the api lane and recorded as `nutrimero-docs` PARKED P-02). So issuing any packaging label
    returns `409 DECLARATION_INCOMPLETE`. Only `eu1_counter_card` and `eu2_counter_card` (allergens
    only) are issuable. Rendering works for EU1 and EU2 only; other regions get `engine:null`.
 4. **Offline-first has no server support.** The api has no `updated_since`, no tombstones, no
