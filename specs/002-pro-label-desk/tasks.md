@@ -4,6 +4,94 @@ description: "Task list for 002 Pro Baker Label desk"
 
 # Tasks: Pro Baker Label desk
 
+## Hold — 2026-09-23
+
+**This lane is on hold** (coordinator, on the owner's word). The owner is pushing the other
+lanes first, and everything left here waits on something else. Nothing below restarts
+without the owner.
+
+### Merged
+
+| PR | What | Commit on `main` |
+|---|---|---|
+| #1 | Pro Baker capability map (`docs/pro-baker/CAPABILITY-MAP.md`) | `1fccc95` |
+| #3 | 002 spec, plan, research, contracts, tasks; ADR 0002 accepted | `31e9944` |
+| #10 | **PR A**, phase 1: shared session, device store, auth middleware, error classifier, entitlement stub, store-release block (T001–T004, T006–T014) | `791549e` |
+| #13 | Docs: be/uk in the stress set (G-2); PR A sweep conditions recorded | `9b71db8` |
+| #16 | **PR B**: recorded fixtures (T005), US1–US3 models and loaders (T015–T020, T026–T028, T030–T031), 87 `labels.*` keys × 7 catalogs, the `@nutrimero/core/native` entry point | `136bf4d` |
+
+### What each remaining phase waits on
+
+| Phase | Tasks | Waits on |
+|---|---|---|
+| **PR C**: screens and wiring | T021–T025, T029, T032 | The **design-mobile lane's Label desk pass** (screen inventory 1–9 in `spec.md`), approved. The sign-in copy is fixed: "Sign in with your nutrimero.org account", Pro namespace, formal register (FR-001, FR-025a). Screen catalog keys (sign-in, chooser, states) are added then, in all seven catalogs. |
+| **PR D**: saved labels | T033–T039 (T035 dropped) | PR C (the screens it saves from). ADR 0002 is already accepted: `expo-sqlite` in the default directory, plus `expo-network`. |
+| **PR E**: plan status, wipe flows, polish | T040–T047 | PR D. Store release also waits on the api's entitlements (ask B8); the store build profile refuses by construction until then. |
+
+### Follow-ups carried from the sweeps (must not be lost)
+
+1. **Wipers are registered before `session.restore()` (T025, PR C).** `restore()` runs the wipe
+   sequence as registered at that moment, so the order is a contract. Add a test proving the
+   fresh-install wipe reaches an app-registered wiper.
+2. **Isolate membership-loss listeners (T037/T042, PR D).** `emitLoss` in
+   `packages/core/src/session/session.ts` awaits listeners without isolation today: a throwing
+   purge listener skips the listeners after it and leaves the active company set. Isolate them
+   the way `wipe.run` isolates wipers, and add the case to `wipe-flows.test.ts`. This touches
+   `packages/core`, so announce it to Home.
+3. **hu-HU, lt-LT and pl-PL label languages (T026 follow-up).** When the api's
+   **refuse-on-gap fix** and **vocabulary completion** PRs land, cite their new rendering tests
+   by spec file › describe › title in `packages/features/labels/src/model/label-languages.ts`,
+   re-record fixtures for those languages (below), and extend T005/T027's fixtures. **Never cite
+   `query-cost.e2e-spec.ts`**: it asserts query counts, not rendered content.
+4. **The owner's review of the lane-authored translations** (`labels.*` in de, hu, lt, be, pl
+   and uk; the Pro tagline) **before any store build**. This is a release item, not a merge item.
+5. For Home, flagged and not changed here: Lithuanian `common.offlineBanner`
+   ("Neprisijungę …") arguably addresses the reader. The `home-data` tests deep-import
+   `@nutrimero/core/src/…`; the `./src/*` export keeps that working, and moving to the
+   platform-free index is Home's choice.
+6. Repo-wide, reported to the coordinator: pnpm 12 does not read `node-linker=hoisted` from
+   `.npmrc`, so installs are isolated. Settle this before the first native (EAS) build.
+
+### Resume, exactly
+
+```bash
+cd ~/Projects/nutrimero-mobile/.worktrees/lane-pro
+git fetch --prune origin
+git checkout lane/pro-baker && git merge --ff-only origin/main   # the lane branch tracks main
+pnpm install --frozen-lockfile
+pnpm quality                     # lint, check, typecheck (all packages), tests, both bundles
+pnpm contract:generate && git status --short   # expect no drift
+# Before PR C: confirm the design pass is approved, and read the coordinator's current rulings.
+# Work each PR on its own branch off main (lane/pro-baker-c, -d, -e); commit, PR, stop for the sweep.
+```
+
+Re-recording the fixtures (only when `contract/SOURCE` moves, or for the hu/lt/pl proofs):
+
+```bash
+SHA=$(awk '{print $2}' contract/SOURCE)            # the api commit the contract came from
+API=$(mktemp -d)/api && mkdir -p "$API"
+git -C ~/Projects/nutrimero-api archive "$SHA" | tar -x -C "$API"   # never touch the shared checkout
+docker run -d --name nutrimero-pro-fixtures -e POSTGRES_USER=nutrimero \
+  -e POSTGRES_PASSWORD=nutrimero -e POSTGRES_DB=nutrimero_pro_fixtures -p 5439:5432 postgres:17
+cat > "$API/.env" <<ENV
+NODE_ENV=development
+PORT=4199
+DATABASE_URL=postgres://nutrimero:nutrimero@localhost:5439/nutrimero_pro_fixtures
+LOG_LEVEL=warn
+AUTH_TOKEN_SECRET=local-fixture-recording-secret-not-used-anywhere-else
+TRUST_PROXY=false
+CORS_ORIGINS=
+ENV
+(cd "$API" && pnpm install --frozen-lockfile && pnpm db:migrate && pnpm fid:import && pnpm build)
+(cd "$API" && node dist/main.js &)                  # wait for /api/v1/health → ok
+node scripts/record-label-fixtures.ts --api-url http://localhost:4199 --api-commit "$SHA"
+pnpm biome format --write packages/features/labels/src/__fixtures__
+pnpm quality
+kill "$(lsof -tiTCP:4199 -sTCP:LISTEN)"; docker rm -f nutrimero-pro-fixtures
+```
+
+---
+
 **Input**: `specs/002-pro-label-desk/` — plan.md (gate 2 passed with rulings), spec.md, research.md,
 data-model.md, contracts/, quickstart.md
 
