@@ -35,8 +35,8 @@ are **stops** until that ADR is approved at gate 2.
 
 - **Decision**: `use-intl` (the framework-agnostic core of `next-intl`, which `nutrimero-web`
   uses) over `packages/core/messages/{en,de,hu,lt,be,pl,uk}.json` (the seven UI locales,
-  IX 1.1.0); locale from `expo-localization` — one of the seven, else `en`, with `be`/`uk` mapped
-  to `en` until a Cyrillic face is ruled. Messages use the web's ICU shape
+  IX 1.1.0); locale from `expo-localization` (read by the app) — one of the seven, else `en`, with
+  `be`/`uk` mapped to `en` only until their G-2 faces are vendored (3c). Messages use the web's ICU shape
   (`{count, plural, one {…} other {…}}` — lt, be, pl and uk need `one/few/many/other`). The
   runtime asserts at startup (dev builds) that Hermes' `Intl.PluralRules` resolves the expected
   categories for all seven; Node-side coverage is already tested in `catalogs.test.ts`.
@@ -48,8 +48,12 @@ are **stops** until that ADR is approved at gate 2.
 ## R4 — Fonts
 
 - **Decision**: vendor the OFL font files (Plus Jakarta Sans 400/500/600/700, Pacifico 400,
-  Stardos Stencil 700) into `packages/ui/assets/fonts/` with their licenses; load via `expo-font`
-  (already a transitive dependency of `expo`, declared explicitly) before the cover is released.
+  Stardos Stencil 700, and — per design ruling G-2 — **Onest** 400/500/600/700 and **Yeseva One**
+  400) into `packages/ui/assets/fonts/` with their licenses; load via `expo-font` (already a
+  transitive dependency of `expo`, declared explicitly) before the cover is released. A font
+  registry picks the UI face and the stamp face by locale script: Latin → Plus Jakarta Sans /
+  Stardos Stencil; Cyrillic (be, uk) → Onest / Yeseva One. A test proves each locale's stamp text
+  and UI text resolve to their ruled faces.
 - **Rationale**: DESIGN.md typography; no runtime download (offline first run).
 - **Alternatives**: `@expo-google-fonts/*` packages (a dependency per family for files we can
   vendor once).

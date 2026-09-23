@@ -25,13 +25,30 @@ given in `specs/001-home-first-run/research.md`:
 | `expo-router` (+ its peers `react-native-screens`, `react-native-safe-area-context`) | navigation | apps/home-baker, packages/features | R1 |
 | `expo-secure-store` | local persistence | packages/core | R2 — backup-excluded device store (VI); session tokens (pro 002 R4) |
 | `expo-file-system` | local persistence (files) | packages/core | Writes condition 2's install marker, which secure-store (Keychain/Keystore only) cannot; the pro lane's saved-label store (002 R5) will want it or `expo-sqlite` |
-| `expo-localization` | platform locale | packages/core | R3 |
+| `expo-localization` | platform locale | apps (read at launch; core stays free of native modules) | R3 |
 | `use-intl` | i18n runtime | packages/core | R3 — same ICU shape as `next-intl` on web (IX) |
-| `expo-font` (declared; already transitive via `expo`) | asset loading | packages/ui | R4 |
+| `expo-font` (declared; already transitive via `expo`) | asset loading | packages/ui | R4 — vendored OFL faces; see *Fonts* below |
 | `yaml` (dev) | build tooling | scripts | R5 — parse DESIGN.md frontmatter for token generation |
 
 Versions are those Expo SDK 57 pins (`npx expo install`). No state library, database, analytics,
 crash-reporting or payment SDK is admitted.
+
+## Fonts (vendored, OFL; amended 2026-09-23 for design G-2)
+
+Faces ship as vendored OFL files with their licenses in `packages/ui/assets/fonts/`, loaded by
+`expo-font` — no runtime download, no `@expo-google-fonts/*` packages. The **font registry**
+selects the UI face and the stamp face by the locale's script (design ruling G-2, design repo
+`fb999ed6`; a global type element, the owner's word):
+
+| Role | Latin locales (en, de, hu, lt, pl) | Cyrillic locales (be, uk) |
+|---|---|---|
+| UI text (body, controls) | Plus Jakarta Sans 400/500/600/700 | **Onest** (same weights) |
+| Provenance stamp | Stardos Stencil 700 | **Yeseva One** |
+| Display (brand moments) | Pacifico 400 (Latin + Cyrillic) | Pacifico 400 |
+
+A test proves each locale's stamp text resolves to its ruled stamp face and its UI text to its
+ruled UI face. With these faces vendored, be and uk are rendered locales (Constitution IX 1.1.0's
+condition is met by the ruling; no constitution change).
 
 ## Secure-store conditions (shared)
 
