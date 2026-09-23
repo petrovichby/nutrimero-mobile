@@ -1,4 +1,4 @@
-# Surface brief — Home Baker v1 design comps (`__artifacts__/raw/layout/impeccable`)
+# Surface brief — Home Baker v1 design comps (`nutrimero-design:mobile/home-baker`)
 
 Scope: high-fidelity phone comps (static HTML, 390×744 safe area) for Nutrimero Home Baker v1
 screens per `docs/prompts/design-prompt-home-baker.md`. Mode: **Operate**. Style-setting pair
@@ -15,7 +15,7 @@ badge on every recipe image; allergens always glyph + text (oxblood), never colo
 photorealistic imagery; locked content shows real previews with a chip, never blurred;
 German strings must survive ("Schokoladen-Sauerteigbrot"); prices labeled "estimated";
 authored recipe content must be bake-realistic (no lorem ipsum). Approved illustration style
-seed: `__artifacts__/raw/illustration/chatgpt-illustration.png`.
+seed: `nutrimero-design:mobile/_explorations/illustration/chatgpt-illustration.png`.
 
 Unresolved: final app name (working title), real recipe corpus (comp content is authored
 demonstration data).

@@ -195,7 +195,7 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   Home Baker comp set) — sepia/ink line work with visible hatching on the cream
   `illustration-canvas`, 4:3, centered subject, generous negative space, no text baked into
   images (text belongs to the UI layer, where it localizes). Canonical reference set:
-  `nutrimero-mobile/__artifacts__/raw/illustration/variant2/` (generation is seed-conditioned
+  `nutrimero-design/mobile/_explorations/illustration/variant2/` (generation is seed-conditioned
   on that set; prompt templates in the comp set's `assets/GENERATION-PROMPTS.md`).
   Illustration plates stay cream in **both** schemes — in dark mode the cream plate is the
   intended contrast anchor, never re-tinted. Known trade-off, accepted: monochrome does not
@@ -270,7 +270,7 @@ or any Operate ergonomics:
   provenance badges recast as rubber stamps (uppercase tracked, ink border, square corners),
   stamped on every AI illustration including the splash cover.
 - 0.2.0 (2026-09-21) — ratified from the Home Baker v1 comp set
-  (`__artifacts__/raw/layout/impeccable/`), amended at Aliaksandr's direction: recipe imagery
+  (`nutrimero-design:mobile/home-baker/`), amended at Aliaksandr's direction: recipe imagery
   style replaced with the monochrome ink-engraving set (variant2) with cream plates
   scheme-fixed; new mobile color roles `destructive` (oxblood family, light+dark),
   `tier-chip` (incl. `on-lime` variant) and `provenance-on-image`; provenance/tier badge

@@ -14,7 +14,7 @@ tablet-first for Pro Baker.
 
 Decided (ideation doc §6): React Native + Expo, TypeScript, generated OpenAPI client shared
 with `nutrimero-web`. Design comps/mockups are produced as static HTML artifacts under
-`__artifacts__/raw/layout/` before RN implementation.
+`nutrimero-design:mobile (design repo)/` before RN implementation.
 
 ## Users
 
@@ -94,12 +94,12 @@ premium signal.
 
 ## Evidence on Hand
 
-- Approved-style recipe illustration seed: `__artifacts__/raw/illustration/chatgpt-illustration.png`
+- Approved-style recipe illustration seed: `nutrimero-design:mobile/_explorations/illustration/chatgpt-illustration.png`
   (rustic sourdough on striped linen, cream canvas — matches the style-seed prompt in
   `docs/prompts/asset-prompts.md`).
-- App icon drafts: `__artifacts__/raw/icon/chatgpt-icon-home.png`, `chatgpt-icon-pro.png`.
-- Competitor design comps for comparison: `__artifacts__/raw/layout/claude-design/`,
-  `__artifacts__/raw/layout/stitch/`.
+- App icon drafts: `nutrimero-design:mobile/_explorations/icon/chatgpt-icon-home.png`, `chatgpt-icon-pro.png`.
+- Competitor design comps for comparison: `nutrimero-design:mobile/_explorations/claude-design/`,
+  `nutrimero-design:mobile/_explorations/stitch/`.
 - ~62 normalized web screens in `nutrimero-design` (family-resemblance reference; desktop
   oriented — layouts are not reusable, tokens are).
 - Real content facts usable in mockups: tier prices above, chain names, launch categories

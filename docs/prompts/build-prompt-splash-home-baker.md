@@ -20,7 +20,7 @@ SDK 57 / React Native 0.86 app inside a pnpm monorepo. Follow the repo's `CLAUDE
 
 ## Asset preparation
 
-Source artwork: `__artifacts__/raw/icon/icon-home-warm.png` (1254×1254; solid golden field
+Source artwork: `nutrimero-design:mobile/_explorations/icon/icon-home-warm.png` (1254×1254; solid golden field
 #dfa21c with a rust #863414 bread-loaf glyph and a thin divider ornament under it).
 
 Do not use the full square image on a colored background — the artwork has grain texture and its

@@ -9,7 +9,7 @@ Tracking* section with the simpler alternative that was rejected and why.
 Amendments require a version bump here and a note in the amendment log at the bottom. Agents MUST
 NOT amend this file as a side effect of implementing a feature.
 
-Founding context: `NUTRIMERO-MOBILE-IDEATION.md` (repo root). Product truth:
+Founding context: `nutrimero-docs/mobile/IDEATION.md` (repo root). Product truth:
 `~/Projects/nutrimero-docs/PRODUCT.md`. Sibling constitutions: `nutrimero-api`, `nutrimero-web`.
 
 ---

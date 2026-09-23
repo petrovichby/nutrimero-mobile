@@ -1,7 +1,7 @@
 # Graphic assets checklist
 
 Tracked inventory of every visual asset the mobile apps need. Derived from
-[`NUTRIMERO-MOBILE-IDEATION.md`](./NUTRIMERO-MOBILE-IDEATION.md) §13.2 and §3.3.
+[`nutrimero-docs/mobile/IDEATION.md`](../nutrimero-docs/mobile/IDEATION.md) §13.2 and §3.3.
 
 Conventions:
 - Brand tokens: lime `#b9bf05`, navy `#1b1f58` (source of truth: `nutrimero-design` `_registry` / `nutrimero-web` `globals.css`).
@@ -17,7 +17,7 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ### Nutrimero Home Baker
 - [~] iOS master icon 1024×1024 (light) — warm "Crust & Butter" concept draft approved-style at
-  `__artifacts__/raw/icon/icon-home-warm.png` (gold field / rust loaf / fleuron, provenance
+  `nutrimero-design:mobile/_explorations/icon/icon-home-warm.png` (gold field / rust loaf / fleuron, provenance
   embedded); human-finished vector pass still owed, exact tokens #dfa621/#7a3520 pinned there
 - [ ] iOS dark variant
 - [ ] iOS tinted variant (grayscale, transparent bg)

@@ -1,7 +1,7 @@
 # nutrimero-mobile — agent instructions
 
 Paid mobile apps (Nutrimero Home Baker / Nutrimero Pro Baker) for the Nutrimero platform.
-Status: ideation/pre-spec — see `README.md` and `NUTRIMERO-MOBILE-IDEATION.md` (the founding
+Status: ideation/pre-spec — see `README.md` and `nutrimero-docs/mobile/IDEATION.md` (the founding
 analysis; treat its "decided" items as settled).
 
 ## Workflow
