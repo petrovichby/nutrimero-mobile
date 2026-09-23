@@ -50,7 +50,7 @@ What the plan avoids:
 | # | Principle | Verdict | How |
 |---|---|---|---|
 | I | Stack settled | ✅ | Expo / TS / pnpm / Biome / Vitest only; no stack change |
-| II | Contract consumer | ✅ **with a blocking dependency** | Every server type is generated. The operations and pinned facts are in `contracts/api-consumption.md`. The sync is Home 001 phase 1's, and **phase 1 here does not start before it merges**. Missing capabilities are raised as api asks (B2, B6, B8, B11, B11b), never faked |
+| II | Contract consumer | ✅ **with a blocking dependency** | Every server type is generated. The operations and pinned facts are in `contracts/api-consumption.md`. The sync is the Home lane's standalone contract-sync PR (api `4a4356b`; number to be named by the coordinator), and **phase 1 here does not start before it merges**. Missing capabilities are raised as api asks (B2, B6, B8, B11, B11b), never faked |
 | III | Core + packs, shared seam | ✅ **seam announcement required** | Session goes into `packages/core`, the desk into `packages/features/labels`, and `apps/pro-baker` stays thin. The `packages/*` additions (`contracts/session-core.md`) are announced to Home through the coordinator before merge |
 | IV | FID-only allergen/nutrition | ✅ | Emphasis, statements and figures come only from the api rendering (FR-014). There is no local derivation path, pinned by a test that the preview renders only `sections` |
 | V | Honest provenance | ✅ n/a | No imagery. The FR-023 plan-lacks state has no dark pattern (equal-weight decline, no blur) |
@@ -125,7 +125,7 @@ apps/pro-baker/src/
 
 | Phase | Content | Blocked by |
 |---|---|---|
-| **0** | Nothing to build. Wait for: the Home 001 phase-1 contract sync; ADR rulings for R4, R5 and R6; the R6 flag rulings; gate 2 | coordinator |
+| **0** | Nothing to build. Wait for: the Home lane's contract-sync PR (number TBD); ADR rulings for R4, R5 and R6; the R6 flag rulings; gate 2 | coordinator |
 | **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port, and the P1–P6 contract tests. The seam announcement is sent before the PR opens | sync + R4 ADR |
 | **2** | `packages/features/labels/model`: readiness, gap sentences, rendering view model, language set, bounded filter, with fixture tests (SC-002/003) | phase 1 types |
 | **3** | Saved-labels store, purge rules, backup exclusion (verified on device), and status refresh on foreground/reconnect | R5 ADR (+ `expo-network` ruling) |

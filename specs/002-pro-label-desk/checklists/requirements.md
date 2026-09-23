@@ -24,7 +24,7 @@
 - [x] All acceptance scenarios are defined
 - [x] Edge cases are identified
 - [x] Scope is clearly bounded (In / Out lists; every write excluded)
-- [x] Dependencies and assumptions identified (Home 001 contract sync, api asks B2/B6/B8, III seam,
+- [x] Dependencies and assumptions identified (Home lane contract-sync PR, api asks B2/B6/B8, III seam,
       XI stop for local persistence)
 
 ## Feature Readiness

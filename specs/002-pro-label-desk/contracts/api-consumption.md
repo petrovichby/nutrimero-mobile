@@ -4,8 +4,8 @@ This is the consumer-side contract (Constitution II). Every operation listed her
 the synced `contract/openapi.json` before phase 1. Pinned facts are checked by tests in this
 repo, so an api change surfaces through the drift gate and CI, not through a user.
 
-The baseline is `nutrimero-api` `origin/main` `4a4356b`, and the contract is consumed after Home
-001 phase 1's sync.
+The baseline is `nutrimero-api` `origin/main` `4a4356b`, and the contract is consumed from the Home lane's
+standalone contract-sync PR (number to be named by the coordinator).
 
 ## Operations
 

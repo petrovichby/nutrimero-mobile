@@ -14,7 +14,7 @@ serves `differsFromCurrent`; the app renders it, never computes it). Constitutio
 declarations are **Pro, tier Essential**; IDEATION §5.3 governs pricing; costing is fenced until an
 api feature series exists; the Production tab leaves the binding nav until a production-plan
 entity is specced; **Hobby is simply absent from the Pro app**; the contract update is the Home
-lane's task inside 001 phase 1 (this feature consumes it); issued labels are this feature's one
+lane's task, delivered as its own contract-sync PR (seam notice 2026-09-23; this feature consumes it); issued labels are this feature's one
 offline cache, everything else is online-only; tier gating renders server entitlement state only.
 
 **Sources, in authority order**: constitution 1.0.0 · `nutrimero-docs/mobile/IDEATION.md` ·
@@ -381,7 +381,7 @@ Phone degradation of 3/4 and 5/7 (stacked navigation) is part of the same pass.
 ## Contract check (Constitution II) — what the desk needs vs. what the API serves
 
 Checked against `nutrimero-api` `origin/main` `4a4356b` (104 paths). This repo's snapshot is stale
-(56 paths); the Home lane syncs it in 001 phase 1 and this feature consumes that sync.
+(56 paths); the Home lane syncs it in a standalone contract-sync PR, and this feature consumes that PR.
 
 | # | Needed by | API status | Note |
 |---|---|---|---|
@@ -469,7 +469,7 @@ the api lane. Alternative: (B) no search until B2 ships (list only, sorted by na
 - The desk is an office/counter tool, not Floor Mode; it follows the Pro scheme (OS light/dark).
 - Numbers from the api are shown as the api formats or supplies them; any display of
   full-precision figures uses the shared decimal formatter (no floating-point rounding).
-- The Home lane's 001 phase-1 contract sync lands before this feature's implementation; if it has
+- The Home lane's contract-sync PR lands before this feature's implementation; if it has
   not, implementation stops (II).
 - Everything this feature adds under `packages/*` (session, company context, error handling,
   gap renderer, issued-label store, decimal formatting) is announced to the Home lane through the

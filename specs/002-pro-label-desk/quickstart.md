@@ -5,7 +5,7 @@ end once implementation lands.
 
 ## Prerequisites
 
-- Home 001 phase-1 contract sync merged: `contract/openapi.json` carries O1–O11
+- The Home lane's contract-sync PR merged (api `4a4356b`): `contract/openapi.json` carries O1–O11
   (`contracts/api-consumption.md`), and `pnpm contract:generate` produces no diff.
 - The ADRs for the secure token store, the saved-labels store and navigation are ruled (plan,
   XI stops).
