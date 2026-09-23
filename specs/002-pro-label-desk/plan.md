@@ -109,7 +109,7 @@ packages/features/labels/        # new feature pack (@nutrimero/feature-labels)
 │   ├── readiness.ts             # display readiness from api cells (FR-004, FR-018)
 │   ├── gap-sentence.ts          # gap → catalog template + names (FR-007/008)
 │   ├── rendering.ts             # sections/runs → view model, text equality (FR-010)
-│   ├── label-languages.ts       # proven set with provenBy (R1)
+│   ├── label-languages.ts       # owner's list, offered only when provenBy cites a rendering test (R1)
 │   └── product-filter.ts        # bounded filter (R2)
 ├── src/store/saved-labels.ts    # repository over the persistence port (R5)
 ├── src/screens/                 # inventory 3–8, after the design pass
@@ -149,6 +149,10 @@ apps/pro-baker/src/
   - Checked at the coordinator's request: hu-HU is **not** rendering-proven (query-cost test only).
   - Applying the same criterion **adds mt-MT** (rendering-proven; cited by test title in R1).
   - The set is therefore en-US, de-DE and mt-MT (R1).
+  - ***Superseded by the owner's ruling (2026-09-23):*** the offered list is the owner's list
+    (en-US, de-DE, hu-HU, lt-LT, pl-PL), each entry gated by a rendering-test citation. mt-MT
+    is dropped from offering (it remains proven), and be-BY is never offered. The api lane is
+    adding hu/lt/pl coverage (B11b widened).
   - B11b (lt-LT) is queued on the api after 020 P1; lt-LT enters with its citation when it lands.
   - B11 remains the durable ask.
 - **G2-Q3.** ADR 0001 (Home) is the shared ADR for navigation, secure store, locale and the i18n

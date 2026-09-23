@@ -80,9 +80,12 @@ mirrors whatever the api reports and never infers a transition.
 
 ### Label-language set (bundled data; `packages/features/labels`)
 
-- A list of `{ tag, provenBy: '<api spec file › describe › test title>' }`. Today it holds en-US, de-DE and
-  mt-MT (R1, gate 2).
-- Adding an entry without a `provenBy` citation fails a unit test.
+- The owner's list as `{ tag, provenBy: '<api spec file › describe › test title>' | null }` for
+  en-US, de-DE, hu-HU, lt-LT and pl-PL (owner ruling). **Offered = entries with a non-null
+  `provenBy`.** Today that is en-US and de-DE; hu-HU, lt-LT and pl-PL gain their citations when
+  the api's coverage PR merges (R1).
+- Tests fail if an offered entry lacks a citation, if a tag outside the owner's list appears, or
+  if be-BY appears.
 - It is replaced by the api listing when B11 ships.
 
 ### Desk preferences (device, non-secret)

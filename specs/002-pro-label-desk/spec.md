@@ -277,12 +277,19 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-010**: The preview MUST render the api's label rendering for product × label type × label
   language, section by section and run by run, applying emphasis exactly where the api marks it,
   and MUST NOT alter, reorder, join, translate or re-round any text or figure.
-- **FR-011**: Label language MUST be selectable independently of UI language. The list offered MUST
-  be only languages whose support can be proven from a source the plan names; the api's `language`
-  parameter is a free string (no enum, no listing endpoint), so until the api serves such a list
-  (ask B11), the desk offers only languages an api rendering test proves, each with its citation
-  (gate 2: en-US, de-DE and mt-MT; lt-LT enters when B11b lands) — never a hardcoded list of 24. The default is the label language last used on the device, else the one
-  matching the UI language when offered, else en-US.
+- **FR-011**: Label language MUST be selectable independently of UI language. The offered list is
+  **the owner's list, each entry present only once an api rendering test proves it** (owner
+  ruling, 2026-09-23).
+  - The owner's list for the first version: **en-US, de-DE, hu-HU, lt-LT, pl-PL**.
+  - Each entry carries its proof citation (api spec file › describe › test title). An entry
+    without one is not offered.
+  - Languages outside the owner's list are not offered, even when proven (e.g. mt-MT).
+  - A language that could only ever render "no engine" is never offered (e.g. be-BY: there is no
+    EU statutory source, and an EAEU engine is future api work).
+  - The api's `language` parameter is a free string with no listing endpoint (ask B11), so the
+    list is bundled data until B11 ships.
+  - The default is the label language last used on the device, else the one matching the UI
+    language when offered, else en-US.
 - **FR-012**: Nutrition values MUST show the api's rounded figure and unit; each value's
   full-precision source figure and rounding rule MUST be reachable from it.
 - **FR-013**: Rendering gaps and notices MUST be listed with the preview; a region without a label
@@ -420,6 +427,8 @@ Checked against `nutrimero-api` `origin/main` `4a4356b` (104 paths). This repo's
 - **Q3 → (A) approved** with a stated bound (FR-005). `q` on `/products` is queued on the api
   (small change on 015; branded-products already has `q`). B6 is queued as non-blocking.
 - **Label languages**: no source exists for "24" — FR-011 rewritten to a proven-only list; ask B11.
+  *Superseded by the owner's ruling (2026-09-23)*: the owner's list (en-US, de-DE, hu-HU, lt-LT,
+  pl-PL), each entry gated by a rendering-test citation (FR-011).
 - **FR-003** pinned to the verified fact (B12).
 
 ### Questions as carried to gate 1 (record)
@@ -451,7 +460,7 @@ the api lane. Alternative: (B) no search until B2 ships (list only, sorted by na
   card, and if not, what is missing?" in under 30 seconds on a tablet.
 - **SC-002**: 100% of gaps the api reports for a product's grid and preview appear in the desk as
   sentences; zero are dropped (verified against the api response for a fixture set).
-- **SC-003**: For a fixture set of counter-card and packaging renderings in en-US, de-DE and lt-LT,
+- **SC-003**: For a fixture set of counter-card and packaging renderings in every offered label language,
   the desk's displayed label text equals the api's `text` character for character, with emphasis
   on exactly the runs the api marks.
 - **SC-004**: The match verdict shown always equals the api's answer from a read made while
@@ -466,7 +475,7 @@ the api lane. Alternative: (B) no search until B2 ships (list only, sorted by na
 
 - Accounts, bakeries, products, assignments and issued labels are created on the web platform;
   the desk reads them. Pilot bakeries use the web for every write in this feature.
-- The label-language list is proven-only (FR-011); its source is named in the plan.
+- The label-language list is the owner's list gated by rendering-test proof (FR-011, research R1).
 - Gap sentences are composed from catalog templates per gap kind with server-provided names
   (ingredient, recipe, nutrient) inserted — the app never invents gap content.
 - Food-symbol wording is not part of the rendering (019 FR-018/035); the desk shows localized

@@ -29,7 +29,7 @@ The Vitest suites must include:
 - the wipe ordering and pending-wipe resume (R10)
 - the filter bound (R2)
 - gap-sentence coverage for every gap kind in the fixtures (SC-002)
-- rendering equality: runs joined equal `text` for the en-US, de-DE and mt-MT fixtures (SC-003)
+- rendering equality: runs joined equal `text` for every offered language's fixtures (SC-003)
 - a test that the saved-label store has no verdict field (R8)
 
 ## Manual scenarios (tablet, then phone)
@@ -39,7 +39,7 @@ The Vitest suites must include:
 | Q1 | Sign in as A | The product list shows P1 "EU counter card — ready", P2 "EU packaging — not issuable yet", P3 "no label types assigned" (US1) |
 | Q2 | Open P2 | Grid: the Additives cell reads "not yet possible in Nutrimero", distinct from fixable gaps; every other gap is a sentence (US1-5/6) |
 | Q3 | Open P1 → preview → de-DE | Text equals the api response; emphasis on the marked runs; VoiceOver announces the emphasis (US2) |
-| Q4 | Open the language picker with the UI in Lithuanian | It offers en-US, de-DE and mt-MT only (no lt-LT, no hu-HU); the default is en-US (R1) |
+| Q4 | Open the language picker with the UI in Lithuanian | It offers exactly the owner's languages that are proven: en-US and de-DE today, and hu-HU, lt-LT, pl-PL once cited. Never mt-MT, never be-BY. The default is lt-LT once it is offered, else en-US (R1) |
 | Q5 | P1 → issued → the de-DE label, online | Frozen text, status, issued-by/at, "Matches current data" with the check time (US3) |
 | Q6 | On the web, edit P1's recipe so the rendering changes; reopen Q5 | "Current data would print a different label"; no diff highlighting (US3-3) |
 | Q7 | Open the lt-LT issued label | Displays in full (frozen); the verdict comes from the api (US3) |

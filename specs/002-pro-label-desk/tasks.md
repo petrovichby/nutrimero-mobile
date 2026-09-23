@@ -52,7 +52,7 @@ delivery phases map as follows:
   - a counter-card grid (complete)
   - a packaging grid (Additives `cannot_be_held`, P-02)
   - a no-composition grid
-  - renderings for `eu1_counter_card` in en-US, de-DE and mt-MT
+  - renderings for `eu1_counter_card` in every **offered** label language (en-US and de-DE today; add hu-HU, lt-LT and pl-PL when each is cited)
   - an `eu1_packaging` rendering in en-US with nutrition
   - a non-EU `engine: null` rendering
   - issued labels in active, superseded and withdrawn states
@@ -150,13 +150,14 @@ with every gap named.
 **Independent Test**: `quickstart.md` Q3 and Q4.
 
 - [ ] T026 [P] [US2] Write `packages/features/labels/src/model/label-languages.ts` + `label-languages.test.ts` (R1):
-  - the proven set is en-US, de-DE and mt-MT, each with `provenBy` = **spec file › describe › test title** (verbatim titles in research R1; never line numbers)
-  - the test **fails if any entry lacks a citation**
+  - the **owner's list** is en-US, de-DE, hu-HU, lt-LT and pl-PL, with `provenBy` = **spec file › describe › test title** or `null` (verbatim titles in research R1; never line numbers)
+  - **offered = entries with a citation** (en-US and de-DE today)
+  - the test fails if an offered entry lacks a citation, if a tag outside the owner's list appears (mt-MT), or if be-BY appears
   - the default is the last used language, else the UI match if offered, else en-US
-  - lt-LT and hu-HU are absent
+  - follow-up when the api's hu/lt/pl coverage PR merges: add the three citations, and add their fixtures to T005 and T027
 - [ ] T027 [P] [US2] Write `packages/features/labels/src/model/rendering.ts` + `rendering.test.ts`:
   - sections and runs become a view model with emphasis flags; nutrition rows carry the rounded figure, unit, source and rule
-  - the test asserts that the runs joined per the api's section order **equal the api `text` exactly** for the en-US, de-DE and mt-MT fixtures (SC-003)
+  - the test asserts that the runs joined per the api's section order **equal the api `text` exactly** for every offered language's fixtures (SC-003)
   - no string transformation of runs
   - `engine: null` becomes the no-engine state (FR-013)
   - symbol ids become reference-data names, marked "not part of the label text"

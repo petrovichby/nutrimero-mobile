@@ -18,37 +18,34 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
   and issue in **en-US, de-DE and mt-MT only**.
 - **lt-LT label rendering is not exercised by any api test.**
 
-**Decision.**
-- The desk's label-language list is a **proven set**. A language enters only when an api
-  **rendering** test (one that asserts rendered content) exercises it (gate 2 ruling):
-  Citations are **by test title**, not by line (coordinator ruling: lines move, and titles are
-  the api's own names for what is proven):
-  - `en-US` and `de-DE`: `src/label-text/labels.e2e-spec.ts` › "a product label, read (019 US1,
-    US2, US4, US5)" › "US2: the decimal mark is the label language s, at the same figures
-    (FR-020)" (title verbatim). `de-DE` is also cited in `issuing.e2e-spec.ts` › "an issued
-    label (019 US3)" › "reads a rendering today, which is what makes the red below mean
-    something".
-  - `mt-MT`: `labels.e2e-spec.ts` › same describe › "US5: a term the language does not hold is
-    a gap, and no other language is printed", and "US5: an origin renders its country by name,
-    and the seed has a name for every one of them".
-  - **Note on mt-MT:** Maltese renders with an honest `not_recorded/label_term per_100g` gap on
-    packaging, because that term is authored for English and German only. The desk shows it as
-    a gap, as FR-013 requires.
-- **Checked and excluded at gate 2**: `hu-HU` and `lt-LT` appear in the label suites only at
-  `src/label-text/query-cost.e2e-spec.ts:420`. That test issues twenty counter cards in twenty
-  locales and asserts query counts and list length, never rendered content, so it is not a
-  rendering proof. hu-HU's other mentions are FID name-locale and ingredient-list tests, not
-  label rendering.
-- It is held as data in `packages/features/labels`. Each entry cites the api test that proves it,
-  so an entry cannot be added without a citation.
-- lt-LT is **not offered** until the api proves it (ask **B11b**) or serves a language listing
-  (ask **B11**).
-- The default is the last used language, else the UI language's match if it is offered, else
-  en-US. A Lithuanian-UI user therefore defaults to en-US.
+**Decision (owner ruling 2026-09-23, superseding the gate-2 proven-set default).**
+- **Offered list = the owner's list ∩ proven.** The owner's list for the first version is
+  **en-US, de-DE, hu-HU, lt-LT, pl-PL**.
+- An entry is **offered only once an api rendering test proves it**, cited by spec file ›
+  describe › test title (coordinator ruling: titles, not lines). The `provenBy` mechanism is
+  what keeps the list honest.
+- **Current state**:
 
-**Consequence (accepted at gate 2, G2-Q2).** The LT pilot cannot preview Lithuanian labels in this feature until
-B11 or B11b lands. Issued labels already issued in lt-LT on the web still display, because they
-are frozen text and the match check re-renders server-side in the stored locale.
+  | Tag | In owner's list | Proven by (rendering test) | Offered |
+  |---|---|---|---|
+  | en-US | yes | `src/label-text/labels.e2e-spec.ts` › "a product label, read (019 US1, US2, US4, US5)" › "US2: the decimal mark is the label language s, at the same figures (FR-020)" (title verbatim) | **yes** |
+  | de-DE | yes | the same test; also `issuing.e2e-spec.ts` › "an issued label (019 US3)" › "reads a rendering today, which is what makes the red below mean something" | **yes** |
+  | hu-HU | yes | none yet. Only `query-cost.e2e-spec.ts`, which asserts query counts, not content. The api lane is adding coverage (B11b widened) | no, until cited |
+  | lt-LT | yes | none yet (same as hu-HU) | no, until cited |
+  | pl-PL | yes | none yet (same as hu-HU) | no, until cited |
+  | mt-MT | **no** | `labels.e2e-spec.ts` › "US5: a term the language does not hold is a gap, and no other language is printed"; "US5: an origin renders its country by name, and the seed has a name for every one of them" | **no**: proven, but not asked for |
+  | be-BY | **no** | none possible: no EU statutory source, and an EAEU engine is future api work | **never**: it would always render "no engine" |
+
+- **When the api's coverage PR merges**, each of hu-HU, lt-LT and pl-PL gains its `provenBy`
+  (the new test titles), and with that it becomes offered. No other change is needed.
+- It is held as data in `packages/features/labels`. A test fails if an offered entry lacks a
+  citation, if any tag outside the owner's list is offered, or if be-BY appears at all.
+- The default is the last used language, else the UI language's match if offered, else en-US.
+
+**Consequence.** Until the api's coverage PR merges, the offered list is en-US and de-DE, so
+the LT pilot previews in English or German. Labels already issued in lt-LT (or hu-HU, pl-PL) on
+the web still display, because they are frozen text and the match check re-renders
+server-side in the stored locale.
 
 **Alternatives rejected.**
 - A hardcoded 24: the coordinator ruled it out, and it has no source.
