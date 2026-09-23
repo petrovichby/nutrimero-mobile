@@ -1,9 +1,5 @@
-import {
-  createApiClient,
-  createSession,
-  fileInstallMarker,
-  secureStoreAdapter,
-} from "@nutrimero/core";
+import { createApiClient, createSession } from "@nutrimero/core";
+import { fileInstallMarker, secureStoreAdapter } from "@nutrimero/core/native";
 import { createHomeStore, registerHomeWiper } from "@nutrimero/feature-home-data";
 
 /**

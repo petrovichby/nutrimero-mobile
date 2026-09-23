@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Offline — wyświetlane są zapisane dane"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Gotowe",
+      "incomplete": "{count, plural, one {Brakujące kategorie: #} few {Brakujące kategorie: #} many {Brakujące kategorie: #} other {Brakujące kategorie: #}}",
+      "notIssuable": "Jeszcze nie do wydania — dodatków nie można jeszcze zapisać w Nutrimero",
+      "noLabelTypes": "Brak przypisanych typów etykiet"
+    },
+    "category": {
+      "allergens": "Alergeny",
+      "additives": "Dodatki",
+      "nutrition": "Wartość odżywcza",
+      "ingredients": "Składniki",
+      "food_symbols": "Symbole żywności"
+    },
+    "cell": {
+      "required": "Wymagane",
+      "notRequired": "Niewymagane",
+      "complete": "Kompletne",
+      "incomplete": "Niekompletne"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Nie zapisano",
+        "cannot_be_held": "Ten rodzaj wpisu nie może tego zawierać",
+        "mass_unresolvable": "Nie można ustalić masy"
+      },
+      "systemCannotBeHeld": "W Nutrimero jeszcze niemożliwe",
+      "where": "{what} — dla: {where}",
+      "occurrences": "{count, plural, one {Miejsc: #} few {Miejsc: #} many {Miejsc: #} other {Miejsc: #}}",
+      "datum": {
+        "nutrient": "Wartość składnika odżywczego: {name}",
+        "nutrient_values": "Wartości odżywcze",
+        "allergen_states": "Informacje o alergenach",
+        "dietary_states": "Informacje dietetyczne",
+        "density": "Gęstość",
+        "piece_weight": "Masa sztuki",
+        "package_content": "Zawartość opakowania",
+        "drained_weight": "Masa po odsączeniu",
+        "quantity": "Ilość",
+        "unit": "Jednostka",
+        "unit_is_not_substance": "Jednostka, która nie jest ilością substancji",
+        "sub_recipe_mass": "Masa podprzepisu",
+        "portion_count": "Liczba porcji",
+        "water_content": "Zawartość wody",
+        "bound_water_content": "Zawartość wody związanej",
+        "nesting": "Zagnieżdżenie przepisów",
+        "allergen": "Alergen: {name}",
+        "dietary": "Status dietetyczny",
+        "additives": "Dodatki",
+        "composition": "Skład produktu",
+        "region_rule": "Zasady dla tego regionu",
+        "food_symbol": "Symbole żywności",
+        "label_term": "Brzmienie etykiety w tym języku",
+        "no_engine": "Dla tego regionu nie ma jeszcze silnika etykiet",
+        "eu_category": "Kategoria dodatków UE",
+        "number_format": "Format liczb dla tego języka",
+        "ingredient_list": "Wykaz składników",
+        "identity": "Tożsamość składnika",
+        "designation": "Nazwa składnika",
+        "additive_category": "Kategoria dodatku",
+        "other": "Inne brakujące informacje ({type})"
+      },
+      "target": {
+        "fid_ingredient": "składnik {name}",
+        "purchased_item": "kupiony artykuł {name}",
+        "recipe": "przepis {name}",
+        "product": "produkt {name}",
+        "system": "platforma Nutrimero",
+        "other": "{type} {name} (obiekt)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "Opakowanie UE",
+      "eu1_counter_card": "Karta przy ladzie UE",
+      "eu2_packaging": "Opakowanie UE (główne alergeny)",
+      "eu2_counter_card": "Karta przy ladzie UE (główne alergeny)",
+      "usa_packaging": "Opakowanie USA",
+      "usa_counter_card": "Karta przy ladzie USA",
+      "canada_packaging": "Opakowanie Kanada",
+      "canada_counter_card": "Karta przy ladzie Kanada",
+      "japan_counter_card": "Karta przy ladzie Japonia",
+      "south_korea_counter_card": "Karta przy ladzie Korea Południowa",
+      "au_nz_counter_card": "Karta przy ladzie Australia/Nowa Zelandia"
+    },
+    "labelLanguage": {
+      "en-US": "Angielski (USA)",
+      "de-DE": "Niemiecki (Niemcy)",
+      "hu-HU": "Węgierski (Węgry)",
+      "lt-LT": "Litewski (Litwa)",
+      "pl-PL": "Polski (Polska)"
+    },
+    "status": {
+      "active": "Aktywna",
+      "superseded": "Zastąpiona",
+      "withdrawn": "Wycofana"
+    },
+    "verdict": {
+      "matches": "Zgodna z bieżącymi danymi",
+      "differs": "Bieżące dane dałyby inną etykietę",
+      "needsConnection": "Sprawdzenie zgodności wymaga połączenia",
+      "checkedAt": "Sprawdzono {time}",
+      "checkedAtDevice": "Sprawdzono {time} (czas urządzenia)",
+      "statusAsOf": "Stan na {time}"
+    },
+    "productList": {
+      "bound": "Wyświetlono pierwsze {loaded} z {total} produktów — wyszukiwanie obejmuje tylko je"
+    },
+    "notice": {
+      "text_language_differs": "Tekst dostawcy składnika jest w innym języku niż ta etykieta",
+      "emphasis_inside_text_unverified": "Nie udało się sprawdzić wyróżnienia alergenów w tekście dostawcy",
+      "category_singular": "Kategoria dodatków jest drukowana w liczbie pojedynczej"
+    },
+    "preview": {
+      "symbolsNote": "Symbole żywności są tu pokazane z nazwy; nie są częścią tekstu etykiety",
+      "noEngine": "Dla tego regionu nie ma jeszcze silnika etykiet, więc nie można pokazać tekstu etykiety"
+    }
   }
 }

@@ -237,6 +237,11 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-001**: The desk MUST let an existing Nutrimero account sign in with email and password, and
   sign out; registration, invitation acceptance and password recovery are not offered in-app — the
   sign-in screen points to nutrimero.org for them.
+  *Owner ruling 2026-09-23:* an existing nutrimero.org account **is** the account (the api's own
+  login). The sign-in screen says so: "Sign in with your nutrimero.org account", in the Pro app's
+  formal register. The link-out for registration and recovery stays. Federated sign-in (Google,
+  paired with Sign in with Apple as App Store rules require) and HÁLÓS/híd linking are future api
+  features, not part of 002 (see `contracts/session-core.md`, *Future surface*).
 - **FR-001a**: When an account signs in on a device that holds another account's session data or
   saved labels, the FR-022 wipe MUST complete before anything is read for the new account.
 - **FR-001b**: Sign-in, sign-out and bakery choice are shared session capability (not Pro-only).
@@ -347,6 +352,12 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-024**: Pro navigation MUST follow DESIGN.md as amended by the owner's ruling (no Production
   tab); the desk's entry point is set by the design pass; unbuilt destinations show an honest
   empty state.
+- **FR-025a (register, owner ruling 2026-09-23):** Pro Baker speaks in the **formal** register in
+  every language (Sie / Jūs / Pan-Pani / Ви); Home Baker in the informal. Strings shared in
+  `packages/core` address no one. A shared string that cannot avoid addressing the person moves to
+  the app's own namespace and exists twice. The desk's `labels.*` keys address no one (verified by
+  scan across all seven catalogs); the sign-in copy (FR-001) addresses the person, so it lives in
+  the Pro app's namespace.
 - **FR-025**: Every app string MUST come from the catalogs of the **seven UI languages**, en, de, hu, lt, be, pl, uk
   (owner's ruling 2026-09-23; constitution IX amendment carried by the Home lane, which also owns
   the catalog plumbing and the one/few/many/other plural check for the Cyrillic be and uk).

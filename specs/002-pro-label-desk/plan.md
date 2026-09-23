@@ -198,6 +198,16 @@ apps/pro-baker/src/
   (`Request`, `Response`, `Headers`). This is additive, not a relaxation: it adds ambient types
   only and weakens no check.
 
+- **A6: the sign-in port (owner ruling 2026-09-23).** A nutrimero.org account is the account,
+  and the sign-in copy says so (FR-001). Federated sign-in (Google + Apple) and HÁLÓS/híd linking
+  are recorded as a **future credential port** in `contracts/session-core.md`. Every kind ends in
+  the same `userId` comparison and wipe (FR-001a, R10), so restore, wipe and `companyHeaders()`
+  do not change. There is no dependency and no code in 002.
+- **A7: register (owner ruling 2026-09-23).** Pro strings are formal, Home strings informal,
+  shared strings address no one (FR-025a). PR B re-cases `app.proBaker.tagline` to the formal
+  register in de, hu, be, pl and uk (lt was already formal). The `labels.*` keys already address
+  no one.
+
 ## Complexity Tracking
 
 | Violation | Why needed | Simpler alternative rejected because |

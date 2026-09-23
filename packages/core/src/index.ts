@@ -1,7 +1,10 @@
+// Platform-free: importable from tests and Node scripts. The native adapters live in
+// "@nutrimero/core/native" so nothing here pulls in React Native.
 export type { ApiClient, ApiClientOptions } from "./api/client";
 export { createApiClient } from "./api/client";
 export type { ApiErrorCode, ClassifiedError, ErrorKind } from "./api/errors";
 export { classifyResponseError, classifyThrown } from "./api/errors";
+export type { components, paths } from "./api/generated/schema";
 export type { DeviceStoreAdapter } from "./device-store/adapter";
 export {
   assertValidKey,
@@ -14,8 +17,6 @@ export type { WipeOutcome } from "./device-store/fresh-install";
 export { ensureFreshInstallWiped } from "./device-store/fresh-install";
 export type { InstallMarker } from "./device-store/install-marker";
 export { createMemoryMarker } from "./device-store/install-marker";
-export { fileInstallMarker } from "./device-store/install-marker-file";
-export { secureStoreAdapter } from "./device-store/secure-store-adapter";
 export type {
   EntitlementAnswer,
   EntitlementPort,

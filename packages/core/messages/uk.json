@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Офлайн — показано збережені дані"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Готово",
+      "incomplete": "{count, plural, one {Бракує категорій: #} few {Бракує категорій: #} many {Бракує категорій: #} other {Бракує категорій: #}}",
+      "notIssuable": "Поки не можна видати — добавки в Nutrimero ще не можна записати",
+      "noLabelTypes": "Типи етикеток не призначено"
+    },
+    "category": {
+      "allergens": "Алергени",
+      "additives": "Добавки",
+      "nutrition": "Харчова цінність",
+      "ingredients": "Склад",
+      "food_symbols": "Харчові символи"
+    },
+    "cell": {
+      "required": "Обов'язково",
+      "notRequired": "Не обов'язково",
+      "complete": "Заповнено",
+      "incomplete": "Не заповнено"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Не записано",
+        "cannot_be_held": "Такий тип запису не може цього містити",
+        "mass_unresolvable": "Вагу неможливо визначити"
+      },
+      "systemCannotBeHeld": "У Nutrimero поки неможливо",
+      "where": "{what} — для: {where}",
+      "occurrences": "{count, plural, one {Місць: #} few {Місць: #} many {Місць: #} other {Місць: #}}",
+      "datum": {
+        "nutrient": "Значення поживної речовини: {name}",
+        "nutrient_values": "Значення харчової цінності",
+        "allergen_states": "Відомості про алергени",
+        "dietary_states": "Дієтична інформація",
+        "density": "Густина",
+        "piece_weight": "Вага штуки",
+        "package_content": "Вміст упаковки",
+        "drained_weight": "Вага без рідини",
+        "quantity": "Кількість",
+        "unit": "Одиниця",
+        "unit_is_not_substance": "Одиниця, що не є кількістю речовини",
+        "sub_recipe_mass": "Вага підрецепта",
+        "portion_count": "Кількість порцій",
+        "water_content": "Вміст води",
+        "bound_water_content": "Вміст зв'язаної води",
+        "nesting": "Вкладеність рецептів",
+        "allergen": "Алерген: {name}",
+        "dietary": "Дієтичний статус",
+        "additives": "Добавки",
+        "composition": "Склад продукту",
+        "region_rule": "Правила для цього регіону",
+        "food_symbol": "Харчові символи",
+        "label_term": "Формулювання етикетки цією мовою",
+        "no_engine": "Для цього регіону ще немає рушія етикеток",
+        "eu_category": "Категорія добавок ЄС",
+        "number_format": "Формат чисел для цієї мови",
+        "ingredient_list": "Перелік складників",
+        "identity": "Ідентичність складника",
+        "designation": "Назва складника",
+        "additive_category": "Категорія добавки",
+        "other": "Інша відсутня інформація ({type})"
+      },
+      "target": {
+        "fid_ingredient": "складник {name}",
+        "purchased_item": "придбаний товар {name}",
+        "recipe": "рецепт {name}",
+        "product": "продукт {name}",
+        "system": "платформа Nutrimero",
+        "other": "{type} {name} (об'єкт)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "Упаковка ЄС",
+      "eu1_counter_card": "Прилавкова картка ЄС",
+      "eu2_packaging": "Упаковка ЄС (основні алергени)",
+      "eu2_counter_card": "Прилавкова картка ЄС (основні алергени)",
+      "usa_packaging": "Упаковка США",
+      "usa_counter_card": "Прилавкова картка США",
+      "canada_packaging": "Упаковка Канади",
+      "canada_counter_card": "Прилавкова картка Канади",
+      "japan_counter_card": "Прилавкова картка Японії",
+      "south_korea_counter_card": "Прилавкова картка Південної Кореї",
+      "au_nz_counter_card": "Прилавкова картка Австралії та Нової Зеландії"
+    },
+    "labelLanguage": {
+      "en-US": "Англійська (США)",
+      "de-DE": "Німецька (Німеччина)",
+      "hu-HU": "Угорська (Угорщина)",
+      "lt-LT": "Литовська (Литва)",
+      "pl-PL": "Польська (Польща)"
+    },
+    "status": {
+      "active": "Чинна",
+      "superseded": "Замінена",
+      "withdrawn": "Відкликана"
+    },
+    "verdict": {
+      "matches": "Відповідає поточним даним",
+      "differs": "З поточними даними було б надруковано іншу етикетку",
+      "needsConnection": "Для перевірки відповідності потрібне з'єднання",
+      "checkedAt": "Перевірено {time}",
+      "checkedAtDevice": "Перевірено {time} (час пристрою)",
+      "statusAsOf": "Статус на {time}"
+    },
+    "productList": {
+      "bound": "Показано перші {loaded} з {total} продуктів — пошук охоплює лише їх"
+    },
+    "notice": {
+      "text_language_differs": "Текст постачальника складника іншою мовою, ніж ця етикетка",
+      "emphasis_inside_text_unverified": "Виділення алергенів у тексті постачальника неможливо перевірити",
+      "category_singular": "Категорію добавок надруковано в однині"
+    },
+    "preview": {
+      "symbolsNote": "Харчові символи показано тут за назвою; вони не є частиною тексту етикетки",
+      "noEngine": "Для цього регіону ще немає рушія етикеток, тому текст етикетки показати неможливо"
+    }
   }
 }

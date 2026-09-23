@@ -26,6 +26,39 @@ in implementation.
 4. Clear `pendingWipe` only if every wiper succeeded.
 5. On launch, if `pendingWipe` is set, repeat the sequence before any read.
 
+## Future surface: the credential port (owner ruling 2026-09-23; **not built**)
+
+Today `signIn(email, password)` is the only way in, and it is the nutrimero.org account (the
+api's `/auth/login`). The owner has named two more kinds that may come:
+- **Federated sign-in** (OIDC): Google, which must arrive paired with Sign in with Apple under
+  App Store rules. This is an api feature first.
+- **HÁLÓS/híd identity**: the ecosystem's account-linking contract (HID_PROJECT_LINKING_API
+  v1.1: pairwise subjects, project-signed JWT proofs, JWKS, form-POST back). Nutrimero is
+  candidate project #2. Also api work first.
+
+The shape that admits them without reshaping anything else:
+
+```ts
+type Credential =
+  | { kind: "password"; email: string; password: string }     // today
+  | { kind: "provider"; provider: "google" | "apple"; idToken: string } // future, api OIDC feature
+  | { kind: "hidProof"; proof: string };                       // future, api HID linking
+
+signIn(credential: Credential): Promise<SignInResult>
+```
+
+**Every kind ends in the same identity step**, which is why no kind needs its own wipe story:
+1. The api exchanges the credential for tokens, held in memory only.
+2. `GET /me` gives the `userId`.
+3. The account comparison runs **by `userId`**: a different or missing stored `userId` runs the
+   wipe sequence (FR-001a, R10) before anything is read or persisted.
+4. Persist, and choose the bakery.
+
+`restore()`, the wipe sequence, `companyHeaders()` and the membership-loss events are
+credential-agnostic and do not change. When the first new kind lands, `signIn(email, password)`
+becomes the `password` case of `signIn(credential)`, with identical behavior. **No dependency is
+added and nothing is built for this in 002.**
+
 ## Fresh-install clear (ADR 0001 condition 3)
 
 `ensureFreshInstallWiped(marker, wipe)`: if the install marker (a document-directory file) is
