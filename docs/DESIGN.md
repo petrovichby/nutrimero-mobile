@@ -1,11 +1,13 @@
 ---
 name: Nutrimero Mobile
-status: draft 0.4.0 — pending ratification; binding for this repo once ratified
+status: 0.5.0 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
-  Full light/dark token ramps are inherited verbatim from the web DESIGN.md frontmatter and the
-  nutrimero-design registry — they are NOT duplicated here; packages/ui/tokens.ts is generated
-  from that source. Only mobile-specific roles are declared below.
+  Pro Baker inherits the web ramps verbatim (web DESIGN.md frontmatter / nutrimero-design
+  registry). Home Baker declares its own ramp below in colors-home (the D-1 deviation in
+  nutrimero-design:mobile/home-baker/DEVIATIONS.md); semantic roles it does not warm are named
+  as inherited. There are two rusts: structure #7a3520 (fills, borders, frames) and heading
+  #6d2f1b (text). packages/ui tokens are generated from this frontmatter.
 colors-mobile:
   # Per-app worlds (decided 2026-09-22): Home Baker runs the warm "Crust & Butter" palette;
   # Pro Baker retains the ecosystem navy/lime ("Lufthansa-like") world. The ecosystem brand
@@ -17,13 +19,90 @@ colors-mobile:
   illustration-canvas: '#f7f4ec'  # cream background of all recipe illustrations (scheme-fixed)
   floor-surface: '#0b0e32'     # navy-deep; Floor Mode runs dark regardless of OS scheme
   destructive: {light: '#8c2318', dark: '#a03325', on: '#ffffff'}  # oxblood family — swipe-remove, delete; never Material red
-  tier-chip:
-    light: {bg: '#eef0cf', ink: '#3a3d01', line: '#c9cd6a'}   # lime-tinted container, dark-olive ink
-    dark: {bg: '#2c2f14', ink: '#d9de62', line: '#565a18'}
-    on-lime: {bg: '#1d1e01', ink: '#b9bf05'}                  # tier chip sitting on a lime primary surface
-  provenance-on-image: {bg: '#f8e9e4', ink: '#57180c', line: '#e4c4ba'}  # scheme-fixed like the cream plate it sits on
+  tier-chip:                   # per app (MA-1); on-action = the chip on the app's primary action fill
+    pro:  {light: {bg: '#eef0cf', ink: '#3a3d01', line: '#c9cd6a'}, dark: {bg: '#2c2f14', ink: '#d9de62', line: '#565a18'}, on-action: {bg: '#1d1e01', ink: '#b9bf05'}}
+    home: {light: {bg: '#f6ecd0', ink: '#4a3405', line: '#d9c27a'}, dark: {bg: '#3e3110', ink: '#e9cb6b', line: '#6e5a1c'}, on-action: {bg: '#251a02', ink: '#dfa621'}}
+  provenance-on-image:         # the on-image stamp (MA-3); scheme-fixed like the cream plate it sits on
+    home: {bg: 'rgba(251,247,238,0.6)', ink: 'rgba(122,53,32,0.92)', line: 'rgba(122,53,32,0.8)'}
+    pro: {bg: 'rgba(251,247,238,0.6)', ink: '#1b1f58', line: '#1b1f58'}
+colors-home:
+  # Home Baker "Crust & Butter" (DEVIATIONS.md D-1 — against the global lime/navy palette).
+  # Scheme-independent roles first; then light and dark. Pro Baker never reads this block.
+  fixed:
+    action: '#dfa621'              # --lime        butter gold: primary fills, printer's rule, loader dots
+    on-action: '#251a02'           # --on-lime     text/glyphs on action (the lime guard, kept)
+    structure: '#7a3520'           # --navy        rust: splash band, secondary outline, selected chip, founder badge
+    on-structure: '#ffffff'        #               text on structure (founder badge, selected chip)
+    illustration-canvas: '#f7f4ec' # --canvas      cream plate, scheme-fixed
+    plate-frame: 'rgba(122,53,32,0.30)'   # .plate::after  printed-plate hairline, 5pt inset, square
+    cover-frame: 'rgba(122,53,32,0.50)'   # splash .cover-plate double rule (border + 4pt offset outline)
+    provenance-stamp: {bg: 'rgba(251,247,238,0.60)', ink: 'rgba(122,53,32,0.92)', line: 'rgba(122,53,32,0.80)'}  # on-image stamp, scheme-fixed
+    cover:                         # the splash is scheme-fixed: these never follow the OS scheme
+      band: '#7a3520'
+      band-ink: '#f7f4ec'
+      band-wordmark: 'rgba(247,244,236,0.85)'
+      band-fleuron: 'rgba(247,244,236,0.55)'
+      field: '#f7f4ec'
+      caption: '#6f6150'
+      tagline: '#6d2f1b'
+      home-indicator: '#362a1f'
+    tier-on-action: {bg: '#251a02', ink: '#dfa621'}   # .btn-primary .chip-plus
+  light:
+    surface: '#fbf7ee'
+    surface-1: '#f4ebd9'
+    surface-2: '#ecdfc6'
+    ink: '#362a1f'
+    ink-2: '#6f6150'
+    ink-3: '#7b6b52'
+    heading: '#6d2f1b'             # the second rust — text only; structure #7a3520 is for fills and frames
+    outline: '#e3d7bd'
+    outline-strong: '#b8a888'
+    chip-bg: '#f4ebd9'
+    chip-selected-bg: '#7a3520'
+    chip-selected-ink: '#ffffff'
+    structure-soft: '#f3e4d3'      # --navy-soft      AI card field, photo slot
+    structure-soft-ink: '#6d2f1b'  # --navy-soft-ink
+    action-soft: '#f6ecd0'         # --lime-soft      active tab pill, per-slice band, timer chip
+    tier: {bg: '#f6ecd0', ink: '#4a3405', line: '#d9c27a'}              # --tier-bg / --tier-ink / --tier-line
+    allergen: {bg: '#ffd7d6', ink: '#6f2725', line: '#ffaaa8', glyph: '#6f2725'}   # --allergen-bg / --allergen-ink / --allergen-line; D-10: tertiary-fixed · on-tertiary-fixed-variant · tertiary-fixed-dim
+    destructive: '#8c2318'
+    on-destructive: '#ffffff'
+    focus-ring: '#1d62ed'          # --focus; D-9: the web's, verbatim — never a brand colour
+    scrim: 'rgba(109,47,27,0.10)'
+    shadow: {offsetY: 6, blur: 18, color: 'rgba(109,47,27,0.14)'}   # floating elements only
+    secondary-button: {line: '#7a3520', ink: '#6d2f1b'}
+  dark:
+    surface: '#201510'
+    surface-1: '#2b1d14'
+    surface-2: '#382619'
+    ink: '#f2ebe1'
+    ink-2: '#cdbda9'
+    ink-3: '#a4917b'
+    heading: '#f2ebe1'
+    outline: '#4a3826'
+    outline-strong: '#8a7358'
+    chip-bg: '#2b1d14'
+    chip-selected-bg: '#f2ebe1'
+    chip-selected-ink: '#6d2f1b'
+    structure-soft: '#382619'
+    structure-soft-ink: '#ecd7bd'
+    action-soft: '#3e3110'
+    tier: {bg: '#3e3110', ink: '#e9cb6b', line: '#6e5a1c'}
+    allergen: {bg: '#6f2725', ink: '#ffd7d6', line: '#ffaaa8', glyph: '#ffaaa8'}   # D-10: tertiary-container · on-tertiary-container · tertiary · tertiary-fixed-dim
+    destructive: '#a03325'
+    on-destructive: '#ffffff'
+    focus-ring: '#8ab1ff'
+    scrim: 'rgba(0,0,0,0.35)'
+    shadow: {offsetY: 6, blur: 18, color: 'rgba(0,0,0,0.45)'}       # MA-8
+    secondary-button: {line: '#8a7358', ink: '#f2ebe1'}
 typography:
-  fontFamily: Plus Jakarta Sans (expo-font, weights 400/500/600/700)
+  fontFamily:                  # the theme switches the family with the UI locale's script (G-1)
+    latin: Plus Jakarta Sans (expo-font, weights 400/500/600/700) — en, de, hu, lt, pl
+    cyrillic: Onest (expo-font, weights 400/500/600/700/800) — be, uk
+  display: Pacifico 400 (brand moments only; Latin + Cyrillic)
+  stamp:                       # the provenance-stamp role only (MA-11, G-2)
+    latin: Stardos Stencil 700
+    cyrillic: Yeseva One 400
   headline-lg: {fontSize: 28, fontWeight: '700', lineHeight: 36, letterSpacing: -0.01em}
   headline-md: {fontSize: 22, fontWeight: '600', lineHeight: 30}
   headline-sm: {fontSize: 18, fontWeight: '600', lineHeight: 26}
@@ -55,11 +134,14 @@ DESIGN.md's rule applies if it translates to native; where it cannot translate (
 z-index scale, CSS-specific guards), this file must speak. Amendments follow the constitution's
 rule: version bump + note in the amendment log; never amended as a side effect of a feature.
 
-All color roles, ramps, and **contrast rules inherit from the web DESIGN.md** — including the
-lime guards (never white text on lime; `on-secondary` near-black olive; lime carries meaning only
-when paired with text or a glyph), the fixed-surface/fixed-foreground pairing rule, and WCAG AA
-(4.5:1 text, 3:1 boundaries). `packages/ui/tokens.ts` is generated from the token registry, never
-hand-edited.
+Pro Baker's color roles and ramps inherit from the web DESIGN.md verbatim; Home Baker declares
+its own ramp (`colors-home`, MA-10/MA-18), and every semantic role it does not warm is named there
+as inherited (allergen, destructive, focus ring, illustration canvas). **Contrast rules inherit
+from the web DESIGN.md for both apps** — including the action-colour guard (never white text on
+the action colour: lime's `#1d1e01` olive in Pro, gold's `#251a02` in Home; the action colour
+carries meaning only when paired with text or a glyph), the fixed-surface/fixed-foreground
+pairing rule, and WCAG AA (4.5:1 text, 3:1 boundaries). `packages/ui` tokens are generated from
+this document's frontmatter, never hand-edited.
 
 ## Brand & personality per app
 
@@ -123,8 +205,10 @@ The bakery-floor recipe view is its own display mode, entered per-recipe:
 ## Elevation & depth
 
 Tonal layers over shadows, as on web. Native translation: surface-container tints for grouping;
-shadows (`elevation`/`shadowOpacity ≤ 0.15`) only on genuinely floating elements — sheets,
-menus, toasts. No stacked z-index scale is defined yet; the first feature needing layered
+shadows only on genuinely floating elements — sheets, menus, toasts, the detail hero's float
+buttons. Light: `0 6px 18px` at `rgba(109,47,27,0.14)` (rust-tinted, ≤ 0.15). **Dark: `0 6px
+18px` at `rgba(0,0,0,0.45)`** — on chocolate surfaces a 0.15 black shadow does not read. Shadows
+go black in dark, rust-tinted in light (Home Baker; MA-8). No stacked z-index scale is defined yet; the first feature needing layered
 stacking beyond the navigation/sheet defaults amends this document first (same growth rule as
 the web z-index table).
 
@@ -132,33 +216,43 @@ the web z-index table).
 
 Shared in `packages/ui`; every component ships with its accessibility props, not after them.
 
-- **Recipe card:** illustration (4:3, `illustration-canvas` background) + title + meta row
-  (time, difficulty, allergen glyphs) + **provenance badge — mandatory, never omitted**
-  (constitution V): `Illustration (AI)` / `Photo — baked by Markus` / `Community photo`.
+- **Recipe card:** illustration (4:3 in the card and list-row plate, `illustration-canvas`
+  background) + title + meta row (time, difficulty, allergen glyphs) + **provenance badge —
+  mandatory, never omitted** (constitution V): `Illustration (AI)` / `Photo — baked by Markus` /
+  `Community photo`. This includes result lists (the Builder's rows carry the in-row stamp) and
+  empty-state engravings (framed as a plate and stamped).
   Exclusive recipes carry a lock/tier chip; locked content shows a real preview, never a blurred
   tease (no dark patterns).
 - **Provenance & tier badges:** text + glyph, color never alone.
   *Provenance:* rendered as a **rubber-stamp impression** (vintage voice). On an
-  illustration (featured banner, detail hero, splash cover): stencil face **Stardos Stencil**
-  700, all-caps tracked "AI ILLUSTRATION" (de: "KI-ILLUSTRATION"), single unrounded 1px
-  border, tilted −5°, corporate navy ink (`#1b1f58`, text and border alike) on a faint
-  translucent cream backdrop — text-only, scheme-fixed, placed at the image corner (away
-  from any control).
-  Stardos Stencil is Latin-only; Cyrillic-script locales will need a stencil fallback for
-  the stamp face (open item). In index rows: a quiet hairline stamp (transparent field,
-  `outline-strong` border, `ink-2` uppercase text) beside the allergen glyphs, with glyph
+  illustration (featured banner, detail hero, splash cover): the `provenance-stamp` role —
+  **Stardos Stencil 700** in Latin-script locales, **Yeseva One 400** in Cyrillic-script
+  locales (be, uk; G-2) — capitals by role, tracked ("AI illustration" → AI ILLUSTRATION; de
+  KI-ILLUSTRATION), single unrounded 1px border, tilted **+5°** (clockwise), **rust structure
+  ink** in Home Baker — text `rgba(122,53,32,0.92)`, border `rgba(122,53,32,0.8)` — on a faint
+  translucent cream backdrop `rgba(251,247,238,0.6)` (Pro Baker's stamp keeps navy ink) —
+  text-only, scheme-fixed, placed at the image corner (away from any control). **A catalog
+  test checks each locale's stamp string against its stamp face's character map**, so no
+  translation can silently fall back. In index rows: a quiet hairline stamp (transparent field,
+  `outline-strong` border, `ink-2` text in capitals by the `provenance-chip` role) beside the
+  allergen glyphs, with glyph
   ("Illustration (AI)" + sparkle / "Photo" + camera). Every AI illustration is stamped, the
   splash cover included.
-  *Tier:* one treatment everywhere — label-sm on the `tier-chip` lime-tinted container;
-  locked content adds a lock glyph to the same chip, never a different chip. On a lime
-  primary surface use the `tier-chip.on-lime` variant (olive field, lime ink). Founder badge
-  renders the number on navy ("Founder #37 of 100") with the medal glyph.
+  *Tier:* one treatment everywhere — label-sm on the app's `tier-chip` container (gold-tinted
+  in Home Baker, lime-tinted in Pro Baker); locked content adds a lock glyph to the same chip,
+  never a different chip. On the primary action surface use the app's `on-action` variant.
+  Founder badge renders the number on the app's structure colour (rust in Home Baker, navy in
+  Pro Baker) ("Founder #37 of 100") with the medal glyph.
 - **Quantity stepper:** the workhorse of scaling — 44pt +/− targets, direct text entry on tap,
   `data-mono` value, unit label from the FID unit catalog, never a bare number.
 - **Timers:** persistent chip while running (any screen), `accessibilityLiveRegion`/VoiceOver
   announcements at completion; multiple named timers listed in a sheet.
 - **Allergen flags:** inherited rule verbatim — `tertiary` + glyph + accessible label naming
-  the allergen; color never alone. Allergen data renders only from FID joins (constitution IV);
+  the allergen; color never alone. Values, the same in both apps: light — bg `tertiary-fixed`
+  `#ffd7d6`, ink `on-tertiary-fixed-variant` `#6f2725`, line `tertiary-fixed-dim` `#ffaaa8`;
+  dark — bg `tertiary-container` `#6f2725`, ink `on-tertiary-container` `#ffd7d6`, line
+  `tertiary` `#ffaaa8`, glyphs `tertiary-fixed-dim` `#ffaaa8` (8.0:1 ink on bg in both schemes;
+  D-10, owner walk 2026-09-23). Allergen colour means allergen: no other element borrows it. Allergen data renders only from FID joins (constitution IV);
   there is no UI path for free-text allergen display.
 - **Offline indicator:** quiet `label-md` banner on `surface-container-high` ("Offline — showing
   saved data"), never a blocking modal. Actions that require network disable with a reason, they
@@ -169,23 +263,57 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 - **Empty/error states:** illustrated in the recipe-illustration style (style-seed palette),
   one sentence of guidance, one action. Empty pantry and empty cupboard states are onboarding
   moments, not dead ends.
-- **Buttons:** primary = `secondary` lime fill with `on-secondary` near-black text (inherited
-  lime rule); secondary = navy outline; destructive = the `destructive` role pair (oxblood
+- **Buttons:** primary = the app's action fill with its near-black text (Home Baker: gold
+  `#dfa621` / `#251a02`; Pro Baker: lime `#b9bf05` / `#1d1e01`); secondary = the app's
+  structure outline (rust / navy), and in dark the `outline-strong` edge with `ink` text; destructive = the `destructive` role pair (oxblood
   family, both schemes — e.g. the swipe-remove action) with confirmation step or undo. One
   primary action per screen.
+- **Focus ring:** `focus-ring` inherited from the web verbatim — `#1d62ed` light, `#8ab1ff`
+  dark — in both apps, independent of the brand ramp so keyboard focus is **never confusable
+  with a brand state** (D-9). Home Baker: 4.9:1 on surface, 4.4:1 on surface-1; 8.3:1 on dark
+  surface.
+- **Prices** are formatted by locale, never by hand: en `€6.40` (symbol first, no space), de
+  `6,40 €`, lt `6,40 €`; prices take `data-mono` tabular figures (MA-16).
 
 ## Typography rules
 
-- Plus Jakarta Sans for all body, UI, and control text (expo-font); no platform-default font
-  fallbacks in shipped UI.
+- Plus Jakarta Sans for all body, UI and control text in **Latin-script locales (en, de, hu,
+  lt, pl)**; **Onest** (expo-font, weights 400/500/600/700/800) for all of it in
+  **Cyrillic-script locales (be, uk)** (G-1). The theme switches the family with the locale; no
+  component chooses a face. No platform-default fallbacks in shipped UI. *Build-time item:*
+  React Native has no per-glyph fallback between custom fonts, so Cyrillic data inside a
+  Latin-script UI must be verified — rendered through a text component that selects Onest when
+  the string contains Cyrillic, or recorded as a known limitation; never left to chance.
+- **Stamp face: Stardos Stencil 700** (Latin) / **Yeseva One 400** (Cyrillic, be/uk; G-2) —
+  the on-image provenance stamp ONLY (the `provenance-stamp` role). The splash wordmark's weight
+  800 is the only use of 800, and it belongs to the `splash-wordmark` role.
 - **Display face (brand moments only): Pacifico** (Google Fonts, 400) — splash title, screen
   mastheads (Recipes/Builder/Pantry/Shopping), paywall headline. Never in body, rows, buttons,
   chips, or any Operate control. Chosen for the 1950s–60s cookbook voice (period-true brush
   lettering revival) and for charset coverage: Latin, Latin-Ext, Cyrillic, Cyrillic-Ext,
-  Vietnamese — covers en/de/lt and future Cyrillic-script locales. Masthead metrics 31/46;
-  splash 56/86.
-- **Dynamic Type / font scaling is supported, not fought:** `allowFontScaling` stays on, layouts
-  are tested at 1.3×; only `data-mono` in Floor Mode may cap scaling (it is already enlarged).
+  Vietnamese — covers all seven UI locales, be and uk included (verified). Masthead metrics
+  31/46; splash 56/86.
+- **Casing lives in the localized strings; CSS never cases authored text — except these named
+  roles, which set every string they carry in capitals in every locale:**
+  1. `provenance-stamp` — the on-image rubber stamp ("AI illustration" / "KI-Illustration");
+  2. `provenance-chip` — the in-row provenance stamp ("Illustration (AI)");
+  3. `splash-wordmark` — the typeset brand word on the splash band. Its string is the
+     lowercase brand `nutrimero` and it may carry **no other string**;
+  4. `splash-caption` and `splash-tagline` — the cover's plate caption and tagline (owner walk
+     2026-09-23: "casing should not be from string, but leave styled").
+
+  No other element may borrow these roles. Data (recipe and ingredient names) is never re-cased.
+  **The brand is `nutrimero`, lowercase, in every string.**
+- **Home Baker writes sentence case everywhere** — headings, buttons, labels, tabs, chips ("Start
+  baking mode", "Bake tonight", "Gluten-free"). A recorded deviation from the global Title Case
+  rule (DEVIATIONS.md D-7). Brand and product names keep their own casing (`nutrimero`,
+  "Founders’ Lifetime"). Pro Baker follows the global rule.
+- **Dynamic Type / font scaling is supported, not fought:** `allowFontScaling` stays on; only
+  `data-mono` in Floor Mode may cap scaling (it is already enlarged). UI languages are **en, de,
+  hu, lt, be, pl, uk**. Layouts are tested at 1.3× text in every one, and five are **named
+  stress witnesses** every screen is checked against before it is done: **de** (long
+  compounds), **hu** (long agglutinative words), **pl** (length and stacked diacritics), **be**
+  and **uk** (Cyrillic, set in Onest). A screen that clips meaning in any witness is not done.
 - Numbers that users compare (weights, prices, percentages) always use `data-mono` with tabular
   figures; body text never carries aligned numeric columns.
 
@@ -193,7 +321,9 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 
 - Recipe illustrations: **monochrome ink-engraving style** (chosen 2026-09-21 from the
   Home Baker comp set) — sepia/ink line work with visible hatching on the cream
-  `illustration-canvas`, 4:3, centered subject, generous negative space, no text baked into
+  `illustration-canvas`, **generated** at 4:3 and cropped to the slot it fills — the recipe card
+  and list-row plates show it at 4:3; heroes and banners (detail hero, drop card) crop it to their
+  own frame (`object-fit: cover`), centred subject preserved — generous negative space, no text baked into
   images (text belongs to the UI layer, where it localizes). Canonical reference set:
   `nutrimero-design/mobile/_explorations/illustration/variant2/` (generation is seed-conditioned
   on that set; prompt templates in the comp set's `assets/GENERATION-PROMPTS.md`).
@@ -221,18 +351,24 @@ Light touch by rule — the vintage voice never alters layout, chips, buttons, t
 or any Operate ergonomics:
 
 - **Printed-plate frames:** every illustration (index thumbs, banner, detail hero) carries an
-  inner hairline frame (navy at 28%, 5px inset, **square corners** — printed rules are never
+  inner hairline frame (the app's structure ink — **rust `#7a3520` at 30%** in Home Baker, navy
+  at 28% in Pro Baker — 5px inset, **square corners** — printed rules are never
   rounded); ceremonial plates (splash cover) use a square double rule (border + offset
   outline).
 - **Fleuron divider** (rule–diamond–rule) marks ceremonial moments only (splash, paywall
   headline) — never list sections.
 - **Plate captions** in tracked small caps ("Plate I · Rustic sourdough") where an engraving
   is presented as a plate.
-- **Splash = the cover** (Split-Band composition): navy masthead band (~34% of frame) with
-  reversed lockup, cream field with the captioned plate, one 2px lime printer's rule, foot
-  colophon + indeterminate loading dots (lime is rationed to the dots — the only moving
-  element). The cover is **scheme-fixed**: identical in light and dark OS schemes; status
-  bar light-content.
+- **Splash = the cover** (Split-Band composition, owner-approved 2026-09-23): a **rust structure
+  band** (~34% of frame) carrying the typeset word `nutrimero` in capitals by the
+  `splash-wordmark` role above the Pacifico title; the cream field carries the captioned plate
+  (rust double frame; **nothing navy on the cover**), one 2px printer's rule in the app's action
+  colour (gold in Home Baker), the indeterminate loading dots in the same colour (the only moving
+  element), and at the foot the **real logo artwork, unrecoloured, 100pt wide**, on the cream
+  field as the publisher's imprint. There is no reversed lockup: the logo is never recoloured
+  (web *Brand Mark*). The cover is **scheme-fixed** in fact, not only in intent: every ink on the
+  cream field (caption, tagline, home indicator) is pinned to its light value, never a scheme
+  variable; status bar light-content. The native static splash is the cream field.
 
 ## Motion
 
@@ -255,6 +391,20 @@ or any Operate ergonomics:
 
 ## Amendment log
 
+- 0.5.0 (2026-09-23) — ported from `nutrimero-design:mobile/AMENDMENTS.md` (design repo main,
+  proof commit `263ecc31`; G-1/G-2 at `fb999ed6`), by the Home lane: MA-1 per-app tier chip
+  (gold in Home, `on-action`); MA-2 rust stamp, +5°; MA-3 `provenance-on-image` carries the
+  stamp; MA-4 rust plate frame at 30%; MA-5 the approved splash (rust band, typeset `nutrimero`,
+  real logo unrecoloured, nothing navy); MA-6 buttons and founder badge in the app's colours;
+  MA-7 ratification status stated; MA-8 the dark shadow the corpus draws; MA-9 4:3 scoped to the
+  recipe card; MA-10/MA-18 Home Baker's full ramp declared as `colors-home` (two rusts); MA-11
+  stamp face under Typography; MA-12 functional focus ring (D-9); MA-13 inherited oxblood
+  allergen family (D-10); MA-14 casing as four named roles, brand lowercase `nutrimero`; MA-15
+  sentence case as Home's voice (D-7); MA-16 one price format; MA-17 provenance on builder rows
+  and empty-state engravings; MA-19 seven UI languages with five 1.3× stress witnesses; G-1 Onest
+  for Cyrillic UI text; G-2 Yeseva One for the Cyrillic stamp. **Not ported:** the C1–C4
+  semantic roles (pending the owner). MA-14 follows the owner's walk (caption and tagline are
+  roles), which widens the coordinator's two-role ruling — flagged in DEVIATIONS.md D-8.
 - 0.4.0 (2026-09-22) — Home Baker warm palette, approved by Aliaksandr from the side-by-side
   experiment: "Crust & Butter" (rust `#7a3520` structure, butter-gold `#dfa621` action, warm
   cream surfaces, warm-brown dark ramp) replaces navy/lime for the Home Baker app UI; the

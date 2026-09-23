@@ -14,7 +14,7 @@ tablet-first for Pro Baker.
 
 Decided (ideation doc §6): React Native + Expo, TypeScript, generated OpenAPI client shared
 with `nutrimero-web`. Design comps/mockups are produced as static HTML artifacts under
-`nutrimero-design:mobile (design repo)/` before RN implementation.
+`nutrimero-design:mobile/home-baker/` (the approved corpus) before RN implementation.
 
 ## Users
 
@@ -49,7 +49,9 @@ premium signal.
 - Weekly 30-second pantry update, not inventory management.
 - Shopping happens per chain (Lidl, Rewe, Edeka; LT pilot: Maxima/Barbora, Rimi, Iki) with
   estimated basket totals; cart handoff is deep-link based (T1/T2).
-- Locales en / de / lt; German strings are the long-word stress test.
+- UI languages en, de, hu, lt, be, pl, uk (Constitution IX 1.1.0). Every screen is tested at 1.3×
+  text against five stress witnesses: de, hu, pl, be, uk (DESIGN.md 0.5.0). Label languages are a
+  separate list: the five EU ones (en, de, hu, lt, pl), proven by the api.
 
 ## Capabilities and Constraints
 
@@ -67,23 +69,29 @@ premium signal.
   introduces consented sync.
 - API types generated from `contract/openapi.json`; entitlements decided server-side; no
   secrets in the bundle.
-- No user-facing hardcoded strings (en/de/lt catalogs).
-- Undecided: final app names (trademark checks pending), icon family execution, API recipe
-  domain not yet shipped (mobile design work runs ahead of it).
+- No user-facing hardcoded strings (catalogs for all seven UI languages).
+- Undecided: final app names (trademark checks pending), icon family execution. The api's
+  recipes (013) are company-scoped; a published catalog the Home Baker app can read is not yet
+  in the contract (the api catalog series, consumed by 003-recipes-home).
 
 ## Brand Commitments
 
-- Tokens: Acid Lime `#b9bf05` + Deep Navy `#1b1f58`; Oxblood `#2f0100` for allergen/warning;
-  cream `#f7f4ec` illustration canvas. Lime never carries white text (`#1d1e01` olive) and
-  never carries meaning alone. Source of truth: `nutrimero-design` registry / web
-  `globals.css`; binding mobile rules in `docs/DESIGN.md`.
-- Type: Plus Jakarta Sans only. Numbers users compare are tabular figures, medium weight.
+- Colours: the ecosystem brand (logo, app icons, web) is Acid Lime `#b9bf05` + Deep Navy
+  `#1b1f58`, and Pro Baker's UI keeps that world. **Home Baker's UI runs the warm "Crust &
+  Butter" palette** — rust `#7a3520` structure, butter gold `#dfa621` action — a recorded
+  deviation (D-1). Allergen flags use the inherited oxblood tertiary family in both apps; cream
+  `#f7f4ec` is the illustration canvas. The action colour never carries white text and never
+  carries meaning alone. Binding values: `docs/DESIGN.md` (0.5.0).
+- Type: Plus Jakarta Sans for UI text in Latin-script locales, Onest in Cyrillic ones (be, uk);
+  Pacifico for brand moments only; the provenance stamp in Stardos Stencil (Latin) / Yeseva One
+  (Cyrillic). The brand is written `nutrimero`, lowercase, in every string. Numbers users compare
+  are tabular figures, medium weight.
 - Home Baker temperament: warm, domestic, focused — "a well-organized kitchen shelf, not an
   instrument panel and not a lifestyle magazine." Illustration-forward, generous whitespace,
   soft-technical shape (4–8pt radii, 12pt max).
-- Imagery policy (decided, ideation §3.3): AI imagery is illustration-style only — warm
-  editorial flat illustration on cream canvas, 4:3, terracotta/honey + navy line accents +
-  single lime detail — never photorealistic, always labeled with a visible provenance badge
+- Imagery policy (decided, ideation §3.3): AI imagery is illustration-style only — monochrome
+  ink engraving on the cream canvas, generated at 4:3 (DESIGN.md *Imagery*; the earlier warm flat
+  style is superseded) — never photorealistic, always labeled with a visible provenance badge
   ("Illustration (AI)" / "Photo — baked by Markus" / "Community photo"). The badge is a
   brand-defining credibility feature, not a disclaimer.
 - No dark patterns: locked content shows real previews (never blurred teases), paywalls have
@@ -94,9 +102,9 @@ premium signal.
 
 ## Evidence on Hand
 
-- Approved-style recipe illustration seed: `nutrimero-design:mobile/_explorations/illustration/chatgpt-illustration.png`
-  (rustic sourdough on striped linen, cream canvas — matches the style-seed prompt in
-  `docs/prompts/asset-prompts.md`).
+- Recipe illustration reference set: `nutrimero-design:mobile/_explorations/illustration/variant2/`
+  (monochrome ink engraving, canonical per DESIGN.md). The earlier flat-illustration seed
+  (`…/illustration/chatgpt-illustration.png`, `docs/prompts/asset-prompts.md` §3) is superseded.
 - App icon drafts: `nutrimero-design:mobile/_explorations/icon/chatgpt-icon-home.png`, `chatgpt-icon-pro.png`.
 - Competitor design comps for comparison: `nutrimero-design:mobile/_explorations/claude-design/`,
   `nutrimero-design:mobile/_explorations/stitch/`.
