@@ -1,6 +1,6 @@
 # nutrimero-mobile Constitution
 
-**Version:** 1.0.0 (ratified by Aliaksandr, 2026-09-23) · **Applies to:** every feature, every agent, every PR
+**Version:** 1.1.0 (1.0.0 ratified by Aliaksandr, 2026-09-23; 1.1.0 pending the owner's merge word) · **Applies to:** every feature, every agent, every PR
 
 These principles are **gates**, not advice. Every `/speckit-plan` MUST include a Constitution Check
 table verifying each one. A violation is either fixed or documented in that plan's *Complexity
@@ -76,8 +76,13 @@ network needs a stated offline behavior in its spec.
 ## IX — Multilingual from day one
 
 No hardcoded user-facing strings. Message catalogs follow the `nutrimero-web` shape (JSON, key
-parity enforced by test). Launch locales: en, de, lt. Units and currency formatting go through
-shared formatters in `packages/core`, never inline.
+parity enforced by test). UI locales: **en, de, hu, lt, be, pl, uk** (Belarusian's tag is
+`be`; `by` is the country). Each locale's ICU plural categories are covered by its catalog (verified by
+test). Translations are authored by the lanes and reviewed by the owner; nothing
+machine-translated ships unreviewed in a UI string. A locale whose script the admitted font faces
+cannot render stays in the catalogs and the parity test but is not rendered on screen until the
+owner rules a face for it. Units and currency formatting go through shared formatters in
+`packages/core`, never inline.
 
 ## X — Design derives from the token system
 
@@ -121,6 +126,12 @@ Work reaches `main` only through gated pull requests.
 
 ## Amendment log
 
+- 1.1.0 (2026-09-23) — IX: UI locales widened from en, de, lt to **en, de, hu, lt, be, pl, uk**
+  by the owner's ruling of 2026-09-23 and its addendum (Ukrainian, the seventh); per-locale
+  plural coverage verified by test; owner review of lane-authored translations; a locale without
+  an admitted face for its script (Belarusian and Ukrainian, Cyrillic) is catalogued but not
+  rendered until the owner rules the face. UI locales are distinct from label languages (the
+  api's five EU ones), which this principle does not govern. Ratified by the owner's merge word.
 - 1.0.0 (2026-09-23) — **ratified by Aliaksandr, 2026-09-23.** Amendments folded in at
   ratification (coordinator-proposed, owner-endorsed): XII — the gates added (spec-kit both gates
   with coordinator stops, PRs only, CI green, no suppressions/skips/silencing casts without dual
