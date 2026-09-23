@@ -46,7 +46,7 @@ What the plan avoids:
 | **Target Platform** | iOS and iPadOS, and Android (phone and tablet) via Expo; **13" tablet first** |
 | **Project Type** | Mobile app in a pnpm monorepo (thin app + shared packages) |
 | **Performance Goals** | SC-001 (answer readiness in < 30 s); Saved labels offline open < 2 s (SC-005); the product list is interactive after the first page while pages 2–5 load |
-| **Constraints** | Read-only; online-only apart from saved labels; label text verbatim from the api; no hardcoded strings (en/de/lt); accessibility gate (44pt, 1.3×, VoiceOver/TalkBack, external keyboard) |
+| **Constraints** | Read-only; online-only apart from saved labels; label text verbatim from the api; no hardcoded strings (seven UI languages: en, de, hu, lt, be, pl, uk); accessibility gate (44pt, 1.3×, VoiceOver/TalkBack, external keyboard) |
 | **Scale/Scope** | ≤ 1,000 products loaded per bakery (R2); ~8 offered label types; tens to hundreds of saved labels per bakery; 9 screens/states |
 
 ## Constitution Check
@@ -138,7 +138,7 @@ apps/pro-baker/src/
 | **2** | `packages/features/labels/model`: readiness, gap sentences, rendering view model, language set, bounded filter, with fixture tests (SC-002/003) | phase 1 types |
 | **3** | Saved-labels store, purge rules, and status refresh on foreground/reconnect | ADR 0002 (**Accepted**) |
 | **4** | Screens 1–9 per the approved design; navigation shell; wiring | the design pass + ADR 0001 (expo-router) |
-| **5** | Accessibility audit (VoiceOver/TalkBack, 1.3×, keyboard), de/lt catalog review, quickstart Q1–Q16 on tablet and phone | phase 4 |
+| **5** | Accessibility audit (VoiceOver/TalkBack, 1.3×, keyboard), review of the six non-English catalogs (be/uk after the Cyrillic font ruling), quickstart Q1–Q16 on tablet and phone | phase 4 |
 | **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. Enforced mechanically: the store profile fails to build while the adapter is the stub | api B8 |
 
 ## Gate 2 rulings (coordinator, 2026-09-23)

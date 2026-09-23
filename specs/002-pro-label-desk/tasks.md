@@ -124,7 +124,7 @@ with every gap named.
   - exposes `{ rows, loaded, total, bounded }` for the "first 1,000 of N" line
   - tested at 1,200 rows
 - [ ] T018 [P] [US1] Write `packages/features/labels/src/model/label-types.ts` + `label-types.test.ts`: offered rule-sets from O5, with display names as catalog keys `labels.labelType.<id>` falling back to the api name (FR-025)
-- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to `packages/core/messages/en.json`, `de.json` and `lt.json`, with the German and Lithuanian translated and key parity passing `catalogs.test.ts`
+- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing for the new locales is Home's; rebase onto it, and do not create it here
 - [ ] T020 [US1] Write `packages/features/labels/src/data/products.ts`: loaders over the session client for O6 and O7 (parallel after the first page reveals `total`) and O8. Online-only, with no persistence (FR-021)
 
 ### Screens (⛔DESIGN, ⛔ADR1 for expo-router and use-intl)
@@ -153,7 +153,7 @@ with every gap named.
   - the **owner's list** is en-US, de-DE, hu-HU, lt-LT and pl-PL, with `provenBy` = **spec file › describe › test title** or `null` (verbatim titles in research R1; never line numbers)
   - **offered = entries with a citation** (en-US and de-DE today)
   - the test fails if an offered entry lacks a citation, if a tag outside the owner's list appears (mt-MT), or if be-BY appears
-  - the default is the last used language, else the UI match if offered, else en-US
+  - the default is the last used language, else the UI match if offered (en/de/hu/lt/pl map to their EU tag; be and uk have none), else en-US
   - follow-up when the api's hu/lt/pl coverage PR merges: add the three citations, and add their fixtures to T005 and T027
 - [ ] T027 [P] [US2] Write `packages/features/labels/src/model/rendering.ts` + `rendering.test.ts`:
   - sections and runs become a view model with emphasis flags; nutrition rows carry the rounded figure, unit, source and rule
@@ -235,8 +235,8 @@ switch and membership loss.
 
 ## Phase 8: Polish & Cross-Cutting
 
-- [ ] T043 [P] Review the German and Lithuanian catalogs: German long-word wrapping at 1.3× text on every screen in inventory 1–9 (FR-026)
-- [ ] T044 VoiceOver + TalkBack walkthrough of screens 1–9 in en, de and lt, plus external-keyboard navigation on the tablet (SC-007). Record the findings in the PR
+- [ ] T043 [P] Review the six non-English catalogs, with a 1.3× text stress pass on every screen in inventory 1–9 across the full stress set (en, de, hu, lt, be, pl, uk; German long words, and Cyrillic be/uk **once design-mobile's font ruling lands**) (FR-026)
+- [ ] T044 VoiceOver + TalkBack walkthrough of screens 1–9 in all seven UI languages (en, de, hu, lt, be, pl, uk; be and uk after the font ruling), plus external-keyboard navigation on the tablet (SC-007). Record the findings in the PR
 - [ ] T045 Run `quickstart.md` Q1–Q16 on a 13" tablet and a phone against staging. Record the results in the PR body
 - [ ] T046 [P] Update `docs/pro-baker/CAPABILITY-MAP.md` §5 to reflect what 002 delivered (Label desk shipped; asks B2, B6, B8, B11 and B11b outstanding)
 - [ ] T047 Final `pnpm quality` green and CI green. Open the feature PR with honest body sections: what is blocked on api B8 (store release fails by construction), the P-02 packaging state, and the proven-language set

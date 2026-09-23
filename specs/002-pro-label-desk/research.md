@@ -40,7 +40,8 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
   (the new test titles), and with that it becomes offered. No other change is needed.
 - It is held as data in `packages/features/labels`. A test fails if an offered entry lacks a
   citation, if any tag outside the owner's list is offered, or if be-BY appears at all.
-- The default is the last used language, else the UI language's match if offered, else en-US.
+- The default is the last used language, else the UI language's match if offered (en→en-US,
+  de→de-DE, hu→hu-HU, lt→lt-LT, pl→pl-PL; be and uk have none), else en-US.
 
 **Consequence.** Until the api's coverage PR merges, the offered list is en-US and de-DE, so
 the LT pilot previews in English or German. Labels already issued in lt-LT (or hu-HU, pl-PL) on

@@ -29,7 +29,7 @@ built before that lane's pass is approved.
 product list with label readiness; a product's declarations grid with every gap named; the label
 preview for a product × rule-set × label language; a product's issued labels and the match check
 of one issued label against current data; saved issued labels viewable offline; tier state
-rendered from the server; en/de/lt; tablet-first layout degrading to phone.
+rendered from the server; seven UI languages (en, de, hu, lt, be, pl, uk); tablet-first layout degrading to phone.
 
 **Out** (each named so it is not silently assumed): **every write** — issuing, withdrawing,
 assigning or unassigning rule-sets, ingredient-list choices, article compositions, product or
@@ -288,6 +288,8 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
     EU statutory source, and an EAEU engine is future api work).
   - The api's `language` parameter is a free string with no listing endpoint (ask B11), so the
     list is bundled data until B11 ships.
+  - UI → label-language match: en → en-US, de → de-DE, hu → hu-HU, lt → lt-LT, pl → pl-PL, each
+    only when offered. be and uk have no label language, so they match none.
   - The default is the label language last used on the device, else the one matching the UI
     language when offered, else en-US.
 - **FR-012**: Nutrition values MUST show the api's rounded figure and unit; each value's
@@ -345,7 +347,11 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-024**: Pro navigation MUST follow DESIGN.md as amended by the owner's ruling (no Production
   tab); the desk's entry point is set by the design pass; unbuilt destinations show an honest
   empty state.
-- **FR-025**: Every app string MUST come from the en/de/lt catalogs (Constitution IX). Label text,
+- **FR-025**: Every app string MUST come from the catalogs of the **seven UI languages**, en, de, hu, lt, be, pl, uk
+  (owner's ruling 2026-09-23; constitution IX amendment carried by the Home lane, which also owns
+  the catalog plumbing and the one/few/many/other plural check for the Cyrillic be and uk).
+  Rendering in be and uk waits on design-mobile's Cyrillic font ruling. UI languages and **label
+  languages are separate lists**: label languages stay the five EU ones in FR-011. Label text,
   product names and ingredient designations come from the api as rendered; label-type display
   names come from the app catalogs keyed by label-type identifier (the api serves names in en-US
   only), falling back to the api name.
@@ -469,7 +475,7 @@ the api lane. Alternative: (B) no search until B2 ships (list only, sorted by na
   and Saved labels opens offline within 2 seconds.
 - **SC-006**: After sign-out, zero saved labels or session data remain on the device.
 - **SC-007**: Every screen in scope passes VoiceOver and TalkBack walkthroughs and renders without
-  clipped meaning at 1.3× text in en, de and lt; zero user-facing strings outside the catalogs.
+  clipped meaning at 1.3× text in all seven UI languages (en, de, hu, lt, be, pl, uk); zero user-facing strings outside the catalogs.
 
 ## Assumptions
 

@@ -51,4 +51,4 @@ The Vitest suites must include:
 | Q13 | Sign in as B (viewer) | Identical to Q1–Q8 (US1-7) |
 | Q14 | Archive the company on the web while the desk is open | "Company archived" message, switch offered, that company's saved labels deleted (US5-3) |
 | Q15 | Fixture company with 1,200 products | The filter works over 1,000; the bound line reads "first 1,000 of 1,200" (R2) |
-| Q16 | VoiceOver + TalkBack pass over screens 1–9 in en, de and lt at 1.3× text; external keyboard on the tablet | SC-007, FR-026 |
+| Q16 | VoiceOver + TalkBack pass over screens 1–9 in all seven UI languages (en, de, hu, lt, be, pl, uk) at 1.3× text; external keyboard on the tablet | SC-007, FR-026 |
