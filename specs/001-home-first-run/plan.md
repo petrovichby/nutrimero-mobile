@@ -153,6 +153,19 @@ sheet); 14 staples; 6 dietary options.
 - **5b** `apps/home-baker`: expo-router layout (Tabs + onboarding stack), thin route files,
   `app.json` plugins and `android.allowBackup: false`; `app-root.tsx` bootstrap retired.
 - **5c** Static no-network test (first-run and diet-profile import no api client, no `fetch`).
+- **5d** Interface language (FR-026–028; Constitution IX 1.2.0):
+  - `resolveLocale(override, deviceLanguageTags)` — the stored override first, then the device;
+  - the override lives under a **device-preferences namespace** (`nutrimero.device.uiLocale`),
+    outside Home's wiper and the session's own keys, so sign-out, erase and "Clear my data" leave
+    it in place (FR-027);
+  - the reinstall-orphan clear must still remove it. Today `ensureFreshInstallWiped` runs only
+    the session's wipe sequence (its own keys plus registered wipers), so a key cleared on
+    reinstall **but not** on sign-out needs a small core addition — a fresh-install-only clear
+    list. That is a `packages/core` seam change, announced through the coordinator;
+  - the root holds the resolved locale in state, so a change re-renders the translator and
+    `ThemeProvider` in place (no restart);
+  - the picker screen waits for the design-mobile drawing and the owner's walk (FR-028). Until
+    then More shows the row in an honest not-yet state.
 
 ### Phase 6 — Verify
 
