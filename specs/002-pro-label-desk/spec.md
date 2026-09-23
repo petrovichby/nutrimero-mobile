@@ -45,7 +45,7 @@ previews.
 
 A bakery owner opens Pro Baker on the office tablet. After signing in, they see their bakery's
 products, each with a readiness summary per assigned label type (e.g. "EU counter card — ready",
-"EU packaging — 2 categories missing"). They open a product and see its declarations grid: for
+"EU packaging — not issuable yet"). They open a product and see its declarations grid: for
 each assigned label type, the five categories (allergens, additives, nutrition, ingredients, food
 symbols), whether each is required and whether it is complete — and for every incomplete cell,
 exactly what is missing and where.
@@ -75,8 +75,9 @@ named in the UI language.
 5. **Given** an incomplete cell, **Then** each gap the api reports is shown as a sentence naming
    the missing datum and where it sits (e.g. "Nutrition: energy not recorded — Wheat flour T550,
    in Dough"), grouped when the api groups occurrences.
-6. **Given** a cell the api reports as *cannot be held* (e.g. additives today), **Then** it reads
-   as "not yet possible in Nutrimero", distinct from "missing data you can add".
+6. **Given** a cell the api reports as *cannot be held* (today: Additives, by design — PARKED
+   P-02), **Then** it reads as "not yet possible in Nutrimero", distinct from "missing data you
+   can add". (P-02 is cited in this spec, not shown to users.)
 7. **Given** a viewer-role member, **Then** the desk behaves identically (every capability here is
    a read).
 
@@ -208,9 +209,12 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
   it stays viewable.
 - **Product with no composition**: every required cell shows the no-composition gap; preview shows
   the api's gaps and no text.
-- **Packaging label types**: shown exactly as the api reports them — if additives are *cannot be
-  held*, the cell and any issuing implication read as US1 scenario 6; if the api lane's
-  verification changes that, the desk shows the new state with no app change (FR-018).
+- **Packaging label types**: every packaging label type requires Additives, and that cell is
+  *cannot be held* by design (016 FR-018, kept by 017's amendment, SC-007 — recorded as
+  `nutrimero-docs` PARKED **P-02**). So no product is packaging-ready and no packaging label can be
+  issued today. The grid shows the Additives cell per US1 scenario 6. The preview
+  still renders the other sections with the gap listed. This feature has no path that expects
+  packaging to become issuable (FR-018).
 - **Label language without a recorded term**: gap shown; never a fallback language.
 - **Very long ingredient lists** (deep sub-recipes): preview scrolls; sections keep headings
   visible; no truncation of legal text.
@@ -282,9 +286,12 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
   from a read made at viewing time, shown with the time of the check. The desk MUST NOT compute,
   infer or cache-forward a verdict; offline, the verdict reads "needs a connection".
 - **FR-018**: Label types MUST be presented exactly as the api reports them: counter-card label
-  types (allergens only) are the guaranteed path and MUST be fully supported; packaging label
-  types appear with whatever readiness and gaps the api reports, with no app-side assumption about
-  which categories can be completed.
+  types (allergens only) are the supported path and MUST be fully supported. Packaging label
+  types are refused by design today (PARKED **P-02**: Additives is *cannot be held*, 016 FR-018).
+  They appear in the grid and preview with the gaps the api reports, and their readiness reads
+  "not issuable yet — additives can't be recorded in Nutrimero yet". The desk MUST NOT offer,
+  promise or design for any path to packaging becoming issuable within this feature. Unblocking
+  P-02 is a separate, future feature.
 
 **Offline (Constitution VIII)**
 
