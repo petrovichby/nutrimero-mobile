@@ -138,6 +138,7 @@ with every gap named.
   - "current as of" (FR-009)
   - the P-02 cell copy
 - [ ] T025 [US1] Write `apps/pro-baker/src/wiring.ts`: create the session with the API base URL from Expo public env, register the app's wipers, and handle `onMembershipLost` with a message and the bakery switch (US5-3 hook point)
+  - **Sweep condition (PR A, coordinator):** register **every** wiper **before** `session.restore()`. `restore()` runs the wipe sequence as registered at that moment, so the order is a contract. A test proves that the fresh-install wipe reaches an app-registered wiper.
 
 **Checkpoint**: US1 is demonstrable on a tablet against staging (Q1, Q2, Q13, Q15).
 
@@ -211,6 +212,7 @@ offline state.
 - T035 — **Dropped** (ADR 0002 accepted: saved labels live in the durable default directory, so there is no eviction and no notice). The ID is retained so later IDs stay stable.
 - [ ] T036 [US4] Write `packages/features/labels/src/store/status-refresh.ts` + test (FR-020): on app foreground and on the `expo-network` reconnect event, re-read each saved label via O11 for its status only, update `status` and `statusConfirmedAt`, and never store the verdict
 - [ ] T037 [US4] Register the saved-labels wiper (`purgeAll`) and the `onMembershipLost` → `purgeCompany` handler in `apps/pro-baker/src/wiring.ts` (FR-022)
+  - **Sweep condition (PR A, coordinator):** the session's membership-loss emission must **isolate** its listeners, the way `wipe.run` isolates wipers. Today a throwing purge listener skips the listeners after it and leaves the active company set. Fix this in `packages/core/src/session/session.ts` (a seam item) and cover it in T042.
 - [ ] T038 [US4] Wire T030's loaders to upsert into the store (FR-019)
 - [ ] T039 [US4] (⛔DESIGN) Write `packages/features/labels/src/screens/saved-labels.tsx`: grouped by product, "status as of", "Match check needs a connection". Offline launch opens here (US4-1). Write `packages/features/labels/src/screens/offline-state.tsx` for list, grid and preview with retry (FR-021)
 
@@ -229,14 +231,14 @@ switch and membership loss.
   - `included` shows nothing
   - fixture-driven for all three
 - [ ] T041 [US5] (⛔DESIGN) Write `packages/features/labels/src/screens/company-archived.tsx` and the session-expired handling (re-sign-in; saved labels kept only for the same person, per FR-001a)
-- [ ] T042 [US5] Write `apps/pro-baker/src/wipe-flows.test.ts`: an integration test over the real session and store ports with fakes, covering sign-out (Q10), crash mid-wipe then resume (Q11), a different account (Q12) and membership loss (Q14). **No saved label or session key survives**
+- [ ] T042 [US5] Write `apps/pro-baker/src/wipe-flows.test.ts`: an integration test over the real session and store ports with fakes, covering sign-out (Q10), crash mid-wipe then resume (Q11), a different account (Q12) and membership loss (Q14). **No saved label or session key survives** Also cover a **throwing membership-loss listener**: later listeners still run, and the active company is cleared (sweep condition on T037).
 
 ---
 
 ## Phase 8: Polish & Cross-Cutting
 
-- [ ] T043 [P] Review the six non-English catalogs, with a 1.3× text stress pass on every screen in inventory 1–9 across the full stress set (en, de, hu, lt, be, pl, uk; German long words, and Cyrillic be/uk **once design-mobile's font ruling lands**) (FR-026)
-- [ ] T044 VoiceOver + TalkBack walkthrough of screens 1–9 in all seven UI languages (en, de, hu, lt, be, pl, uk; be and uk after the font ruling), plus external-keyboard navigation on the tablet (SC-007). Record the findings in the PR
+- [ ] T043 [P] Review the six non-English catalogs, with a 1.3× text stress pass on every screen in inventory 1–9 across the full stress set (en, de, hu, lt, be, pl, uk; German long words, and Cyrillic be/uk with widths measured in **Onest**, per design-mobile's ruling G-2 (fb999ed6): be/uk UI face Onest, stamp face Yeseva One) (FR-026)
+- [ ] T044 VoiceOver + TalkBack walkthrough of screens 1–9 in all seven UI languages (en, de, hu, lt, be, pl, uk; be/uk render in Onest and Yeseva One per G-2), plus external-keyboard navigation on the tablet (SC-007). Record the findings in the PR
 - [ ] T045 Run `quickstart.md` Q1–Q16 on a 13" tablet and a phone against staging. Record the results in the PR body
 - [ ] T046 [P] Update `docs/pro-baker/CAPABILITY-MAP.md` §5 to reflect what 002 delivered (Label desk shipped; asks B2, B6, B8, B11 and B11b outstanding)
 - [ ] T047 Final `pnpm quality` green and CI green. Open the feature PR with honest body sections: what is blocked on api B8 (store release fails by construction), the P-02 packaging state, and the proven-language set
