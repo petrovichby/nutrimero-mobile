@@ -24,7 +24,10 @@ analysis; treat its "decided" items as settled).
 - No user-facing hardcoded strings (locales: en, de, lt).
 - No secrets in the app bundle; entitlements are decided server-side.
 - Dietary/allergen profile stays device-local unless a spec explicitly introduces consented sync.
-- User commits git changes personally — write/edit files only; do not commit, stage, or push.
+- Git workflow (owner's ruling, 2026-09-23): lanes COMMIT their own work and OPEN PRs on their
+  lane branches. Lanes never merge and never push to `main` — merges are the owner's or the
+  coordinator's, on the owner's merge word, after the coordinator's sweep (the api/web PR
+  discipline applies: CI green, no suppressions, honest PR bodies).
 
 ## Related repos
 
