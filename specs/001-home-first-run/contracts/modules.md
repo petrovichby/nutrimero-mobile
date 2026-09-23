@@ -14,8 +14,12 @@ createTranslator(locale: Locale): Translator                        // typed key
 // device store (expo-secure-store behind a typed adapter)
 interface DeviceStoreAdapter { get(key): Promise<string | null>; set(key, value): Promise<void>; delete(key): Promise<void> }
 createDeviceStore(adapter: DeviceStoreAdapter): DeviceStore        // typed get/set per key in data-model.md
-DeviceStore.wipeAll(): Promise<void>                                // FR-011–013; the single wipe path
-ensureFreshInstallWiped(store, marker): Promise<void>              // reinstall rule (research R2)
+DeviceStore.wipeAll(): Promise<void>                                // Home's single wipe path (idempotent)
+ensureFreshInstallWiped(store, marker): Promise<void>              // reinstall rule — shared with the
+                                                                    // pro session store (ADR 0001 condition 2)
+
+// consumed from pro 002's session core (specs/002-pro-label-desk/contracts/session-core.md)
+registerWiper("home.deviceData", () => deviceStore.wipeAll())       // FR-011/012 via core's wipe sequence
 
 // units
 formatQuantity(value, unit, system: Units, locale): string          // shared formatter (IX)

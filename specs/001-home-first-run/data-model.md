@@ -36,8 +36,15 @@ resets the install marker's companion state, returning the app to `units`. Calle
 |---|---|---|
 | "Clear my data on this device" (More) | 001 | confirm ⇒ `wipeAll()` ⇒ restart first run |
 | Fresh install / reinstall (no marker) | 001 | `wipeAll()` before any read (iOS Keychain survives uninstall) |
-| Sign-out | future auth | `wipeAll()` ⇒ first run (FR-011 contract) |
-| Account erase | future auth | `wipeAll()` regardless of server response (FR-012 contract) |
+| Sign-out | core session (pro 002's `signOut`), once Home adopts sign-in | core's wipe sequence runs Home's registered wiper ⇒ first run (FR-011) |
+| Account erase | future auth/profile feature | same wipe sequence, regardless of server response (FR-012) |
+
+**Registration (III seam with pro 002's session core).** Home registers one wiper at app start:
+`registerWiper("home.deviceData", wipeAll)`. `wipeAll` is idempotent and touches only Home's
+namespace; core's sequence runs it after core's own wipe, isolated, and resumes it on launch via
+`pendingWipe`. "Clear my data on this device" (FR-013) calls `wipeAll` directly — it is Home's own
+action, not the session sequence. If session core has not merged when 001's phase 3 lands, 001
+ships `wipeAll` unregistered and registration lands with whichever PR merges second.
 
 Storage class: iOS Keychain `WHEN_UNLOCKED_THIS_DEVICE_ONLY`; Android Keystore-backed with app
 backup disabled (FR-009).

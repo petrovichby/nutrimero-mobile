@@ -3,6 +3,10 @@
 **Status**: Proposed (gate 2 of 001-home-first-run) · **Date**: 2026-09-23 · **Deciders**: owner
 (Aliaksandr), coordinator
 
+**Scope**: ruled by the coordinator as **the shared ADR** for navigation, secure store, locale
+and i18n runtime across both apps (home 001, pro 002). The pro lane's secure-store conditions are
+folded in below when received.
+
 ## Context
 
 Constitution XI: a plan that wants a new category of dependency stops and proposes an ADR first;
@@ -27,6 +31,21 @@ given in `specs/001-home-first-run/research.md`:
 
 Versions are those Expo SDK 57 pins (`npx expo install`). No state library, database, analytics,
 crash-reporting or payment SDK is admitted.
+
+## Secure-store conditions (shared)
+
+One secure-store adapter in `packages/core` serves both the pro lane's session (tokens, `userId`,
+`activeCompanyId`, `pendingWipe`) and Home's device data (profile, units, pantry, onboarding).
+
+1. **This-device-only.** iOS Keychain class `WHEN_UNLOCKED_THIS_DEVICE_ONLY` — never synced to
+   iCloud Keychain, never restored to another device. Android: Keystore-backed, app backup
+   disabled (`android.allowBackup: false`).
+2. **Reinstall wipe.** iOS Keychain items survive uninstall. On launch, before any read, if the
+   install marker (a file in the app's document directory, removed by uninstall) is absent, the
+   adapter clears every key it owns — session tokens included — then writes the marker. Without
+   this, a reinstalled app would resume a stale session and a stale dietary profile.
+3. **No logging** of keys' values; no values in crash reports.
+4. *Pro-lane conditions: pending — to be folded in here on receipt.*
 
 ## Consequences
 

@@ -82,6 +82,14 @@ violation; Complexity Tracking empty.
    verified rather than operator-declared (R7).
 5. **Staple FID ids**: chosen during implementation by querying the api, confirmed by the owner in
    the snapshot PR.
+6. **Seam with pro 002's session core** (`specs/002-pro-label-desk/contracts/session-core.md`):
+   compatible. Home registers `registerWiper("home.deviceData", wipeAll)`; FR-013 stays Home's own
+   action. Three alignment points for the pro lane:
+   - **one secure-store adapter** in `packages/core` for both apps' keys (ADR 0001, shared);
+   - **reinstall wipe** (ADR condition 2) must cover session tokens too — an iOS reinstall
+     otherwise resumes a stale session;
+   - **FR-012 erase**: the session surface has no erase operation; the future auth/profile
+     feature adds one that runs the same wipe sequence (noted, not needed by 002 or 001).
 
 ## Phases
 
@@ -113,8 +121,10 @@ violation; Complexity Tracking empty.
 
 - **3a** `packages/core`: `resolveLocale`, `createTranslator` (use-intl), catalog additions for
   every 001 string (en/de/lt, parity test), `formatQuantity`.
-- **3b** `packages/core`: `DeviceStore` over a typed adapter, `wipeAll`, reinstall rule; tests
-  with an in-memory adapter.
+- **3b** `packages/core`: `DeviceStore` over the shared secure-store adapter, `wipeAll`, the
+  reinstall rule (shared with the pro session store); tests with an in-memory adapter. Registers
+  `home.deviceData` with session core's `registerWiper` if 002 has merged, else ships
+  unregistered and whichever PR merges second wires it.
 - **3c** `packages/ui`: fonts (vendored OFL files + licenses), `Screen`, `Masthead`, `Button`,
   `SelectionCard`, `ToggleChip`, `EmptyState`, `OfflineBanner`, `ConfirmSheet`, `TabBar`,
   `ProvenanceStamp` — through the `impeccable` skill, a11y props built in.
