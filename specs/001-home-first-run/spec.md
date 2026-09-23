@@ -29,8 +29,9 @@ approved corpus `nutrimero-design:mobile/home-baker` — `00-splash` **as amende
   migrated when the api's per-user scope exists.
 - **Q3 → (A)**, conditions in FR-014–FR-017: onboarding completes with no network, from a
   script-produced FID snapshot shipped with the app. No runtime FID refresh in 001.
-- **Dietary mapping** (option → FID) is **Markus-CONFIRMED before it is built** (M-ledger, via
-  the coordinator). Everything else builds; the mapping lands when his answer does.
+- **Dietary mapping** (option → FID) is **ruled by the owner** (correction to gate 1,
+  2026-09-23; not a Markus item): the conservative default is the ruling, and it builds in 001 —
+  see FR-018.
 - With Q1 + Q3, 001 makes **no** api calls at all (A8 is zero for this feature).
 
 ## Scope
@@ -155,8 +156,8 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
   step; answers already given are kept.
 - **Changing answers later**: no editor ships in 001; "Clear my data" plus re-onboarding is the
   path until a settings feature exists.
-- **Dietary mapping not yet confirmed by Markus**: the dietary step still records the options;
-  nothing in 001 interprets them against allergen data, so no statement depends on the mapping.
+- **No recipes to evaluate yet**: 001 builds and tests the fit evaluation (FR-018) but shows no
+  fit flags — there are no recipes until 003, which displays them.
 - **Snapshot staple missing a locale name**: shows the en FID name; a missing staple fails the
   build (FR-017), never the user.
 - **Storage write fails**: the user is told the answer could not be saved and may continue;
@@ -220,9 +221,12 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
   with) until a guest-read policy exists.
 - **FR-017**: A test MUST prove every staple's FID id resolves in the snapshot with names in all
   three locales. A hand edit to the snapshot is a suppression-class violation (Constitution XII).
-- **FR-018**: The dietary option → FID mapping MUST NOT be built until Markus confirms it (gate-1
-  ruling). Proposed: Gluten-free ⇒ gluten; Lactose-free ⇒ milk; Nut allergy ⇒ tree nuts **and**
-  peanuts; Egg-free ⇒ egg; Vegan / Vegetarian ⇒ FID dietary facts.
+- **FR-018 (owner's ruling, 2026-09-23)**: The dietary option → FID mapping is: Gluten-free ⇒
+  cereals containing gluten; Lactose-free ⇒ milk (incl. lactose); Nut allergy ⇒ tree nuts **and**
+  peanuts; Egg-free ⇒ eggs; Vegan / Vegetarian ⇒ FID dietary facts. Fit evaluation, on the device:
+  an allergen state of "contains" ⇒ **not fitting**; "unknown" or "depends on brand" ⇒ **check**,
+  never fitting; only an explicit "does not contain" (or a satisfied dietary fact) fits. 001 builds
+  the mapping and the evaluation with tests covering every option × state; 003 displays the result.
 
 **Recipes tab (shell states)**
 
@@ -310,7 +314,6 @@ build time, against the contract-typed responses.
   Home lane ports it into `docs/DESIGN.md` by PR, with the PRODUCT.md staleness the census found).
   The splash is re-drawn there (real logo, smaller, owner-approved first — D-5); FR-001 builds
   that version. Screens with no pending amendment build against 0.4.0.
-- **Markus** confirms the dietary mapping (FR-018) via the coordinator's M-ledger.
 - **chore/contract-sync** merged, so the snapshot script runs against current contract types.
 
 ## Assumptions

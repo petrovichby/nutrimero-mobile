@@ -35,5 +35,5 @@
 - The "Contract check" section names api paths and fields on purpose: Constitution II's check is
   required before any screen is specced, and missing capability is recorded as nutrimero-api work
   (A1–A7, consumed by 003). It is a dependency record, not an implementation choice.
-- Q1–Q3 were resolved at gate 1 (all option A); the dietary mapping (FR-018) is pending Markus's
-  confirmation and is the only deferred build item.
+- Q1–Q3 were resolved at gate 1 (all option A). The dietary mapping (FR-018) is the owner's
+  ruling (gate-1 correction, 2026-09-23) and builds in 001; no build item is deferred.
