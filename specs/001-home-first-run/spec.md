@@ -40,7 +40,7 @@ approved corpus `nutrimero-design:mobile/home-baker` — `00-splash` **as amende
 skippable); the device-local dietary profile, units preference and pantry seed; the FID
 reference snapshot that onboarding reads; the wipe rules (sign-out, erase, local reset); the
 bottom tab bar with honest empty states; the Recipes tab in its connect-once state; the seven UI locales (Constitution IX 1.1.0:
-en, de, hu, lt, be, pl, uk).
+en, de, hu, lt, be, pl, uk); the in-app interface-language choice (FR-026; IX 1.2.0).
 
 **Out** (named so nothing is silently assumed): the populated recipes home, featured drop,
 category filter and populated offline cache (→ 003); recipe detail and baking mode (`02`,
@@ -148,8 +148,9 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 
 ### Edge Cases
 
-- **Language**: the device language selects one of the seven UI locales (en, de, hu, lt, be, pl,
-  uk); any other → en. **be and uk render in their ruled Cyrillic faces** (design G-2: Onest for
+- **Language**: an in-app choice (FR-026), when set, decides; otherwise the device language selects
+  one of the seven UI locales (en, de, hu, lt, be, pl, uk); any other → en (Constitution IX 1.2.0,
+  rule 1 — unchanged by the in-app choice, which only overrides it). **be and uk render in their ruled Cyrillic faces** (design G-2: Onest for
   UI text, Yeseva One for stamps; ADR 0001 *Fonts*) once those faces are vendored (phase 3c);
   until then a be or uk device renders en. German remains the long-word stress test at 1.3× text
   size (`01-recipes-de` is the parity witness for the masthead, tab labels and shell strings); pl,
@@ -257,7 +258,8 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 
 - **FR-021**: The bottom tab bar MUST show Recipes · Builder · Shopping · Pantry · More with
   labels always visible; unbuilt tabs show an illustrated empty state (one sentence, one action
-  back to Recipes). More contains only FR-013 and the app/version line.
+  back to Recipes). More contains only "Language" (FR-026), "Clear my data on this device" (FR-013)
+  and the app/version line.
 - **FR-022**: Every user-facing string MUST come from the seven UI-locale catalogs (Constitution IX
   1.1.0: en, de, hu, lt, be, pl, uk), with key parity and per-locale plural coverage enforced by test,
   and Hermes' `Intl.PluralRules` verified on device for all seven. Translations are lane-authored
@@ -270,10 +272,31 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 - **FR-025**: Home Baker colors MUST come from tokens that follow DESIGN.md (e.g. the home accent
   is butter gold `#dfa621`, not lime).
 
+**Interface language (owner's ruling 2026-09-23; Constitution IX 1.2.0)**
+
+- **FR-026**: More MUST offer "Language". It lists the seven UI locales **by their own names**
+  (English, Deutsch, Magyar, Lietuvių, Беларуская, Polski, Українська), marks the current one, and
+  shows the system's choice as the default ("System language — ‹name›"). Choosing a locale:
+  - **overrides** the system language, and choosing the default removes the override;
+  - **applies immediately**, without a restart — every visible string and the UI and stamp faces
+    (G-1/G-2) switch in place;
+  - **persists on the device** in the device store.
+  Locale resolution takes the stored override first, then the device languages (FR-022's rule).
+- **FR-027**: The language choice is a **device preference, not personal data**. It is **not** part
+  of the FR-011 (sign-out), FR-012 (erase) or FR-013 ("Clear my data") wipes, which leave it in
+  place. It is cleared only by the reinstall-orphan clear (ADR 0001 condition 3), so a fresh
+  install starts from the system language.
+- **FR-028 (pending design)**: The Language picker has **no corpus drawing**. The design-mobile lane
+  draws it for the owner's walk, and it is built only after that. Until then the More tab's
+  "Language" row is present as an **honest not-yet state** (visible, announced as not yet
+  available, no dead end), and resolution already honours a stored override.
+
 ### Key Entities
 
 - **Dietary profile** (device-only): the set of the six options chosen.
 - **Units preference** (device-only): metric | imperial.
+- **Interface-language preference** (device preference, FR-026/027): one of the seven UI locales,
+  or absent (follow the system). Not personal data; outside the Home wiper; cleared on reinstall.
 - **Pantry seed** (device-only in v1): set of FID ingredient ids; migrates to the server pantry
   when the api's per-user scope exists.
 - **Onboarding state** (device-only): per-step completion and the completed marker.
@@ -341,8 +364,9 @@ build time, against the contract-typed responses.
 
 ## Assumptions
 
-- Language follows the device (one of the seven, else en; be/uk render en only until Onest and
-  Yeseva One are vendored in phase 3c); no in-app language step — the corpus has none.
+- Language follows the device (one of the seven, else en) unless the in-app choice (FR-026)
+  overrides it. *Retired 2026-09-23 by the owner's ruling:* "no in-app language step — the corpus
+  has none". There is still no language step in **onboarding** — the choice lives in More.
 - No editor for profile/units/pantry in 001; clear-and-re-onboard is the stopgap.
 - The 14 staples are curated content, identified by FID ingredient id.
 - Everything added under `packages/*` (the onboarding feature package, shared components, the

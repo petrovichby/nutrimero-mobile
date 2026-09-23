@@ -15,6 +15,10 @@ persistence 001 has.
 | `pantrySeed` | `FidIngredientId[]` (set, manifest order) | `[]` | FR-007 | each ∈ staples manifest; unknown ids dropped |
 | `onboarding` | `{ units: StepState, diet: StepState, pantry: StepState, completed: boolean }` | all `pending`, `false` | FR-008 | — |
 
+**Device preference (outside Home's namespace and wiper):** `nutrimero.device.uiLocale` —
+one of the seven UI locales, or absent (follow the system). Written by FR-026; **not** cleared by
+sign-out, erase or "Clear my data" (FR-027); cleared by the reinstall-orphan clear only.
+
 `DietaryOption` = `glutenFree | lactoseFree | nutAllergy | eggFree | vegan | vegetarian`.
 `StepState` = `pending | answered | skipped`.
 
