@@ -5,7 +5,12 @@
 **Input**: Feature specification from `specs/001-home-first-run/spec.md` (gate 1 passed, with the
 owner's dietary-mapping ruling).
 
-**Status**: Draft — **gate 2** (coordinator reads; nothing is implemented before the word).
+**Status**: **Gate 2 PASSED 2026-09-23** (coordinator). Rulings: ADR 0001 Accepted with
+amendments a–d (folded); FR-020 → 003; the Home role table is a requirement on design-mobile's
+AMENDMENTS.md; A10 queued, snapshot from a local api at `contract/SOURCE`'s commit; staple ids
+confirmed in the snapshot PR; session-core seam compatible, alignment points relayed.
+**Order**: phase 1 after #5 merges (one PR) · phase 2a after design-mobile's AMENDMENTS.md ·
+phases 3+ after #4 merges with the ADR Accepted.
 
 ## Summary
 
@@ -62,11 +67,10 @@ sheet); 14 staples; 6 dietary options.
 | VIII | Offline first-class | ✅ | Whole flow offline; connect-once state stated; delta sync is 003's (A7) |
 | IX | Multilingual | ✅ | `use-intl` over en/de/lt catalogs, parity test, shared unit formatter |
 | X | Design from tokens | ✅ after rider | Tokens generated from DESIGN.md (0.5.0) — replaces hand-seeded lime; impeccable used for screen build/review |
-| XI | Stop conditions | ⛔ **STOP (raised)** | New categories: navigation, local persistence, i18n runtime (+ locale, fonts, dev yaml) → **ADR 0001 proposed**; approval required at gate 2 |
+| XI | Stop conditions | ✅ (was ⛔) | New categories admitted by **ADR 0001, Accepted at gate 2** (+ `expo-file-system` for the install marker) |
 | XII | The gates | ✅ | Both gates; PRs only; CI green; no-suppressions instrument ported (phase 1); tokens/snapshot generated files are suppression-class if hand-edited |
 
-**Post-design re-check**: unchanged. XI remains a stop until ADR 0001 is approved; no other
-violation; Complexity Tracking empty.
+**Post-design re-check**: all ✅ after gate 2; Complexity Tracking empty.
 
 ## Gate-2 items for the coordinator
 
@@ -132,8 +136,10 @@ violation; Complexity Tracking empty.
 ### Phase 4 — Diet profile (owner's ruling)
 
 - **4a** `packages/features/diet-profile`: options, mapping, `evaluateFit` + full matrix tests.
-- **4b** `scripts/fid-snapshot.ts` + generated snapshot + resolution test (R7). Header states the
-  api commit, contract source and the "hand edit = suppression-class violation (XII)" rule.
+- **4b** `scripts/fid-snapshot.ts` + generated snapshot + resolution test (R7). Taken from a
+  **local** api instance checked out at `contract/SOURCE`'s commit and seeded with `fid:import` —
+  never from production — so `--api-commit` is a fact by construction. Header states the api
+  commit, contract source and the "hand edit = suppression-class violation (XII)" rule.
 
 ### Phase 5 — Screens (needs 2, 3, 4)
 

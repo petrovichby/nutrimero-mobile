@@ -233,9 +233,9 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 - **FR-019**: The Recipes tab MUST show its masthead and, while no catalog is available, the
   connect-once state: illustration, one sentence ("Recipes download the first time you're
   connected"), one action. It MUST NOT show placeholder or sample recipes.
-- **FR-020**: When offline, the tab MUST show the quiet offline banner ("Offline — showing saved
-  data" form, per DESIGN.md), never a blocking modal; network-only actions are disabled with a
-  reason rather than failing after a tap.
+- **FR-020**: *Moved to 003 at gate 2 (2026-09-23).* 001 makes no network calls and has no saved
+  data or network-only actions; the `OfflineBanner` component ships in `packages/ui` with 001's
+  shell components and is wired in 003.
 
 **Shell, language, accessibility**
 

@@ -82,9 +82,10 @@ are **stops** until that ADR is approved at gate 2.
   `packages/features/diet-profile/src/fid-snapshot.generated.ts` — `satisfies` a type derived
   from the generated schema, with a header naming the api commit, the contract snapshot commit
   (`contract/SOURCE`), and the generation date.
-- **Api commit**: `/health` exposes no build commit, so the script takes `--api-commit` from the
-  operator and refuses to run unless it equals `contract/SOURCE`'s commit (the types it was typed
-  against). Named as a small non-blocking api ask (**A10**: build commit on `/health`).
+- **Api commit** (gate-2 ruling): until A10 (build commit on `/health`, queued, non-blocking)
+  exists, the snapshot is taken from a **local** api instance checked out at `contract/SOURCE`'s
+  commit and seeded with `fid:import` — never production. `--api-commit` is then a fact by
+  construction; the script still refuses unless it equals `contract/SOURCE`.
 - **Test**: every manifest staple resolves with names in en, de and lt; every mapped allergen code
   resolves; the header carries a 40-hex api commit. A hand edit is a suppression-class violation
   (XII) — the file header says so and the PR template for regeneration shows the command used.
@@ -136,5 +137,5 @@ are **stops** until that ADR is approved at gate 2.
 - **Finding**: 001 makes no network calls and has no network-only actions; the Recipes tab shows
   the connect-once state regardless of connectivity. Detecting connectivity only to show a banner
   over "no saved data" adds a dependency (`expo-network`) for no user value.
-- **Proposal (gate-2 question)**: FR-020 moves to 003, where saved data and network actions exist.
-  The banner *component* ships in `packages/ui` with 001's shell components.
+- **Ruled at gate 2**: FR-020 moved to 003. The banner *component* ships in `packages/ui` with
+  001's shell components; `expo-network` enters via pro ADR 0002 or 003, whichever is first.
