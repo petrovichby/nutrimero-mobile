@@ -36,6 +36,10 @@ jobs:
       - name: Unit tests (Vitest)
         run: pnpm test
 
+      # Also run by `pnpm test` above; named here so the gate shows in the checks list.
+      - name: No suppressions (Constitution XII)
+        run: pnpm vitest run scripts/no-suppressions.test.ts
+
       # The mobile analogue of "build": Metro must be able to produce release JS
       # bundles for both platforms in both apps. Native compilation happens on EAS,
       # not in CI.
