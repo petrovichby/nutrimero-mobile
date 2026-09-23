@@ -1,7 +1,7 @@
-// Design tokens per docs/DESIGN.md (draft 0.1.0). Mobile-specific roles are declared in the
-// DESIGN.md frontmatter; the full light/dark ramps are inherited from the nutrimero token
-// registry. TODO(design): replace this hand-seeded subset with generation from the registry —
-// this file must never be extended by hand beyond bootstrap (Constitution X).
+// Bootstrap design tokens, hand-seeded from docs/DESIGN.md 0.1.0 and now stale against the binding
+// 0.5.0 (e.g. appAccentHome is still lime; 0.5.0 makes it butter gold #dfa621). 001 phase 2b
+// replaces this file with tokens generated from the DESIGN.md frontmatter (colors-mobile,
+// colors-home) — it must never be extended by hand (Constitution X).
 export const tokens = {
   color: {
     primary: "#1b1f58",
