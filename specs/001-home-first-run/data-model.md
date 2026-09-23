@@ -55,8 +55,8 @@ backup disabled (FR-009).
 header: apiCommit (40-hex), contractSource (contract/SOURCE line), generatedAt (ISO date),
         "GENERATED — do not edit; a hand edit is a suppression-class violation (XII)"
 languages: { en: LanguageId, de: LanguageId, lt: LanguageId }
-staples: [ { fidId, names: { en, de, lt }, dietary: { vegan, vegetarian, lactoseFree, glutenFree } } ] × 14
-allergens: [ { id, code, names: { en, de, lt } } ]   // exactly the codes the mapping uses
+staples: [ { fidId, names: { en, de, hu, lt, be, pl, uk }, dietary: { vegan, vegetarian, lactoseFree, glutenFree } } ] × 14
+allergens: [ { id, code, names: { en, de, hu, lt, be, pl, uk } } ]   // exactly the codes the mapping uses
 ```
 
 Field types derive from the generated contract schema (`components["schemas"]`), so a contract

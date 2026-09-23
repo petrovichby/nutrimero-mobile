@@ -13,7 +13,7 @@ pnpm quality          # lint → check → typecheck → unit (incl. no-suppress
 pnpm tokens:generate && git diff --exit-code packages/ui/src/tokens.generated.ts   # tokens drift
 ```
 
-## Manual walkthrough (both platforms; en, de, lt; light and dark)
+## Manual walkthrough (both platforms; en, de, hu, lt, pl rendered — be/uk render en until their face is ruled; light and dark)
 
 | # | Do | Expect | Covers |
 |---|---|---|---|
@@ -23,7 +23,9 @@ pnpm tokens:generate && git diff --exit-code packages/ui/src/tokens.generated.ts
 | 4 | Clear my data (More) → confirm | Back to Units; Cancel had equal weight | US4, FR-013 |
 | 5 | Imperial, Nut allergy + Vegan, tap 8 staples, Done | Counter "8 items…"; relaunch keeps all three | US2, US3 |
 | 6 | Kill app on Diet step; relaunch | Resumes at Diet with Units kept | FR-008 |
-| 7 | Device language de, text size 130% | No clipped meaning; German staple names from snapshot | SC-006, IX |
+| 7 | Device language de, then pl, text size 130% | No clipped meaning; staple names from the snapshot in that language | SC-006, IX |
+| 7b | Device language be, then uk | App renders en (face not yet ruled); after the face lands: repeat row 7 and record Cyrillic string widths | IX 1.1.0 |
+| 7c | Dev build launch on each platform | Startup check passes: Hermes `Intl.PluralRules` gives the expected categories for all seven locales | FR-022 |
 | 8 | Proxy on, repeat 1–5 online | **Zero** requests from the app | SC-002 |
 | 9 | iOS: encrypted backup → restore to a second device; Android: `adb backup` | No profile/pantry restored; onboarding shows | FR-009, SC-003 |
 | 10 | Uninstall → reinstall (iOS) | Onboarding shows; old profile gone | R2 reinstall rule |
