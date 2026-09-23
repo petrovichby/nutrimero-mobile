@@ -46,8 +46,8 @@ audit for screens (no RN component harness — research R11).
 onboarding step 1 under 2 s on a mid-range device; SC-001 timings.
 
 **Constraints**: works fully offline from install; zero network requests; no personal data in
-logs; 44pt targets; 1.3× text; seven UI locales (IX 1.1.0), five rendered until a Cyrillic face
-is ruled.
+logs; 44pt targets; 1.3× text; seven UI locales (IX 1.1.0), all rendered once 3c vendors the
+G-2 Cyrillic faces.
 
 **Scale/Scope**: 8 screens (cover, 3 steps, Recipes connect-once, coming-soon tab, More, confirm
 sheet); 14 staples; 6 dietary options.
@@ -66,7 +66,7 @@ sheet); 14 staples; 6 dietary options.
 | VI | Privacy by architecture | ✅ | Device-only store, backup-excluded, one wipe path, no transmission (static test + proxy check) |
 | VII | Entitlements server-side | ✅ n/a | No tier logic in 001 |
 | VIII | Offline first-class | ✅ | Whole flow offline; connect-once state stated; delta sync is 003's (A7) |
-| IX | Multilingual | ✅ | `use-intl` over the seven catalogs (IX 1.1.0), parity + plural tests (#8), Hermes plural check on device, be/uk not rendered until their face is ruled, shared unit formatter |
+| IX | Multilingual | ✅ | `use-intl` over the seven catalogs (IX 1.1.0), parity + plural tests (#8), Hermes plural check on device, be/uk rendered in Onest / Yeseva One (G-2) from 3c, shared unit formatter |
 | X | Design from tokens | ✅ after rider | Tokens generated from DESIGN.md (0.5.0) — replaces hand-seeded lime; impeccable used for screen build/review |
 | XI | Stop conditions | ✅ (was ⛔) | New categories admitted by **ADR 0001, Accepted at gate 2** (+ `expo-file-system` for the install marker) |
 | XII | The gates | ✅ | Both gates; PRs only; CI green; no-suppressions instrument ported (phase 1); tokens/snapshot generated files are suppression-class if hand-edited |
@@ -131,8 +131,10 @@ sheet); 14 staples; 6 dietary options.
   reinstall rule (shared with the pro session store); tests with an in-memory adapter. Registers
   `home.deviceData` with session core's `registerWiper` if 002 has merged, else ships
   unregistered and whichever PR merges second wires it.
-- **3c** `packages/ui`: fonts (vendored OFL files + licenses; Latin faces only until the owner
-  rules a Cyrillic-capable face via design-mobile — this lane does not pick one), `Screen`, `Masthead`, `Button`,
+- **3c** `packages/ui`: fonts (vendored OFL files + licenses: Plus Jakarta Sans, Pacifico, Stardos
+  Stencil, and Onest + Yeseva One per design G-2) with a registry selecting UI and stamp faces by
+  locale script, and the test that each locale's stamp and UI text resolve to their ruled faces;
+  `RENDERED_LOCALES` widens to all seven in the same PR. Then `Screen`, `Masthead`, `Button`,
   `SelectionCard`, `ToggleChip`, `EmptyState`, `OfflineBanner`, `ConfirmSheet`, `TabBar`,
   `ProvenanceStamp` — through the `impeccable` skill, a11y props built in.
 

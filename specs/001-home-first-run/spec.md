@@ -149,12 +149,12 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 ### Edge Cases
 
 - **Language**: the device language selects one of the seven UI locales (en, de, hu, lt, be, pl,
-  uk); any other → en. **be and uk are catalogued but not rendered** until the owner rules a
-  Cyrillic-capable face (design-mobile; ADR 0001's vendored faces are Latin-only) — until then a
-  be or uk device renders en. German remains the long-word stress test at 1.3× text size
-  (`01-recipes-de` is the parity witness for the masthead, tab labels and shell strings); pl joins
-  the stress set now; be and uk join it when their face lands, with their string widths measured
-  in that face (Cyrillic widths behave differently from Latin).
+  uk); any other → en. **be and uk render in their ruled Cyrillic faces** (design G-2: Onest for
+  UI text, Yeseva One for stamps; ADR 0001 *Fonts*) once those faces are vendored (phase 3c);
+  until then a be or uk device renders en. German remains the long-word stress test at 1.3× text
+  size (`01-recipes-de` is the parity witness for the masthead, tab labels and shell strings); pl,
+  be and uk are in the stress set, be and uk with their string widths measured in Onest (Cyrillic
+  widths behave differently from Latin).
 - **Dark scheme**: onboarding, the Recipes tab and empty states follow the OS scheme (per
   `01-recipes-dark`); the cover and illustration plates are scheme-fixed.
 - **Interrupted onboarding**: app killed mid-flow → next launch resumes at the first unfinished
@@ -312,8 +312,7 @@ build time, against the contract-typed responses.
 - **SC-005**: Every staple resolves in the FID snapshot in all seven UI locales (build-time test), and
   the snapshot names the api commit it came from.
 - **SC-006**: Every screen in scope passes a VoiceOver and a TalkBack walkthrough and renders
-  without clipped meaning at 1.3× text size in every rendered locale (en, de, hu, lt, pl; be and uk
-  once their face lands).
+  without clipped meaning at 1.3× text size in all seven UI locales (be and uk measured in Onest).
 - **SC-007**: Zero user-facing strings outside the seven catalogs; the catalogs have identical
   key sets.
 
@@ -327,8 +326,8 @@ build time, against the contract-typed responses.
 
 ## Assumptions
 
-- Language follows the device (one of the seven, else en; be/uk render en until their face is
-  ruled); no in-app language step — the corpus has none.
+- Language follows the device (one of the seven, else en; be/uk render en only until Onest and
+  Yeseva One are vendored in phase 3c); no in-app language step — the corpus has none.
 - No editor for profile/units/pantry in 001; clear-and-re-onboard is the stopgap.
 - The 14 staples are curated content, identified by FID ingredient id.
 - Everything added under `packages/*` (the onboarding feature package, shared components, the
