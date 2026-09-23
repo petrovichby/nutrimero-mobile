@@ -280,8 +280,8 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-011**: Label language MUST be selectable independently of UI language. The list offered MUST
   be only languages whose support can be proven from a source the plan names; the api's `language`
   parameter is a free string (no enum, no listing endpoint), so until the api serves such a list
-  (ask B11) the desk offers en-US plus the UI languages the vocabulary is tested against — never a
-  hardcoded list of 24. The default is the label language last used on the device, else the one
+  (ask B11), the desk offers only languages an api rendering test proves, each with its citation
+  (gate 2: en-US, de-DE and mt-MT; lt-LT enters when B11b lands) — never a hardcoded list of 24. The default is the label language last used on the device, else the one
   matching the UI language when offered, else en-US.
 - **FR-012**: Nutrition values MUST show the api's rounded figure and unit; each value's
   full-precision source figure and rounding rule MUST be reachable from it.
@@ -311,6 +311,9 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 
 - **FR-019**: Every issued label the desk loads MUST be saved on the device, per bakery, and be
   readable offline in full under Saved labels.
+  *Proposed amendment (ADR 0002, pending the coordinator's word):* "…unless the device clears
+  them under storage pressure, which the desk states". On iOS, SDK 57 offers no backup-exclusion
+  path outside the caches directory.
 - **FR-020**: Saved labels MUST show the time their status was last confirmed by the api; statuses
   MUST refresh automatically on foreground and on reconnect.
 - **FR-021**: Products, grids and previews are online-only: offline they MUST show an offline state
@@ -325,8 +328,9 @@ membership was then deactivated, go online, and confirm that bakery's saved labe
 - **FR-023**: Whether the bakery's plan includes the desk MUST come from the server's entitlement
   answer; the app MUST NOT decide it. A plan without the desk shows a plain, non-blurred
   explanation with a decline path of equal weight; no purchase flow ships here. While the api
-  serves no entitlement answer, the states are built and **store release waits** (gate 1, Q2-A);
-  no ungated fallback is planned.
+  serves no entitlement answer, the desk is usable under a **persistent, non-dismissible**
+  "Plan status not available from the server" banner, and **the store build fails** until a
+  server-backed answer exists (gate 1 Q2-A; gate 2 G2-Q1-A).
 
 **Navigation, language, accessibility**
 

@@ -79,7 +79,8 @@ mirrors whatever the api reports and never infers a transition.
 
 ### Label-language set (bundled data; `packages/features/labels`)
 
-- A list of `{ tag: 'en-US' | 'de-DE', provenBy: '<api test path>' }` (R1).
+- A list of `{ tag, provenBy: '<api rendering-test path:line>' }`. Today it holds en-US, de-DE and
+  mt-MT (R1, gate 2).
 - Adding an entry without a `provenBy` citation fails a unit test.
 - It is replaced by the api listing when B11 ships.
 

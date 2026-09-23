@@ -4,8 +4,11 @@
 
 **Input**: Feature specification from `specs/002-pro-label-desk/spec.md`
 
-**Status**: Draft for **gate 2**. Nothing is implemented. Phase 1 is blocked behind the Home
-lane's contract sync (II) and the XI stops below.
+**Status**: **Gate 2 PASSED with rulings** (coordinator, 2026-09-23; see *Gate 2 rulings*
+below). Nothing is implemented.
+- Phase 1 waits on **PR #5** (contract sync, api `4a4356b`) merging and on **ADR 0001** (Home)
+  being ruled.
+- Phase 3 waits on **ADR 0002** (this lane).
 
 ## Summary
 
@@ -26,15 +29,17 @@ Where the work lands:
 
 What the plan avoids:
 - There is no state library and no decimal library.
-- **Three new dependency categories stop for ADRs**: the secure token store, the local
-  persistence store, and navigation. Two Expo device modules are flagged for a ruling.
+- New dependencies enter **only through ADRs**:
+  - ADR 0001 (shared, Home-owned): `expo-router`, `expo-secure-store`, `expo-localization`,
+    `use-intl`
+  - ADR 0002 (this lane): `expo-sqlite`, `expo-network`
 
 ## Technical Context
 
 | | |
 |---|---|
 | **Language/Version** | TypeScript 6.0 (strict), React 19.2, React Native 0.86 |
-| **Primary Dependencies** | Existing: Expo SDK 57, `openapi-fetch` 0.17, generated types (`openapi-typescript` 7). **Proposed, behind ADRs**: secure store (R4), local store (R5), navigation (R6). **Flagged**: `expo-localization`, `expo-network` (R6) |
+| **Primary Dependencies** | Existing: Expo SDK 57, `openapi-fetch` 0.17, generated types (`openapi-typescript` 7). **ADR 0001** (shared, Home-owned): `expo-router`, `expo-secure-store`, `expo-localization`, `use-intl`. **ADR 0002** (this lane): `expo-sqlite`, `expo-network` |
 | **Storage** | Secure store: tokens, `userId`, `pendingWipe`. Local store: saved issued labels, per company, outside OS backups (R5). Nothing else persisted (FR-021) |
 | **Testing** | Vitest (existing) for every pure module: session, wipe, error classifier, filter, readiness, gap sentences, rendering equality, language set, pinned contract facts. Screens are validated by `quickstart.md` Q1–Q16 and the VoiceOver/TalkBack audit |
 | **Target Platform** | iOS and iPadOS, and Android (phone and tablet) via Expo; **13" tablet first** |
@@ -55,12 +60,12 @@ What the plan avoids:
 | IV | FID-only allergen/nutrition | ✅ | Emphasis, statements and figures come only from the api rendering (FR-014). There is no local derivation path, pinned by a test that the preview renders only `sections` |
 | V | Honest provenance | ✅ n/a | No imagery. The FR-023 plan-lacks state has no dark pattern (equal-weight decline, no blur) |
 | VI | Privacy by architecture | ✅ | No dietary profile involved. Bakery data is purged on sign-out, account switch and membership loss, and kept out of OS backups |
-| VII | Entitlements server-side | ✅ | An entitlement port renders the server state; its only implementation returns `unavailable`; store release is blocked (R9). **G2-Q1** covers the dev rendering of `unavailable` |
+| VII | Entitlements server-side | ✅ | An entitlement port renders the server state; its only implementation returns `unavailable`; a non-dismissible banner shows while it returns `unavailable` (G2-Q1-A). The **store build fails at config evaluation** while the adapter is the stub (R9); this is mechanical, not a checklist |
 | VIII | Offline read-only, first-class | ⚠️ **justified deviation** | Saved issued labels are the offline cache, refreshed by re-reading. There is **no delta sync** because the api has none, and other data is online-only by the coordinator's 002 ruling. See Complexity Tracking |
 | IX | Multilingual | ✅ | All strings come from the catalogs. Label-type names are catalog keys by id. Gap sentences use catalog templates. The label language is separate from the UI language |
 | X | Design from tokens, a11y gate | ✅ **blocked on design** | No screen is built before the design-mobile lane's pass. `packages/ui` components carry the a11y props |
-| XI | Stop conditions | ⛔ **three stops raised** | The secure store (R4), local persistence (R5) and navigation (R6) are new categories, and ADR proposals are in `research.md`. `expo-localization` and `expo-network` are flagged for a ruling. No new top-level package (`packages/features/*` is per the coordinator's ruling) |
-| XII | Gates | ✅ | Gate 1 passed. This plan stops at gate 2. PRs only; CI green; no suppressions |
+| XI | Stop conditions | ✅ **routed through ADRs** | The secure store, navigation, locale and i18n runtime are ADR 0001's (Home-owned, ruled at Home gate 2). The document store and connectivity are ADR 0002's (this lane, proposed). No dependency enters before its ADR is ruled. No new top-level package |
+| XII | Gates | ✅ | Gates 1 and 2 passed. PRs only; CI green; no suppressions; the release block is enforced by the build, not by people |
 
 **Post-design re-check:** unchanged. The design added no dependency beyond R4–R6, no persistence
 beyond saved labels and session, and no write path.
@@ -96,7 +101,7 @@ packages/core/src/
 │   ├── company.ts               # active company, membership-loss events
 │   └── token-store.ts           # port; the adapter depends on ADR (R4)
 ├── entitlements/entitlement.ts  # port, `unavailable` implementation (R9)
-└── i18n/format.ts               # interpolation helper (if not landed by Home first)
+                                 # (i18n runtime: use-intl per ADR 0001, landed by Home; no helper here)
 
 packages/features/labels/        # new feature pack (@nutrimero/feature-labels)
 ├── src/model/
@@ -125,15 +130,32 @@ apps/pro-baker/src/
 
 | Phase | Content | Blocked by |
 |---|---|---|
-| **0** | Nothing to build. Wait for: the Home lane's contract-sync PR (number TBD); ADR rulings for R4, R5 and R6; the R6 flag rulings; gate 2 | coordinator |
-| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port, and the P1–P6 contract tests. The seam announcement is sent before the PR opens | sync + R4 ADR |
+| **0** | Nothing to build. Wait for PR #5 (contract sync) to merge and ADR 0001 to be ruled | coordinator |
+| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port (+ exported source), the P1–P6 contract tests, `apps/pro-baker/app.config.ts` + `eas.json` with the **store-profile build failure** and its test. The seam announcement is sent before the PR opens | PR #5 + ADR 0001 |
 | **2** | `packages/features/labels/model`: readiness, gap sentences, rendering view model, language set, bounded filter, with fixture tests (SC-002/003) | phase 1 types |
-| **3** | Saved-labels store, purge rules, backup exclusion (verified on device), and status refresh on foreground/reconnect | R5 ADR (+ `expo-network` ruling) |
-| **4** | Screens 1–9 per the approved design; navigation shell; wiring | the design pass + R6 ADR |
+| **3** | Saved-labels store, purge rules, backup exclusion (verified on device), and status refresh on foreground/reconnect | ADR 0002 (and the FR-019 amendment it proposes) |
+| **4** | Screens 1–9 per the approved design; navigation shell; wiring | the design pass + ADR 0001 (expo-router) |
 | **5** | Accessibility audit (VoiceOver/TalkBack, 1.3×, keyboard), de/lt catalog review, quickstart Q1–Q16 on tablet and phone | phase 4 |
-| **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. It is not part of this feature's done-ness; it is a release checklist item | api B8 |
+| **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. Enforced mechanically: the store profile fails to build while the adapter is the stub | api B8 |
 
-## Questions for gate 2
+## Gate 2 rulings (coordinator, 2026-09-23)
+
+- **G2-Q1 → (A)**, with a mechanical block. The banner is persistent and non-dismissible, and the
+  store build profile fails at build time while the adapter is the stub (R9).
+- **G2-Q2 → the proven set stands.**
+  - Checked at the coordinator's request: hu-HU is **not** rendering-proven (query-cost test only).
+  - Applying the same criterion **adds mt-MT** (rendering-proven, `labels.e2e-spec.ts:303/359`).
+  - The set is therefore en-US, de-DE and mt-MT (R1).
+  - B11b (lt-LT) is queued on the api after 020 P1; lt-LT enters with its citation when it lands.
+  - B11 remains the durable ask.
+- **G2-Q3.** ADR 0001 (Home) is the shared ADR for navigation, secure store, locale and the i18n
+  runtime. This lane's R4 conditions are folded in as requirements; the Keychain class is
+  corrected per the SDK 57 docs (R4). This lane authors **ADR 0002** (document store +
+  connectivity), and phase 3 waits on it.
+- **Accepted as planned**: R2, R3, R7, R8, R9, R10, the session-core contract, the VIII
+  deviations, and P1–P6.
+
+### Questions as carried to gate 2 (record)
 
 - **G2-Q1 — How does the desk render entitlement `unavailable` in development and internal
   builds?** Both options are client choices, so the coordinator picks.

@@ -19,8 +19,16 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
 - **lt-LT label rendering is not exercised by any api test.**
 
 **Decision.**
-- The desk's label-language list is a **proven set**: en-US and de-DE, the UI languages that api
-  tests prove.
+- The desk's label-language list is a **proven set**. A language enters only when an api
+  **rendering** test (one that asserts rendered content) exercises it (gate 2 ruling):
+  - `en-US`: `src/label-text/labels.e2e-spec.ts:210` (EU1 packaging nutrition in English)
+  - `de-DE`: `src/label-text/labels.e2e-spec.ts:211`, and `issuing.e2e-spec.ts:126`
+  - `mt-MT`: `src/label-text/labels.e2e-spec.ts:303` and `:359` (EU1 packaging rendered in Maltese)
+- **Checked and excluded at gate 2**: `hu-HU` and `lt-LT` appear in the label suites only at
+  `src/label-text/query-cost.e2e-spec.ts:420`. That test issues twenty counter cards in twenty
+  locales and asserts query counts and list length, never rendered content, so it is not a
+  rendering proof. hu-HU's other mentions are FID name-locale and ingredient-list tests, not
+  label rendering.
 - It is held as data in `packages/features/labels`. Each entry cites the api test that proves it,
   so an entry cannot be added without a citation.
 - lt-LT is **not offered** until the api proves it (ask **B11b**) or serves a language listing
@@ -28,7 +36,7 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
 - The default is the last used language, else the UI language's match if it is offered, else
   en-US. A Lithuanian-UI user therefore defaults to en-US.
 
-**Consequence to flag.** The LT pilot cannot preview Lithuanian labels in this feature until
+**Consequence (accepted at gate 2, G2-Q2).** The LT pilot cannot preview Lithuanian labels in this feature until
 B11 or B11b lands. Issued labels already issued in lt-LT on the web still display, because they
 are frozen text and the match check re-renders server-side in the stored locale.
 
@@ -81,7 +89,15 @@ are frozen text and the match check re-renders server-side in the stored locale.
 - The session holds a bearer access token and a rotating refresh token (api ADR 0004).
 - These are secrets at rest. No secret-storage module is in the repo.
 
-**Judgement under XI: this is a new dependency category (secret storage). It stops for an ADR.**
+**Gate 2: folded into ADR 0001** (Home-owned, the shared ADR for navigation, secure store,
+locale and i18n runtime). These conditions go to the Home lane through the coordinator as
+requirements. SDK 57 docs, checked 2026-09-23, **correct one condition**:
+`AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY` is marked *deprecated* in `expo-secure-store`, and the
+docs recommend `WHEN_UNLOCKED_THIS_DEVICE_ONLY`, which is ADR 0001's choice. The desk reads
+tokens only while it is in the foreground, so the stricter class costs it nothing.
+
+*Original judgement, kept for the record:* this is a new dependency category (secret storage)
+and stops for an ADR.
 - Candidate: `expo-secure-store`, first-party Expo, Keychain on iOS and Keystore-backed on
   Android.
 - It is not "obviously fine": the ADR must state
@@ -103,8 +119,14 @@ are frozen text and the match check re-renders server-side in the stored locale.
   fields. Expect tens to a few hundred per bakery.
 - They must be grouped by product, purged per bakery, and excluded from OS backups (FR-022).
 
-**Judgement under XI: a local database or document store is a new dependency category. It stops
-for an ADR.**
+**Gate 2: authored by this lane as ADR 0002** (`docs/adr/0002-saved-label-document-store.md`):
+`expo-sqlite` plus `expo-network`, Pro-only.
+- SDK 57 documents no iOS backup-exclusion path, so the ADR takes the stated fallback: the
+  caches directory plus disclosed eviction.
+- That fallback proposes an FR-019 amendment, pending the coordinator's word.
+
+*Original judgement, kept for the record:* a local database or document store is a new
+dependency category and stops for an ADR.
 - **Shared with Home.** Home 001 needs a device store for the dietary profile, pantry and
   collection cache.
 - One ADR should serve both lanes. The coordinator routes it through the III seam.
@@ -130,11 +152,11 @@ under storage pressure", which is a spec change that goes back to the coordinato
 
 | Need | Choice | XI judgement |
 |---|---|---|
-| Screen navigation (tablet split, stacks) | expo-router or React Navigation | **New category. Stops for an ADR.** Shared with Home (the tab shell). Proposed jointly. |
+| Screen navigation (tablet split, stacks) | **`expo-router`** | **Gate 2: ADR 0001** (shared, Home-owned) |
 | Server state / caching | **None**: plain hooks over `openapi-fetch` | No dependency. Every read is online-only and fresh by rule (FR-021), so a query-cache library adds nothing this feature may use. |
 | Decimal arithmetic | **None** | The desk does no arithmetic. It displays the api's rounded strings and full-precision source strings verbatim (FR-010/012). |
-| i18n runtime | Catalog lookup plus a small interpolation helper in `packages/core` | No library. The device locale comes from `expo-localization`: first-party Expo, but a new module. **Flagged for a coordinator ruling** (lean: within stack I). Shared with Home, whichever lane lands first. |
-| Connectivity events (FR-020 reconnect refresh) | `expo-network` listener; offline is otherwise inferred from fetch failure | First-party Expo device-info module. **Flagged for a ruling** (lean: within stack I). Without it, the refresh falls back to foreground and retry only. |
+| i18n runtime | **`use-intl`** (the web's ICU message shape) + **`expo-localization`** | **Gate 2: ADR 0001.** One runtime for both apps (III). The earlier "small interpolation helper in core" is **dropped** |
+| Connectivity events (FR-020 reconnect refresh) | **`expo-network`** `addNetworkStateListener`; offline is otherwise inferred from fetch failure | **Gate 2: ADR 0002** (this lane) |
 | Component tests | Not added | Logic lives in pure TS modules tested by Vitest. Screens are verified by the quickstart and the VoiceOver/TalkBack audit. Adding a React Native testing library is a dev-dependency decision left for later. |
 
 ## R7 — Issued labels for a product (FR-015, B6)
@@ -166,11 +188,18 @@ full rendering and structure.
 - `packages/core` defines an entitlement port: `included | not_included | unavailable`.
 - Its only implementation today returns `unavailable`, because there is no endpoint. The desk
   renders both server states from fixtures.
-- **For the `unavailable` state in development and internal builds, a gate-2 question is
-  carried (G2-Q1)**, because either rendering choice is a client decision.
+- **Gate 2 ruling (G2-Q1-A).** While the port returns `unavailable`, the desk is usable under a
+  **persistent, non-dismissible** banner: "Plan status not available from the server".
 
-**Release rule.** A store-release checklist item fails while the port has no server-backed
-implementation. Q2-B (a pilot) is not planned.
+**Release rule: mechanical, not a checklist (gate 2).**
+- The entitlement adapter exports its source (`stub | server`).
+- `apps/pro-baker` moves from `app.json` to `app.config.ts`. It **throws at config evaluation**
+  when the build profile is `store` (`EAS_BUILD_PROFILE === 'store'`, defined in a new
+  `apps/pro-baker/eas.json`) and the source is `stub`, so the store build fails before any
+  native step.
+- A Vitest test evaluates the config under a simulated `store` profile and asserts that it
+  throws.
+- Q2-B (a pilot) is not planned.
 
 ## R10 — Account switch and wipe ordering (FR-001a/b, Q1 conditions 1–2)
 
