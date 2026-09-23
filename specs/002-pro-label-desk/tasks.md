@@ -124,7 +124,7 @@ with every gap named.
   - exposes `{ rows, loaded, total, bounded }` for the "first 1,000 of N" line
   - tested at 1,200 rows
 - [ ] T018 [P] [US1] Write `packages/features/labels/src/model/label-types.ts` + `label-types.test.ts`: offered rule-sets from O5, with display names as catalog keys `labels.labelType.<id>` falling back to the api name (FR-025)
-- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing for the new locales is Home's; rebase onto it, and do not create it here
+- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing is on `main` (#8: the seven catalogs, the `LOCALES` export, and parity and plural tests); add the keys to every locale in `LOCALES`, and do not create plumbing here
 - [ ] T020 [US1] Write `packages/features/labels/src/data/products.ts`: loaders over the session client for O6 and O7 (parallel after the first page reveals `total`) and O8. Online-only, with no persistence (FR-021)
 
 ### Screens (⛔DESIGN, ⛔ADR1 for expo-router and use-intl)
