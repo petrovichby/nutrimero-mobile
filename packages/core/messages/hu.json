@@ -128,5 +128,10 @@
       "symbolsNote": "Az élelmiszer-szimbólumok itt név szerint jelennek meg; nem részei a címke szövegének",
       "noEngine": "Ehhez a régióhoz még nincs címkemotor, így címkeszöveg nem jeleníthető meg"
     }
+  },
+  "provenance": {
+    "stamp": {
+      "aiIllustration": "MI-illusztráció"
+    }
   }
 }

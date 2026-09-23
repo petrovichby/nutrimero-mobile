@@ -128,5 +128,10 @@
       "symbolsNote": "Lebensmittelsymbole werden hier namentlich gezeigt; sie gehören nicht zum Etikettentext",
       "noEngine": "Für diese Region gibt es noch keine Etiketten-Engine, daher kann kein Etikettentext angezeigt werden"
     }
+  },
+  "provenance": {
+    "stamp": {
+      "aiIllustration": "KI-Illustration"
+    }
   }
 }

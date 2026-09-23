@@ -128,5 +128,10 @@
       "symbolsNote": "Symbole żywności są tu pokazane z nazwy; nie są częścią tekstu etykiety",
       "noEngine": "Dla tego regionu nie ma jeszcze silnika etykiet, więc nie można pokazać tekstu etykiety"
     }
+  },
+  "provenance": {
+    "stamp": {
+      "aiIllustration": "Ilustracja AI"
+    }
   }
 }

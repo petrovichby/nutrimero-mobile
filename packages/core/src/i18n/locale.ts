@@ -3,11 +3,10 @@ import { LOCALES, type Locale } from "./messages";
 export const FALLBACK_LOCALE: Locale = "en";
 
 /**
- * The locales a screen may render. be and uk are catalogued and their faces are ruled (design G-2:
- * Onest for UI text, Yeseva One for stamps), but they render only once those faces are vendored
- * in packages/ui (001 phase 3c). That change widens this list to all of LOCALES.
+ * The locales a screen may render: all seven. be and uk render since their ruled faces (G-1 Onest
+ * for UI text, G-2 Yeseva One for the stamp) are vendored in packages/ui (001 phase 3c).
  */
-export const RENDERED_LOCALES: readonly Locale[] = ["en", "de", "hu", "lt", "pl"];
+export const RENDERED_LOCALES: readonly Locale[] = LOCALES;
 
 /**
  * The UI locale for a device's preferred languages (BCP 47 tags, most preferred first). The first

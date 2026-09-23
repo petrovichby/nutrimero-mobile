@@ -128,5 +128,10 @@
       "symbolsNote": "Maisto simboliai čia rodomi pavadinimais; jie nėra etiketės teksto dalis",
       "noEngine": "Šiam regionui dar nėra etikečių variklio, todėl etiketės teksto parodyti negalima"
     }
+  },
+  "provenance": {
+    "stamp": {
+      "aiIllustration": "DI iliustracija"
+    }
   }
 }
