@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Па-за сеткай — паказаны захаваныя даныя"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Гатова",
+      "incomplete": "{count, plural, one {Не хапае катэгорый: #} few {Не хапае катэгорый: #} many {Не хапае катэгорый: #} other {Не хапае катэгорый: #}}",
+      "notIssuable": "Пакуль нельга выдаць — дабаўкі ў Nutrimero яшчэ нельга запісаць",
+      "noLabelTypes": "Тыпы этыкетак не прызначаны"
+    },
+    "category": {
+      "allergens": "Алергены",
+      "additives": "Дабаўкі",
+      "nutrition": "Харчовая каштоўнасць",
+      "ingredients": "Склад",
+      "food_symbols": "Харчовыя сімвалы"
+    },
+    "cell": {
+      "required": "Абавязкова",
+      "notRequired": "Не абавязкова",
+      "complete": "Запоўнена",
+      "incomplete": "Не запоўнена"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Не запісана",
+        "cannot_be_held": "Такі тып запісу не можа гэта ўтрымліваць",
+        "mass_unresolvable": "Вагу немагчыма вызначыць"
+      },
+      "systemCannotBeHeld": "У Nutrimero пакуль немагчыма",
+      "where": "{what} — для: {where}",
+      "occurrences": "{count, plural, one {Месцаў: #} few {Месцаў: #} many {Месцаў: #} other {Месцаў: #}}",
+      "datum": {
+        "nutrient": "Значэнне пажыўнага рэчыва: {name}",
+        "nutrient_values": "Значэнні харчовай каштоўнасці",
+        "allergen_states": "Звесткі пра алергены",
+        "dietary_states": "Звесткі пра харчаванне",
+        "density": "Шчыльнасць",
+        "piece_weight": "Вага штукі",
+        "package_content": "Змесціва ўпакоўкі",
+        "drained_weight": "Вага без вадкасці",
+        "quantity": "Колькасць",
+        "unit": "Адзінка",
+        "unit_is_not_substance": "Адзінка, якая не з'яўляецца колькасцю рэчыва",
+        "sub_recipe_mass": "Вага падрэцэпта",
+        "portion_count": "Колькасць порцый",
+        "water_content": "Утрыманне вады",
+        "bound_water_content": "Утрыманне звязанай вады",
+        "nesting": "Укладзенасць рэцэптаў",
+        "allergen": "Алерген: {name}",
+        "dietary": "Дыетычны статус",
+        "additives": "Дабаўкі",
+        "composition": "Склад прадукту",
+        "region_rule": "Правілы для гэтага рэгіёна",
+        "food_symbol": "Харчовыя сімвалы",
+        "label_term": "Тэкст этыкеткі на гэтай мове",
+        "no_engine": "Для гэтага рэгіёна пакуль няма рухавіка этыкетак",
+        "eu_category": "Катэгорыя дабавак ЕС",
+        "number_format": "Фармат лікаў для гэтай мовы",
+        "ingredient_list": "Спіс складнікаў",
+        "identity": "Ідэнтычнасць складніка",
+        "designation": "Назва складніка",
+        "additive_category": "Катэгорыя дабаўкі",
+        "other": "Іншыя адсутныя звесткі ({type})"
+      },
+      "target": {
+        "fid_ingredient": "складнік {name}",
+        "purchased_item": "набыты тавар {name}",
+        "recipe": "рэцэпт {name}",
+        "product": "прадукт {name}",
+        "system": "платформа Nutrimero",
+        "other": "{type} {name} (аб'ект)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "Упакоўка ЕС",
+      "eu1_counter_card": "Прылаўкавая картка ЕС",
+      "eu2_packaging": "Упакоўка ЕС (асноўныя алергены)",
+      "eu2_counter_card": "Прылаўкавая картка ЕС (асноўныя алергены)",
+      "usa_packaging": "Упакоўка ЗША",
+      "usa_counter_card": "Прылаўкавая картка ЗША",
+      "canada_packaging": "Упакоўка Канады",
+      "canada_counter_card": "Прылаўкавая картка Канады",
+      "japan_counter_card": "Прылаўкавая картка Японіі",
+      "south_korea_counter_card": "Прылаўкавая картка Паўднёвай Карэі",
+      "au_nz_counter_card": "Прылаўкавая картка Аўстраліі і Новай Зеландыі"
+    },
+    "labelLanguage": {
+      "en-US": "Англійская (ЗША)",
+      "de-DE": "Нямецкая (Германія)",
+      "hu-HU": "Венгерская (Венгрыя)",
+      "lt-LT": "Літоўская (Літва)",
+      "pl-PL": "Польская (Польшча)"
+    },
+    "status": {
+      "active": "Дзейная",
+      "superseded": "Заменена",
+      "withdrawn": "Адклікана"
+    },
+    "verdict": {
+      "matches": "Адпавядае бягучым дадзеным",
+      "differs": "З бягучымі дадзенымі была б надрукавана іншая этыкетка",
+      "needsConnection": "Для праверкі адпаведнасці патрэбна злучэнне",
+      "checkedAt": "Праверана {time}",
+      "checkedAtDevice": "Праверана {time} (час прылады)",
+      "statusAsOf": "Статус на {time}"
+    },
+    "productList": {
+      "bound": "Паказаны першыя {loaded} з {total} прадуктаў — пошук ахоплівае толькі іх"
+    },
+    "notice": {
+      "text_language_differs": "Тэкст пастаўшчыка складніка на іншай мове, чым гэтая этыкетка",
+      "emphasis_inside_text_unverified": "Вылучэнне алергенаў у тэксце пастаўшчыка немагчыма праверыць",
+      "category_singular": "Катэгорыя дабавак друкуецца ў адзіночным ліку"
+    },
+    "preview": {
+      "symbolsNote": "Харчовыя сімвалы паказаны тут па назве; яны не ўваходзяць у тэкст этыкеткі",
+      "noEngine": "Для гэтага рэгіёна пакуль няма рухавіка этыкетак, таму тэкст этыкеткі паказаць немагчыма"
+    }
   }
 }

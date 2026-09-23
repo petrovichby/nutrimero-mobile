@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Offline — gespeicherte Daten werden angezeigt"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Bereit",
+      "incomplete": "{count, plural, one {# Kategorie fehlt} other {# Kategorien fehlen}}",
+      "notIssuable": "Noch nicht ausstellbar — Zusatzstoffe lassen sich in Nutrimero noch nicht erfassen",
+      "noLabelTypes": "Keine Etikettenarten zugewiesen"
+    },
+    "category": {
+      "allergens": "Allergene",
+      "additives": "Zusatzstoffe",
+      "nutrition": "Nährwerte",
+      "ingredients": "Zutaten",
+      "food_symbols": "Lebensmittelsymbole"
+    },
+    "cell": {
+      "required": "Erforderlich",
+      "notRequired": "Nicht erforderlich",
+      "complete": "Vollständig",
+      "incomplete": "Unvollständig"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Nicht erfasst",
+        "cannot_be_held": "Diese Art von Eintrag kann das nicht enthalten",
+        "mass_unresolvable": "Gewicht lässt sich nicht ermitteln"
+      },
+      "systemCannotBeHeld": "In Nutrimero noch nicht möglich",
+      "where": "{what} — für {where}",
+      "occurrences": "{count, plural, one {an # Stelle} other {an # Stellen}}",
+      "datum": {
+        "nutrient": "Nährwert: {name}",
+        "nutrient_values": "Nährwertangaben",
+        "allergen_states": "Allergeninformationen",
+        "dietary_states": "Ernährungsangaben",
+        "density": "Dichte",
+        "piece_weight": "Stückgewicht",
+        "package_content": "Packungsinhalt",
+        "drained_weight": "Abtropfgewicht",
+        "quantity": "Menge",
+        "unit": "Einheit",
+        "unit_is_not_substance": "Eine Einheit, die keine Stoffmenge ist",
+        "sub_recipe_mass": "Gewicht des Unterrezepts",
+        "portion_count": "Anzahl der Portionen",
+        "water_content": "Wassergehalt",
+        "bound_water_content": "Gehalt an gebundenem Wasser",
+        "nesting": "Rezeptverschachtelung",
+        "allergen": "Allergen-Angabe: {name}",
+        "dietary": "Ernährungsstatus",
+        "additives": "Zusatzstoffe",
+        "composition": "Zusammensetzung",
+        "region_rule": "Die Regeln für diese Region",
+        "food_symbol": "Lebensmittelsymbole",
+        "label_term": "Etikettenwortlaut in dieser Sprache",
+        "no_engine": "Für diese Region gibt es noch keine Etiketten-Engine",
+        "eu_category": "EU-Zusatzstoffklasse",
+        "number_format": "Zahlenformat für diese Sprache",
+        "ingredient_list": "Zutatenverzeichnis",
+        "identity": "Zutatenidentität",
+        "designation": "Zutatenbezeichnung",
+        "additive_category": "Zusatzstoffklasse",
+        "other": "Weitere fehlende Angabe ({type})"
+      },
+      "target": {
+        "fid_ingredient": "Zutat {name}",
+        "purchased_item": "Einkaufsartikel {name}",
+        "recipe": "Rezept {name}",
+        "product": "Produkt {name}",
+        "system": "die Nutrimero-Plattform",
+        "other": "{type} {name} (Objekt)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "EU-Verpackung",
+      "eu1_counter_card": "EU-Thekenschild",
+      "eu2_packaging": "EU-Verpackung (Hauptallergene)",
+      "eu2_counter_card": "EU-Thekenschild (Hauptallergene)",
+      "usa_packaging": "US-Verpackung",
+      "usa_counter_card": "US-Thekenschild",
+      "canada_packaging": "Kanada-Verpackung",
+      "canada_counter_card": "Kanada-Thekenschild",
+      "japan_counter_card": "Japan-Thekenschild",
+      "south_korea_counter_card": "Südkorea-Thekenschild",
+      "au_nz_counter_card": "Australien/Neuseeland-Thekenschild"
+    },
+    "labelLanguage": {
+      "en-US": "Englisch (USA)",
+      "de-DE": "Deutsch (Deutschland)",
+      "hu-HU": "Ungarisch (Ungarn)",
+      "lt-LT": "Litauisch (Litauen)",
+      "pl-PL": "Polnisch (Polen)"
+    },
+    "status": {
+      "active": "Aktiv",
+      "superseded": "Ersetzt",
+      "withdrawn": "Zurückgezogen"
+    },
+    "verdict": {
+      "matches": "Stimmt mit den aktuellen Daten überein",
+      "differs": "Mit den aktuellen Daten würde ein anderes Etikett gedruckt",
+      "needsConnection": "Die Übereinstimmungsprüfung braucht eine Verbindung",
+      "checkedAt": "Geprüft {time}",
+      "checkedAtDevice": "Geprüft {time} (Gerätezeit)",
+      "statusAsOf": "Status vom {time}"
+    },
+    "productList": {
+      "bound": "Die ersten {loaded} von {total} Produkten werden angezeigt — die Suche umfasst nur diese"
+    },
+    "notice": {
+      "text_language_differs": "Der Lieferantentext einer Zutat ist in einer anderen Sprache als dieses Etikett",
+      "emphasis_inside_text_unverified": "Die Allergenhervorhebung im Text eines Lieferanten konnte nicht geprüft werden",
+      "category_singular": "Eine Zusatzstoffklasse wird in der Einzahl gedruckt"
+    },
+    "preview": {
+      "symbolsNote": "Lebensmittelsymbole werden hier namentlich gezeigt; sie gehören nicht zum Etikettentext",
+      "noEngine": "Für diese Region gibt es noch keine Etiketten-Engine, daher kann kein Etikettentext angezeigt werden"
+    }
   }
 }

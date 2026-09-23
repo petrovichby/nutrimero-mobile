@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Offline — mentett adatok láthatók"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Kész",
+      "incomplete": "{count, plural, one {# kategória hiányzik} other {# kategória hiányzik}}",
+      "notIssuable": "Még nem kiadható — az adalékanyagok még nem rögzíthetők a Nutrimeróban",
+      "noLabelTypes": "Nincs hozzárendelt címketípus"
+    },
+    "category": {
+      "allergens": "Allergének",
+      "additives": "Adalékanyagok",
+      "nutrition": "Tápérték",
+      "ingredients": "Összetevők",
+      "food_symbols": "Élelmiszer-szimbólumok"
+    },
+    "cell": {
+      "required": "Kötelező",
+      "notRequired": "Nem kötelező",
+      "complete": "Teljes",
+      "incomplete": "Hiányos"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Nincs rögzítve",
+        "cannot_be_held": "Ez a rekordtípus nem tartalmazhatja",
+        "mass_unresolvable": "A tömeg nem határozható meg"
+      },
+      "systemCannotBeHeld": "A Nutrimeróban még nem lehetséges",
+      "where": "{what} — ehhez: {where}",
+      "occurrences": "{count, plural, one {# helyen} other {# helyen}}",
+      "datum": {
+        "nutrient": "Tápanyagérték: {name}",
+        "nutrient_values": "Tápértékadatok",
+        "allergen_states": "Allergéninformációk",
+        "dietary_states": "Étrendi információk",
+        "density": "Sűrűség",
+        "piece_weight": "Darabtömeg",
+        "package_content": "Csomag tartalma",
+        "drained_weight": "Lecsepegtetett tömeg",
+        "quantity": "Mennyiség",
+        "unit": "Mértékegység",
+        "unit_is_not_substance": "Nem anyagmennyiséget jelölő mértékegység",
+        "sub_recipe_mass": "Alrecept tömege",
+        "portion_count": "Adagok száma",
+        "water_content": "Víztartalom",
+        "bound_water_content": "Kötött víztartalom",
+        "nesting": "Receptek egymásba ágyazása",
+        "allergen": "Allergén: {name}",
+        "dietary": "Étrendi állapot",
+        "additives": "Adalékanyagok",
+        "composition": "Összetétel",
+        "region_rule": "Az erre a régióra vonatkozó szabályok",
+        "food_symbol": "Élelmiszer-szimbólumok",
+        "label_term": "Címkeszöveg ezen a nyelven",
+        "no_engine": "Ehhez a régióhoz még nincs címkemotor",
+        "eu_category": "Uniós adalékanyag-kategória",
+        "number_format": "Számformátum ehhez a nyelvhez",
+        "ingredient_list": "Összetevők listája",
+        "identity": "Összetevő azonosítása",
+        "designation": "Összetevő megnevezése",
+        "additive_category": "Adalékanyag-kategória",
+        "other": "Egyéb hiányzó adat ({type})"
+      },
+      "target": {
+        "fid_ingredient": "{name} összetevő",
+        "purchased_item": "{name} beszerzett tétel",
+        "recipe": "{name} recept",
+        "product": "{name} termék",
+        "system": "a Nutrimero platform",
+        "other": "{type} {name} (objektum)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "Uniós csomagolás",
+      "eu1_counter_card": "Uniós pultkártya",
+      "eu2_packaging": "Uniós csomagolás (fő allergének)",
+      "eu2_counter_card": "Uniós pultkártya (fő allergének)",
+      "usa_packaging": "Egyesült államokbeli csomagolás",
+      "usa_counter_card": "Egyesült államokbeli pultkártya",
+      "canada_packaging": "Kanadai csomagolás",
+      "canada_counter_card": "Kanadai pultkártya",
+      "japan_counter_card": "Japán pultkártya",
+      "south_korea_counter_card": "Dél-koreai pultkártya",
+      "au_nz_counter_card": "Ausztrál/új-zélandi pultkártya"
+    },
+    "labelLanguage": {
+      "en-US": "Angol (USA)",
+      "de-DE": "Német (Németország)",
+      "hu-HU": "Magyar (Magyarország)",
+      "lt-LT": "Litván (Litvánia)",
+      "pl-PL": "Lengyel (Lengyelország)"
+    },
+    "status": {
+      "active": "Aktív",
+      "superseded": "Felváltva",
+      "withdrawn": "Visszavonva"
+    },
+    "verdict": {
+      "matches": "Megegyezik a jelenlegi adatokkal",
+      "differs": "A jelenlegi adatokkal más címke készülne",
+      "needsConnection": "Az egyezés ellenőrzéséhez kapcsolat szükséges",
+      "checkedAt": "Ellenőrizve: {time}",
+      "checkedAtDevice": "Ellenőrizve: {time} (eszközidő)",
+      "statusAsOf": "Állapot ekkor: {time}"
+    },
+    "productList": {
+      "bound": "Az első {loaded} termék látható ennyiből: {total} — a keresés csak ezekre terjed ki"
+    },
+    "notice": {
+      "text_language_differs": "Egy összetevő beszállítói szövege más nyelvű, mint ez a címke",
+      "emphasis_inside_text_unverified": "A beszállítói szövegen belüli allergénkiemelés nem ellenőrizhető",
+      "category_singular": "Egy adalékanyag-kategória egyes számban szerepel"
+    },
+    "preview": {
+      "symbolsNote": "Az élelmiszer-szimbólumok itt név szerint jelennek meg; nem részei a címke szövegének",
+      "noEngine": "Ehhez a régióhoz még nincs címkemotor, így címkeszöveg nem jeleníthető meg"
+    }
   }
 }

@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Offline — showing saved data"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Ready",
+      "incomplete": "{count, plural, one {# category missing} other {# categories missing}}",
+      "notIssuable": "Not issuable yet — additives can't be recorded in Nutrimero yet",
+      "noLabelTypes": "No label types assigned"
+    },
+    "category": {
+      "allergens": "Allergens",
+      "additives": "Additives",
+      "nutrition": "Nutrition",
+      "ingredients": "Ingredients",
+      "food_symbols": "Food symbols"
+    },
+    "cell": {
+      "required": "Required",
+      "notRequired": "Not required",
+      "complete": "Complete",
+      "incomplete": "Incomplete"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Not recorded",
+        "cannot_be_held": "This kind of record can't hold it",
+        "mass_unresolvable": "Weight can't be worked out"
+      },
+      "systemCannotBeHeld": "Not yet possible in Nutrimero",
+      "where": "{what} — for {where}",
+      "occurrences": "{count, plural, one {in # place} other {in # places}}",
+      "datum": {
+        "nutrient": "Nutrient value: {name}",
+        "nutrient_values": "Nutrition values",
+        "allergen_states": "Allergen information",
+        "dietary_states": "Dietary information",
+        "density": "Density",
+        "piece_weight": "Piece weight",
+        "package_content": "Package content",
+        "drained_weight": "Drained weight",
+        "quantity": "Quantity",
+        "unit": "Unit",
+        "unit_is_not_substance": "A unit that isn't an amount of substance",
+        "sub_recipe_mass": "Sub-recipe weight",
+        "portion_count": "Number of portions",
+        "water_content": "Water content",
+        "bound_water_content": "Bound water content",
+        "nesting": "Recipe nesting",
+        "allergen": "Allergen: {name}",
+        "dietary": "Dietary status",
+        "additives": "Additives",
+        "composition": "Composition",
+        "region_rule": "The rules for this region",
+        "food_symbol": "Food symbols",
+        "label_term": "Label wording in this language",
+        "no_engine": "No label engine for this region yet",
+        "eu_category": "EU additive category",
+        "number_format": "Number format for this language",
+        "ingredient_list": "Ingredient list",
+        "identity": "Ingredient identity",
+        "designation": "Ingredient name",
+        "additive_category": "Additive category",
+        "other": "Other missing information ({type})"
+      },
+      "target": {
+        "fid_ingredient": "ingredient {name}",
+        "purchased_item": "purchased item {name}",
+        "recipe": "recipe {name}",
+        "product": "product {name}",
+        "system": "the Nutrimero platform",
+        "other": "{type} {name}"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "EU packaging",
+      "eu1_counter_card": "EU counter card",
+      "eu2_packaging": "EU packaging (main allergens)",
+      "eu2_counter_card": "EU counter card (main allergens)",
+      "usa_packaging": "US packaging",
+      "usa_counter_card": "US counter card",
+      "canada_packaging": "Canada packaging",
+      "canada_counter_card": "Canada counter card",
+      "japan_counter_card": "Japan counter card",
+      "south_korea_counter_card": "South Korea counter card",
+      "au_nz_counter_card": "Australia/New Zealand counter card"
+    },
+    "labelLanguage": {
+      "en-US": "English (US)",
+      "de-DE": "German (Germany)",
+      "hu-HU": "Hungarian (Hungary)",
+      "lt-LT": "Lithuanian (Lithuania)",
+      "pl-PL": "Polish (Poland)"
+    },
+    "status": {
+      "active": "Active",
+      "superseded": "Superseded",
+      "withdrawn": "Withdrawn"
+    },
+    "verdict": {
+      "matches": "Matches current data",
+      "differs": "Current data would print a different label",
+      "needsConnection": "Match check needs a connection",
+      "checkedAt": "Checked {time}",
+      "checkedAtDevice": "Checked {time} (device time)",
+      "statusAsOf": "Status as of {time}"
+    },
+    "productList": {
+      "bound": "Showing the first {loaded} of {total} products — search covers these only"
+    },
+    "notice": {
+      "text_language_differs": "An ingredient's supplier text is in another language than this label",
+      "emphasis_inside_text_unverified": "Allergen emphasis inside a supplier's text could not be checked",
+      "category_singular": "An additive category is printed in its singular form"
+    },
+    "preview": {
+      "symbolsNote": "Food symbols are shown by name here; they are not part of the label text",
+      "noEngine": "There is no label engine for this region yet, so no label text can be shown"
+    }
   }
 }

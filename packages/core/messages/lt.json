@@ -11,5 +11,122 @@
   },
   "common": {
     "offlineBanner": "Nėra ryšio — rodomi išsaugoti duomenys"
+  },
+  "labels": {
+    "readiness": {
+      "ready": "Paruošta",
+      "incomplete": "{count, plural, one {Trūkstamos kategorijos: #} few {Trūkstamos kategorijos: #} many {Trūkstamos kategorijos: #} other {Trūkstamos kategorijos: #}}",
+      "notIssuable": "Kol kas negalima išduoti — priedų Nutrimero dar negalima įrašyti",
+      "noLabelTypes": "Etikečių tipai nepriskirti"
+    },
+    "category": {
+      "allergens": "Alergenai",
+      "additives": "Priedai",
+      "nutrition": "Maistingumas",
+      "ingredients": "Sudedamosios dalys",
+      "food_symbols": "Maisto simboliai"
+    },
+    "cell": {
+      "required": "Privaloma",
+      "notRequired": "Neprivaloma",
+      "complete": "Užpildyta",
+      "incomplete": "Neužpildyta"
+    },
+    "gap": {
+      "kind": {
+        "not_recorded": "Neįrašyta",
+        "cannot_be_held": "Tokio tipo įrašas to negali turėti",
+        "mass_unresolvable": "Svorio nustatyti negalima"
+      },
+      "systemCannotBeHeld": "Nutrimero dar negalima",
+      "where": "{what} — kam: {where}",
+      "occurrences": "{count, plural, one {Vietų: #} few {Vietų: #} many {Vietų: #} other {Vietų: #}}",
+      "datum": {
+        "nutrient": "Maistinės medžiagos vertė: {name}",
+        "nutrient_values": "Maistingumo vertės",
+        "allergen_states": "Informacija apie alergenus",
+        "dietary_states": "Mitybos informacija",
+        "density": "Tankis",
+        "piece_weight": "Vieneto svoris",
+        "package_content": "Pakuotės turinys",
+        "drained_weight": "Masė be skysčio",
+        "quantity": "Kiekis",
+        "unit": "Vienetas",
+        "unit_is_not_substance": "Vienetas, kuris nėra medžiagos kiekis",
+        "sub_recipe_mass": "Porecepčio svoris",
+        "portion_count": "Porcijų skaičius",
+        "water_content": "Vandens kiekis",
+        "bound_water_content": "Surišto vandens kiekis",
+        "nesting": "Receptų įdėjimas",
+        "allergen": "Alergenas: {name}",
+        "dietary": "Mitybos būsena",
+        "additives": "Priedai",
+        "composition": "Sudėtis",
+        "region_rule": "Šio regiono taisyklės",
+        "food_symbol": "Maisto simboliai",
+        "label_term": "Etiketės formuluotė šia kalba",
+        "no_engine": "Šiam regionui etikečių variklio dar nėra",
+        "eu_category": "ES priedų kategorija",
+        "number_format": "Šios kalbos skaičių formatas",
+        "ingredient_list": "Sudedamųjų dalių sąrašas",
+        "identity": "Sudedamosios dalies tapatybė",
+        "designation": "Sudedamosios dalies pavadinimas",
+        "additive_category": "Priedo kategorija",
+        "other": "Kita trūkstama informacija ({type})"
+      },
+      "target": {
+        "fid_ingredient": "sudedamoji dalis {name}",
+        "purchased_item": "pirktas produktas {name}",
+        "recipe": "receptas {name}",
+        "product": "produktas {name}",
+        "system": "Nutrimero platforma",
+        "other": "{type} {name} (objektas)"
+      }
+    },
+    "labelType": {
+      "eu1_packaging": "ES pakuotė",
+      "eu1_counter_card": "ES prekystalio kortelė",
+      "eu2_packaging": "ES pakuotė (pagrindiniai alergenai)",
+      "eu2_counter_card": "ES prekystalio kortelė (pagrindiniai alergenai)",
+      "usa_packaging": "JAV pakuotė",
+      "usa_counter_card": "JAV prekystalio kortelė",
+      "canada_packaging": "Kanados pakuotė",
+      "canada_counter_card": "Kanados prekystalio kortelė",
+      "japan_counter_card": "Japonijos prekystalio kortelė",
+      "south_korea_counter_card": "Pietų Korėjos prekystalio kortelė",
+      "au_nz_counter_card": "Australijos / Naujosios Zelandijos prekystalio kortelė"
+    },
+    "labelLanguage": {
+      "en-US": "Anglų (JAV)",
+      "de-DE": "Vokiečių (Vokietija)",
+      "hu-HU": "Vengrų (Vengrija)",
+      "lt-LT": "Lietuvių (Lietuva)",
+      "pl-PL": "Lenkų (Lenkija)"
+    },
+    "status": {
+      "active": "Galiojanti",
+      "superseded": "Pakeista",
+      "withdrawn": "Atšaukta"
+    },
+    "verdict": {
+      "matches": "Atitinka dabartinius duomenis",
+      "differs": "Pagal dabartinius duomenis būtų išspausdinta kita etiketė",
+      "needsConnection": "Atitikčiai patikrinti reikia ryšio",
+      "checkedAt": "Patikrinta {time}",
+      "checkedAtDevice": "Patikrinta {time} (įrenginio laikas)",
+      "statusAsOf": "Būsena {time}"
+    },
+    "productList": {
+      "bound": "Rodomi pirmieji {loaded} iš {total} produktų — paieška apima tik juos"
+    },
+    "notice": {
+      "text_language_differs": "Sudedamosios dalies tiekėjo tekstas yra kita kalba nei ši etiketė",
+      "emphasis_inside_text_unverified": "Alergenų paryškinimo tiekėjo tekste patikrinti nepavyko",
+      "category_singular": "Priedų kategorija spausdinama vienaskaita"
+    },
+    "preview": {
+      "symbolsNote": "Maisto simboliai čia rodomi pavadinimais; jie nėra etiketės teksto dalis",
+      "noEngine": "Šiam regionui dar nėra etikečių variklio, todėl etiketės teksto parodyti negalima"
+    }
   }
 }
