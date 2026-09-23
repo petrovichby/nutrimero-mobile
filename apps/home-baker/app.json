@@ -14,7 +14,13 @@
           "backgroundColor": "#f7f4ec"
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ]
     ],
     "ios": {
       "bundleIdentifier": "org.nutrimero.homebaker",
@@ -28,7 +34,8 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "allowBackup": false
     }
   }
 }

@@ -3,10 +3,12 @@ import { tokens } from "@nutrimero/ui";
 import { getLocales } from "expo-localization";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { ready } from "./boot";
 
-// Keep the native splash up until the root view has laid out. There is no async boot
-// work yet; once font/entitlement loading exists, the hideAsync call moves behind it.
+// Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
+// settled and the root view has laid out. Font loading joins `ready` in phase 3c.
 SplashScreen.preventAutoHideAsync();
 // DESIGN.md motion rules: 150–250 ms; a fade is not a movement, so it is acceptable
 // under reduced motion — no extra handling needed.
@@ -26,6 +28,18 @@ if (__DEV__) {
 const t = createTranslator(resolveLocale(getLocales().map((locale) => locale.languageTag)));
 
 export function AppRoot() {
+  const [booted, setBooted] = useState(false);
+
+  useEffect(() => {
+    // A store failure must not strand the user on the splash: reads fall back to their defaults,
+    // and first run surfaces the "could not be saved" state (001 edge cases) in phase 5.
+    ready.catch(() => undefined).finally(() => setBooted(true));
+  }, []);
+
+  if (!booted) {
+    return null;
+  }
+
   return (
     <View onLayout={() => SplashScreen.hideAsync()} style={styles.container}>
       <Text accessibilityRole="header" style={styles.name}>
