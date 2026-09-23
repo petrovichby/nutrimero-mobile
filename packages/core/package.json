@@ -10,7 +10,8 @@
   "dependencies": {
     "expo-file-system": "~57.0.7",
     "expo-secure-store": "~57.0.4",
-    "openapi-fetch": "^0.17.0"
+    "openapi-fetch": "^0.17.0",
+    "use-intl": "^4.14.6"
   },
   "devDependencies": {
     "typescript": "~6.0.3"

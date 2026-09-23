@@ -23,7 +23,14 @@ export type {
   EntitlementSubject,
 } from "./entitlements/entitlement";
 export { ENTITLEMENT_SOURCE, stubEntitlementPort } from "./entitlements/entitlement";
+export { FALLBACK_LOCALE, RENDERED_LOCALES, resolveLocale } from "./i18n/locale";
 export { LOCALES, type Locale, type MessageCatalog, messages } from "./i18n/messages";
+export {
+  EXPECTED_PLURAL_CATEGORIES,
+  type PluralCategoriesOf,
+  pluralRuleMismatches,
+} from "./i18n/plural";
+export { createTranslator, type Translator } from "./i18n/translator";
 export { SESSION_KEYS } from "./session/keys";
 export type {
   CompanyLossReason,
@@ -37,3 +44,11 @@ export type {
 } from "./session/session";
 export { createSession } from "./session/session";
 export type { Wiper, WipeSequence } from "./session/wipe";
+export {
+  celsiusFromFahrenheit,
+  fahrenheitFromCelsius,
+  gramsFromOunces,
+  ouncesFromGrams,
+  roundToStep,
+} from "./units/convert";
+export { formatNumber } from "./units/format";

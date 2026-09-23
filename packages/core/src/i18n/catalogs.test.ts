@@ -2,7 +2,8 @@
 // every locale must have exactly the English key set, and no non-English catalog may leave a
 // string silently identical to English (untranslated keys must be caught, not shipped).
 import { describe, expect, it } from "vitest";
-import { LOCALES, type Locale, messages } from "./messages";
+import { LOCALES, messages } from "./messages";
+import { EXPECTED_PLURAL_CATEGORIES } from "./plural";
 
 type Flat = Record<string, string>;
 
@@ -41,23 +42,6 @@ describe("message catalogs", () => {
     });
   }
 });
-
-/**
- * Constitution IX (1.1.0): each locale's ICU plural categories are covered by its catalog.
- *
- * The expected sets are CLDR's, written out so a runtime whose plural data drifts fails here
- * rather than silently picking "other". This runs on Node's ICU; the same check against Hermes
- * on device lands with the i18n runtime (001 phase 3), because Vitest cannot run Hermes.
- */
-const EXPECTED_PLURAL_CATEGORIES: Record<Locale, readonly string[]> = {
-  en: ["one", "other"],
-  de: ["one", "other"],
-  hu: ["one", "other"],
-  lt: ["few", "many", "one", "other"],
-  be: ["few", "many", "one", "other"],
-  pl: ["few", "many", "one", "other"],
-  uk: ["few", "many", "one", "other"],
-};
 
 /** The selector keys of every top-level ICU `plural` argument in a message. */
 function pluralSelectors(message: string): string[][] {
