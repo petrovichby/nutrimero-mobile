@@ -51,7 +51,7 @@ Screens: `CoverScreen`, `UnitsStep`, `DietStep`, `PantryStep`, `RecipesConnectOn
 ## apps/home-baker
 
 `app/` route files re-exporting the screens (thin, III) · `app.json`: static splash `#f7f4ec`
-both schemes, `android.allowBackup: false`, plugins (`expo-router`, `expo-secure-store`,
+both schemes, `android.allowBackup: false`, plugins (`expo-router`, `expo-secure-store` with `configureAndroidBackup`,
 `expo-font`, `expo-localization`, `expo-splash-screen`).
 
 ## Scripts

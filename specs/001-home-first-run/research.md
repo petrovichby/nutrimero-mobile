@@ -22,7 +22,8 @@ are **stops** until that ADR is approved at gate 2.
   device). Android: Keystore-encrypted storage; app backup disabled (`android.allowBackup:
   false`) so nothing reaches Google backup. **Reinstall rule**: iOS Keychain survives uninstall,
   so first launch checks an install marker file in the app's document directory (removed by
-  uninstall); if absent, the store is wiped before anything is read.
+  uninstall; written with `expo-file-system`, admitted at gate 2); if absent, the store is wiped
+  before anything is read. Full conditions: ADR 0001 §Secure-store conditions.
 - **Rationale**: FR-009 requires exclusion from backups; secure-store's ThisDeviceOnly class and
   Android backup exclusion give that without custom native code. Payload is tiny (≤ 14 staple ids,
   ≤ 6 options, one enum, a marker).
