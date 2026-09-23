@@ -47,7 +47,8 @@ Quality gate (mirrors `nutrimero-web`): `pnpm quality` = lint → format/style c
 unit tests → release-bundle export for both apps. CI (`.github/workflows/ci.yml`) additionally
 enforces the contract drift gate (regenerates the client from the committed snapshot and fails on
 diff) and a quickstart smoke job. `pnpm contract:sync` pulls a new snapshot from the sibling
-`nutrimero-api` checkout — a deliberate, reviewable diff, never run by CI.
+`nutrimero-api` checkout's `origin/main` (not its working tree) and records the api commit in
+`contract/SOURCE` — a deliberate, reviewable diff, never run by CI.
 
 Layout: `apps/home-baker` + `apps/pro-baker` (thin Expo apps) · `packages/core` (generated API
 client, i18n catalogs + parity test) · `packages/ui` (design tokens per `docs/DESIGN.md`).
