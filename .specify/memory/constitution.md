@@ -1,6 +1,6 @@
 # nutrimero-mobile Constitution
 
-**Version:** 1.1.0 (1.0.0 ratified by Aliaksandr, 2026-09-23; 1.1.0 pending the owner's merge word) · **Applies to:** every feature, every agent, every PR
+**Version:** 1.2.0 (1.0.0 ratified by Aliaksandr, 2026-09-23; 1.1.0 and 1.2.0 by the owner's merge word) · **Applies to:** every feature, every agent, every PR
 
 These principles are **gates**, not advice. Every `/speckit-plan` MUST include a Constitution Check
 table verifying each one. A violation is either fixed or documented in that plan's *Complexity
@@ -84,6 +84,11 @@ cannot render stays in the catalogs and the parity test but is not rendered on s
 owner rules a face for it. Units and currency formatting go through shared formatters in
 `packages/core`, never inline.
 
+**Interface language — two rules.** (1) The app follows the system language when it is one of
+the UI locales, otherwise English. (2) The user can switch the interface language inside the app;
+that choice overrides the system language, persists on the device, and applies immediately,
+without a restart.
+
 ## X — Design derives from the token system
 
 UI is built from `packages/ui` components driven by the Nutrimero token set (lime `#b9bf05` / navy
@@ -126,6 +131,9 @@ Work reaches `main` only through gated pull requests.
 
 ## Amendment log
 
+- 1.2.0 (2026-09-23) — IX: the interface-language rules, by the owner's ruling of 2026-09-23 —
+  the system language when it is a UI locale (else English), and an in-app choice that overrides
+  it, persists on the device and applies without a restart. Ratified by the owner's merge word.
 - 1.1.0 (2026-09-23) — IX: UI locales widened from en, de, lt to **en, de, hu, lt, be, pl, uk**
   by the owner's ruling of 2026-09-23 and its addendum (Ukrainian, the seventh); per-locale
   plural coverage verified by test; owner review of lane-authored translations; a locale without
