@@ -19,6 +19,14 @@ export {
   type UiWeight,
   uiFace,
 } from "./fonts";
+export { Glyph } from "./glyphs/glyph";
+export {
+  FILLED_GLYPHS,
+  type FilledGlyphName,
+  type GlyphName,
+  STROKE_GLYPHS,
+  type StrokeGlyphName,
+} from "./glyphs/glyph-data";
 export { contrastRatio, withAlpha } from "./theme/color";
 export { createTheme, type Theme, ThemeProvider, useTheme } from "./theme/provider";
 export { type App, type Roles, rolesFor, type Scheme } from "./theme/roles";

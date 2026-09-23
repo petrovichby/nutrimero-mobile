@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Glyph } from "../glyphs/glyph";
+import type { StrokeGlyphName } from "../glyphs/glyph-data";
 import { useTheme } from "../theme/provider";
 import { tokens } from "../tokens";
 import { textRole } from "./text-style";
@@ -7,8 +8,8 @@ import { textRole } from "./text-style";
 /**
  * A multi-select option (07-onboarding-diet `.diet-chip`, the pantry staples): 48pt tall, 12pt
  * radius, 1.5pt outline; pressed-in = structure edge on surface-1 with heading ink. Announced as a
- * toggle with its checked state. The glyph slot takes an owned domain glyph (the diet/allergen
- * stroke set) from the caller — this package ships no icon library.
+ * toggle with its checked state. The optional glyph is from the owned diet/allergen stroke set
+ * (ink-2, heading when selected), following the strike grammar.
  */
 export function ToggleChip({
   label,
@@ -19,7 +20,7 @@ export function ToggleChip({
   label: string;
   selected: boolean;
   onPress: () => void;
-  glyph?: ReactNode;
+  glyph?: StrokeGlyphName;
 }) {
   const theme = useTheme();
   const { color } = theme;
@@ -38,7 +39,11 @@ export function ToggleChip({
         pressed && styles.pressed,
       ]}
     >
-      {glyph !== undefined && <View style={styles.glyph}>{glyph}</View>}
+      {glyph !== undefined && (
+        <View style={styles.glyph}>
+          <Glyph name={glyph} size={20} color={selected ? color.heading : color.ink2} />
+        </View>
+      )}
       <Text
         style={[textRole(theme, "bodyMd", "600"), { color: selected ? color.heading : color.ink }]}
       >

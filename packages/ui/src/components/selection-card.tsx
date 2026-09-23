@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Glyph } from "../glyphs/glyph";
 import { useTheme } from "../theme/provider";
 import { tokens } from "../tokens";
-import { Check } from "./check";
 import { textRole } from "./text-style";
 
 /**
@@ -54,7 +54,7 @@ export function SelectionCard({
         )}
       </View>
       <View style={[styles.disc, selected && { backgroundColor: color.action }]}>
-        {selected && <Check color={color.onAction} />}
+        {selected && <Glyph name="check" size={15} color={color.onAction} />}
       </View>
     </Pressable>
   );
