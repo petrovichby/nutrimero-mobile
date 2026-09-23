@@ -1,6 +1,6 @@
 # nutrimero-mobile Constitution
 
-**Version:** 0.1.0 (draft — pending ratification) · **Applies to:** every feature, every agent, every PR
+**Version:** 1.0.0 (ratified by Aliaksandr, 2026-09-23) · **Applies to:** every feature, every agent, every PR
 
 These principles are **gates**, not advice. Every `/speckit-plan` MUST include a Constitution Check
 table verifying each one. A violation is either fixed or documented in that plan's *Complexity
@@ -9,7 +9,7 @@ Tracking* section with the simpler alternative that was rejected and why.
 Amendments require a version bump here and a note in the amendment log at the bottom. Agents MUST
 NOT amend this file as a side effect of implementing a feature.
 
-Founding context: `nutrimero-docs/mobile/IDEATION.md` (repo root). Product truth:
+Founding context: `nutrimero-docs/mobile/IDEATION.md`. Product truth:
 `~/Projects/nutrimero-docs/PRODUCT.md`. Sibling constitutions: `nutrimero-api`, `nutrimero-web`.
 
 ---
@@ -35,6 +35,10 @@ The monorepo shape is `apps/home-baker`, `apps/pro-baker`, `packages/core`, `pac
 `packages/features/*`. Apps are thin (branding, config, feature flags); every capability lives in a
 shared package. A feature implemented inside an `apps/` directory that a second vertical would want
 has failed this gate. Baking is the first vertical, not the architecture.
+
+**The shared-package seam:** `packages/*` is shared by the home and pro lanes. Any change under
+`packages/*` is announced to the other lane through the coordinator before it merges — never
+landed silently from one lane.
 
 ## IV — Allergen and nutrition data comes only from FID joins
 
@@ -78,7 +82,10 @@ shared formatters in `packages/core`, never inline.
 ## X — Design derives from the token system
 
 UI is built from `packages/ui` components driven by the Nutrimero token set (lime `#b9bf05` / navy
-`#1b1f58`; source of truth in `nutrimero-design`/`nutrimero-web`). Accessibility is a gate, not a
+`#1b1f58`, with per-app deviations recorded in the binding document). Authority chain: the concept
+authority is `nutrimero-design`'s **mobile** domain (`mobile/`, per its `DOMAINS.md`); the binding
+document is this repo's `docs/DESIGN.md`. `nutrimero-web` and its `docs/DESIGN.md` are a sibling
+consumer, not an authority over this repo. Accessibility is a gate, not a
 polish item (European Accessibility Act): accessibility labels, contrast, and touch-target minimums
 ship with the component, not after it. UI design and review work goes through the `impeccable`
 skill (see `CLAUDE.md`).
@@ -88,9 +95,39 @@ skill (see `CLAUDE.md`).
 A plan that wants a new category of dependency (state library, database/sync engine, analytics SDK,
 payment SDK), a new top-level package, or any deviation from I–X stops and proposes an ADR first.
 
+## XII — The gates
+
+Work reaches `main` only through gated pull requests.
+
+- **Spec-kit, both gates.** Every feature runs `/speckit-specify` → `/speckit-clarify` →
+  `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`, with the coordinator's stops at both
+  gates (spec gate before planning, plan gate before implementation). A lane does not cross a gate
+  without the coordinator's word.
+- **PRs only.** No direct pushes to `main`. Lanes commit their own work and open PRs on their lane
+  branches; lanes never merge. Merges are the owner's or the coordinator's, on the owner's word,
+  after the coordinator's sweep (owner's ruling, 2026-09-23, `e6f32ff`).
+- **CI green is required.** A PR merges only with every CI job green. A CI gate workflow
+  (`.github/workflows/ci.yml`) must exist before the first feature PR opens.
+- **No suppressions.** No suppression marker (`biome-ignore`, `@ts-expect-error`, `@ts-ignore`,
+  `@ts-nocheck`), no silencing cast (`as unknown as`, `as any`), and no skipped, focused, or
+  hollowed test (`.skip`, `.only`, `.todo`, a deleted assertion, a test rewritten to assert less)
+  enters a branch without **explicit prior sign-off from both the owner and the coordinator**,
+  recorded in the PR description with location and reason. The same dual sign-off applies to any
+  change to `biome.json`, a `tsconfig`, the Vitest config, or a CI workflow that relaxes a rule,
+  widens an exclusion, or removes a job or step. A lane that believes one is warranted stops and
+  reports (XI); approval precedes the commit.
+
 ---
 
 ## Amendment log
 
+- 1.0.0 (2026-09-23) — **ratified by Aliaksandr, 2026-09-23.** Amendments folded in at
+  ratification (coordinator-proposed, owner-endorsed): XII — the gates added (spec-kit both gates
+  with coordinator stops, PRs only, CI green, no suppressions/skips/silencing casts without dual
+  owner + coordinator sign-off, lanes commit and open PRs but never merge per `e6f32ff`, CI gate
+  workflow before the first feature PR); X — authority chain corrected (concept: `nutrimero-design`
+  mobile domain per `DOMAINS.md`; binding: `docs/DESIGN.md`; web is a sibling); III — shared-package
+  seam (`packages/*` changes announced to the other lane through the coordinator before merge);
+  stale "(repo root)" parenthetical dropped.
 - 0.1.0 (2026-09-21) — initial draft distilled from the mobile ideation session; pending
   ratification by Aliaksandr.
