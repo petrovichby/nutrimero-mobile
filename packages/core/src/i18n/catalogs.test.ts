@@ -20,6 +20,16 @@ function flatten(obj: unknown, prefix = "", out: Flat = {}): Flat {
   return out;
 }
 
+/**
+ * REGISTER (coordinator ruling, 2026-09-23 — every language, per app). Home Baker strings address
+ * the user INFORMALLY (du / tu / ty / ти); Pro Baker strings FORMALLY (Sie / Ön / Państwo / Jūs /
+ * Вы). Shared strings address no one: a shared string that cannot avoid a "you" moves into the
+ * app namespaces and exists twice. Only English is checked mechanically below — elsewhere the
+ * pronouns are ambiguous ("Sie" is also "they") — so every other locale is held to the rule in
+ * review.
+ */
+const APP_NAMESPACES = ["app.homeBaker.", "app.proBaker.", "home.", "pro."];
+
 // Brand/product names are legitimately identical across locales.
 const IDENTICAL_ALLOWED = new Set(["app.homeBaker.name", "app.proBaker.name"]);
 
@@ -92,5 +102,15 @@ describe("plural categories", () => {
     expect(pluralSelectors("{count, plural, one {# item} few {# items} other {# items}}")).toEqual([
       ["one", "few", "other"],
     ]);
+  });
+});
+
+describe("register", () => {
+  it("shared English strings address no one", () => {
+    const addressing = Object.entries(en)
+      .filter(([key]) => !APP_NAMESPACES.some((namespace) => key.startsWith(namespace)))
+      .filter(([, message]) => /\byou(r|rs|rself)?\b/i.test(message))
+      .map(([key]) => key);
+    expect(addressing).toEqual([]);
   });
 });
