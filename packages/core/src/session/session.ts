@@ -2,7 +2,7 @@ import type { ApiClient } from "../api/client";
 import { type ClassifiedError, classifyResponseError, classifyThrown } from "../api/errors";
 import type { paths } from "../api/generated/schema";
 import { createAuthMiddleware } from "../api/middleware";
-import type { DeviceStoreAdapter } from "../device-store/adapter";
+import { assertValidKey, type DeviceStoreAdapter } from "../device-store/adapter";
 import { ensureFreshInstallWiped } from "../device-store/fresh-install";
 import type { InstallMarker } from "../device-store/install-marker";
 import { SESSION_KEYS, SESSION_OWN_KEYS } from "./keys";
@@ -51,6 +51,11 @@ export interface Session {
   reportCompanyUnavailable(companyId: string, reason: CompanyLossReason): Promise<void>;
   onMembershipLost(listener: MembershipLostListener): () => void;
   registerWiper(name: string, wiper: Wiper): () => void;
+  /**
+   * A device-preference key only the reinstall-orphan clear removes (ADR 0001 condition 3) —
+   * never sign-out, erase or an app's own reset. Register at start-up, before `restore()`.
+   */
+  registerFreshInstallOnlyKey(key: string): () => void;
   /** Single-flight; true when a fresh access token is in place. */
   refreshTokens(): Promise<boolean>;
   accessToken(): string | null;
@@ -69,6 +74,7 @@ interface Tokens {
 
 export function createSession({ client, store, marker }: SessionDeps): Session {
   const wipe = createWipeSequence(store, SESSION_OWN_KEYS, SESSION_KEYS.pendingWipe);
+  const freshInstallOnlyKeys = new Set<string>();
   const stateListeners = new Set<(state: SessionState) => void>();
   const lossListeners = new Set<MembershipLostListener>();
 
@@ -166,7 +172,10 @@ export function createSession({ client, store, marker }: SessionDeps): Session {
 
   const session: Session = {
     async restore() {
-      await ensureFreshInstallWiped(marker, () => wipe.run());
+      await ensureFreshInstallWiped(marker, () => wipe.run(), {
+        store,
+        keys: [...freshInstallOnlyKeys],
+      });
       if (await wipe.isPending()) {
         await wipe.run();
       }
@@ -299,6 +308,13 @@ export function createSession({ client, store, marker }: SessionDeps): Session {
     onMembershipLost(listener) {
       lossListeners.add(listener);
       return () => lossListeners.delete(listener);
+    },
+
+    registerFreshInstallOnlyKey(key) {
+      freshInstallOnlyKeys.add(assertValidKey(key));
+      return () => {
+        freshInstallOnlyKeys.delete(key);
+      };
     },
 
     registerWiper(name, wiper) {
