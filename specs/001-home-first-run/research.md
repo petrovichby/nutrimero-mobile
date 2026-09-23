@@ -34,9 +34,12 @@ are **stops** until that ADR is approved at gate 2.
 ## R3 — i18n runtime (XI, IX)
 
 - **Decision**: `use-intl` (the framework-agnostic core of `next-intl`, which `nutrimero-web`
-  uses) over the existing `packages/core/messages/{en,de,lt}.json`; locale from
-  `expo-localization` (`de`/`lt`, else `en`). Messages use the web's ICU shape
-  (`{count, plural, one {…} other {…}}` — Lithuanian needs `one/few/many/other`).
+  uses) over `packages/core/messages/{en,de,hu,lt,be,pl,uk}.json` (the seven UI locales,
+  IX 1.1.0); locale from `expo-localization` — one of the seven, else `en`, with `be`/`uk` mapped
+  to `en` until a Cyrillic face is ruled. Messages use the web's ICU shape
+  (`{count, plural, one {…} other {…}}` — lt, be, pl and uk need `one/few/many/other`). The
+  runtime asserts at startup (dev builds) that Hermes' `Intl.PluralRules` resolves the expected
+  categories for all seven; Node-side coverage is already tested in `catalogs.test.ts`.
 - **Rationale**: IX requires the web catalog shape; the web's catalogs are ICU via next-intl, so
   the same formatter family guarantees identical semantics. Hermes provides `Intl.PluralRules`.
 - **Alternatives**: hand-written `t()` (would need an ICU parser to keep the web shape — a
@@ -79,7 +82,7 @@ are **stops** until that ADR is approved at gate 2.
   supplied API URL and session token (env only, never committed). Inputs: the curated staples
   manifest (14 FID ids, ordered) and the mapping's allergen codes. It reads
   `/fid/languages`, `/fid/ingredients/{fidId}` (names, dietary facts, allergen states) and
-  `/fid/allergens?language=` for en/de/lt, and writes
+  `/fid/allergens?language=` for the seven UI locales, and writes
   `packages/features/diet-profile/src/fid-snapshot.generated.ts` — `satisfies` a type derived
   from the generated schema, with a header naming the api commit, the contract snapshot commit
   (`contract/SOURCE`), and the generation date.
@@ -87,7 +90,8 @@ are **stops** until that ADR is approved at gate 2.
   exists, the snapshot is taken from a **local** api instance checked out at `contract/SOURCE`'s
   commit and seeded with `fid:import` — never production. `--api-commit` is then a fact by
   construction; the script still refuses unless it equals `contract/SOURCE`.
-- **Test**: every manifest staple resolves with names in en, de and lt; every mapped allergen code
+- **Test**: every manifest staple resolves with names in all seven UI locales (a locale FID lacks
+  fails and is ruled, never hand-filled); every mapped allergen code
   resolves; the header carries a 40-hex api commit. A hand edit is a suppression-class violation
   (XII) — the file header says so and the PR template for regeneration shows the command used.
 - **Open content item**: the 14 FID ids are chosen by querying `/fid/ingredients?q=` during

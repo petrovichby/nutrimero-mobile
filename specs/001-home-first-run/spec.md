@@ -39,7 +39,8 @@ approved corpus `nutrimero-design:mobile/home-baker` — `00-splash` **as amende
 **In**: splash hand-off on every launch; the three onboarding steps on first launch (each
 skippable); the device-local dietary profile, units preference and pantry seed; the FID
 reference snapshot that onboarding reads; the wipe rules (sign-out, erase, local reset); the
-bottom tab bar with honest empty states; the Recipes tab in its connect-once state; en/de/lt.
+bottom tab bar with honest empty states; the Recipes tab in its connect-once state; the seven UI locales (Constitution IX 1.1.0:
+en, de, hu, lt, be, pl, uk).
 
 **Out** (named so nothing is silently assumed): the populated recipes home, featured drop,
 category filter and populated offline cache (→ 003); recipe detail and baking mode (`02`,
@@ -147,9 +148,13 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 
 ### Edge Cases
 
-- **Language**: device language de or lt → the whole flow in that language; otherwise en. German
-  is the long-word stress test at 1.3× text size (`01-recipes-de` is the parity witness for the
-  masthead, tab labels and shell strings).
+- **Language**: the device language selects one of the seven UI locales (en, de, hu, lt, be, pl,
+  uk); any other → en. **be and uk are catalogued but not rendered** until the owner rules a
+  Cyrillic-capable face (design-mobile; ADR 0001's vendored faces are Latin-only) — until then a
+  be or uk device renders en. German remains the long-word stress test at 1.3× text size
+  (`01-recipes-de` is the parity witness for the masthead, tab labels and shell strings); pl joins
+  the stress set now; be and uk join it when their face lands, with their string widths measured
+  in that face (Cyrillic widths behave differently from Latin).
 - **Dark scheme**: onboarding, the Recipes tab and empty states follow the OS scheme (per
   `01-recipes-dark`); the cover and illustration plates are scheme-fixed.
 - **Interrupted onboarding**: app killed mid-flow → next launch resumes at the first unfinished
@@ -215,12 +220,13 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 
 - **FR-014**: The snapshot MUST be produced by a script from the api's own contract-typed
   responses — never hand-typed — and MUST cover exactly the 14 staples and the allergen/dietary
-  vocabulary the six dietary options map to, in en, de and lt.
+  vocabulary the six dietary options map to, in all seven UI locales.
 - **FR-015**: The snapshot MUST carry, in its header, the api commit it was taken at.
 - **FR-016**: The app MUST NOT refresh FID data at runtime in 001 (no session exists to do it
   with) until a guest-read policy exists.
 - **FR-017**: A test MUST prove every staple's FID id resolves in the snapshot with names in all
-  three locales. A hand edit to the snapshot is a suppression-class violation (Constitution XII).
+  seven UI locales; a locale FID lacks fails the test and is ruled (owner), never filled by hand.
+  A hand edit to the snapshot is a suppression-class violation (Constitution XII).
 - **FR-018 (owner's ruling, 2026-09-23)**: The dietary option → FID mapping is: Gluten-free ⇒
   cereals containing gluten; Lactose-free ⇒ milk (incl. lactose); Nut allergy ⇒ tree nuts **and**
   peanuts; Egg-free ⇒ eggs; Vegan / Vegetarian ⇒ FID dietary facts. Fit evaluation, on the device:
@@ -242,8 +248,10 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 - **FR-021**: The bottom tab bar MUST show Recipes · Builder · Shopping · Pantry · More with
   labels always visible; unbuilt tabs show an illustrated empty state (one sentence, one action
   back to Recipes). More contains only FR-013 and the app/version line.
-- **FR-022**: Every user-facing string MUST come from the en/de/lt catalogs (Constitution IX),
-  with key parity enforced.
+- **FR-022**: Every user-facing string MUST come from the seven UI-locale catalogs (Constitution IX
+  1.1.0: en, de, hu, lt, be, pl, uk), with key parity and per-locale plural coverage enforced by test,
+  and Hermes' `Intl.PluralRules` verified on device for all seven. Translations are lane-authored
+  and owner-reviewed; nothing machine-translated ships unreviewed.
 - **FR-023**: Every screen in scope MUST meet DESIGN.md's accessibility gate: 44pt targets, role,
   label and state on every control, color never alone, layouts intact at 1.3× text size, and a
   VoiceOver + TalkBack audit before done.
@@ -301,11 +309,12 @@ build time, against the contract-typed responses.
 - **SC-003**: The dietary profile and pantry seed are absent from device backups and from every
   log and crash report.
 - **SC-004**: After "Clear my data on this device", zero onboarding data remains on the device.
-- **SC-005**: Every staple resolves in the FID snapshot in en, de and lt (build-time test), and
+- **SC-005**: Every staple resolves in the FID snapshot in all seven UI locales (build-time test), and
   the snapshot names the api commit it came from.
 - **SC-006**: Every screen in scope passes a VoiceOver and a TalkBack walkthrough and renders
-  without clipped meaning at 1.3× text size in en, de and lt.
-- **SC-007**: Zero user-facing strings outside the en/de/lt catalogs; the catalogs have identical
+  without clipped meaning at 1.3× text size in every rendered locale (en, de, hu, lt, pl; be and uk
+  once their face lands).
+- **SC-007**: Zero user-facing strings outside the seven catalogs; the catalogs have identical
   key sets.
 
 ## Dependencies
@@ -318,7 +327,8 @@ build time, against the contract-typed responses.
 
 ## Assumptions
 
-- Language follows the device (de/lt, else en); no in-app language step — the corpus has none.
+- Language follows the device (one of the seven, else en; be/uk render en until their face is
+  ruled); no in-app language step — the corpus has none.
 - No editor for profile/units/pantry in 001; clear-and-re-onboard is the stopgap.
 - The 14 staples are curated content, identified by FID ingredient id.
 - Everything added under `packages/*` (the onboarding feature package, shared components, the

@@ -46,7 +46,8 @@ audit for screens (no RN component harness — research R11).
 onboarding step 1 under 2 s on a mid-range device; SC-001 timings.
 
 **Constraints**: works fully offline from install; zero network requests; no personal data in
-logs; 44pt targets; 1.3× text; en/de/lt.
+logs; 44pt targets; 1.3× text; seven UI locales (IX 1.1.0), five rendered until a Cyrillic face
+is ruled.
 
 **Scale/Scope**: 8 screens (cover, 3 steps, Recipes connect-once, coming-soon tab, More, confirm
 sheet); 14 staples; 6 dietary options.
@@ -65,7 +66,7 @@ sheet); 14 staples; 6 dietary options.
 | VI | Privacy by architecture | ✅ | Device-only store, backup-excluded, one wipe path, no transmission (static test + proxy check) |
 | VII | Entitlements server-side | ✅ n/a | No tier logic in 001 |
 | VIII | Offline first-class | ✅ | Whole flow offline; connect-once state stated; delta sync is 003's (A7) |
-| IX | Multilingual | ✅ | `use-intl` over en/de/lt catalogs, parity test, shared unit formatter |
+| IX | Multilingual | ✅ | `use-intl` over the seven catalogs (IX 1.1.0), parity + plural tests (#8), Hermes plural check on device, be/uk not rendered until their face is ruled, shared unit formatter |
 | X | Design from tokens | ✅ after rider | Tokens generated from DESIGN.md (0.5.0) — replaces hand-seeded lime; impeccable used for screen build/review |
 | XI | Stop conditions | ✅ (was ⛔) | New categories admitted by **ADR 0001, Accepted at gate 2** (+ `expo-file-system` for the install marker) |
 | XII | The gates | ✅ | Both gates; PRs only; CI green; no-suppressions instrument ported (phase 1); tokens/snapshot generated files are suppression-class if hand-edited |
@@ -124,12 +125,14 @@ sheet); 14 staples; 6 dietary options.
 ### Phase 3 — Shared foundations (needs ADR 0001)
 
 - **3a** `packages/core`: `resolveLocale`, `createTranslator` (use-intl), catalog additions for
-  every 001 string (en/de/lt, parity test), `formatQuantity`.
+  every 001 string in all seven catalogs (lane-authored, owner-reviewed), `formatQuantity`, and a
+  dev-build startup check of Hermes' `Intl.PluralRules` for all seven. Depends on #8.
 - **3b** `packages/core`: `DeviceStore` over the shared secure-store adapter, `wipeAll`, the
   reinstall rule (shared with the pro session store); tests with an in-memory adapter. Registers
   `home.deviceData` with session core's `registerWiper` if 002 has merged, else ships
   unregistered and whichever PR merges second wires it.
-- **3c** `packages/ui`: fonts (vendored OFL files + licenses), `Screen`, `Masthead`, `Button`,
+- **3c** `packages/ui`: fonts (vendored OFL files + licenses; Latin faces only until the owner
+  rules a Cyrillic-capable face via design-mobile — this lane does not pick one), `Screen`, `Masthead`, `Button`,
   `SelectionCard`, `ToggleChip`, `EmptyState`, `OfflineBanner`, `ConfirmSheet`, `TabBar`,
   `ProvenanceStamp` — through the `impeccable` skill, a11y props built in.
 
@@ -151,7 +154,7 @@ sheet); 14 staples; 6 dietary options.
 
 ### Phase 6 — Verify
 
-- Quickstart walkthrough (both platforms, en/de/lt, light/dark, 1.3×, Reduce Motion), proxy
+- Quickstart walkthrough (both platforms, the five rendered locales, light/dark, 1.3×, Reduce Motion), proxy
   check, backup/reinstall checks, VoiceOver + TalkBack audit; impeccable critique pass on every
   screen against the corpus.
 
