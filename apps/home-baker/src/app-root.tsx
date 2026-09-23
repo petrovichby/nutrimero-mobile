@@ -1,5 +1,6 @@
-import { messages } from "@nutrimero/core";
+import { createTranslator, pluralRuleMismatches, resolveLocale } from "@nutrimero/core";
 import { tokens } from "@nutrimero/ui";
+import { getLocales } from "expo-localization";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
@@ -11,18 +12,26 @@ SplashScreen.preventAutoHideAsync();
 // under reduced motion — no extra handling needed.
 SplashScreen.setOptions({ fade: true, duration: 200 });
 
-// Bootstrap placeholder — replaced by the first specced feature. Locale resolution is
-// hardwired to "en" until the i18n runtime is chosen (Constitution IX gates the catalogs,
-// not the runtime).
-const t = messages.en;
+// Constitution IX: Hermes' Intl.PluralRules must give every UI locale its CLDR categories.
+// Vitest checks Node's ICU; this checks the device's, once per dev launch (001 FR-022).
+if (__DEV__) {
+  const mismatches = pluralRuleMismatches();
+  if (mismatches.length > 0) {
+    throw new Error(`Intl.PluralRules is missing plural categories:\n${mismatches.join("\n")}`);
+  }
+}
+
+// Bootstrap placeholder — replaced by 001's first-run screens (phase 5). The locale is read
+// once at launch; reacting to a system-language change while running is phase 5's to decide.
+const t = createTranslator(resolveLocale(getLocales().map((locale) => locale.languageTag)));
 
 export function AppRoot() {
   return (
     <View onLayout={() => SplashScreen.hideAsync()} style={styles.container}>
       <Text accessibilityRole="header" style={styles.name}>
-        {t.app.homeBaker.name}
+        {t("app.homeBaker.name")}
       </Text>
-      <Text style={styles.tagline}>{t.app.homeBaker.tagline}</Text>
+      <Text style={styles.tagline}>{t("app.homeBaker.tagline")}</Text>
       <StatusBar style="auto" />
     </View>
   );
