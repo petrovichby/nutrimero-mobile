@@ -29,6 +29,7 @@ given in `specs/001-home-first-run/research.md`:
 | `use-intl` | i18n runtime | packages/core | R3 — same ICU shape as `next-intl` on web (IX) |
 | `expo-font` (declared; already transitive via `expo`) | asset loading | packages/ui | R4 — vendored OFL faces; see *Fonts* below |
 | `yaml` (dev) | build tooling | scripts | R5 — parse DESIGN.md frontmatter for token generation |
+| `react-native-svg` (amended 2026-09-23, coordinator ruling) | vector graphics | packages/ui | The corpus's tab and diet/allergen glyphs are SVG; redrawing them from views would be a worse deviation than one well-known renderer. Expo-supported (`npx expo install`) |
 
 Versions are those Expo SDK 57 pins (`npx expo install`). No state library, database, analytics,
 crash-reporting or payment SDK is admitted.
@@ -96,6 +97,10 @@ One secure-store adapter in `packages/core` serves both the pro lane's session (
    (e.g. a larger pantry), it is split across keys rather than raising the limit.
 
 ## Consequences
+
+- **Amended 2026-09-23:** `react-native-svg` admitted (vector graphics). The owned glyph sets (UI chrome
+  glyphs and the diet/allergen stroke set) ship from `packages/ui`; the tab bar, chips and empty states
+  take their glyphs from there, not from the caller.
 
 - `expo-network` is **not** admitted here: 001 makes no network calls (FR-020 moved to 003).
   It enters once, via the pro lane's ADR 0002 or 003, whichever is first.
