@@ -30,14 +30,15 @@ a stop that the coordinator rules on at gate 2. Facts are cited to the api at `o
   |---|---|---|---|
   | en-US | yes | `src/label-text/labels.e2e-spec.ts` › "a product label, read (019 US1, US2, US4, US5)" › "US2: the decimal mark is the label language s, at the same figures (FR-020)" (title verbatim) | **yes** |
   | de-DE | yes | the same test; also `issuing.e2e-spec.ts` › "an issued label (019 US3)" › "reads a rendering today, which is what makes the red below mean something" | **yes** |
-  | hu-HU | yes | none yet. Only `query-cost.e2e-spec.ts`, which asserts query counts, not content. The api lane is adding coverage (B11b widened) | no, until cited |
+  | hu-HU | yes | none yet. **Waits on two api PRs**: a refuse-on-gap fix and the vocabulary completion. **Never cite `query-cost.e2e-spec.ts`** (coordinator), because it asserts query counts, not content | no, until cited |
   | lt-LT | yes | none yet (same as hu-HU) | no, until cited |
   | pl-PL | yes | none yet (same as hu-HU) | no, until cited |
   | mt-MT | **no** | `labels.e2e-spec.ts` › "US5: a term the language does not hold is a gap, and no other language is printed"; "US5: an origin renders its country by name, and the seed has a name for every one of them" | **no**: proven, but not asked for |
   | be-BY | **no** | none possible: no EU statutory source, and an EAEU engine is future api work | **never**: it would always render "no engine" |
 
-- **When the api's coverage PR merges**, each of hu-HU, lt-LT and pl-PL gains its `provenBy`
-  (the new test titles), and with that it becomes offered. No other change is needed.
+- **When the api's two PRs merge** (the refuse-on-gap fix and the vocabulary completion), each of
+  hu-HU, lt-LT and pl-PL gains its `provenBy` from the new rendering-test titles, and with that it
+  becomes offered. No other change is needed.
 - It is held as data in `packages/features/labels`. A test fails if an offered entry lacks a
   citation, if any tag outside the owner's list is offered, or if be-BY appears at all.
 - The default is the last used language, else the UI language's match if offered (en→en-US,

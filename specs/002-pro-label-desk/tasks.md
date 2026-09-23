@@ -154,7 +154,7 @@ with every gap named.
   - **offered = entries with a citation** (en-US and de-DE today)
   - the test fails if an offered entry lacks a citation, if a tag outside the owner's list appears (mt-MT), or if be-BY appears
   - the default is the last used language, else the UI match if offered (en/de/hu/lt/pl map to their EU tag; be and uk have none), else en-US
-  - follow-up when the api's hu/lt/pl coverage PR merges: add the three citations, and add their fixtures to T005 and T027
+  - follow-up when the api's two PRs merge (the refuse-on-gap fix and the vocabulary completion): add the three citations from the new rendering tests (**never `query-cost.e2e-spec.ts`**), and add their fixtures to T005 and T027
 - [ ] T027 [P] [US2] Write `packages/features/labels/src/model/rendering.ts` + `rendering.test.ts`:
   - sections and runs become a view model with emphasis flags; nutrition rows carry the rounded figure, unit, source and rule
   - the test asserts that the runs joined per the api's section order **equal the api `text` exactly** for every offered language's fixtures (SC-003)
