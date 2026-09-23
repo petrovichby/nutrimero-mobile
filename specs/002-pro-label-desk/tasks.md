@@ -48,7 +48,7 @@ delivery phases map as follows:
 - [x] T002 Add `packages/features/*` to `pnpm-workspace.yaml`, unless Home's PR #4 landed it first (then rebase instead). This is a shared file, so it goes in the seam announcement (T011) *(Done in PR A: `packages/features/*` added — this lane landed first.)*
 - [x] T003 Create the feature pack `packages/features/labels/` with `package.json` (`@nutrimero/feature-labels`, private, `main: src/index.ts`, `typecheck` script, deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`), `tsconfig.json` extending `../../../tsconfig.base.json`, and `src/index.ts` *(Done in PR A: an empty pack.)*
 - [x] T004 [P] Add `@nutrimero/feature-labels: workspace:*` to `apps/pro-baker/package.json` and run `pnpm install`, so the lockfile updates *(Done in PR A.)*
-- [ ] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only. Each is recorded from a **local** api at `contract/SOURCE`'s commit (`4a4356b`), seeded with `fid:import`, the same rule as Home's snapshot. **Never from production.** The recording script and seed commit are noted in `__fixtures__/README.md`. Fixtures: *(Moved to PR B: the core tests use inline data typed by the generated types; recorded fixtures serve the models.)*
+- [x] T005 [P] Create the api-shaped fixtures under `packages/features/labels/src/__fixtures__/`, typed by generated types only. Each is recorded from a **local** api at `contract/SOURCE`'s commit (`4a4356b`), seeded with `fid:import`, the same rule as Home's snapshot. **Never from production.** The recording script and seed commit are noted in `__fixtures__/README.md`. Fixtures: *(Moved to PR B: the core tests use inline data typed by the generated types; recorded fixtures serve the models.)* *(Done in PR B: 16 fixtures from a local api at `4a4356b` in a throwaway Postgres, seeded with `fid:import`. The recorder refuses non-loopback URLs and a commit that is not `contract/SOURCE`'s. Each fixture module `satisfies` its generated type.)*
   - a counter-card grid (complete)
   - a packaging grid (Additives `cannot_be_held`, P-02)
   - a no-composition grid
@@ -109,28 +109,28 @@ with every gap named.
 
 ### Tests and model (plan phase 2; after Foundational)
 
-- [ ] T015 [P] [US1] Write `packages/features/labels/src/model/readiness.ts` + `readiness.test.ts`:
+- [x] T015 [P] [US1] Write `packages/features/labels/src/model/readiness.ts` + `readiness.test.ts`: *(Done in PR B. "Not issuable" = a required cell with a `cannot_be_held` gap whose **target is `system`**. A record-shape `cannot_be_held` stays fixable.)*
   - display readiness comes from the api cells: ready, or a count of incomplete required categories
   - packaging reads "not issuable yet" when Additives is `cannot_be_held`, **derived from the gap kind, never from the rule-set id** (FR-018, P-02)
   - fixtures: complete, packaging, no-composition
-- [ ] T016 [P] [US1] Write `packages/features/labels/src/model/gap-sentence.ts` + `gap-sentence.test.ts`:
+- [x] T016 [P] [US1] Write `packages/features/labels/src/model/gap-sentence.ts` + `gap-sentence.test.ts`: *(Done in PR B. `datum.type`/`target.type` are open strings in the contract; known types come from the api's own sources, others use `other` templates.)*
   - a gap (kind, datum, path/occurrences) becomes a catalog key + parameters, with server names inserted
   - `cannot_be_held` gets a distinct template (FR-008)
   - an unknown kind or datum falls back to a generic template that still shows kind + path
   - the test asserts **every gap in every fixture yields a sentence** (SC-002)
-- [ ] T017 [P] [US1] Write `packages/features/labels/src/model/product-filter.ts` + `product-filter.test.ts` (R2):
+- [x] T017 [P] [US1] Write `packages/features/labels/src/model/product-filter.ts` + `product-filter.test.ts` (R2): *(Done in PR B.)*
   - loads ≤ 5 × 200 pages
   - matches name and number, case- and diacritic-insensitive
   - exposes `{ rows, loaded, total, bounded }` for the "first 1,000 of N" line
   - tested at 1,200 rows
-- [ ] T018 [P] [US1] Write `packages/features/labels/src/model/label-types.ts` + `label-types.test.ts`: offered rule-sets from O5, with display names as catalog keys `labels.labelType.<id>` falling back to the api name (FR-025)
-- [ ] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing is on `main` (#8: the seven catalogs, the `LOCALES` export, and parity and plural tests); add the keys to every locale in `LOCALES`, and do not create plumbing here
-- [ ] T020 [US1] Write `packages/features/labels/src/data/products.ts`: loaders over the session client for O6 and O7 (parallel after the first page reveals `total`) and O8. Online-only, with no persistence (FR-021)
+- [x] T018 [P] [US1] Write `packages/features/labels/src/model/label-types.ts` + `label-types.test.ts`: offered rule-sets from O5, with display names as catalog keys `labels.labelType.<id>` falling back to the api name (FR-025) *(Done in PR B.)*
+- [x] T019 [US1] Add the `labels.*` catalog keys (readiness, gap templates, label-type names, bound line, grid headings, sign-in, bakery chooser, states) to all **seven** UI catalogs under `packages/core/messages/` (en, de, hu, lt, be, pl, uk), translated, with key parity and Home's plural check passing. The catalog plumbing is on `main` (#8: the seven catalogs, the `LOCALES` export, and parity and plural tests); add the keys to every locale in `LOCALES`, and do not create plumbing here *(Done in PR B for the model-facing keys: 87 `labels.*` keys × 7 catalogs, none addressing the reader (FR-025a). **Screen keys (sign-in, bakery chooser, states) come with PR C**, in the Pro namespace, formal register.)*
+- [x] T020 [US1] Write `packages/features/labels/src/data/products.ts`: loaders over the session client for O6 and O7 (parallel after the first page reveals `total`) and O8. Online-only, with no persistence (FR-021) *(Done in PR B: `data/products.ts`, `data/result.ts`.)*
 
 ### Screens (⛔DESIGN, ⛔ADR1 for expo-router and use-intl)
 
 - [ ] T021 [US1] Build `apps/pro-baker/src/app/` routing (expo-router) per the approved design. It has sign-in, bakery chooser, and the Label desk split view (list | detail on tablet, stacked on phone), and **no Production tab**
-- [ ] T022 [US1] Write `packages/features/labels/src/screens/sign-in.tsx` and `bakery-chooser.tsx` (FR-001, FR-002; link out to nutrimero.org for account and recovery; "last chosen bakery" remembered through the session)
+- [ ] T022 [US1] Write `packages/features/labels/src/screens/sign-in.tsx` and `bakery-chooser.tsx` (FR-001, FR-002; link out to nutrimero.org for account and recovery; "last chosen bakery" remembered through the session) **Copy (owner ruling 2026-09-23):** "Sign in with your nutrimero.org account", with the link-out kept, in the Pro namespace and the formal register (FR-001, FR-025a).
 - [ ] T023 [US1] Write `packages/features/labels/src/screens/product-list.tsx`: rows with readiness per label type (T015), the bounded filter and its line (T017), and a "no label types assigned" row that still opens (US1-3)
 - [ ] T024 [US1] Write `packages/features/labels/src/screens/declarations-grid.tsx`:
   - label types × five cells, with required/complete in text and glyph
@@ -150,19 +150,19 @@ with every gap named.
 
 **Independent Test**: `quickstart.md` Q3 and Q4.
 
-- [ ] T026 [P] [US2] Write `packages/features/labels/src/model/label-languages.ts` + `label-languages.test.ts` (R1):
+- [x] T026 [P] [US2] Write `packages/features/labels/src/model/label-languages.ts` + `label-languages.test.ts` (R1): *(Done in PR B.)*
   - the **owner's list** is en-US, de-DE, hu-HU, lt-LT and pl-PL, with `provenBy` = **spec file › describe › test title** or `null` (verbatim titles in research R1; never line numbers)
   - **offered = entries with a citation** (en-US and de-DE today)
   - the test fails if an offered entry lacks a citation, if a tag outside the owner's list appears (mt-MT), or if be-BY appears
   - the default is the last used language, else the UI match if offered (en/de/hu/lt/pl map to their EU tag; be and uk have none), else en-US
   - follow-up when the api's two PRs merge (the refuse-on-gap fix and the vocabulary completion): add the three citations from the new rendering tests (**never `query-cost.e2e-spec.ts`**), and add their fixtures to T005 and T027
-- [ ] T027 [P] [US2] Write `packages/features/labels/src/model/rendering.ts` + `rendering.test.ts`:
+- [x] T027 [P] [US2] Write `packages/features/labels/src/model/rendering.ts` + `rendering.test.ts`: *(Done in PR B.)*
   - sections and runs become a view model with emphasis flags; nutrition rows carry the rounded figure, unit, source and rule
   - the test asserts that the runs joined per the api's section order **equal the api `text` exactly** for every offered language's fixtures (SC-003)
   - no string transformation of runs
   - `engine: null` becomes the no-engine state (FR-013)
   - symbol ids become reference-data names, marked "not part of the label text"
-- [ ] T028 [US2] Write `packages/features/labels/src/data/rendering.ts`: an O9 loader with `language` from T026. Online-only
+- [x] T028 [US2] Write `packages/features/labels/src/data/rendering.ts`: an O9 loader with `language` from T026. Online-only *(Done in PR B.)*
 - [ ] T029 [US2] (⛔DESIGN) Write `packages/features/labels/src/screens/label-preview.tsx`:
   - label type and language selectors
   - sections with bold emphasis, and an accessibility announcement of the emphasis
@@ -179,11 +179,11 @@ with every gap named.
 
 **Independent Test**: `quickstart.md` Q5, Q6 and Q7.
 
-- [ ] T030 [P] [US3] Write `packages/features/labels/src/data/issued.ts` + `issued.test.ts` (R7):
+- [x] T030 [P] [US3] Write `packages/features/labels/src/data/issued.ts` + `issued.test.ts` (R7): *(Done in PR B.)*
   - O10 is queried for **every offered rule-set** from O5, in parallel, with no hardcoded regions
   - merged and ordered per label type and language, active first
   - O11 detail read
-- [ ] T031 [P] [US3] Write `packages/features/labels/src/model/verdict.ts` + `verdict.test.ts` (R8):
+- [x] T031 [P] [US3] Write `packages/features/labels/src/model/verdict.ts` + `verdict.test.ts` (R8): *(Done in PR B.)*
   - the verdict comes only from an O11 response, with its check time from the HTTP `Date` header (fallback: device time, labelled)
   - the test proves no verdict is produced from a stored document or while offline (SC-004)
 - [ ] T032 [US3] (⛔DESIGN) Write `packages/features/labels/src/screens/issued-list.tsx` and `issued-detail.tsx`:
