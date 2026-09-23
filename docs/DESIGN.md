@@ -1,6 +1,6 @@
 ---
 name: Nutrimero Mobile
-status: 0.5.0 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
+status: 0.5.1 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
   Pro Baker inherits the web ramps verbatim (web DESIGN.md frontmatter / nutrimero-design
@@ -68,6 +68,9 @@ colors-home:
     destructive: '#8c2318'
     on-destructive: '#ffffff'
     focus-ring: '#1d62ed'          # --focus; D-9: the web's, verbatim — never a brand colour
+    status-positive: {bg: '#d6f5dd', ink: '#0c5223', line: '#1e7d38'}   # C2/C3 (MA-21): "cheapest", full-match chip — web success, verbatim
+    note-assurance: {bg: '#f4ebd9', ink: '#362a1f', line: '#e3d7bd', glyph: '#6d2f1b'}   # C4 (MA-21): privacy card
+    count-neutral: {bg: '#ecdfc6', ink: '#6d2f1b', line: '#b8a888'}     # C1 (MA-21): founders counter (surface-2 / heading / outline-strong)
     scrim: 'rgba(109,47,27,0.10)'
     shadow: {offsetY: 6, blur: 18, color: 'rgba(109,47,27,0.14)'}   # floating elements only
     secondary-button: {line: '#7a3520', ink: '#6d2f1b'}
@@ -92,6 +95,9 @@ colors-home:
     destructive: '#a03325'
     on-destructive: '#ffffff'
     focus-ring: '#8ab1ff'
+    status-positive: {bg: '#1d5c31', ink: '#c9f2d3', line: '#86d99a'}
+    note-assurance: {bg: '#2b1d14', ink: '#f2ebe1', line: '#4a3826', glyph: '#f2ebe1'}
+    count-neutral: {bg: '#382619', ink: '#f2ebe1', line: '#8a7358'}
     scrim: 'rgba(0,0,0,0.35)'
     shadow: {offsetY: 6, blur: 18, color: 'rgba(0,0,0,0.45)'}       # MA-8
     secondary-button: {line: '#8a7358', ink: '#f2ebe1'}
@@ -163,6 +169,14 @@ The two apps share every component in `packages/ui`; the temperament difference 
 the app-accent role, spacing presets, and content (illustrations vs. data), never by forked
 components.
 
+**Register of address is per app, in every UI language** (MA-20). **Home Baker addresses the
+baker informally**: de *du*, hu *te*, lt *tu*, pl *ty*, be *ты*, uk *ти*. **Pro Baker addresses the
+bakery formally**: de *Sie*, hu *Ön*, lt *Jūs*, pl the formal construction the translator chooses
+(*Pan/Pani/Państwo* or an impersonal form), be *Вы*, uk *Ви*. English has no pronoun distinction,
+so the register is carried by wording. Home stays warm and plain and may use contractions; **Pro
+English is formal: no contractions, no casual idiom** ("cannot be recorded", not "can't be
+recorded"). One app never mixes registers. The catalog review for each locale checks it.
+
 ## Layout & touch
 
 - **4pt rhythm.** All spacing is multiples of the 4pt unit; screen edge margin 16pt.
@@ -186,6 +200,13 @@ components.
     semantics (`aria-current` equivalent: `accessibilityState.selected`).
 - Modal flows (builder wizard, paywall, onboarding) present as full-screen sheets with an
   explicit close affordance top-left and never trap the user (hardware back always works).
+- **More → Language** (MA-22). The seven UI languages are listed in their own names (English,
+  Deutsch, Magyar, Lietuvių, Беларуская, Polski, Українська), each with its name in the current UI
+  language beneath and tagged with its own language for assistive tech. The current language is
+  marked. The phone's language carries a "Your phone’s language" tag, and until a language is
+  picked the app follows the phone. Endonyms in another script set in that script's face (G-1:
+  Cyrillic in Onest), never in a platform default. Corpus: `08-language.html`,
+  `08-language-dark.html`.
 
 ## Floor Mode (Pro Baker)
 
@@ -268,6 +289,12 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   structure outline (rust / navy), and in dark the `outline-strong` edge with `ink` text; destructive = the `destructive` role pair (oxblood
   family, both schemes — e.g. the swipe-remove action) with confirmation step or undo. One
   primary action per screen.
+- **Status, count and note roles are named, never borrowed** (MA-21). `status-positive` (the
+  web `success` family, verbatim) marks a good status — the cheapest basket, a full pantry match.
+  `note-assurance` (surface-1, outline edge, ink text, heading glyph) carries a quiet reassurance
+  panel. `count-neutral` (surface-2, heading ink, outline-strong edge) shows a plain count, such as
+  the founders seats left. **Tier stays one treatment, used only for tiers; allergen colour means
+  allergen.** Values in `colors-home`.
 - **Focus ring:** `focus-ring` inherited from the web verbatim — `#1d62ed` light, `#8ab1ff`
   dark — in both apps, independent of the brand ramp so keyboard focus is **never confusable
   with a brand state** (D-9). Home Baker: 4.9:1 on surface, 4.4:1 on surface-1; 8.3:1 on dark
@@ -391,6 +418,11 @@ or any Operate ergonomics:
 
 ## Amendment log
 
+- 0.5.1 (2026-09-23) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `4cf875b6`
+  (C1 at `a7e02fd2`), by the Home lane: MA-18's `colors-home` re-pasted whole — the C1–C4 roles
+  are ruled, so `status-positive`, `note-assurance` and `count-neutral` join both schemes
+  (MA-21); MA-20 register of address per app; MA-21 named status/count/note roles, never
+  borrowed; MA-22 the Language picker under *Navigation*. Tokens regenerated.
 - 0.5.0 (2026-09-23) — ported from `nutrimero-design:mobile/AMENDMENTS.md` (design repo main,
   proof commit `263ecc31`; G-1/G-2 at `fb999ed6`), by the Home lane: MA-1 per-app tier chip
   (gold in Home, `on-action`); MA-2 rust stamp, +5°; MA-3 `provenance-on-image` carries the

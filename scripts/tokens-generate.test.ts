@@ -11,7 +11,9 @@ describe("generated design tokens (Constitution X)", () => {
 
   it("names its sources, including the web commit Pro Baker's ramp was taken at", () => {
     const header = renderTokens(sources).split("\n").slice(0, 4).join("\n");
-    expect(header).toContain("docs/DESIGN.md 0.5.0 frontmatter");
+    const version = /^status: (\S+)/m.exec(sources.designMd)?.[1];
+    expect(version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(header).toContain(`docs/DESIGN.md ${version} frontmatter`);
     expect(header).toMatch(/nutrimero-web [0-9a-f]{40}/);
     expect(header).toContain("DO NOT EDIT");
   });
