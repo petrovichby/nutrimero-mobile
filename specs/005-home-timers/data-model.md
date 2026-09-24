@@ -21,7 +21,7 @@ A **bake stage** (for FR-013a) has the name key `bake` or `preheat`.
 | `state` | `running` \| `paused` \| `done` | |
 | `endAt` | epoch ms | only when `running`, and **the truth** (FR-003) |
 | `remaining` | seconds | only when `paused` |
-| `endedAt` | epoch ms | only when `done` |
+| `endedAt` | derived | **not stored** (PR 1): a running timer whose `endAt` has passed is derived as done, and its `endAt` is when it ended |
 | `notificationId` | string \| null | only when `running` and permission is granted |
 
 ## Routine run (an active item)
@@ -71,6 +71,6 @@ Up to 20 saved routines.
 - **Only derived values change as time passes.** No stored field is written because time
   passed. Stored fields change only on user actions or reconciliation.
 - **Pending notifications ≤ active items ≤ 10** (R4).
-- Every value's worst-case serialized size is ≤ 1,500 bytes, under the 2,048-byte budget of ADR
-  0001 condition 5.
+- Every stored value is ≤ **1,900 bytes**, under the 2,048-byte budget of ADR 0001 condition 5.
+  A larger save is refused (`reason: "size"`) rather than written (PR 1, accepted).
 - **After the wiper runs: no timers key remains, and no timers notification is pending.**

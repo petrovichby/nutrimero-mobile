@@ -32,12 +32,12 @@ component tests (no React Native test harness is admitted).
 
 ## Phase 1: Setup
 
-- [ ] T001 Create the pack `packages/features/timers/`:
+- [x] T001 Create the pack `packages/features/timers/`:
   - `package.json`: name `@nutrimero/feature-timers`, private, exports `"."` → `./src/index.ts` and `"./native"` → `./src/native.ts` (the core/ui pattern), a `typecheck` script, and deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`
   - `tsconfig.json` extending `../../../tsconfig.base.json`
   - `src/index.ts`
   - `src/native.ts`
-- [ ] T002 [P] Add `expo-notifications@~57.0.20` and `expo-keep-awake@~57.0.2` (ADR 0001 rows, accepted) to `packages/features/timers/package.json` with `pnpm --filter`. Commit the lockfile, and confirm that `pnpm install --frozen-lockfile` is clean
+- [x] T002 [P] Add `expo-notifications@~57.0.20` and `expo-keep-awake@~57.0.2` (ADR 0001 rows, accepted) to `packages/features/timers/package.json` with `pnpm --filter`. Commit the lockfile, and confirm that `pnpm install --frozen-lockfile` is clean
 
 ---
 
@@ -46,12 +46,12 @@ component tests (no React Native test harness is admitted).
 **Checkpoint**: every story depends on this phase. `src/index.ts` must stay importable from Node
 (Vitest).
 
-- [ ] T003 [P] Write `packages/features/timers/src/model/stage.ts` + `stage.test.ts`:
+- [x] T003 [P] Write `packages/features/timers/src/model/stage.ts` + `stage.test.ts`:
   - the `StageKey` union (`mix`, `autolyse`, `bulkFerment`, `stretchAndFold`, `preShape`, `shape`, `proof`, `coldProof`, `preheat`, `bake`, `cool`)
   - `Stage { name: {key}|{text}; seconds: number|null }`
   - validation: free text 1–40 characters trimmed; seconds an integer from 5 to 172,800, or null
   - `isBakeStage` (FR-013a: `bake` or `preheat`)
-- [ ] T004 Write `packages/features/timers/src/model/item.ts` + `item.test.ts`: the `Timer` and `RoutineRun` types (data-model.md).
+- [x] T004 Write `packages/features/timers/src/model/item.ts` + `item.test.ts`: the `Timer` and `RoutineRun` types (data-model.md).
   - `transition(item, action, now)` for start, pause, resume, addTime, cancel, dismiss, startNextStage and doneHandsOn. It returns `{ item, intents: ("schedule"|"cancel")[] }`.
   - `derive(item, now)`: time left or time since, the stage position "n / N", the next stage, and `done`.
   - Tests cover:
@@ -60,23 +60,23 @@ component tests (no React Native test harness is admitted).
     - a hands-on stage schedules nothing
     - at most one schedule intent per run (FR-011)
     - pause and resume moving `endAt` correctly
-- [ ] T005 [P] Write `packages/features/timers/src/model/reconcile.ts` + `reconcile.test.ts` (research R1): stored items plus pending ids give the intents.
+- [x] T005 [P] Write `packages/features/timers/src/model/reconcile.ts` + `reconcile.test.ts` (research R1): stored items plus pending ids give the intents.
   - A running item with no pending notification is re-scheduled; this covers restart, force-stop and a later grant.
   - An orphan pending id is cancelled.
   - A done item has no pending notification.
   - Pending notifications never exceed the active-item cap of 10 (C4).
-- [ ] T006 [P] Write `packages/features/timers/src/model/duration.ts` + `duration.test.ts` (R10): `formatDuration(seconds, t)` composes whole units for display (`1 h 30 min`) and a spoken form for screen readers ("1 hour 30 minutes left"). Every plural argument is an integer `count`. Test in all seven locales.
-- [ ] T007 Write `packages/features/timers/src/store/timer-store.ts` + `timer-store.test.ts` (R6), on `DeviceStoreAdapter` with keys under `nutrimero.home.timers.*`:
+- [x] T006 [P] Write `packages/features/timers/src/model/duration.ts` + `duration.test.ts` (R10): `formatDuration(seconds, t)` composes whole units for display (`1 h 30 min`) and a spoken form for screen readers ("1 hour 30 minutes left"). Every plural argument is an integer `count`. Test in all seven locales.
+- [x] T007 Write `packages/features/timers/src/store/timer-store.ts` + `timer-store.test.ts` (R6), on `DeviceStoreAdapter` with keys under `nutrimero.home.timers.*`:
   - an index plus per-item keys, and saved routines plus per-routine keys, and prefs
   - caps: 10 active, 20 saved, 12 stages
   - worst-case values asserted ≤ 1,500 bytes, under the 2,048-byte budget
   - writes go item first, then index, and orphans are tolerated
   - tested with `createMemoryAdapter`
-- [ ] T008 Write `packages/features/timers/src/store/wiper.ts` + `wiper.test.ts` (FR-021, R7):
+- [x] T008 Write `packages/features/timers/src/store/wiper.ts` + `wiper.test.ts` (FR-021, R7):
   - `registerTimersWiper(session, store, cancelAll)` registers under the name `"home.timers"`
   - the wiper deletes every timers key and cancels every stored notification id
   - tests: no key left and every notification cancelled; the **fresh-install path** (`session.restore()` with no marker) reaches `"home.timers"` when it was registered before `restore()`
-- [ ] T009 Add the non-screen `home.timers.*` keys to all seven catalogs under `packages/core/messages/`, informal, "device", integer `count`:
+- [x] T009 Add the non-screen `home.timers.*` keys to all seven catalogs under `packages/core/messages/`, informal, "device", integer `count`:
   - the stage-name picks
   - the duration units, visual and spoken
   - the notification title and body ("{name} is done", "{stage} done: {next} next")
