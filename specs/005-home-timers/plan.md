@@ -2,8 +2,26 @@
 
 **Branch**: `lane/home-2` | **Date**: 2026-09-24 | **Spec**: [spec.md](./spec.md) (gate 1 passed at `e118563`)
 
-**Status**: Draft for **gate 2**. Nothing is implemented. The build also waits on the owner's
-walk of design-mobile's drawings (drawn after F23).
+**Status**: **Gate 2 PASSED at `35d6571`** (coordinator, 2026-09-24). The build order: the pure
+core now, the native adapters next, and the screens after the owner's walk. The one app-root wiring
+change comes after Home 1's Clear-my-data fix merges, announced through the owner first.
+
+## Gate 2 rulings
+
+- **ADR 0001 rows accepted**: `expo-notifications` ~57.0.20 (local scheduling only; one
+  timers-only channel) and `expo-keep-awake` ~57.0.2 (declared, although transitive).
+- **Exact alarms**: the manifest check stays. If `expo-notifications` itself contributes
+  `SCHEDULE_EXACT_ALARM`, it is stripped with the app config's `android.blockedPermissions`, and
+  the check is the proof.
+- **Sound without `expo-audio` / `expo-haptics`**: accepted. With permission refused, completion
+  is visual plus vibration only, and FR-017's note says so.
+- **The cap of 10, the launch reconcile, and C1–C4**: accepted. A C1 or C2 disagreement goes to
+  the owner before release.
+- **The seam bug is on `main`**: #38 made Clear my data a direct `homeStore.wipeAll()`
+  (`apps/home-baker/app/_layout.tsx:74`). Home 1 is fixing it to run every registered data
+  wiper. 005's wiper registers before `restore()`, as planned.
+- **The Clear-my-data list gains "your timers and saved routines"**. The string goes in all seven
+  catalogs in 005's PR.
 
 ## Summary
 

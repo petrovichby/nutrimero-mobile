@@ -264,7 +264,9 @@ asks again on its own.
   routine start, preceded by a one-sentence reason in the app. **Never during onboarding** and
   never at launch.
 - **FR-017**: If refused, the app MUST NOT prompt again on its own. Timer surfaces carry the
-  "alerts only while the app is open" note with an "Open settings" action. When permission
+  "alerts only while the app is open" note with an "Open settings" action. The note says plainly
+  that **completion is then visual plus vibration only: no sound** (gate 2 ruling: sound comes only
+  from the notification). When permission
   appears later, running timers are re-scheduled at the next foreground (US5-3).
 
 **Chip, sheet, screens**
@@ -283,6 +285,9 @@ asks again on its own.
   the device, under Home's namespace in the shared device store. They MUST be removed, and every
   pending notification cancelled, by 001's "Clear my data on this device" and by any session wipe
   (the wiper registered **before** `session.restore()`, as ADR 0001 condition 3's order requires).
+  When 005 ships, the Clear-my-data sheet's list gains the line **"your timers and saved routines"**
+  (gate 2 ruling). The string ships in all seven catalogs in 005's PR, and design-mobile updates the
+  drawing.
 
 **Language, register, accessibility**
 

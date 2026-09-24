@@ -31,8 +31,8 @@ given in `specs/001-home-first-run/research.md`:
 | `yaml` (dev) | build tooling | scripts | R5 — parse DESIGN.md frontmatter for token generation |
 | `react-native-svg` (amended 2026-09-23, coordinator ruling) | vector graphics | packages/ui | The corpus's tab and diet/allergen glyphs are SVG; redrawing them from views would be a worse deviation than one well-known renderer. Expo-supported (`npx expo install`) |
 | `@formatjs/intl-locale` 5.3.11 + `@formatjs/intl-pluralrules` 6.3.15 — exact pins (amended 2026-09-24, coordinator ruling) | i18n runtime (Intl polyfill) | packages/core `./native` | Hermes ships no `Intl.PluralRules` or `Intl.Locale` on this runtime. **Forced on device on both platforms**, so plural selection comes from one pinned CLDR dataset; locale data for the seven UI languages only; MIT. Known upstream defect: fractions diverge from CLDR in hu/lt/be. **Ruling 2026-09-24: every plural argument is a `count`, and fractions are formatted as numbers, never pluralised** (tested in `catalogs.test.ts`, asserted at runtime in dev builds by the translator) |
-| `expo-notifications` ~57.0.20 — **proposed 2026-09-24 (005 gate 2)** | local scheduled notifications | packages/features/timers `./native`; apps/home-baker (config plugin) | 005 R1: F27's timers are **local and scheduled, never server push**, and work fully offline. One pending notification per active item (≤ 10), reconciled with the stored end times at launch. The config plugin sets the timers channel only, with no remote-notification setup. **`SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` are never requested** (owner's F27 decision; asserted by a build check); Android lateness is stated per 005 FR-013 |
-| `expo-keep-awake` ~57.0.2 — **proposed 2026-09-24 (005 gate 2)**; already transitive via `expo`, declared | platform capability (screen wake) | packages/features/timers `./native` | 005 R5 / F37: the screen stays on while a timer screen is focused; released on leave and in background. No config plugin, no permission (SDK 57 docs) |
+| `expo-notifications` ~57.0.20 — **accepted 2026-09-24 (005 gate 2, coordinator)** | local scheduled notifications | packages/features/timers `./native`; apps/home-baker (config plugin) | 005 R1: F27's timers are **local and scheduled, never server push**, and work fully offline. One pending notification per active item (≤ 10), reconciled with the stored end times at launch. The config plugin sets the timers channel only, with no remote-notification setup. **`SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` are never requested** (owner's F27 decision; asserted by a build check; if the library contributes it, the app config strips it with `android.blockedPermissions`); Android lateness is stated per 005 FR-013 |
+| `expo-keep-awake` ~57.0.2 — **accepted 2026-09-24 (005 gate 2, coordinator)**; already transitive via `expo`, declared | platform capability (screen wake) | packages/features/timers `./native` | 005 R5 / F37: the screen stays on while a timer screen is focused; released on leave and in background. No config plugin, no permission (SDK 57 docs) |
 
 Versions are those Expo SDK 57 pins (`npx expo install`). No state library, database, analytics,
 crash-reporting or payment SDK is admitted.
@@ -101,8 +101,8 @@ One secure-store adapter in `packages/core` serves both the pro lane's session (
 
 ## Consequences
 
-- **Proposed 2026-09-24 (005 gate 2, Home lane 2):** `expo-notifications` and `expo-keep-awake`, as
-  rows above. They are not added before the coordinator accepts them. A timers wiper
+- **Accepted 2026-09-24 (005 gate 2, Home lane 2):** `expo-notifications` and `expo-keep-awake`, as
+  rows above. A timers wiper
   (`"home.timers"`) joins the session's wipe sequence before `restore()`, and every scheduled
   notification is cancelled by it.
 

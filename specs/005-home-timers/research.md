@@ -47,8 +47,9 @@ falls back to inexact scheduling.
 
 **Decision**:
 - **Do not add `SCHEDULE_EXACT_ALARM` or `USE_EXACT_ALARM`** (the owner's F27 decision). A build
-  check asserts that neither appears in the generated Android manifest permissions
-  (`app.config` / prebuild inspection in the plan's phase 1).
+  check asserts that neither appears in the generated Android manifest permissions. If
+  `expo-notifications` contributes either one itself, the app config lists it in
+  `android.blockedPermissions` (gate 2 ruling), and the check is the proof.
 - The help text is the ruled wording (FR-013). The one-time bake-stage notice is FR-013a.
 
 **Check C1 (owed, a real Android device)**: measure the actual lateness of a 30-minute and a
