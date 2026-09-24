@@ -1,3 +1,12 @@
-// The native half of @nutrimero/feature-timers (005): the notification scheduler, permission,
-// routing and keep-awake adapters land here in PR 2. The platform-free core is "./index".
-export {};
+// The native half of @nutrimero/feature-timers (005): expo-notifications and expo-keep-awake
+// behind the pure core's ports. Apps import this at wiring time; tests import "./index".
+export { useTimerKeepAwake } from "./native/keep-awake";
+export { reconcileNow, useTimersLifecycle } from "./native/lifecycle";
+export { readPermission, requestInContext } from "./native/permission";
+export { useNotificationRouting } from "./native/routing";
+export {
+  ensureTimersChannel,
+  notificationScheduler,
+  presentTimersInForeground,
+  TIMERS_CHANNEL_ID,
+} from "./native/scheduler";
