@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-24
 
-**Status**: Draft — at gate 1 (three owner questions below)
+**Status**: Gate 1 PASSED 2026-09-24 (owner and coordinator) — rulings Q1–Q3 recorded below
 
 **Input**: Coordinator assignment "004 — F23 measures and conversion": the ledger entry F23
 (`nutrimero-docs` `f7756e1`, `mobile/FEATURES.md`, accepted 2026-09-24, **free tier**). A
@@ -17,9 +17,32 @@ design-mobile is drawing in parallel (`nutrimero-design:mobile/home-baker/`, →
 `docs/DESIGN.md`) · `docs/DESIGN.md` (binding) · FID reference data as served by the contract
 (`contract/openapi.json`, `contract/SOURCE` = nutrimero-api `4a4356b`).
 
-## Gate 1 — what the owner is asked
+## Gate 1 record
 
-Three questions, all about **which numbers the app is allowed to show**. The data survey behind
+- **Q1 → the owner's rule: multi-source proof.** A row whose FID source is AI-derived
+  ("OpenAI category estimate", "AI-assisted") reaches a screen **only when at least two
+  independent published sources confirm its value within 5 %**, each source recorded (URL,
+  locus, value). A confirmed row is then used like any other, with its sources cited;
+  unconfirmed or disputed rows are not shown. The verification is scoped to 004's curated set,
+  not all 449 rows, and its evidence is committed as `density-evidence.md` (ingredient, FID
+  value, sources, verdict) — FR-004, FR-004a.
+- **Q2 → agreement band 5 %.** Admissible rows for the same ingredient, form and state that agree
+  within 5 % take the fixed rule (confidence, then method, then source), source shown on tap.
+  **Beyond 5 % is an INCONSISTENCY**: listed with every row's source and value and brought for
+  investigation — never picked silently. Until the owner rules a sourced pick, that ingredient
+  shows **no volume conversion**. Resolved picks live in the snapshot manifest (the
+  `staples.ts` curated-names pattern, each tested against FID), moving to the api later. Wheat
+  flour `389D858` comes first: Health Canada 52.8, FAO 58, Fineli 65 (Fineli's is the
+  semi-coarse flour) — all the same form and state — FR-005, FR-005a.
+- **Q3 → (A)**: US customary — cup 236.59 ml, tbsp 14.79 ml, tsp 4.93 ml; metric cup 250 ml and
+  tbsp 15 ml; both labelled. UK and AU behind a setting, as the F23 log says. FID's 240 ml cup is
+  the US nutrition-label cup; that inconsistency goes to the api lane — FR-010.
+- **The onboarding card's "1 cup flour = 120 g"** is an unsourced number from the comp. It takes
+  the resolved flour value once ruled; design-mobile is told when the number changes — FR-023.
+
+## Gate 1 — the data survey
+
+The questions were all about **which numbers the app is allowed to show**. The data survey behind
 them (FID seeds at `4a4356b`, identical on api main):
 
 - FID holds **1,594 volume-to-mass rows over 1,388 ingredients** and **2,010 piece-weight rows
@@ -35,7 +58,8 @@ them (FID seeds at `4a4356b`, identical on api main):
 - **FID holds several densities for the same ingredient, form and state, and they disagree.**
   Wheat flour, powder, raw: 52.8 g (Health Canada CNF, MEDIUM), 58 g (FAO/INFOODS, HIGH,
   calculated) and 65 g (Fineli, HIGH) per 100 ml — a 23 % spread, i.e. a US cup of flour reads
-  125 g, 137 g or 154 g depending on the row. Sugar: 84.5, 85 and 95 g per 100 ml — Q2.
+  125 g, 137 g or 154 g depending on the row. Sugar: 84.5, 85 and 95 g per 100 ml (a 12 % spread, so sugar is an inconsistency under the
+  Q2 ruling too) — Q2.
 - **FID's own unit table defines the cup as 240 ml** (the US nutrition-labelling cup) and the
   tablespoon as 15 ml; the F23 log says "US 237 ml". The two cannot both be the app's US cup —
   Q3.
@@ -44,8 +68,7 @@ them (FID seeds at `4a4356b`, identical on api main):
   FID's model, not of its current data; this spec shows variants **only where FID holds them**
   (FR-006) and never invents one.
 
-Questions Q1–Q3 are carried as the three `[NEEDS CLARIFICATION]` markers in FR-004, FR-005 and
-FR-010; each is presented with options in the gate-1 report.
+The rulings above answer Q1–Q3.
 
 ## Scope
 
@@ -78,16 +101,16 @@ zero input. Generic converters get it wrong because they use one density for eve
 ingredient-aware answer is the "crown jewels" differentiator the ledger accepted F23 for.
 
 **Independent Test**: With no network, open Measures, pick wheat flour, and check that the cup,
-tablespoon and teaspoon rows show grams consistent with the ruled density (Q2) and the ruled cup
-standard (Q3), labelled with that standard.
+tablespoon and teaspoon rows show grams from flour's ruled pick (FR-005a) in the US customary and
+metric cups (FR-010), each labelled — or, until the pick is ruled, that flour shows no volume
+conversion and says why.
 
 **Acceptance Scenarios**:
 
 1. **Given** the app is installed and offline, **When** the baker opens Measures, **Then** the
    bakery set is listed and every ingredient in it shows its everyday measures without a network.
 2. **Given** flour is selected and the cup standard is US, **When** the baker reads the cup row,
-   **Then** it shows the grams for one US cup and names the standard ("US cup, 236.6 ml" or as
-   ruled in Q3) — a cup is never shown without its standard.
+   **Then** it shows the grams for one US cup and names the standard ("US cup, 236.6 ml") — a cup is never shown without its standard.
 3. **Given** an ingredient FID gives no volume data for, **When** the baker opens it, **Then** the
    volume rows say that no volume measure is known for it — no number is estimated or borrowed
    from a similar ingredient.
@@ -172,6 +195,8 @@ method and confidence of the row the rule chose.
    source, method and confidence FID records for it are shown, in plain words.
 2. **Given** a number whose FID confidence is low, **When** it is shown, **Then** it is marked
    approximate in words, not by colour alone.
+3. **Given** a row confirmed by multi-source proof (FR-004a), **When** its provenance opens,
+   **Then** the confirming published sources are cited alongside FID's.
 
 ---
 
@@ -198,8 +223,9 @@ and are labelled "AU tbsp".
 
 ### Edge Cases
 
-- **Several FID rows for one ingredient, form and state** — resolved only by the Q2 rule; the
-  rule is deterministic and tested, so the same ingredient always shows the same number.
+- **Several FID rows for one ingredient, form and state** — within 5 %: the fixed rule; beyond
+  5 %: no volume conversion until a ruled pick (FR-005, FR-005a). Deterministic and tested, so
+  the same ingredient always shows the same number.
 - **Variants** — where FID holds more than one form or state with its own data (e.g. whole vs
   chopped, liquid vs viscous), the ingredient offers them by FID's names; where it holds one, no
   variant picker appears.
@@ -218,8 +244,8 @@ and are labelled "AU tbsp".
 - **Temperature** — °C ↔ °F only; oven temperatures are rounded to 5 degrees for display.
 - **An ingredient drops out of FID or changes in a later snapshot** — the app shows what its own
   shipped set holds; snapshot regeneration is reviewed (the diff is part of the PR).
-- **Low-confidence-only ingredient** — shown, marked approximate (User Story 4), or excluded,
-  as Q1 rules.
+- **Only AI-derived rows, none proven** — the ingredient shows no volume conversion (FR-004a); its
+  piece weights, if any, still show.
 
 ## Requirements *(mandatory)*
 
@@ -238,14 +264,25 @@ and are labelled "AU tbsp".
   directions; and, with no ingredient, mass ↔ mass, volume ↔ volume and °C ↔ °F.
 - **FR-004**: Every ingredient-specific number (density, piece weight) MUST come from FID data
   shipped in the app, and only from rows FID supplies — never from LLM output at runtime, a
-  hand-typed table, a similar ingredient, or a heuristic. Which FID rows are **admissible** is
-  ruled at gate 1: [NEEDS CLARIFICATION Q1: may rows whose FID source is an AI/LLM estimate
-  ("OpenAI category estimate", "AI-assisted") power a conversion — excluded, shown marked, or
-  treated like any other row?]
-- **FR-005**: Where FID holds several admissible rows for the same ingredient, form and state,
-  the app MUST pick deterministically, by a rule that is written down and tested:
-  [NEEDS CLARIFICATION Q2: one number chosen by rule (confidence, then method, then source), a
-  range, or a curated pick per ingredient?]
+  hand-typed table, a similar ingredient, or a heuristic. A row is **admissible** when its FID
+  source is not AI-derived, or when it is AI-derived and **multi-source proven** (FR-004a).
+- **FR-004a**: An AI-derived FID row (source "OpenAI category estimate" or "AI-assisted") MUST be
+  shown only if at least two independent published sources confirm its value within 5 %; each
+  source is recorded with URL, locus (table, page or entry) and value in
+  `specs/004-measures-conversion/density-evidence.md`, with the FID value and a verdict
+  (confirmed, unconfirmed, disputed). Confirmed rows are used like any other and cite their
+  sources in the provenance view (FR-016); unconfirmed and disputed rows are not shown. The
+  check covers the curated set only, and a test holds the shipped set to the evidence file.
+- **FR-005**: Where FID holds several admissible rows for the same ingredient, form and state and
+  they all agree within 5 % (max ≤ 1.05 × min), the app MUST pick by the fixed rule — highest
+  confidence, then method (`MEASURED` > `LITERATURE` > `CALCULATED` > `ESTIMATE`), then a
+  written source order — and show the chosen row's source on tap. The rule is tested.
+- **FR-005a**: Where they disagree by more than 5 %, the ingredient is an **inconsistency**: the
+  snapshot build lists it with every row's source and value for investigation, and the app shows
+  **no volume conversion** for it until the owner rules a sourced pick. A ruled pick is recorded in
+  the snapshot manifest (curated, like `CURATED_STAPLE_NAMES`), names one of FID's own rows, and
+  is tested against the snapshot; it moves to the api when FID gains a display density. Wheat
+  flour `389D858` is the first inconsistency brought.
 - **FR-006**: Forms and preparation states MUST be offered only where FID holds separate data for
   them, named with FID's names; the app MUST NOT invent a variant (e.g. "sifted") FID has no data
   for.
@@ -259,10 +296,8 @@ and are labelled "AU tbsp".
 - **FR-009**: The default MUST show US and metric side by side; UK and Australian standards MUST
   be available behind a setting that persists on the device and survives Clear my data only if
   ruled a device preference (default: it is Home data and is cleared — see Assumptions).
-- **FR-010**: The standards' millilitre values MUST be the ones ruled at gate 1:
-  [NEEDS CLARIFICATION Q3: the US cup and spoons — the customary definitions (cup 236.59 ml,
-  tbsp 14.79 ml, tsp 4.93 ml) as the F23 log says, or FID's unit table (cup 240 ml, tbsp 15 ml,
-  tsp 5 ml)?] Metric: cup 250 ml, tbsp 15 ml, tsp 5 ml. UK: cup 284 ml (½ imperial pint), tbsp
+- **FR-010**: The standards' millilitre values MUST be (gate 1, Q3): US customary — cup
+  236.59 ml, tbsp 14.79 ml, tsp 4.93 ml, fl oz 29.57 ml; metric — cup 250 ml, tbsp 15 ml, tsp 5 ml. UK: cup 284 ml (½ imperial pint), tbsp
   15 ml, tsp 5 ml, fl oz 28.41 ml. Australian: cup 250 ml, tbsp 20 ml, tsp 5 ml.
 - **FR-011**: Pure unit arithmetic (g ↔ oz, ml ↔ cups, °C ↔ °F, rounding) MUST go through the
   shared unit functions in the core package (Constitution IX: never inline), extended there.
@@ -311,6 +346,10 @@ and are labelled "AU tbsp".
   eighth US cups", not "1 ⅛"), and every control meets DESIGN.md's target and contrast rules (X).
 - **FR-022**: Measures MUST hold no personal data; the only thing stored is the standard setting
   (FR-009).
+- **FR-023**: The onboarding units card (001) MUST show the resolved wheat-flour value in place of
+  the comp's unsourced "120 g", in the labelled US cup; until flour's inconsistency is ruled, the
+  card keeps its current value and design-mobile is told when it changes. Its butter "stick"
+  (113 g = ½ US cup by definition, 4 oz) is a unit identity, not a density, and stays.
 
 ### Key Entities
 
@@ -360,14 +399,18 @@ and are labelled "AU tbsp".
 
 ## Dependencies
 
-- **Owner rulings Q1–Q3** (gate 1) and the owner's confirmation of the ~150–200 ingredient list
-  (FR-018).
+- **Owner rulings**: Q1–Q3 given at gate 1; still owed — the confirmation of the ~150–200
+  ingredient list (FR-018) and a sourced pick for each inconsistency (FR-005a), wheat flour
+  first.
+- **Multi-source evidence** (FR-004a): web research into published density tables for the
+  AI-derived rows in the curated set, committed as `density-evidence.md`.
+- **api lane** (via the coordinator): FID's unit table defines the cup as 240 ml, the US
+  nutrition-label cup, not the kitchen cup (Q3).
 - **design-mobile's F23 concept screens** → AMENDMENTS → DESIGN.md port; UI work through
   impeccable; no screen is built before the concept is approved.
 - **api lane**: confirm `reserved.volumeToMass`/`reserved.pieceWeight` are stable (Contract
   check); later, a guest-read policy for full search (out of scope here).
-- **Markus**: none required for v1 beyond what Q1/Q2 rule (e.g. if Q2 picks "curated per
-  ingredient", the curation is his or the owner's).
+- **Markus**: none required; inconsistency picks are the owner's ruling (FR-005a).
 - **No new native dependency is expected** (the snapshot is data; conversion is arithmetic). Any
   that surfaces in the plan is an ADR 0001 row first (XI).
 
@@ -376,11 +419,7 @@ and are labelled "AU tbsp".
 - The Measures destination is free for everyone (F23 verdict); no entitlement check.
 - The standard setting (FR-009) is Home data: Clear my data resets it. (If the owner prefers it as
   a device preference like the interface language, that is a one-line change of category.)
-- The onboarding units card (001, `07-onboarding-units`) hard-codes "1 cup flour → 120 g" and
-  "1 stick butter → 113 g" as illustrative values from the comp. Once Measures exists, that is a
-  hand-typed density beside an FID-derived one — two answers to the same question. This feature
-  brings the card onto the same FID-derived numbers (and the same labelled cup standard), which
-  may change the comp's "120 g"; design-mobile is told.
+- The onboarding units card is covered by FR-023 (gate 1 ruling).
 - FID names in lt, pl, be and uk arrive with api `feat/021`; until then those locales show English
   ingredient names (001 FR-017's fallback) while the UI itself is translated.
 - Snapshot size stays small enough to ship in the bundle (~200 ingredients × a few rows);

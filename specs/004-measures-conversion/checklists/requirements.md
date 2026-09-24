@@ -15,8 +15,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain — **three remain by design** (Q1 FR-004, Q2
-      FR-005, Q3 FR-010): they are the owner's gate-1 questions.
+- [x] No [NEEDS CLARIFICATION] markers remain — Q1–Q3 ruled at gate 1 (2026-09-24).
 - [x] Requirements are testable and unambiguous (apart from the three rulings)
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -34,7 +33,7 @@
 
 ## Notes
 
-- Blocked on gate 1: Q1 (admissible FID sources), Q2 (one density among several), Q3 (the US
-  cup's millilitres). Once ruled, the markers are replaced and the spec goes to `/speckit-plan`.
+- Gate 1 passed 2026-09-24; still owed by the owner (not blocking the plan): the confirmation of
+  the curated set (FR-018) and a sourced pick per inconsistency (FR-005a), wheat flour first.
 - SC-007 depends on 003's launch recipe corpus, which does not exist yet; it is measured when it
   does.
