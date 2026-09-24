@@ -57,6 +57,8 @@ export const STROKE_GLYPHS = {
   lactoseFree: strike(MILK),
   eggFree: strike(EGG),
   vegan: [path("M20 4c1 8-2 13-6 15s-8 1-9-1 0-6 4-9 8-4 11-5z"), path("M5 20c3-5 7-9 12-12")],
+  // UI chrome, but stroke-drawn in the corpus (09-more `i-chev`, stroke 2.2 there; 2 here, the set's width).
+  chevron: [path("m9 6 6 6-6 6")],
   vegetarian: [
     path("M12 21v-8"),
     path("M12 13c0-4 3-6 8-6 0 4-3 6-8 6z"),
@@ -97,6 +99,18 @@ export const FILLED_GLYPHS = {
   check: [path("M9.5 16.2 5.8 12.5l-1.8 1.8 5.5 5.5L20 9.3l-1.8-1.8-8.7 8.7Z")],
   plus: [path("M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z")],
   back: [path("M14.7 19.2 7.5 12l7.2-7.2 1.8 1.8L11.1 12l5.4 5.4-1.8 1.8Z")],
+  globe: [
+    path(
+      "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.6 2.8A7.4 7.4 0 0 0 4.7 11h3.1c.1-2.3.9-4.5 2.6-6.2Zm3.2 0c1.7 1.7 2.5 3.9 2.6 6.2h3.1a7.4 7.4 0 0 0-5.7-6.2ZM13.8 11c-.1-2-.8-3.8-1.8-5.2-1 1.4-1.7 3.2-1.8 5.2h3.6Zm-3.6 2c.1 2 .8 3.8 1.8 5.2 1-1.4 1.7-3.2 1.8-5.2h-3.6Zm-2.4 0H4.7a7.4 7.4 0 0 0 5.7 6.2C8.7 17.5 7.9 15.3 7.8 13Zm8.4 0c-.1 2.3-.9 4.5-2.6 6.2a7.4 7.4 0 0 0 5.7-6.2h-3.1Z",
+      { evenOdd: true },
+    ),
+  ],
+  trash: [
+    path(
+      "M9 2h6a1 1 0 0 1 1 1v1h4v2H4V4h4V3a1 1 0 0 1 1-1Zm-3.5 6h13l-1 12.2A2 2 0 0 1 15.5 22h-7a2 2 0 0 1-2-1.8L5.5 8Zm4 2.5v8h2v-8h-2Zm3 0v8h2v-8h-2Z",
+      { evenOdd: true },
+    ),
+  ],
   search: [
     path(
       "M10.5 3a7.5 7.5 0 1 0 4.55 13.45l4.25 4.25 1.8-1.8-4.25-4.25A7.5 7.5 0 0 0 10.5 3Zm0 2.6a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Z",

@@ -227,6 +227,54 @@
         "pl": "lenkų",
         "uk": "ukrainiečių"
       }
+    },
+    "tabs": {
+      "recipes": "Receptai",
+      "builder": "Konstruktorius",
+      "shopping": "Pirkiniai",
+      "pantry": "Sandėliukas",
+      "more": "Daugiau"
+    },
+    "recipes": {
+      "title": "Receptai",
+      "connectOnce": "Receptai atsisiųs, kai pirmą kartą prisijungsi."
+    },
+    "soon": {
+      "back": "Atgal į receptus",
+      "builder": {
+        "title": "Konstruktorius",
+        "body": "Konstruktorius dar orkaitėje – netrukus jis parodys, ką gali iškepti iš to, ką turi lentynoje.",
+        "art": "Graviūros stiliaus iliustracija: ant sukamo padėklo komponuojamas daugiasluoksnis tortas, šalia – mentelė"
+      },
+      "pantry": {
+        "title": "Sandėliukas",
+        "body": "Tavo sandėliukas dar kuriamas – netrukus 30 sekundžių savaitinis atnaujinimas palaikys jį tvarkingą.",
+        "art": "Graviūros stiliaus iliustracija: pilnos sandėliuko lentynos su pažymėtais stiklainiais, miltų maišu ir kiaušinių puodu"
+      },
+      "shopping": {
+        "title": "Pirkiniai",
+        "body": "Pirkinių sąrašai dar kyla – netrukus jie surinks viską, ko trūksta receptui.",
+        "art": "Graviūros stiliaus iliustracija: pintas turgaus krepšys su popieriniu miltų maišeliu, pieno buteliu ir keliais kiaušiniais"
+      }
+    },
+    "more": {
+      "title": "Daugiau",
+      "clearTitle": "Ištrinti mano duomenis šiame įrenginyje",
+      "clearHint": "Tavo mitybos profilis, matavimo vienetai ir sandėliukas",
+      "version": "{app} · versija {version}"
+    },
+    "clearData": {
+      "title": "Ištrinti tavo duomenis šiame įrenginyje?",
+      "lead": "Iš šio įrenginio bus ištrinta:",
+      "items": {
+        "profile": "tavo mitybos profilis",
+        "units": "tavo pasirinkti matavimo vienetai",
+        "pantry": "pagrindiniai produktai tavo sandėliuke"
+      },
+      "restart": "Pradėsi iš naujo nuo pirmo klausimo. To nebus galima atšaukti.",
+      "keeps": "Programėlės kalba liks tokia pati.",
+      "cancel": "Atšaukti",
+      "confirm": "Ištrinti mano duomenis"
     }
   }
 }

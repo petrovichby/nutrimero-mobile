@@ -227,6 +227,54 @@
         "pl": "Polnisch",
         "uk": "Ukrainisch"
       }
+    },
+    "tabs": {
+      "recipes": "Rezepte",
+      "builder": "Baukasten",
+      "shopping": "Einkauf",
+      "pantry": "Vorrat",
+      "more": "Mehr"
+    },
+    "recipes": {
+      "title": "Rezepte",
+      "connectOnce": "Rezepte werden geladen, sobald du zum ersten Mal verbunden bist."
+    },
+    "soon": {
+      "back": "Zurück zu den Rezepten",
+      "builder": {
+        "title": "Baukasten",
+        "body": "Der Baukasten ist noch im Ofen – bald zeigt er dir, was du mit deinem Vorrat backen kannst.",
+        "art": "Gravierte Illustration einer Schichttorte, die auf einem Drehteller zusammengesetzt wird, daneben eine Palette"
+      },
+      "pantry": {
+        "title": "Vorrat",
+        "body": "Dein Vorrat entsteht noch – bald hält ihn ein 30-Sekunden-Update pro Woche aktuell.",
+        "art": "Gravierte Illustration gut gefüllter Vorratsregale mit beschrifteten Gläsern, einem Mehlsack und einem Topf voller Eier"
+      },
+      "shopping": {
+        "title": "Einkauf",
+        "body": "Einkaufslisten gehen noch auf – bald sammeln sie alles, was einem Rezept fehlt.",
+        "art": "Gravierte Illustration eines Marktkorbs aus Weide mit einer Papiertüte Mehl, einer Flasche Milch und ein paar Eiern"
+      }
+    },
+    "more": {
+      "title": "Mehr",
+      "clearTitle": "Meine Daten auf diesem Gerät löschen",
+      "clearHint": "Dein Ernährungsprofil, Einheiten und Vorrat",
+      "version": "{app} · Version {version}"
+    },
+    "clearData": {
+      "title": "Deine Daten auf diesem Gerät löschen?",
+      "lead": "Das wird von diesem Gerät gelöscht:",
+      "items": {
+        "profile": "dein Ernährungsprofil",
+        "units": "deine Wahl der Maßeinheiten",
+        "pantry": "die Grundzutaten in deinem Vorrat"
+      },
+      "restart": "Du beginnst wieder mit der ersten Frage. Das kann nicht rückgängig gemacht werden.",
+      "keeps": "Die Sprache der App bleibt, wie sie ist.",
+      "cancel": "Abbrechen",
+      "confirm": "Meine Daten löschen"
     }
   }
 }

@@ -5,6 +5,7 @@ import {
   utf8ByteLength,
   VALUE_BUDGET_BYTES,
 } from "@nutrimero/core/src/device-store/adapter";
+import { createDevicePreferences } from "@nutrimero/core/src/device-store/preferences";
 import { describe, expect, it } from "vitest";
 import { createHomeStore } from "./home-store";
 import { HOME_KEYS } from "./keys";
@@ -75,6 +76,19 @@ describe("the Home store (001 data-model)", () => {
     await home.wipeAll();
     await home.wipeAll(); // idempotent
     expect(adapter.snapshot()).toEqual({ "nutrimero.session.userId": "someone" });
+  });
+
+  it("clears my data back to the first question and keeps the app language (FR-013, FR-027)", async () => {
+    const adapter = createMemoryAdapter();
+    const home = createHomeStore(adapter);
+    const preferences = createDevicePreferences(adapter);
+    await preferences.setUiLocale("lt");
+    await home.setUnits("imperial");
+    await home.setOnboarding({ ...INITIAL_ONBOARDING, completed: true });
+    await home.wipeAll();
+    expect(await home.onboarding()).toEqual(INITIAL_ONBOARDING);
+    expect(await home.units()).toBe("metric");
+    expect(await preferences.uiLocale()).toBe("lt");
   });
 
   it("keeps every Home key's maximal value inside the 2,048-byte budget (ADR 0001 condition 5)", () => {

@@ -22,6 +22,7 @@ const TEXT: Pair[] = [
   ["selected chip label", "chipSelectedInk", "chipSelectedBg"],
   ["offline banner text", "ink2", "statusBg"],
   ["reassurance note text", "noteInk", "noteBg"],
+  ["destructive row label on surface-1", "destructiveInk", "surface1"],
 ];
 
 const BOUNDARIES: Pair[] = [
@@ -81,5 +82,10 @@ describe("shared components meet WCAG AA", () => {
     expect(contrastRatio("#000000", "#ffffff")).toBeCloseTo(21, 5);
     expect(contrastRatio("#ffffff", "#ffffff")).toBeCloseTo(1, 5);
     expect(withAlpha("#7a3520", 0.3)).toBe("rgba(122,53,32,0.3)");
+  });
+
+  it("names every value still awaiting a DESIGN.md declaration (it must only shrink)", async () => {
+    const { PENDING_DECLARATION } = await import("./roles");
+    expect(Object.keys(PENDING_DECLARATION).sort()).toEqual(["destructiveInkDark", "sheetScrim"]);
   });
 });
