@@ -55,6 +55,13 @@ design-mobile is drawing in parallel (`nutrimero-design:mobile/home-baker/`, →
 - **Sequencing.** 004's build takes its snapshot **after that api change lands**. Until then:
   the spec update and the evidence research.
 
+- **Scope widened (coordinator, 2026-09-24, on the api lane's finding).** "USDA FDC via iForge" is a
+  source string inside Markus's M30 file — the delivery M34 disclosed as AI-generated — and the api never
+  read USDA. **Every** volume row therefore counts as an AI-delivered claim until it is verified against its
+  named published record, or confirmed by two independent published sources within 5 %; the evidence covers
+  the row the app would show for every ingredient in the set. **Piece weights** (Markus's M28 table, method
+  undisclosed) fall under the same rule, and no screen shows a piece weight before it is verified (FR-007a).
+
 The Q1–Q3 lines above are kept as the record of what was first ruled; where they differ, this
 correction governs.
 
@@ -284,8 +291,9 @@ with their name and millilitres, and that spoons read 5 ml and 15 ml.
   ingredient, or a heuristic. The **density shown is the api's chosen density** for that
   ingredient, form and state (FR-005); the app applies no choice rule of its own.
 - **FR-004a**: The lane MUST produce `specs/004-measures-conversion/density-evidence.md` for the
-  curated set (gate-1 Q1): per ingredient, its FID rows (id, value, source, method, confidence),
-  at least two independent published sources for each AI-derived row (URL, locus, value), and a
+  curated set (gate-1 Q1, widened): per ingredient, its FID rows (id, value, source, method, confidence),
+  each checked against its named published record or, failing that, against at least two independent
+  published sources (URL, locus, value) — every row, since every row is an AI-delivered claim — and a
   verdict (confirmed within 5 %, unconfirmed, disputed). The file **feeds the api's overlays**;
   the api decides what is admissible. The provenance view (FR-016) shows the sources the api
   records for the chosen value.
@@ -303,6 +311,10 @@ with their name and millilitres, and that spoons read 5 ml and 15 ml.
   for.
 - **FR-007**: A volume ↔ mass or piece ↔ mass conversion MUST NOT be offered for an ingredient the
   snapshot gives no chosen density or piece weight for; the app says the measure is not known.
+- **FR-007a**: A piece weight MUST NOT be shown unless it is verified against its named published record or
+  confirmed by two independent published sources within 5 % (`density-evidence.md` §D). Egg sizes follow the
+  classes the user buys by: FID's current classes are US/Canadian minimums, which name EU eggs one grade too
+  large, so eggs show no size-classed weight until the platform defines EU-graded values.
 
 **Units**
 
