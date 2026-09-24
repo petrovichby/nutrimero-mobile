@@ -10,7 +10,16 @@
     }
   },
   "common": {
-    "offlineBanner": "Nėra ryšio — rodomi išsaugoti duomenys"
+    "offlineBanner": "Nėra ryšio — rodomi išsaugoti duomenys",
+    "languageEndonym": {
+      "en": "English",
+      "de": "Deutsch",
+      "hu": "Magyar",
+      "lt": "Lietuvių",
+      "be": "Беларуская",
+      "pl": "Polski",
+      "uk": "Українська"
+    }
   },
   "labels": {
     "readiness": {
@@ -132,6 +141,88 @@
   "provenance": {
     "stamp": {
       "aiIllustration": "DI iliustracija"
+    }
+  },
+  "home": {
+    "cover": {
+      "wordmark": "nutrimero",
+      "title": "Home Baker",
+      "plateCaption": "I lentelė · Kaimiška raugo duona",
+      "plateDescription": "Graviūros stiliaus kaimiškos raugo duonos ant dryžuotos staltiesės iliustracija",
+      "tagline": "Namų kepėjo palydovas",
+      "logoDescription": "nutrimero — viskas apie mitybą",
+      "loading": "Įkeliama"
+    },
+    "onboarding": {
+      "progress": "{step} žingsnis iš {total}",
+      "skip": "Praleisti",
+      "continue": "Toliau",
+      "units": {
+        "title": "Kaip matuoji?",
+        "body": "Kiekvienas receptas perskaičiuojamas akimirksniu – tai gali pakeisti bet kada.",
+        "group": "Matavimo vienetai",
+        "metric": "Metrinė",
+        "metricUnits": "gramai · mililitrai · °C",
+        "imperial": "Imperinė",
+        "imperialUnits": "puodeliai · uncijos · °F",
+        "sampleImperial": "3¼ puodelio",
+        "convertLabel": "Taip atrodys tavo receptai",
+        "rows": {
+          "flourCup": "1 puodelis miltų",
+          "flourGrams": "{grams, number} g miltų",
+          "butterStick": "1 lazdelė sviesto",
+          "butterGrams": "{grams, number} g sviesto"
+        },
+        "values": {
+          "cup": "1 puodelis",
+          "stick": "1 lazdelė",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
+        },
+        "tip": "Kepėjo patarimas: sverti gramais – didžiausias tikslumo patobulinimas; mūsų receptai pirmiausia rašomi metrine sistema."
+      },
+      "diet": {
+        "title": "Į ką turėtume atkreipti dėmesį?",
+        "body": "Pažymėsime netinkančius receptus ir pasiūlysime tinkamų pakaitalų.",
+        "group": "Mitybos ir alergenų profilis",
+        "options": {
+          "glutenFree": "Be glitimo",
+          "lactoseFree": "Be laktozės",
+          "nutAllergy": "Alergija riešutams",
+          "eggFree": "Be kiaušinių",
+          "vegan": "Veganiška",
+          "vegetarian": "Vegetariška"
+        },
+        "privacyTitle": "Lieka tavo įrenginyje.",
+        "privacyBody": "Tavo mitybos profilis niekada neįkeliamas ir naudojamas tik tam, kad filtruotų, ką matai.",
+        "note": "Alergenų žymos paimtos iš patikrintų sudedamųjų dalių deklaracijų – vis tiek visada patikrink produktų etiketes."
+      },
+      "pantry": {
+        "title": "Kas yra tavo kepimo lentynoje?",
+        "body": "Paliesk tai, ką turi – 30 sekundžių dabar, tinkami receptai visam laikui.",
+        "group": "Pagrindiniai produktai",
+        "count": "{count, plural, one {Kol kas # produktas tavo sandėliuke} few {Kol kas # produktai tavo sandėliuke} many {Kol kas # produkto tavo sandėliuke} other {Kol kas # produktų tavo sandėliuke}}",
+        "note": "Visa kita galėsi pridėti vėliau – sandėliukas skirtas 30 sekundžių savaitiniam atnaujinimui, ne apskaitai.",
+        "done": "Baigta – parodyk, ką galiu iškepti"
+      }
+    },
+    "language": {
+      "back": "Daugiau",
+      "title": "Kalba",
+      "intro": "Pasirink kalbą, kuria nori kepti.",
+      "group": "Programėlės kalba",
+      "phoneTag": "Tavo telefono kalba",
+      "note": "Kol nepasirinksi, nutrimero naudos tavo telefono kalbą.",
+      "names": {
+        "en": "anglų",
+        "de": "vokiečių",
+        "hu": "vengrų",
+        "lt": "lietuvių",
+        "be": "baltarusių",
+        "pl": "lenkų",
+        "uk": "ukrainiečių"
+      }
     }
   }
 }

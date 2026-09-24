@@ -187,6 +187,9 @@ importers:
       '@nutrimero/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@nutrimero/feature-first-run':
+        specifier: workspace:*
+        version: link:../../packages/features/first-run
       '@nutrimero/feature-home-data':
         specifier: workspace:*
         version: link:../../packages/features/home-data
@@ -302,6 +305,40 @@ importers:
         specifier: workspace:*
         version: link:../home-data
     devDependencies:
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
+  packages/features/first-run:
+    dependencies:
+      '@nutrimero/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@nutrimero/feature-diet-profile':
+        specifier: workspace:*
+        version: link:../diet-profile
+      '@nutrimero/feature-home-data':
+        specifier: workspace:*
+        version: link:../home-data
+      '@nutrimero/ui':
+        specifier: workspace:*
+        version: link:../../ui
+      react:
+        specifier: '*'
+        version: 19.2.3
+      react-native:
+        specifier: '*'
+        version: 0.86.3(@babel/core@7.29.7(supports-color@10.2.2))(@types/react@19.2.18)(react@19.2.3)(supports-color@10.2.2)
+      react-native-safe-area-context:
+        specifier: '*'
+        version: 5.7.0(react-native@0.86.3(@babel/core@7.29.7(supports-color@10.2.2))(@types/react@19.2.18)(react@19.2.3)(supports-color@10.2.2))(react@19.2.3)
+      react-native-svg:
+        specifier: '*'
+        version: 15.15.4(react-native@0.86.3(@babel/core@7.29.7(supports-color@10.2.2))(@types/react@19.2.18)(react@19.2.3)(supports-color@10.2.2))(react@19.2.3)
+    devDependencies:
+      '@types/react':
+        specifier: ~19.2.2
+        version: 19.2.18
       typescript:
         specifier: ~6.0.3
         version: 6.0.3

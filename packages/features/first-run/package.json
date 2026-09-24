@@ -1,0 +1,26 @@
+{
+  "name": "@nutrimero/feature-first-run",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nutrimero/core": "workspace:*",
+    "@nutrimero/feature-diet-profile": "workspace:*",
+    "@nutrimero/feature-home-data": "workspace:*",
+    "@nutrimero/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-svg": "*"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3"
+  }
+}

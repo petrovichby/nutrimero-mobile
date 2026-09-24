@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nutrimero/core": "workspace:*",
+    "@nutrimero/feature-first-run": "workspace:*",
     "@nutrimero/feature-home-data": "workspace:*",
     "@nutrimero/ui": "workspace:*",
     "expo": "~57.0.24",

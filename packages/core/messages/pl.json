@@ -10,7 +10,16 @@
     }
   },
   "common": {
-    "offlineBanner": "Offline — wyświetlane są zapisane dane"
+    "offlineBanner": "Offline — wyświetlane są zapisane dane",
+    "languageEndonym": {
+      "en": "English",
+      "de": "Deutsch",
+      "hu": "Magyar",
+      "lt": "Lietuvių",
+      "be": "Беларуская",
+      "pl": "Polski",
+      "uk": "Українська"
+    }
   },
   "labels": {
     "readiness": {
@@ -132,6 +141,88 @@
   "provenance": {
     "stamp": {
       "aiIllustration": "Ilustracja AI"
+    }
+  },
+  "home": {
+    "cover": {
+      "wordmark": "nutrimero",
+      "title": "Home Baker",
+      "plateCaption": "Tablica I · Rustykalny chleb na zakwasie",
+      "plateDescription": "Grawerowana ilustracja rustykalnego chleba na zakwasie na pasiastej ściereczce",
+      "tagline": "Towarzysz domowego piekarza",
+      "logoDescription": "nutrimero — wszystko o odżywianiu",
+      "loading": "Wczytywanie"
+    },
+    "onboarding": {
+      "progress": "Krok {step} z {total}",
+      "skip": "Pomiń",
+      "continue": "Dalej",
+      "units": {
+        "title": "Jak mierzysz?",
+        "body": "Każdy przepis przelicza się od razu — możesz to zmienić w każdej chwili.",
+        "group": "Jednostki",
+        "metric": "Metryczny",
+        "metricUnits": "gramy · mililitry · °C",
+        "imperial": "Imperialny",
+        "imperialUnits": "szklanki · uncje · °F",
+        "sampleImperial": "3¼ szklanki",
+        "convertLabel": "Tak będą wyglądać twoje przepisy",
+        "rows": {
+          "flourCup": "1 szklanka mąki",
+          "flourGrams": "{grams, number} g mąki",
+          "butterStick": "1 kostka masła (stick)",
+          "butterGrams": "{grams, number} g masła"
+        },
+        "values": {
+          "cup": "1 szklanka",
+          "stick": "1 kostka (stick)",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
+        },
+        "tip": "Rada piekarza: ważenie w gramach to największy krok ku dokładności — nasze przepisy są pisane najpierw w systemie metrycznym."
+      },
+      "diet": {
+        "title": "Na co mamy uważać?",
+        "body": "Oznaczymy przepisy, które nie pasują, i zaproponujemy pasujące zamienniki.",
+        "group": "Profil żywieniowy i alergenowy",
+        "options": {
+          "glutenFree": "Bez glutenu",
+          "lactoseFree": "Bez laktozy",
+          "nutAllergy": "Alergia na orzechy",
+          "eggFree": "Bez jajek",
+          "vegan": "Wegańskie",
+          "vegetarian": "Wegetariańskie"
+        },
+        "privacyTitle": "Zostaje na twoim urządzeniu.",
+        "privacyBody": "Twój profil żywieniowy nigdy nie jest wysyłany i służy tylko do filtrowania tego, co widzisz.",
+        "note": "Oznaczenia alergenów pochodzą ze sprawdzonych deklaracji składników — mimo to zawsze sprawdzaj etykiety produktów."
+      },
+      "pantry": {
+        "title": "Co masz na półce do pieczenia?",
+        "body": "Stuknij to, co masz — 30 sekund teraz, pasujące przepisy na zawsze.",
+        "group": "Podstawowe produkty",
+        "count": "{count, plural, one {Na razie # produkt w twojej spiżarni} few {Na razie # produkty w twojej spiżarni} many {Na razie # produktów w twojej spiżarni} other {Na razie # produktu w twojej spiżarni}}",
+        "note": "Resztę możesz dodać później — spiżarnia służy do 30-sekundowej aktualizacji raz w tygodniu, a nie do księgowości.",
+        "done": "Gotowe — pokaż, co mogę upiec"
+      }
+    },
+    "language": {
+      "back": "Więcej",
+      "title": "Język",
+      "intro": "Wybierz język, w którym chcesz piec.",
+      "group": "Język aplikacji",
+      "phoneTag": "Język twojego telefonu",
+      "note": "Dopóki nie wybierzesz, nutrimero używa języka twojego telefonu.",
+      "names": {
+        "en": "angielski",
+        "de": "niemiecki",
+        "hu": "węgierski",
+        "lt": "litewski",
+        "be": "białoruski",
+        "pl": "polski",
+        "uk": "ukraiński"
+      }
     }
   }
 }

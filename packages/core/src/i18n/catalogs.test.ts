@@ -30,8 +30,29 @@ function flatten(obj: unknown, prefix = "", out: Flat = {}): Flat {
  */
 const APP_NAMESPACES = ["app.homeBaker.", "app.proBaker.", "home.", "pro."];
 
-// Brand/product names are legitimately identical across locales.
-const IDENTICAL_ALLOWED = new Set(["app.homeBaker.name", "app.proBaker.name"]);
+/**
+ * Strings legitimately identical to English, per key AND per locale — so allowing German "Vegan"
+ * never lets an untranslated "Vegan" through in Polish. "all" is for brand words, endonyms and
+ * unit symbols, which are the same in every language by definition.
+ */
+const IDENTICAL_ALLOWED: Record<string, "all" | readonly string[]> = {
+  "app.homeBaker.name": "all",
+  "app.proBaker.name": "all",
+  "home.cover.wordmark": "all", // the brand, lowercase (MA-14)
+  "home.cover.title": "all", // the app name
+  "home.onboarding.units.values.celsius": "all",
+  "home.onboarding.units.values.fahrenheit": "all",
+  "home.onboarding.units.values.grams": ["de", "hu", "lt", "pl"], // Latin "g"; be/uk use "г"
+  "home.onboarding.units.imperial": ["de"],
+  "home.onboarding.diet.options.vegan": ["de"],
+  "home.onboarding.units.values.stick": ["hu"], // the US "stick" has no Hungarian word
+};
+const ENDONYM_PREFIX = "common.languageEndonym."; // a language's own name is the same everywhere
+
+function identicalAllowed(key: string, locale: string): boolean {
+  const rule = IDENTICAL_ALLOWED[key];
+  return key.startsWith(ENDONYM_PREFIX) || rule === "all" || (rule?.includes(locale) ?? false);
+}
 
 const en = flatten(messages.en);
 const locales = LOCALES.filter((locale) => locale !== "en");
@@ -46,7 +67,7 @@ describe("message catalogs", () => {
 
     it(`${locale} has no untranslated strings identical to en`, () => {
       const identical = Object.keys(en).filter(
-        (key) => !IDENTICAL_ALLOWED.has(key) && catalog[key] === en[key],
+        (key) => !identicalAllowed(key, locale) && catalog[key] === en[key],
       );
       expect(identical).toEqual([]);
     });

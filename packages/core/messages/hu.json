@@ -10,7 +10,16 @@
     }
   },
   "common": {
-    "offlineBanner": "Offline — mentett adatok láthatók"
+    "offlineBanner": "Offline — mentett adatok láthatók",
+    "languageEndonym": {
+      "en": "English",
+      "de": "Deutsch",
+      "hu": "Magyar",
+      "lt": "Lietuvių",
+      "be": "Беларуская",
+      "pl": "Polski",
+      "uk": "Українська"
+    }
   },
   "labels": {
     "readiness": {
@@ -132,6 +141,88 @@
   "provenance": {
     "stamp": {
       "aiIllustration": "MI-illusztráció"
+    }
+  },
+  "home": {
+    "cover": {
+      "wordmark": "nutrimero",
+      "title": "Home Baker",
+      "plateCaption": "I. tábla · Rusztikus kovászos kenyér",
+      "plateDescription": "Gravírozott illusztráció egy rusztikus kovászos kenyérről csíkos kendőn",
+      "tagline": "Az otthoni pék társa",
+      "logoDescription": "nutrimero — minden a táplálkozásról",
+      "loading": "Betöltés"
+    },
+    "onboarding": {
+      "progress": "{step}. lépés / {total}",
+      "skip": "Kihagyás",
+      "continue": "Tovább",
+      "units": {
+        "title": "Hogyan mérsz?",
+        "body": "Minden recept azonnal átvált – ezt bármikor módosíthatod.",
+        "group": "Mértékegységek",
+        "metric": "Metrikus",
+        "metricUnits": "gramm · milliliter · °C",
+        "imperial": "Angolszász",
+        "imperialUnits": "csésze · uncia · °F",
+        "sampleImperial": "3¼ csésze",
+        "convertLabel": "Így fognak kinézni a receptjeid",
+        "rows": {
+          "flourCup": "1 csésze liszt",
+          "flourGrams": "{grams, number} g liszt",
+          "butterStick": "1 stick vaj",
+          "butterGrams": "{grams, number} g vaj"
+        },
+        "values": {
+          "cup": "1 csésze",
+          "stick": "1 stick",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
+        },
+        "tip": "Péktipp: a grammra mérés a legnagyobb lépés a pontosság felé – receptjeink elsősorban metrikusak."
+      },
+      "diet": {
+        "title": "Mire figyeljünk?",
+        "body": "Megjelöljük a nem megfelelő recepteket, és megfelelő helyettesítéseket javaslunk.",
+        "group": "Étrendi és allergénprofil",
+        "options": {
+          "glutenFree": "Gluténmentes",
+          "lactoseFree": "Laktózmentes",
+          "nutAllergy": "Dióallergia",
+          "eggFree": "Tojásmentes",
+          "vegan": "Vegán",
+          "vegetarian": "Vegetáriánus"
+        },
+        "privacyTitle": "Az eszközödön marad.",
+        "privacyBody": "Az étrendi profilodat soha nem töltjük fel, és csak arra használjuk, hogy szűrjük, mit látsz.",
+        "note": "Az allergénjelzések ellenőrzött összetevő-nyilatkozatokból származnak – azért mindig nézd meg a termékcímkéket is."
+      },
+      "pantry": {
+        "title": "Mi van a sütőpolcodon?",
+        "body": "Koppints arra, amid van – most 30 másodperc, aztán mindig valódi receptajánlatok.",
+        "group": "Alapanyagok",
+        "count": "{count, plural, one {Eddig # tétel van a kamrádban} other {Eddig # tétel van a kamrádban}}",
+        "note": "Bármi mást később is hozzáadhatsz – a kamra heti 30 másodperces frissítésre készült, nem könyvelésre.",
+        "done": "Kész – mutasd, mit süthetek"
+      }
+    },
+    "language": {
+      "back": "Továbbiak",
+      "title": "Nyelv",
+      "intro": "Válaszd ki, milyen nyelven szeretnél sütni.",
+      "group": "Alkalmazás nyelve",
+      "phoneTag": "A telefonod nyelve",
+      "note": "Amíg nem választasz, a nutrimero a telefonod nyelvét követi.",
+      "names": {
+        "en": "angol",
+        "de": "német",
+        "hu": "magyar",
+        "lt": "litván",
+        "be": "belarusz",
+        "pl": "lengyel",
+        "uk": "ukrán"
+      }
     }
   }
 }

@@ -37,6 +37,11 @@ export interface Roles {
   chipBg: string;
   chipSelectedBg: string;
   chipSelectedInk: string;
+  /** A quiet reassurance panel (DESIGN.md MA-21, C4 `note-assurance`): the privacy card. */
+  noteBg: string;
+  noteInk: string;
+  noteLine: string;
+  noteGlyph: string;
   /** Banner field for quiet status (offline) — DESIGN.md: surface-container-high. */
   statusBg: string;
   destructive: string;
@@ -46,6 +51,9 @@ export interface Roles {
   shadowColor: string;
   /** Scheme-fixed: the cream plate and the stamp that sits on it. */
   illustrationCanvas: string;
+  /** Text on the cream canvas — pinned to the light ramp in both schemes (the canvas is fixed). */
+  canvasInk: string;
+  canvasHeading: string;
   plateFrame: string;
   stampBg: string;
   stampInk: string;
@@ -76,6 +84,10 @@ function homeRoles(scheme: Scheme): Roles {
     chipBg: ramp.chipBg,
     chipSelectedBg: ramp.chipSelectedBg,
     chipSelectedInk: ramp.chipSelectedInk,
+    noteBg: ramp.noteAssurance.bg,
+    noteInk: ramp.noteAssurance.ink,
+    noteLine: ramp.noteAssurance.line,
+    noteGlyph: ramp.noteAssurance.glyph,
     statusBg: ramp.surface2,
     destructive: ramp.destructive,
     onDestructive: ramp.onDestructive,
@@ -83,6 +95,8 @@ function homeRoles(scheme: Scheme): Roles {
     scrim: ramp.scrim,
     shadowColor: ramp.shadow.color,
     illustrationCanvas: fixed.illustrationCanvas,
+    canvasInk: g.home.light.ink2,
+    canvasHeading: g.home.light.heading,
     plateFrame: fixed.plateFrame,
     stampBg: fixed.provenanceStamp.bg,
     stampInk: fixed.provenanceStamp.ink,
@@ -118,6 +132,11 @@ function proRoles(scheme: Scheme): Roles {
     chipBg: ramp.surfaceContainerLow,
     chipSelectedBg: scheme === "light" ? ramp.primary : ramp.onSurface,
     chipSelectedInk: scheme === "light" ? ramp.onPrimary : ramp.surface,
+    // MA-21's definition, in Pro's ramp: surface-1, outline edge, ink text, heading glyph.
+    noteBg: ramp.surfaceContainerLow,
+    noteInk: ramp.onSurface,
+    noteLine: ramp.outlineVariant,
+    noteGlyph: scheme === "light" ? ramp.primary : ramp.onSurface,
     statusBg: ramp.surfaceContainerHigh,
     destructive: g.mobile.destructive[scheme],
     onDestructive: g.mobile.destructive.on,
@@ -127,6 +146,8 @@ function proRoles(scheme: Scheme): Roles {
     shadowColor:
       scheme === "light" ? withAlpha(g.pro.light.primary, 0.14) : withAlpha("#000000", 0.45),
     illustrationCanvas: g.mobile.illustrationCanvas,
+    canvasInk: g.pro.light.onSurfaceVariant,
+    canvasHeading: g.pro.light.primary,
     plateFrame: withAlpha(g.pro.light.primary, 0.28), // DESIGN.md MA-4: navy at 28% in Pro
     stampBg: stamp.bg,
     stampInk: stamp.ink,
