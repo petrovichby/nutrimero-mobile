@@ -114,3 +114,23 @@ describe("register", () => {
     expect(addressing).toEqual([]);
   });
 });
+
+/**
+ * Plural arguments are whole numbers (coordinator's Option A, 2026-09-24): the forced plural
+ * polyfill disagrees with CLDR on fractions in hu, lt and be (intl-polyfill.test.ts). So every
+ * ICU plural argument is named `count` — a count of things, never a measurement. A fractional
+ * quantity is formatted as a number (formatNumber / `{x, number}`), never pluralised.
+ */
+describe("plural arguments", () => {
+  it("every plural argument in every catalog is a `count`", () => {
+    const offenders: string[] = [];
+    for (const locale of LOCALES) {
+      for (const [key, message] of Object.entries(flatten(messages[locale]))) {
+        for (const match of message.matchAll(/\{\s*(\w+)\s*,\s*plural\s*,/g)) {
+          if (match[1] !== "count") offenders.push(`${locale} ${key}: ${match[1]}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});

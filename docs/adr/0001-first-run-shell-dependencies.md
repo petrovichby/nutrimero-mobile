@@ -30,6 +30,7 @@ given in `specs/001-home-first-run/research.md`:
 | `expo-font` (declared; already transitive via `expo`) | asset loading | packages/ui | R4 — vendored OFL faces; see *Fonts* below |
 | `yaml` (dev) | build tooling | scripts | R5 — parse DESIGN.md frontmatter for token generation |
 | `react-native-svg` (amended 2026-09-23, coordinator ruling) | vector graphics | packages/ui | The corpus's tab and diet/allergen glyphs are SVG; redrawing them from views would be a worse deviation than one well-known renderer. Expo-supported (`npx expo install`) |
+| `@formatjs/intl-locale` 5.3.11 + `@formatjs/intl-pluralrules` 6.3.15 — exact pins (amended 2026-09-24, coordinator ruling) | i18n runtime (Intl polyfill) | packages/core `./native` | Hermes ships no `Intl.PluralRules` or `Intl.Locale` on this runtime. **Forced on device on both platforms**, so plural selection comes from one pinned CLDR dataset; locale data for the seven UI languages only; MIT. Known upstream defect: fractions diverge from CLDR in hu/lt/be, so **plural arguments are whole numbers** (a tested rule; Option A) |
 
 Versions are those Expo SDK 57 pins (`npx expo install`). No state library, database, analytics,
 crash-reporting or payment SDK is admitted.
@@ -97,6 +98,11 @@ One secure-store adapter in `packages/core` serves both the pro lane's session (
    (e.g. a larger pantry), it is split across keys rather than raising the limit.
 
 ## Consequences
+
+- **Amended 2026-09-24:** the forced Intl polyfills are admitted. `@nutrimero/core/native` installs them as a
+  side effect, and **each app imports that entry first**, before i18n starts. The dev-launch plural
+  check stays. Plural arguments are whole-number `count`s only — the polyfill's fraction defect is
+  asserted exactly in `intl-polyfill.test.ts` and guarded in `catalogs.test.ts`.
 
 - **Amended 2026-09-23:** `react-native-svg` admitted (vector graphics). The owned glyph sets (UI chrome
   glyphs and the diet/allergen stroke set) ship from `packages/ui`; the tab bar, chips and empty states

@@ -51,6 +51,11 @@ without the owner.
    platform-free index is Home's choice.
 6. Repo-wide, reported to the coordinator: pnpm 12 does not read `node-linker=hoisted` from
    `.npmrc`, so installs are isolated. Settle this before the first native (EAS) build.
+7. **Import `@nutrimero/core/native` first in `apps/pro-baker/index.ts`** (Home lane, 2026-09-24;
+   ADR 0001 amendment). It force-installs the Intl polyfills (Hermes has no `Intl.PluralRules`
+   on this runtime), so it must load before i18n starts — `labels.incomplete` and
+   `labels.occurrences` are plural messages. Plural arguments are whole-number `count`s only
+   (the polyfill diverges from CLDR on fractions in hu/lt/be; guarded by `catalogs.test.ts`).
 
 ### Resume, exactly
 
