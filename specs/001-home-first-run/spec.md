@@ -141,8 +141,9 @@ device" in More, confirm the app returns to onboarding step 1 and nothing remain
 1. **Given** saved onboarding data, **When** the user confirms "Clear my data on this device",
    **Then** the dietary profile, units choice, pantry seed and onboarding marker are deleted and
    the app restarts first run.
-2. **Given** the confirmation step, **Then** it names what will be deleted and offers Cancel with
-   equal visual weight.
+2. **Given** the confirmation step, **Then** it names what will be deleted and offers Cancel at
+   **the same size** as the confirm action (amended 2026-09-24: the owner approved design-mobile's
+   sheet layout; its copy comes from design-mobile).
 
 ---
 

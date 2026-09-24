@@ -3,11 +3,13 @@ export { ConfirmSheet } from "./components/confirm-sheet";
 export { EmptyState } from "./components/empty-state";
 export { Masthead } from "./components/masthead";
 export { OfflineBanner } from "./components/offline-banner";
+export { PageTitle } from "./components/page-title";
 export { Plate } from "./components/plate";
 export { ProvenanceStamp } from "./components/provenance-stamp";
 export { Screen } from "./components/screen";
 export { SelectionCard } from "./components/selection-card";
 export { TabBar, type TabItem } from "./components/tab-bar";
+export { textRole } from "./components/text-style";
 export { ToggleChip } from "./components/toggle-chip";
 export {
   displayFace,

@@ -1,16 +1,25 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Professionelles Backwissen für zu Hause"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Ihre Rezepte in der Backstube"
     }
   },
   "common": {
-    "offlineBanner": "Offline — gespeicherte Daten werden angezeigt"
+    "offlineBanner": "Offline — gespeicherte Daten werden angezeigt",
+    "languageEndonym": {
+      "en": "English",
+      "de": "Deutsch",
+      "hu": "Magyar",
+      "lt": "Lietuvių",
+      "be": "Беларуская",
+      "pl": "Polski",
+      "uk": "Українська"
+    }
   },
   "labels": {
     "readiness": {
@@ -132,6 +141,92 @@
   "provenance": {
     "stamp": {
       "aiIllustration": "KI-Illustration"
+    }
+  },
+  "home": {
+    "cover": {
+      "wordmark": "nutrimero",
+      "title": "Home Baker",
+      "plateCaption": "Tafel I · Rustikales Sauerteigbrot",
+      "plateDescription": "Gravierte Illustration eines rustikalen Sauerteigbrots auf einem gestreiften Tuch",
+      "tagline": "Der Begleiter für Hobbybäcker",
+      "logoDescription": "nutrimero — alles über Ernährung",
+      "loading": "Wird geladen"
+    },
+    "onboarding": {
+      "progress": "Schritt {step} von {total}",
+      "skip": "Überspringen",
+      "continue": "Weiter",
+      "units": {
+        "title": "Wie misst du?",
+        "body": "Jedes Rezept rechnet sofort um.",
+        "group": "Maßeinheiten",
+        "metric": "Metrisch",
+        "metricUnits": "Gramm · Milliliter · °C",
+        "imperial": "Imperial",
+        "imperialUnits": "Tassen · Unzen · °F",
+        "convertLabel": "So lesen sich deine Rezepte",
+        "rows": {
+          "flourCup": "1 Tasse Mehl",
+          "flourGrams": "{grams, number} g Mehl",
+          "butterStick": "1 Stick Butter",
+          "butterGrams": "{grams, number} g Butter"
+        },
+        "values": {
+          "cup": "1 Tasse",
+          "stick": "1 Stick",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
+        },
+        "tip": "Bäckertipp: In Gramm zu wiegen bringt die größte Genauigkeit – unsere Rezepte sind zuerst metrisch geschrieben.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "Tassen"
+        }
+      },
+      "diet": {
+        "title": "Worauf sollen wir achten?",
+        "body": "Wir markieren Rezepte, die nicht passen.",
+        "group": "Ernährungs- und Allergenprofil",
+        "options": {
+          "glutenFree": "Glutenfrei",
+          "lactoseFree": "Laktosefrei",
+          "nutAllergy": "Nussallergie",
+          "eggFree": "Eifrei",
+          "vegan": "Vegan",
+          "vegetarian": "Vegetarisch"
+        },
+        "privacyTitle": "Bleibt auf deinem Gerät.",
+        "privacyBody": "Dein Ernährungsprofil wird nie hochgeladen und nur genutzt, um zu filtern, was du siehst.",
+        "note": "Allergenhinweise stammen aus unseren Zutatendaten – prüfe trotzdem immer die Produktetiketten."
+      },
+      "pantry": {
+        "title": "Was steht in deinem Backregal?",
+        "body": "Tippe an, was du hast – 30 Sekunden jetzt, passende Rezepte für immer.",
+        "group": "Grundzutaten",
+        "count": "{count, plural, one {# Zutat bisher in deinem Vorrat} other {# Zutaten bisher in deinem Vorrat}}",
+        "note": "Alles andere kannst du später hinzufügen – der Vorrat ist für ein 30-Sekunden-Update pro Woche gemacht, nicht für Buchhaltung.",
+        "done": "Fertig – zeig mir, was ich backen kann"
+      }
+    },
+    "language": {
+      "back": "Mehr",
+      "title": "Sprache",
+      "intro": "Wähle die Sprache, in der du backen möchtest.",
+      "group": "App-Sprache",
+      "deviceTag": "Sprache deines Geräts",
+      "note": "Bis du eine auswählst, folgt nutrimero der Sprache deines Geräts.",
+      "names": {
+        "en": "Englisch",
+        "de": "Deutsch",
+        "hu": "Ungarisch",
+        "lt": "Litauisch",
+        "be": "Belarussisch",
+        "pl": "Polnisch",
+        "uk": "Ukrainisch"
+      }
     }
   }
 }

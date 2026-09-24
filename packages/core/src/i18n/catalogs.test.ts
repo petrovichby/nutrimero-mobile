@@ -30,8 +30,31 @@ function flatten(obj: unknown, prefix = "", out: Flat = {}): Flat {
  */
 const APP_NAMESPACES = ["app.homeBaker.", "app.proBaker.", "home.", "pro."];
 
-// Brand/product names are legitimately identical across locales.
-const IDENTICAL_ALLOWED = new Set(["app.homeBaker.name", "app.proBaker.name"]);
+/**
+ * Strings legitimately identical to English, per key AND per locale — so allowing German "Vegan"
+ * never lets an untranslated "Vegan" through in Polish. "all" is for brand words, endonyms and
+ * unit symbols, which are the same in every language by definition.
+ */
+const IDENTICAL_ALLOWED: Record<string, "all" | readonly string[]> = {
+  "app.homeBaker.name": "all",
+  "app.proBaker.name": "all",
+  "home.cover.wordmark": "all", // the brand, lowercase (MA-14)
+  "home.cover.title": "all", // the app name
+  "home.onboarding.units.sample.imperialValue": "all", // a numeral with a vulgar fraction
+  "home.onboarding.units.sample.metricUnit": ["de", "hu", "lt", "pl"], // Latin "g"; be/uk use "г"
+  "home.onboarding.units.values.celsius": "all",
+  "home.onboarding.units.values.fahrenheit": "all",
+  "home.onboarding.units.values.grams": ["de", "hu", "lt", "pl"], // Latin "g"; be/uk use "г"
+  "home.onboarding.units.imperial": ["de"],
+  "home.onboarding.diet.options.vegan": ["de"],
+  "home.onboarding.units.values.stick": ["hu"], // the US "stick" has no Hungarian word
+};
+const ENDONYM_PREFIX = "common.languageEndonym."; // a language's own name is the same everywhere
+
+function identicalAllowed(key: string, locale: string): boolean {
+  const rule = IDENTICAL_ALLOWED[key];
+  return key.startsWith(ENDONYM_PREFIX) || rule === "all" || (rule?.includes(locale) ?? false);
+}
 
 const en = flatten(messages.en);
 const locales = LOCALES.filter((locale) => locale !== "en");
@@ -46,7 +69,7 @@ describe("message catalogs", () => {
 
     it(`${locale} has no untranslated strings identical to en`, () => {
       const identical = Object.keys(en).filter(
-        (key) => !IDENTICAL_ALLOWED.has(key) && catalog[key] === en[key],
+        (key) => !identicalAllowed(key, locale) && catalog[key] === en[key],
       );
       expect(identical).toEqual([]);
     });
@@ -116,7 +139,7 @@ describe("register", () => {
 });
 
 /**
- * Plural arguments are whole numbers (coordinator's Option A, 2026-09-24): the forced plural
+ * Plural arguments are whole numbers (ruling 2026-09-24: every plural argument is a `count`; fractions are formatted as numbers, never pluralised): the forced plural
  * polyfill disagrees with CLDR on fractions in hu, lt and be (intl-polyfill.test.ts). So every
  * ICU plural argument is named `count` — a count of things, never a measurement. A fractional
  * quantity is formatted as a number (formatNumber / `{x, number}`), never pluralised.
@@ -129,6 +152,27 @@ describe("plural arguments", () => {
         for (const match of message.matchAll(/\{\s*(\w+)\s*,\s*plural\s*,/g)) {
           if (match[1] !== "count") offenders.push(`${locale} ${key}: ${match[1]}`);
         }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
+
+/**
+ * "Device", never "phone" (owner, 2026-09-24): the apps are planned for tablets and possibly iOS
+ * apps on macOS, so no user-facing text in any language names the phone. A case-insensitive
+ * substring match, so inflections are caught too (Telefons, telefonas, тэлефона, телефону …).
+ */
+const PHONE_WORDS = ["phone", "telefon", "handy", "тэлефон", "телефон", "smartphone"];
+
+describe("device, never phone", () => {
+  it("no catalog value in any language names the phone", () => {
+    const offenders: string[] = [];
+    for (const locale of LOCALES) {
+      for (const [key, message] of Object.entries(flatten(messages[locale]))) {
+        const lower = message.toLocaleLowerCase(locale);
+        const word = PHONE_WORDS.find((phoneWord) => lower.includes(phoneWord));
+        if (word) offenders.push(`${locale} ${key}: ${word}`);
       }
     }
     expect(offenders).toEqual([]);

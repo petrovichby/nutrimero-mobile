@@ -21,6 +21,7 @@ const TEXT: Pair[] = [
   ["secondary button label", "secondaryInk", "surface"],
   ["selected chip label", "chipSelectedInk", "chipSelectedBg"],
   ["offline banner text", "ink2", "statusBg"],
+  ["reassurance note text", "noteInk", "noteBg"],
 ];
 
 const BOUNDARIES: Pair[] = [
@@ -56,6 +57,16 @@ describe("shared components meet WCAG AA", () => {
       expect(failing).toEqual([]);
     });
   }
+
+  it("text on the cream canvas reads in both schemes (it is scheme-fixed)", () => {
+    for (const [app, scheme] of cases) {
+      const roles = rolesFor(app, scheme);
+      expect(contrastRatio(roles.canvasInk, roles.illustrationCanvas)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(roles.canvasHeading, roles.illustrationCanvas)).toBeGreaterThanOrEqual(
+        4.5,
+      );
+    }
+  });
 
   it("the stamp reads on its cream plate (scheme-fixed, 8pt text ≥ 4.5:1)", () => {
     for (const app of ["home", "pro"] as const) {

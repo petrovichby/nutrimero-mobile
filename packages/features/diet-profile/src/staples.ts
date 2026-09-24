@@ -27,10 +27,13 @@ export type StapleFidId = (typeof STAPLE_FID_IDS)[number];
 /**
  * Curated display names — the owner's pick (2026-09-24) where FID stores several names for a
  * staple in one language. Each is one of FID's own stored names (a test holds it to the snapshot
- * set), never a hand-typed string. Everywhere else the first name in FID's delivery order shows
- * — the rule the api adopts with A11 (one display name per ingredient and language). When A11
- * ships and the snapshot is retaken, each pick either matches the api's display name (drop it)
- * or moves into the api as an owner overlay.
+ * set), never a hand-typed string. Everywhere else the first name the SNAPSHOT holds shows — and
+ * the snapshot holds the api's order, which at 4a4356b is ALPHABETICAL, not FID's delivery order
+ * (production stores delivery order; the contract does not expose it yet). A test therefore
+ * requires a curated pick wherever a staple has more than one name in a locale, so an
+ * alphabetical accident can never show. When A11 ships (one display name per ingredient and
+ * language, first-delivered) and the snapshot is retaken, each pick either matches the api's
+ * display name (drop it) or moves into the api as an owner overlay.
  */
 export const CURATED_STAPLE_NAMES: Partial<
   Record<StapleFidId, Partial<Record<SnapshotLocale, string>>>
@@ -47,7 +50,9 @@ const CURATED_BY_ID = new Map<string, Partial<Record<SnapshotLocale, string>>>(
 
 /**
  * The name a staple shows in a UI locale (001 FR-007; MA-14: exactly as stored, never re-cased):
- * the curated pick, else FID's first name. A locale FID has no name for yet (lt, pl, be, uk until
+ * the curated pick, else the first name in the snapshot — the api's alphabetical order at 4a4356b,
+ * which only ever decides for a staple with a single name in that locale (a test holds this). A
+ * locale FID has no name for yet (lt, pl, be, uk until
  * api feat/021) falls back to English (FR-017's temporary fallback).
  */
 export function stapleName(

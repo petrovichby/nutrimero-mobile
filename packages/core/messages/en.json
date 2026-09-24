@@ -1,16 +1,25 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Professional baking knowledge at home"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Your recipes on the bakery floor"
     }
   },
   "common": {
-    "offlineBanner": "Offline — showing saved data"
+    "offlineBanner": "Offline — showing saved data",
+    "languageEndonym": {
+      "en": "English",
+      "de": "Deutsch",
+      "hu": "Magyar",
+      "lt": "Lietuvių",
+      "be": "Беларуская",
+      "pl": "Polski",
+      "uk": "Українська"
+    }
   },
   "labels": {
     "readiness": {
@@ -132,6 +141,92 @@
   "provenance": {
     "stamp": {
       "aiIllustration": "AI illustration"
+    }
+  },
+  "home": {
+    "cover": {
+      "wordmark": "nutrimero",
+      "title": "Home Baker",
+      "plateCaption": "Plate I · Rustic sourdough",
+      "plateDescription": "Engraved illustration of a rustic sourdough loaf on a striped cloth",
+      "tagline": "The home baker’s companion",
+      "logoDescription": "nutrimero — all about nutrition",
+      "loading": "Loading"
+    },
+    "onboarding": {
+      "progress": "Step {step} of {total}",
+      "skip": "Skip",
+      "continue": "Continue",
+      "units": {
+        "title": "How do you measure?",
+        "body": "Every recipe converts instantly.",
+        "group": "Units",
+        "metric": "Metric",
+        "metricUnits": "grams · millilitres · °C",
+        "imperial": "Imperial",
+        "imperialUnits": "cups · ounces · °F",
+        "convertLabel": "How your recipes will read",
+        "rows": {
+          "flourCup": "1 cup flour",
+          "flourGrams": "{grams, number} g flour",
+          "butterStick": "1 stick butter",
+          "butterGrams": "{grams, number} g butter"
+        },
+        "values": {
+          "cup": "1 cup",
+          "stick": "1 stick",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
+        },
+        "tip": "Bakers’ tip: weighing in grams is the single biggest accuracy upgrade — our recipes are written metric-first.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "cups"
+        }
+      },
+      "diet": {
+        "title": "Anything we should watch for?",
+        "body": "We’ll flag recipes that don’t fit.",
+        "group": "Dietary and allergen profile",
+        "options": {
+          "glutenFree": "Gluten-free",
+          "lactoseFree": "Lactose-free",
+          "nutAllergy": "Nut allergy",
+          "eggFree": "Egg-free",
+          "vegan": "Vegan",
+          "vegetarian": "Vegetarian"
+        },
+        "privacyTitle": "Stays on your device.",
+        "privacyBody": "Your dietary profile is never uploaded or used for anything but filtering what you see.",
+        "note": "Allergen flags come from our ingredient data — always check your product labels too."
+      },
+      "pantry": {
+        "title": "What’s on your baking shelf?",
+        "body": "Tap what you have — 30 seconds now, real recipe matches forever.",
+        "group": "Common staples",
+        "count": "{count, plural, one {# item in your pantry so far} other {# items in your pantry so far}}",
+        "note": "You can add anything else later — the pantry is built for a 30-second weekly update, not bookkeeping.",
+        "done": "Done — show what I can bake"
+      }
+    },
+    "language": {
+      "back": "More",
+      "title": "Language",
+      "intro": "Pick the language you’d like to bake in.",
+      "group": "App language",
+      "deviceTag": "Your device’s language",
+      "note": "Until you pick one, nutrimero follows your device’s language.",
+      "names": {
+        "en": "English",
+        "de": "German",
+        "hu": "Hungarian",
+        "lt": "Lithuanian",
+        "be": "Belarusian",
+        "pl": "Polish",
+        "uk": "Ukrainian"
+      }
     }
   }
 }

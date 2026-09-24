@@ -71,7 +71,10 @@ describe("the font registry (G-1, G-2)", () => {
 describe("character coverage", () => {
   for (const locale of LOCALES) {
     it(`${locale}: every catalog string is covered by its UI face`, () => {
-      expect(missing(strings(messages[locale]).join(""), uiFace(locale))).toEqual([]);
+      // Endonyms set in their own script's face (MA-22), so they are checked below instead.
+      const { languageEndonym: _endonyms, ...rest } = messages[locale].common;
+      const catalog = { ...messages[locale], common: rest };
+      expect(missing(strings(catalog).join(""), uiFace(locale))).toEqual([]);
     });
 
     it(`${locale}: the stamp string, in capitals by role, is covered by its stamp face`, () => {
@@ -79,6 +82,14 @@ describe("character coverage", () => {
       expect(missing(stamp, stampFace(locale))).toEqual([]);
     });
   }
+
+  it("each language's endonym is covered by the UI face of its own script (MA-22)", () => {
+    for (const locale of LOCALES) {
+      expect(missing(messages.en.common.languageEndonym[locale], uiFace(locale)), locale).toEqual(
+        [],
+      );
+    }
+  });
 
   it("the reader finds a face's gaps (Plus Jakarta Sans carries no Cyrillic)", () => {
     expect(missing("Ілюстрацыя", "PlusJakartaSans-400").length).toBeGreaterThan(0);

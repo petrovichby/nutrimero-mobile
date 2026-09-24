@@ -4,7 +4,8 @@ import {
   pluralRuleMismatches,
   resolveLocale,
 } from "@nutrimero/core";
-import { tokens, uiFace } from "@nutrimero/ui";
+import { Cover, FirstRunFlow } from "@nutrimero/feature-first-run";
+import { ThemeProvider, tokens, uiFace } from "@nutrimero/ui";
 import { fontAssets } from "@nutrimero/ui/native";
 import { useFonts } from "expo-font";
 import { getLocales } from "expo-localization";
@@ -12,7 +13,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { devicePreferences, ready } from "./boot";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { devicePreferences, homeStore, ready } from "./boot";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
 // settled, the bundled faces are loaded, and the root view has laid out — so no text ever paints
@@ -31,11 +33,11 @@ if (__DEV__) {
   }
 }
 
-// Bootstrap placeholder — replaced by 001's first-run screens (phase 5).
 const deviceLanguageTags = () => getLocales().map((tag) => tag.languageTag);
 
 export function AppRoot() {
   const [booted, setBooted] = useState(false);
+  const [onboarded, setOnboarded] = useState<boolean | null>(null);
   // The locale is state, so the in-app choice (FR-026, IX 1.2.0) re-renders in place — no restart.
   // It starts from the system and takes the stored choice once boot has run the reinstall clear.
   const [locale, setLocale] = useState<Locale>(() => resolveLocale(null, deviceLanguageTags()));
@@ -50,16 +52,47 @@ export function AppRoot() {
     ready
       .then(() => devicePreferences.uiLocale())
       .then((choice) => setLocale(resolveLocale(choice, deviceLanguageTags())))
-      .catch(() => undefined)
+      .then(() => homeStore.onboarding())
+      .then((state) => setOnboarded(state.completed))
+      .catch(() => setOnboarded(false))
       .finally(() => setBooted(true));
   }, []);
 
-  if (!booted || (!fontsLoaded && !fontError)) {
+  // The native splash (the cream field) holds until the faces load; the composed cover then shows
+  // only while boot is still settling — never for a fixed duration (001 FR-001/FR-002).
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <View onLayout={() => SplashScreen.hideAsync()} style={styles.container}>
+    <SafeAreaProvider>
+      <ThemeProvider app="home" locale={locale}>
+        <View style={styles.fill} onLayout={() => SplashScreen.hideAsync()}>
+          {!booted || onboarded === null ? (
+            <Cover t={t} />
+          ) : onboarded ? (
+            <Placeholder t={t} locale={locale} />
+          ) : (
+            <FirstRunFlow
+              t={t}
+              locale={locale}
+              store={homeStore}
+              onComplete={() => setOnboarded(true)}
+            />
+          )}
+        </View>
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}
+
+/**
+ * Where first run lands until the Recipes tab's connect-once state is drawn (design-mobile): the
+ * bootstrap placeholder, unchanged. Not a shipped screen.
+ */
+function Placeholder({ t, locale }: { t: ReturnType<typeof createTranslator>; locale: Locale }) {
+  return (
+    <View style={styles.container}>
       <Text accessibilityRole="header" style={[styles.name, { fontFamily: uiFace(locale, "700") }]}>
         {t("app.homeBaker.name")}
       </Text>
@@ -72,6 +105,7 @@ export function AppRoot() {
 }
 
 const styles = StyleSheet.create({
+  fill: { flex: 1 },
   container: {
     flex: 1,
     backgroundColor: tokens.color.illustrationCanvas,

@@ -1,22 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme } from "../theme/provider";
+import { StyleSheet, View } from "react-native";
 import { tokens } from "../tokens";
+import { PageTitle } from "./page-title";
 
 /**
- * The screen masthead in the display face (DESIGN.md *Typography rules*: Pacifico for brand
- * moments only — screen mastheads, splash title, paywall headline; masthead metrics 31/46). The
- * heading role colour; announced as a header.
+ * A tab's masthead: its page title (MA-25 — Pacifico, 31/46) on the screen margin.
  */
 export function Masthead({ title }: { title: string }) {
-  const theme = useTheme();
   return (
     <View style={styles.bar}>
-      <Text
-        accessibilityRole="header"
-        style={[styles.title, { fontFamily: theme.displayFace, color: theme.color.heading }]}
-      >
-        {title}
-      </Text>
+      <PageTitle>{title}</PageTitle>
     </View>
   );
 }
@@ -27,5 +19,4 @@ const styles = StyleSheet.create({
     paddingTop: tokens.spacing.unit * 1.5,
     paddingBottom: tokens.spacing.unit * 2.5,
   },
-  title: { fontSize: 31, lineHeight: 46 },
 });

@@ -107,4 +107,21 @@ describe("the FID snapshot (001 FR-014–FR-017)", () => {
       }),
     );
   });
+
+  it("every staple with more than one stored name in a locale has a curated pick there", () => {
+    // The snapshot holds the api's ALPHABETICAL order at 4a4356b, not FID's delivery order, so a
+    // first name is only trustworthy when it is the only name (coordinator, 2026-09-24).
+    const unpicked = FID_SNAPSHOT.staples.flatMap((staple) =>
+      Object.entries(staple.names)
+        .filter(([, names]) => (names?.length ?? 0) > 1)
+        .filter(([locale]) => {
+          const picks = Object.entries(CURATED_STAPLE_NAMES).find(
+            ([id]) => id === staple.fidId,
+          )?.[1];
+          return !Object.entries(picks ?? {}).some(([pickLocale]) => pickLocale === locale);
+        })
+        .map(([locale]) => `${staple.fidId} ${locale}`),
+    );
+    expect(unpicked).toEqual([]);
+  });
 });
