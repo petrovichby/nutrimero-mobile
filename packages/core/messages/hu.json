@@ -275,6 +275,65 @@
       "keeps": "Az alkalmazás nyelve nem változik.",
       "cancel": "Mégse",
       "confirm": "Adataim törlése"
+    },
+    "timers": {
+      "stage": {
+        "mix": "Összekeverés",
+        "autolyse": "Autolízis",
+        "bulkFerment": "Első kelesztés",
+        "stretchAndFold": "Nyújtás és hajtogatás",
+        "preShape": "Előformázás",
+        "shape": "Formázás",
+        "proof": "Kelesztés",
+        "coldProof": "Hideg kelesztés",
+        "preheat": "Előmelegítés",
+        "bake": "Sütés",
+        "cool": "Hűtés"
+      },
+      "unit": {
+        "hours": "{value} óra",
+        "minutes": "{value} perc",
+        "seconds": "{value} mp"
+      },
+      "spoken": {
+        "hours": "{count, plural, one {# óra} other {# óra}}",
+        "minutes": "{count, plural, one {# perc} other {# perc}}",
+        "seconds": "{count, plural, one {# másodperc} other {# másodperc}}"
+      },
+      "left": "még {duration}",
+      "doneAgo": "Kész · {duration} óta",
+      "defaultTimerName": "{number}. időzítő",
+      "defaultRoutineName": "Menetrend",
+      "channelName": "Időzítők",
+      "notification": {
+        "timerDone": {
+          "title": "Lejárt: {name}",
+          "body": "Koppints az időzítőid megnyitásához."
+        },
+        "stageDone": {
+          "title": "{stage} kész · következik: {next}",
+          "body": "Koppints, ha készen állsz a következő lépésre."
+        },
+        "lastStageDone": {
+          "title": "{stage} kész · ez volt az utolsó lépés",
+          "body": "Koppints a menetrended megnyitásához."
+        }
+      },
+      "help": {
+        "androidLate": "Androidon az értesítés késhet, amíg az eszköz tétlen – jellemzően legfeljebb kb. 10 percet, de sosem érkezik korábban.",
+        "forceStop": "Ha kényszerítve leállítod az alkalmazást, az értesítések szünetelnek, amíg újra meg nem nyitod."
+      },
+      "notice": {
+        "androidBake": "Androidon ennek a lépésnek az értesítése késhet, amíg az eszközöd tétlen. Hagyd nyitva ezt a képernyőt, és az eszközöd ébren marad."
+      },
+      "permission": {
+        "reason": "Értesíthetünk, ha lejár egy időzítő, akkor is, ha az alkalmazás be van zárva?"
+      },
+      "refused": {
+        "note": "Értesítés csak nyitott alkalmazásnál van. Az időzítők így is jeleznek a képernyőn és rezegnek, hang nélkül.",
+        "openSettings": "Beállítások megnyitása"
+      },
+      "clearDataLine": "az időzítőid és mentett menetrendjeid"
     }
   }
 }

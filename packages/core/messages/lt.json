@@ -275,6 +275,65 @@
       "keeps": "Programėlės kalba liks tokia pati.",
       "cancel": "Atšaukti",
       "confirm": "Ištrinti mano duomenis"
+    },
+    "timers": {
+      "stage": {
+        "mix": "Maišymas",
+        "autolyse": "Autolizė",
+        "bulkFerment": "Pirminis kildinimas",
+        "stretchAndFold": "Tempimas ir lankstymas",
+        "preShape": "Išankstinis formavimas",
+        "shape": "Formavimas",
+        "proof": "Kildinimas",
+        "coldProof": "Šaltas kildinimas",
+        "preheat": "Įkaitinimas",
+        "bake": "Kepimas",
+        "cool": "Aušinimas"
+      },
+      "unit": {
+        "hours": "{value} val.",
+        "minutes": "{value} min.",
+        "seconds": "{value} s"
+      },
+      "spoken": {
+        "hours": "{count, plural, one {# valanda} few {# valandos} many {# valandos} other {# valandų}}",
+        "minutes": "{count, plural, one {# minutė} few {# minutės} many {# minutės} other {# minučių}}",
+        "seconds": "{count, plural, one {# sekundė} few {# sekundės} many {# sekundės} other {# sekundžių}}"
+      },
+      "left": "Liko: {duration}",
+      "doneAgo": "Baigta · praėjo: {duration}",
+      "defaultTimerName": "Laikmatis {number}",
+      "defaultRoutineName": "Eiga",
+      "channelName": "Laikmačiai",
+      "notification": {
+        "timerDone": {
+          "title": "Laikmatis baigėsi: {name}",
+          "body": "Paliesk, kad atidarytum savo laikmačius."
+        },
+        "stageDone": {
+          "title": "Baigtas etapas: {stage} · toliau: {next}",
+          "body": "Paliesk, kai galėsi pradėti kitą etapą."
+        },
+        "lastStageDone": {
+          "title": "Baigtas etapas: {stage} · tai buvo paskutinis",
+          "body": "Paliesk, kad atidarytum savo eigą."
+        }
+      },
+      "help": {
+        "androidLate": "Android sistemoje pranešimas gali vėluoti, kol įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada neateina anksčiau.",
+        "forceStop": "Jei priverstinai sustabdysi programėlę, pranešimai bus sustabdyti, kol ją vėl atidarysi."
+      },
+      "notice": {
+        "androidBake": "Android sistemoje šio etapo pranešimas gali vėluoti, kol tavo įrenginys neaktyvus. Palik šį ekraną atvertą ir įrenginys neužmigs."
+      },
+      "permission": {
+        "reason": "Ar galime tau pranešti, kai baigsis laikmatis, net jei programėlė uždaryta?"
+      },
+      "refused": {
+        "note": "Pranešimai veikia tik kai programėlė atidaryta. Laikmačiai vis tiek baigiasi ekrane ir vibruoja, be garso.",
+        "openSettings": "Atidaryti nustatymus"
+      },
+      "clearDataLine": "tavo laikmačiai ir išsaugotos eigos"
     }
   }
 }

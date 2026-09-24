@@ -48,6 +48,9 @@ const IDENTICAL_ALLOWED: Record<string, "all" | readonly string[]> = {
   "home.onboarding.units.imperial": ["de"],
   "home.onboarding.diet.options.vegan": ["de"],
   "home.onboarding.units.values.stick": ["hu"], // the US "stick" has no Hungarian word
+  "home.timers.unit.minutes": ["pl"], // Polish writes "min", as English does (005)
+  "home.timers.unit.seconds": ["lt", "pl"], // the SI "s"; be/uk use Cyrillic "с" (005)
+  "home.timers.stage.autolyse": ["de"], // the baking term is the same word in German (005)
 };
 const ENDONYM_PREFIX = "common.languageEndonym."; // a language's own name is the same everywhere
 
