@@ -7,7 +7,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./native": "./src/native.ts",
-    "./src/*": "./src/*.ts"
+    "./src/*": "./src/*.ts",
+    "./plugins/with-ui-scene": "./plugins/with-ui-scene.cjs"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

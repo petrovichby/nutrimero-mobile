@@ -22,7 +22,8 @@
         }
       ],
       "expo-font",
-      "expo-router"
+      "expo-router",
+      "@nutrimero/core/plugins/with-ui-scene"
     ],
     "ios": {
       "bundleIdentifier": "org.nutrimero.homebaker",

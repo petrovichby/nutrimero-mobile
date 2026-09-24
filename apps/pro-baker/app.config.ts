@@ -48,6 +48,8 @@ export default function config({ config }: ConfigContext): ExpoConfig {
     plugins: [
       // ADR 0001 condition 2: SecureStore's preferences stay out of Auto Backup even if re-enabled.
       ["expo-secure-store", { configureAndroidBackup: true, faceIDPermission: false }],
+      // iOS 27 requires the UIScene life cycle (shared plugin, packages/core/plugins).
+      "@nutrimero/core/plugins/with-ui-scene",
     ],
   };
 }
