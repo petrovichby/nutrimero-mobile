@@ -15,7 +15,7 @@ import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { devicePreferences, homeStore, ready } from "../src/boot";
+import { devicePreferences, homeStore, ready, session } from "../src/boot";
 import { type Shell, ShellProvider } from "../src/shell";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
@@ -70,9 +70,14 @@ export default function RootLayout() {
   }, []);
 
   const clearData = useCallback(async () => {
-    // Home's keys only — the language is a device preference and stays (FR-027).
-    await homeStore.wipeAll();
-    setOnboarded(false);
+    // Every registered data wiper, in order, through core's wipe sequence (FR-013) — Home's data
+    // today, and each later feature's (timers, routines, notifications) as it registers. Never a
+    // sign-out, and the language stays: device preferences are not wipers (FR-027). An incomplete
+    // clear stays pending and resumes at the next launch, so first run shows only once it is done.
+    const outcome = await session.clearDeviceData();
+    if (outcome.complete) {
+      setOnboarded(false);
+    }
   }, []);
 
   const shell = useMemo<Shell>(

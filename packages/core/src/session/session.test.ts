@@ -3,6 +3,11 @@ import { createApiClient } from "../api/client";
 import type { paths } from "../api/generated/schema";
 import { createMemoryAdapter } from "../device-store/adapter";
 import { createMemoryMarker } from "../device-store/install-marker";
+import {
+  createDevicePreferences,
+  DEVICE_PREFERENCE_KEYS,
+  registerDevicePreferences,
+} from "../device-store/preferences";
 import { BASE_URL, createFakeApi, errorBody, type Handler, json } from "../test-support/fake-api";
 import { SESSION_KEYS } from "./keys";
 import { createSession } from "./session";
@@ -334,5 +339,62 @@ describe("bakeries and membership loss (FR-002, FR-022)", () => {
     await session.chooseCompany(SECOND);
     expect(session.companyHeaders()).toEqual({ "X-Company-Id": SECOND });
     await expect(session.chooseCompany("00000000-0000-4000-8000-0000000000ff")).rejects.toThrow();
+  });
+});
+
+describe("Clear my data on this device (001 FR-013, FR-027)", () => {
+  it("runs every registered data wiper in order, and never signs out or clears the language", async () => {
+    const { session, store } = setup({}, signedInAs(ANNA));
+    registerDevicePreferences(session);
+    await createDevicePreferences(store).setUiLocale("lt");
+    const order: string[] = [];
+    session.registerWiper("home.deviceData", async () => {
+      order.push("home.deviceData");
+    });
+    // A second feature's wiper — e.g. Home's timers — must run on Clear my data too.
+    session.registerWiper("home.timers", async () => {
+      order.push("home.timers");
+    });
+    await session.restore();
+
+    expect(await session.clearDeviceData()).toEqual({ complete: true, failed: [] });
+    expect(order).toEqual(["home.deviceData", "home.timers"]);
+    expect(session.state()).toEqual({ status: "signedIn", userId: ANNA, activeCompanyId: BAKERY });
+    expect(await store.get(SESSION_KEYS.userId)).toBe(ANNA);
+    expect(await store.get(DEVICE_PREFERENCE_KEYS.uiLocale)).toBe("lt");
+  });
+
+  it("resumes an interrupted clear at launch — the wipers, not a sign-out", async () => {
+    const { session, store } = setup(
+      {},
+      {
+        ...signedInAs(ANNA),
+        [SESSION_KEYS.pendingDataWipe]: "1",
+      },
+    );
+    const timers = vi.fn(async () => undefined);
+    session.registerWiper("home.timers", timers);
+
+    expect(await session.restore()).toEqual({
+      status: "signedIn",
+      userId: ANNA,
+      activeCompanyId: BAKERY,
+    });
+    expect(timers).toHaveBeenCalledOnce();
+    expect(await store.get(SESSION_KEYS.pendingDataWipe)).toBeNull();
+  });
+
+  it("stays pending when a wiper fails, and reports which", async () => {
+    const { session, store } = setup({});
+    session.registerWiper("home.timers", async () => {
+      throw new Error("notifications unavailable");
+    });
+    const home = vi.fn(async () => undefined);
+    session.registerWiper("home.deviceData", home);
+    await session.restore();
+
+    expect(await session.clearDeviceData()).toEqual({ complete: false, failed: ["home.timers"] });
+    expect(home).toHaveBeenCalledOnce();
+    expect(await store.get(SESSION_KEYS.pendingDataWipe)).toBe("1");
   });
 });

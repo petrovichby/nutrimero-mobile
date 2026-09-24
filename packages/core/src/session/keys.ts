@@ -5,6 +5,8 @@ export const SESSION_KEYS = {
   userId: "nutrimero.session.userId",
   activeCompanyId: "nutrimero.session.activeCompanyId",
   pendingWipe: "nutrimero.session.pendingWipe",
+  /** Set while "Clear my data on this device" runs the data wipers; resumed at launch. */
+  pendingDataWipe: "nutrimero.session.pendingDataWipe",
 } as const;
 
 /** Everything the session owns and clears itself; `pendingWipe` is cleared last, separately. */
@@ -13,4 +15,6 @@ export const SESSION_OWN_KEYS: readonly string[] = [
   SESSION_KEYS.refreshToken,
   SESSION_KEYS.userId,
   SESSION_KEYS.activeCompanyId,
+  // A full wipe runs every data wiper too, so it also settles an interrupted data-only clear.
+  SESSION_KEYS.pendingDataWipe,
 ];
