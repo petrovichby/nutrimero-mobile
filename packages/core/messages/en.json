@@ -275,6 +275,65 @@
       "keeps": "Your app language stays as it is.",
       "cancel": "Cancel",
       "confirm": "Clear my data"
+    },
+    "timers": {
+      "stage": {
+        "mix": "Mix",
+        "autolyse": "Autolyse",
+        "bulkFerment": "Bulk ferment",
+        "stretchAndFold": "Stretch and fold",
+        "preShape": "Pre-shape",
+        "shape": "Shape",
+        "proof": "Proof",
+        "coldProof": "Cold proof",
+        "preheat": "Preheat",
+        "bake": "Bake",
+        "cool": "Cool"
+      },
+      "unit": {
+        "hours": "{value} h",
+        "minutes": "{value} min",
+        "seconds": "{value} s"
+      },
+      "spoken": {
+        "hours": "{count, plural, one {# hour} other {# hours}}",
+        "minutes": "{count, plural, one {# minute} other {# minutes}}",
+        "seconds": "{count, plural, one {# second} other {# seconds}}"
+      },
+      "left": "{duration} left",
+      "doneAgo": "Done · {duration} ago",
+      "defaultTimerName": "Timer {number}",
+      "defaultRoutineName": "Routine",
+      "channelName": "Timers",
+      "notification": {
+        "timerDone": {
+          "title": "{name} is done",
+          "body": "Tap to open your timers."
+        },
+        "stageDone": {
+          "title": "{stage} done: {next} next",
+          "body": "Tap when you're ready to start the next stage."
+        },
+        "lastStageDone": {
+          "title": "{stage} done: that was the last stage",
+          "body": "Tap to open your routine."
+        }
+      },
+      "help": {
+        "androidLate": "On Android a notification may arrive late while the device is idle, typically by up to about 10 minutes, and never early.",
+        "forceStop": "If you force-stop the app, alerts pause until you open it again."
+      },
+      "notice": {
+        "androidBake": "On Android the alert for this stage may be late while your device is idle. Keep this screen open and your device stays awake."
+      },
+      "permission": {
+        "reason": "Can we notify you when a timer ends, even when the app is closed?"
+      },
+      "refused": {
+        "note": "Alerts only work while the app is open. Timers still finish on screen and vibrate, with no sound.",
+        "openSettings": "Open settings"
+      },
+      "clearDataLine": "your timers and saved routines"
     }
   }
 }

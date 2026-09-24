@@ -275,6 +275,65 @@
       "keeps": "Die Sprache der App bleibt, wie sie ist.",
       "cancel": "Abbrechen",
       "confirm": "Meine Daten löschen"
+    },
+    "timers": {
+      "stage": {
+        "mix": "Mischen",
+        "autolyse": "Autolyse",
+        "bulkFerment": "Stockgare",
+        "stretchAndFold": "Dehnen und Falten",
+        "preShape": "Vorformen",
+        "shape": "Formen",
+        "proof": "Stückgare",
+        "coldProof": "Kalte Gare",
+        "preheat": "Vorheizen",
+        "bake": "Backen",
+        "cool": "Abkühlen"
+      },
+      "unit": {
+        "hours": "{value} Std.",
+        "minutes": "{value} Min.",
+        "seconds": "{value} Sek."
+      },
+      "spoken": {
+        "hours": "{count, plural, one {# Stunde} other {# Stunden}}",
+        "minutes": "{count, plural, one {# Minute} other {# Minuten}}",
+        "seconds": "{count, plural, one {# Sekunde} other {# Sekunden}}"
+      },
+      "left": "noch {duration}",
+      "doneAgo": "Fertig · seit {duration}",
+      "defaultTimerName": "Timer Nr. {number}",
+      "defaultRoutineName": "Ablauf",
+      "channelName": "Timer",
+      "notification": {
+        "timerDone": {
+          "title": "{name} ist fertig",
+          "body": "Tippe, um deine Timer zu öffnen."
+        },
+        "stageDone": {
+          "title": "{stage} fertig · als Nächstes: {next}",
+          "body": "Tippe, wenn du bereit für den nächsten Schritt bist."
+        },
+        "lastStageDone": {
+          "title": "{stage} fertig · das war der letzte Schritt",
+          "body": "Tippe, um deinen Ablauf zu öffnen."
+        }
+      },
+      "help": {
+        "androidLate": "Auf Android kann eine Benachrichtigung verspätet ankommen, während das Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
+        "forceStop": "Wenn du die App zwangsweise beendest, pausieren die Hinweise, bis du sie wieder öffnest."
+      },
+      "notice": {
+        "androidBake": "Auf Android kann der Hinweis für diesen Schritt verspätet kommen, während dein Gerät ruht. Lass diesen Bildschirm offen, dann bleibt dein Gerät wach."
+      },
+      "permission": {
+        "reason": "Dürfen wir dich benachrichtigen, wenn ein Timer abläuft – auch bei geschlossener App?"
+      },
+      "refused": {
+        "note": "Hinweise gibt es nur bei geöffneter App. Timer enden trotzdem auf dem Bildschirm und vibrieren – ohne Ton.",
+        "openSettings": "Einstellungen öffnen"
+      },
+      "clearDataLine": "deine Timer und gespeicherten Abläufe"
     }
   }
 }
