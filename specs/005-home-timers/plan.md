@@ -125,6 +125,16 @@ docs/adr/0001-…md                    # the two rows (this PR)
 | 4 | The one app-root wiring change (chip; wiper registered before `restore()`) | **Home 1's More-walk PR merged**, and announced through the owner |
 | 5 | Device verification: M1–M9 on iOS; C1–C5; Android owed on a real device, and said so | phase 4 |
 
+## Amendments from implementation (PR 1, accepted by the coordinator)
+
+- **P1, index before item**: every stored key stays reachable by the wiper (R6).
+- **P2, the 1,900-byte refusal**: the worst case is 2,773 bytes against ADR 0001's 2,048. The
+  routine editor shows the refusal, and design-mobile draws that state.
+- **P3, three allowances in `catalogs.test.ts`**: Polish "min", the SI "s" in lt and pl, and
+  German "Autolyse". Announced to Home 1.
+- `endedAt` is derived, not stored. English stage names are capitalized in notifications
+  ("Bulk ferment done: Shape next"): they are the stages' names, which is fine.
+
 ## Complexity Tracking
 
 *None.* No constitution deviation.

@@ -32,12 +32,12 @@ component tests (no React Native test harness is admitted).
 
 ## Phase 1: Setup
 
-- [ ] T001 Create the pack `packages/features/timers/`:
+- [x] T001 Create the pack `packages/features/timers/`:
   - `package.json`: name `@nutrimero/feature-timers`, private, exports `"."` → `./src/index.ts` and `"./native"` → `./src/native.ts` (the core/ui pattern), a `typecheck` script, and deps `@nutrimero/core` and `@nutrimero/ui` as `workspace:*`
   - `tsconfig.json` extending `../../../tsconfig.base.json`
   - `src/index.ts`
   - `src/native.ts`
-- [ ] T002 [P] Add `expo-notifications@~57.0.20` and `expo-keep-awake@~57.0.2` (ADR 0001 rows, accepted) to `packages/features/timers/package.json` with `pnpm --filter`. Commit the lockfile, and confirm that `pnpm install --frozen-lockfile` is clean
+- [x] T002 [P] Add `expo-notifications@~57.0.20` and `expo-keep-awake@~57.0.2` (ADR 0001 rows, accepted) to `packages/features/timers/package.json` with `pnpm --filter`. Commit the lockfile, and confirm that `pnpm install --frozen-lockfile` is clean
 
 ---
 
@@ -46,12 +46,12 @@ component tests (no React Native test harness is admitted).
 **Checkpoint**: every story depends on this phase. `src/index.ts` must stay importable from Node
 (Vitest).
 
-- [ ] T003 [P] Write `packages/features/timers/src/model/stage.ts` + `stage.test.ts`:
+- [x] T003 [P] Write `packages/features/timers/src/model/stage.ts` + `stage.test.ts`:
   - the `StageKey` union (`mix`, `autolyse`, `bulkFerment`, `stretchAndFold`, `preShape`, `shape`, `proof`, `coldProof`, `preheat`, `bake`, `cool`)
   - `Stage { name: {key}|{text}; seconds: number|null }`
   - validation: free text 1–40 characters trimmed; seconds an integer from 5 to 172,800, or null
   - `isBakeStage` (FR-013a: `bake` or `preheat`)
-- [ ] T004 Write `packages/features/timers/src/model/item.ts` + `item.test.ts`: the `Timer` and `RoutineRun` types (data-model.md).
+- [x] T004 Write `packages/features/timers/src/model/item.ts` + `item.test.ts`: the `Timer` and `RoutineRun` types (data-model.md).
   - `transition(item, action, now)` for start, pause, resume, addTime, cancel, dismiss, startNextStage and doneHandsOn. It returns `{ item, intents: ("schedule"|"cancel")[] }`.
   - `derive(item, now)`: time left or time since, the stage position "n / N", the next stage, and `done`.
   - Tests cover:
@@ -60,23 +60,23 @@ component tests (no React Native test harness is admitted).
     - a hands-on stage schedules nothing
     - at most one schedule intent per run (FR-011)
     - pause and resume moving `endAt` correctly
-- [ ] T005 [P] Write `packages/features/timers/src/model/reconcile.ts` + `reconcile.test.ts` (research R1): stored items plus pending ids give the intents.
+- [x] T005 [P] Write `packages/features/timers/src/model/reconcile.ts` + `reconcile.test.ts` (research R1): stored items plus pending ids give the intents.
   - A running item with no pending notification is re-scheduled; this covers restart, force-stop and a later grant.
   - An orphan pending id is cancelled.
   - A done item has no pending notification.
   - Pending notifications never exceed the active-item cap of 10 (C4).
-- [ ] T006 [P] Write `packages/features/timers/src/model/duration.ts` + `duration.test.ts` (R10): `formatDuration(seconds, t)` composes whole units for display (`1 h 30 min`) and a spoken form for screen readers ("1 hour 30 minutes left"). Every plural argument is an integer `count`. Test in all seven locales.
-- [ ] T007 Write `packages/features/timers/src/store/timer-store.ts` + `timer-store.test.ts` (R6), on `DeviceStoreAdapter` with keys under `nutrimero.home.timers.*`:
+- [x] T006 [P] Write `packages/features/timers/src/model/duration.ts` + `duration.test.ts` (R10): `formatDuration(seconds, t)` composes whole units for display (`1 h 30 min`) and a spoken form for screen readers ("1 hour 30 minutes left"). Every plural argument is an integer `count`. Test in all seven locales.
+- [x] T007 Write `packages/features/timers/src/store/timer-store.ts` + `timer-store.test.ts` (R6), on `DeviceStoreAdapter` with keys under `nutrimero.home.timers.*`:
   - an index plus per-item keys, and saved routines plus per-routine keys, and prefs
   - caps: 10 active, 20 saved, 12 stages
   - worst-case values asserted ≤ 1,500 bytes, under the 2,048-byte budget
   - writes go item first, then index, and orphans are tolerated
   - tested with `createMemoryAdapter`
-- [ ] T008 Write `packages/features/timers/src/store/wiper.ts` + `wiper.test.ts` (FR-021, R7):
+- [x] T008 Write `packages/features/timers/src/store/wiper.ts` + `wiper.test.ts` (FR-021, R7):
   - `registerTimersWiper(session, store, cancelAll)` registers under the name `"home.timers"`
   - the wiper deletes every timers key and cancels every stored notification id
   - tests: no key left and every notification cancelled; the **fresh-install path** (`session.restore()` with no marker) reaches `"home.timers"` when it was registered before `restore()`
-- [ ] T009 Add the non-screen `home.timers.*` keys to all seven catalogs under `packages/core/messages/`, informal, "device", integer `count`:
+- [x] T009 Add the non-screen `home.timers.*` keys to all seven catalogs under `packages/core/messages/`, informal, "device", integer `count`:
   - the stage-name picks
   - the duration units, visual and spoken
   - the notification title and body ("{name} is done", "{stage} done: {next} next")
@@ -97,10 +97,10 @@ with the Android-owed line.
 and asks for permission in context.
 **Independent test**: quickstart M1, M2 and M3.
 
-- [ ] T010 [US1] Write `packages/features/timers/src/native/scheduler.ts` (R1): `ensureChannel(t)` (the `home-timers` channel, HIGH, named in the UI language), `schedule(item, t)` (a `DATE` trigger at `endAt`, `data: {kind, itemId}`), `cancel(id)`, `pending()`, and `setNotificationHandler`. In the foreground the banner and list are off and the sound is on (R1, R9).
-- [ ] T011 [US1] Write `packages/features/timers/src/native/permission.ts` (FR-016, FR-017): `permission()` reads the status and `canAskAgain`. `requestInContext()` is called only from the first-start flow, only once (the `permissionAsked` pref), and never at launch or in onboarding.
-- [ ] T012 [US1] Write `packages/features/timers/src/native/lifecycle.ts`: on launch and on every foreground, `derive` everything, run `reconcile`, and apply the intents through the scheduler (FR-004, FR-014, US5-3). It also re-schedules every pending text when the UI language changes (FR-015).
-- [ ] T013 [US1] Add a build check, `packages/features/timers/src/android-permissions.test.ts`: evaluate `apps/home-baker`'s resolved config and assert that `SCHEDULE_EXACT_ALARM` and `USE_EXACT_ALARM` are absent. If `expo-notifications` contributes one, list it in `android.blockedPermissions` (gate 2 ruling) and keep the test as the proof. (The config edit itself is part of ⛔HOME1's wiring task T024; until then the test runs against the plugin's declared permissions.)
+- [x] T010 [US1] Write `packages/features/timers/src/native/scheduler.ts` (R1): `ensureChannel(t)` (the `home-timers` channel, HIGH, named in the UI language), `schedule(item, t)` (a `DATE` trigger at `endAt`, `data: {kind, itemId}`), `cancel(id)`, `pending()`, and `setNotificationHandler`. In the foreground the banner and list are off and the sound is on (R1, R9).
+- [x] T011 [US1] Write `packages/features/timers/src/native/permission.ts` (FR-016, FR-017): `permission()` reads the status and `canAskAgain`. `requestInContext()` is called only from the first-start flow, only once (the `permissionAsked` pref), and never at launch or in onboarding.
+- [x] T012 [US1] Write `packages/features/timers/src/native/lifecycle.ts`: on launch and on every foreground, `derive` everything, run `reconcile`, and apply the intents through the scheduler (FR-004, FR-014, US5-3). It also re-schedules every pending text when the UI language changes (FR-015).
+- [x] T013 [US1] Add a build check, `packages/features/timers/src/android-permissions.test.ts`: evaluate `apps/home-baker`'s resolved config and assert that `SCHEDULE_EXACT_ALARM` and `USE_EXACT_ALARM` are absent. If `expo-notifications` contributes one, list it in `android.blockedPermissions` (gate 2 ruling) and keep the test as the proof. (The config edit itself is part of ⛔HOME1's wiring task T024; until then the test runs against the plugin's declared permissions.)
 - [ ] T014 [US1] (⛔WALK) Build `packages/features/timers/src/screens/new-timer.tsx` and `timer-screen.tsx`:
   - large time left, via the display-only refresh (R8)
   - pause/resume, +1 min and +5 min, cancel, and the done state
@@ -115,7 +115,7 @@ and asks for permission in context.
 **Goal**: routines with one notification per timed stage, manual chaining, and saved routines.
 **Independent test**: quickstart M4.
 
-- [ ] T016 [US2] Write `packages/features/timers/src/native/routing.ts` (gate 1, Q1): the response listener plus `getLastNotificationResponse()` at cold start. A stage notification opens the routine screen at "Start next stage".
+- [x] T016 [US2] Write `packages/features/timers/src/native/routing.ts` (gate 1, Q1): the response listener plus `getLastNotificationResponse()` at cold start. A stage notification opens the routine screen at "Start next stage".
 - [ ] T017 [US2] (⛔WALK) Build `packages/features/timers/src/screens/routine-editor.tsx`, `routine-screen.tsx` and `saved-routines.tsx`:
   - stages with picks or free text, and a duration or hands-on
   - "n / N", the current stage in the UI face (steps are not page titles), and the next stage
@@ -142,7 +142,7 @@ and asks for permission in context.
 
 **Independent test**: quickstart M6.
 
-- [ ] T019 [US4] Write `packages/features/timers/src/native/keep-awake.ts` (R5): `useTimerKeepAwake(tag, focused)`, active only while the timer or routine screen is focused in the foreground, and released within a second of leaving. Use it in T014 and T017's screens.
+- [x] T019 [US4] Write `packages/features/timers/src/native/keep-awake.ts` (R5): `useTimerKeepAwake(tag, focused)`, active only while the timer or routine screen is focused in the foreground, and released within a second of leaving. Use it in T014 and T017's screens.
 
 ---
 

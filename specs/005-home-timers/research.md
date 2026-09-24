@@ -120,8 +120,14 @@ package (`packages/features/timers`). They are not added to `home-data`'s static
 
 - Ids are base-36 and inside the key alphabet (ADR 0001 condition 6).
 - Each value's worst case is asserted ≤ 2,048 bytes (condition 5), with margin.
-- Writes go item first, then index. A reader tolerates an index id with no item (skipped) and
-  an item with no index entry (orphan, cleaned at launch).
+- **Amended in PR 1 (accepted):** the **index is written before the item**, and removal deletes
+  the item before the index entry. The secure store cannot list its keys, so an item written
+  first could be orphaned by a crash where no wipe can reach it. A reader skips an index id with
+  no item.
+- **Amended in PR 1 (accepted):** the worst case the data model allows (12 stages × 40-character
+  names in a 4-byte script) serializes to **2,773 bytes**, over the 2,048 budget. So a save over
+  **1,900 bytes is refused** (`reason: "size"`) before anything is written. Twelve stages named in
+  Cyrillic fit. The routine editor shows the refusal (design-mobile draws that state).
 
 ## R7 — Wipe (FR-021) and the seam
 
