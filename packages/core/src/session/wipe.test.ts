@@ -16,7 +16,12 @@ describe("the wipe sequence (002 plan R10)", () => {
   it("clears core's own keys first, then each wiper in registration order", async () => {
     const store = seeded();
     const order: string[] = [];
-    const wipe = createWipeSequence(store, SESSION_OWN_KEYS, SESSION_KEYS.pendingWipe);
+    const wipe = createWipeSequence(
+      store,
+      SESSION_OWN_KEYS,
+      SESSION_KEYS.pendingWipe,
+      SESSION_KEYS.pendingDataWipe,
+    );
     wipe.register("pro.savedLabels", async () => {
       expect(await store.get(SESSION_KEYS.accessToken)).toBeNull();
       order.push("pro.savedLabels");
@@ -33,7 +38,12 @@ describe("the wipe sequence (002 plan R10)", () => {
   it("isolates a failing wiper: the rest still run, and the wipe stays pending", async () => {
     const store = seeded();
     const ran: string[] = [];
-    const wipe = createWipeSequence(store, SESSION_OWN_KEYS, SESSION_KEYS.pendingWipe);
+    const wipe = createWipeSequence(
+      store,
+      SESSION_OWN_KEYS,
+      SESSION_KEYS.pendingWipe,
+      SESSION_KEYS.pendingDataWipe,
+    );
     wipe.register("first", async () => {
       throw new Error("disk full");
     });
@@ -50,7 +60,12 @@ describe("the wipe sequence (002 plan R10)", () => {
   it("clears the pending mark once a later run completes", async () => {
     const store = seeded();
     let fail = true;
-    const wipe = createWipeSequence(store, SESSION_OWN_KEYS, SESSION_KEYS.pendingWipe);
+    const wipe = createWipeSequence(
+      store,
+      SESSION_OWN_KEYS,
+      SESSION_KEYS.pendingWipe,
+      SESSION_KEYS.pendingDataWipe,
+    );
     wipe.register("flaky", async () => {
       if (fail) throw new Error("once");
     });
@@ -65,11 +80,36 @@ describe("the wipe sequence (002 plan R10)", () => {
       createMemoryAdapter(),
       SESSION_OWN_KEYS,
       SESSION_KEYS.pendingWipe,
+      SESSION_KEYS.pendingDataWipe,
     );
     const unregister = wipe.register("x", async () => undefined);
     expect(() => wipe.register("x", async () => undefined)).toThrow();
     expect(() => wipe.register(CORE_WIPER_NAME, async () => undefined)).toThrow();
     unregister();
     expect(() => wipe.register("x", async () => undefined)).not.toThrow();
+  });
+
+  it("a data-only run clears every data wiper in order and keeps core's own keys", async () => {
+    const store = seeded();
+    const order: string[] = [];
+    const wipe = createWipeSequence(
+      store,
+      SESSION_OWN_KEYS,
+      SESSION_KEYS.pendingWipe,
+      SESSION_KEYS.pendingDataWipe,
+    );
+    wipe.register("home.deviceData", async () => {
+      expect(await wipe.isDataPending()).toBe(true);
+      order.push("home.deviceData");
+    });
+    wipe.register("home.timers", async () => {
+      order.push("home.timers");
+    });
+
+    expect(await wipe.runData()).toEqual({ complete: true, failed: [] });
+    expect(order).toEqual(["home.deviceData", "home.timers"]);
+    expect(await wipe.isDataPending()).toBe(false);
+    expect(await store.get(SESSION_KEYS.userId)).toBe("u");
+    expect(await store.get(SESSION_KEYS.accessToken)).toBe("a");
   });
 });

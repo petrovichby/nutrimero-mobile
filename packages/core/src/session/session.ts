@@ -52,6 +52,12 @@ export interface Session {
   onMembershipLost(listener: MembershipLostListener): () => void;
   registerWiper(name: string, wiper: Wiper): () => void;
   /**
+   * "Clear my data on this device" (001 FR-013): every registered data wiper, in registration
+   * order. Never signs out and never clears device preferences (FR-027). An interrupted clear
+   * resumes at the next `restore()`.
+   */
+  clearDeviceData(): Promise<{ complete: boolean; failed: readonly string[] }>;
+  /**
    * A device-preference key only the reinstall-orphan clear removes (ADR 0001 condition 3) —
    * never sign-out, erase or an app's own reset. Register at start-up, before `restore()`.
    */
@@ -73,7 +79,12 @@ interface Tokens {
 }
 
 export function createSession({ client, store, marker }: SessionDeps): Session {
-  const wipe = createWipeSequence(store, SESSION_OWN_KEYS, SESSION_KEYS.pendingWipe);
+  const wipe = createWipeSequence(
+    store,
+    SESSION_OWN_KEYS,
+    SESSION_KEYS.pendingWipe,
+    SESSION_KEYS.pendingDataWipe,
+  );
   const freshInstallOnlyKeys = new Set<string>();
   const stateListeners = new Set<(state: SessionState) => void>();
   const lossListeners = new Set<MembershipLostListener>();
@@ -178,6 +189,8 @@ export function createSession({ client, store, marker }: SessionDeps): Session {
       });
       if (await wipe.isPending()) {
         await wipe.run();
+      } else if (await wipe.isDataPending()) {
+        await wipe.runData();
       }
       const [accessToken, refreshToken, userId, activeCompanyId] = await Promise.all([
         store.get(SESSION_KEYS.accessToken),
@@ -315,6 +328,10 @@ export function createSession({ client, store, marker }: SessionDeps): Session {
       return () => {
         freshInstallOnlyKeys.delete(key);
       };
+    },
+
+    clearDeviceData() {
+      return wipe.runData();
     },
 
     registerWiper(name, wiper) {
