@@ -191,9 +191,10 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 
 ## R13 — Contract and api asks
 
-- `reserved.volumeToMass` / `reserved.pieceWeight`: the api's spec 002 described `reserved` as
-  empty and forward-looking; the snapshot will depend on its shape → **api confirms it stable**
-  (or renames) before implementation starts (gate-2 item 2).
+- `reserved.volumeToMass` / `reserved.pieceWeight`: **confirmed stable by the api lane
+  (2026-09-24)** — schema unchanged since 2026-09-04. The snapshot keeps FID's full-precision
+  decimal strings and parses them only at use; an absent row means "not known", never 0; `losses`
+  and `dryMatterPercent` are not read.
 - FID's unit table defines the cup as 240 ml → **to the api lane** (gate-1 Q3).
 - Later, not 004: a guest-read policy for `/fid/ingredients?q=` (full search).
 

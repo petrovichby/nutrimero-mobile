@@ -75,9 +75,15 @@ provenance sheet) plus a setting; the exact screen count follows design-mobile's
 1. **Owner: confirm the curated set** (FR-018). It arrives as a table in the snapshot PR (phase 2),
    flagged per candidate: AI-only, inconsistent, pieces only. Wheat flour's and sugar's
    inconsistencies are brought with it (FR-005a).
-2. **api lane (via the coordinator):** confirm that `reserved.volumeToMass` and
-   `reserved.pieceWeight` are stable, or rename them, before phase 2 depends on their shape.
-   Also report FID's 240 ml cup (gate-1 Q3).
+2. ~~api lane: confirm `reserved` is stable~~ — **CONFIRMED STABLE** by the api lane (2026-09-24):
+   `GET /api/v1/fid/ingredients/{fidId}` → `reserved.volumeToMass`, `pieceWeight`,
+   `waterContent`, `losses`, `dryMatterPercent`, schema unchanged since 2026-09-04, no open branch
+   touching it. Relied on: the fields as they are; numbers as full-precision strings; density =
+   mass over volume to 6 places; **empty is not zero**. `losses` holds 0 rows and
+   `dryMatterPercent` is always null by design — 004 derives neither. A new `method` or
+   `confidence` value would be an announced contract change (the closed source list and the
+   enums in the generated types fail loudly if one appears). Still with the api lane: FID's
+   240 ml cup (gate-1 Q3).
 3. **Source order for the fixed rule's third key** (R3). It only matters inside the 5 % band.
    Proposed: national food-composition tables (Fineli, Health Canada CNF, BLS, McCance &
    Widdowson), then USDA FDC, then FAO/INFOODS, then Markus's table, then confirmed AI-derived
