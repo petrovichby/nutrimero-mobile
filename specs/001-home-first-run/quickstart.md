@@ -20,7 +20,7 @@ pnpm tokens:generate && git diff --exit-code packages/ui/src/tokens.generated.ts
 | 1 | Fresh install, airplane mode on, launch | Cream static splash (no gold flash) → composed cover → Units step | FR-001–003, US3-4 |
 | 2 | Skip × 3 | Recipes tab, connect-once state, tab bar with 5 labels | US1, FR-019, FR-021 |
 | 3 | Relaunch | Cover → Recipes directly | US1-4 |
-| 4 | Clear my data (More) → confirm | Back to Units; Cancel had equal weight | US4, FR-013 |
+| 4 | Clear my data (More) → confirm | Back to Units; Cancel is the same size as confirm | US4, FR-013 |
 | 5 | Imperial, Nut allergy + Vegan, tap 8 staples, Done | Counter "8 items…"; relaunch keeps all three | US2, US3 |
 | 6 | Kill app on Diet step; relaunch | Resumes at Diet with Units kept | FR-008 |
 | 7 | Device language de, then pl, text size 130% | No clipped meaning; staple names from the snapshot in that language | SC-006, IX |

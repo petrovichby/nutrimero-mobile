@@ -137,7 +137,7 @@ describe("register", () => {
 });
 
 /**
- * Plural arguments are whole numbers (coordinator's Option A, 2026-09-24): the forced plural
+ * Plural arguments are whole numbers (ruling 2026-09-24: every plural argument is a `count`; fractions are formatted as numbers, never pluralised): the forced plural
  * polyfill disagrees with CLDR on fractions in hu, lt and be (intl-polyfill.test.ts). So every
  * ICU plural argument is named `count` — a count of things, never a measurement. A fractional
  * quantity is formatted as a number (formatNumber / `{x, number}`), never pluralised.

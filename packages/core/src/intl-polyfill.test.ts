@@ -8,7 +8,7 @@ import { LOCALES } from "./i18n/messages";
  * polyfill must select ICU's category for every sample that separates one/few/many/other across
  * the seven languages, the teens (11–14), the 21/22/25 tails and 101 included.
  *
- * FRACTIONS — a known upstream defect (coordinator's Option A, 2026-09-24): every
+ * FRACTIONS — a known upstream defect (ruling 2026-09-24): every
  * @formatjs/intl-pluralrules 6.x release tests only a decimal's integer part, so hu, lt and be
  * disagree with CLDR on fractions. The exact divergence is asserted, not ignored: the day an
  * upgrade fixes it, this test fails and the whole-number-only rule can be revisited.
