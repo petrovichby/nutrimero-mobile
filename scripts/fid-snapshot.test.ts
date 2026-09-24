@@ -4,7 +4,11 @@ import { describe, expect, it } from "vitest";
 import { FID_SNAPSHOT } from "../packages/features/diet-profile/src/fid-snapshot.generated";
 import type { SnapshotLocale } from "../packages/features/diet-profile/src/fid-snapshot-types";
 import { MAPPED_ALLERGEN_CODES } from "../packages/features/diet-profile/src/mapping";
-import { STAPLE_FID_IDS } from "../packages/features/diet-profile/src/staples";
+import {
+  CURATED_STAPLE_NAMES,
+  STAPLE_FID_IDS,
+  stapleName,
+} from "../packages/features/diet-profile/src/staples";
 
 /**
  * 001 FR-014–FR-017, made mechanical. The snapshot is generated from a local api at
@@ -74,5 +78,33 @@ describe("the FID snapshot (001 FR-014–FR-017)", () => {
         [...MAPPED_ALLERGEN_CODES].sort(),
       );
     }
+  });
+
+  it("every curated display name is one of that staple's own FID names (never hand-typed)", () => {
+    for (const [fidId, picks] of Object.entries(CURATED_STAPLE_NAMES)) {
+      const staple = FID_SNAPSHOT.staples.find((entry) => entry.fidId === fidId);
+      expect(staple, fidId).toBeDefined();
+      for (const [locale, name] of Object.entries(picks)) {
+        const stored = Object.entries(staple?.names ?? {}).find(([code]) => code === locale)?.[1];
+        expect(stored, `${fidId} ${locale}`).toContain(name);
+      }
+    }
+  });
+
+  it("shows the owner's German picks, else FID's first name, else English (FR-017)", () => {
+    const byId = (id: string) => FID_SNAPSHOT.staples.find((entry) => entry.fidId === id);
+    const sugar = byId("4BEC221");
+    const flour = byId("389D858");
+    if (!sugar || !flour) throw new Error("staples missing");
+    expect(stapleName(sugar, "de")).toBe("Zucker");
+    expect(stapleName(flour, "de")).toBe("Weizenmehl");
+    expect(stapleName(flour, "en")).toBe("wheat flour"); // exactly as stored (MA-14)
+    expect(stapleName(flour, "uk")).toBe("wheat flour"); // pending feat/021 ⇒ English
+    expect(["Zucker", "Ei", "Salz", "Zartbitter-Schokolade"]).toEqual(
+      ["4BEC221", "14A64E9", "007BBC5", "4B24CC7"].map((id) => {
+        const staple = byId(id);
+        return staple ? stapleName(staple, "de") : "";
+      }),
+    );
   });
 });
