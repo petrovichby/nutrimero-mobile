@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-24
 
-**Status**: Draft — gate 1 (coordinator reads before anything is planned)
+**Status**: Gate 1 PASSED at `e118563` (coordinator, 2026-09-24), with the rulings recorded under Clarifications
 
 **Input**: Owner assignment to Home lane 2, 2026-09-24: spec 005 = **F07 timers + F27 stage
 notifications + F37 wake-lock** (`nutrimero-docs:mobile/FEATURES.md` at `fb29dcb`, delivery
@@ -99,8 +99,10 @@ locked, and confirm one notification per stage, each naming the stage that ended
    finished stage and the next one.
 3. **Given** a stage has **no duration** (hands-on work such as "shape"), **Then** it has no timer
    and no notification. It waits for the baker to mark it done.
-4. **Given** a stage ended, **When** the baker moves on, **Then** the next stage starts according
-   to the chaining rule (Q1), and its notification is scheduled.
+4. **Given** a timed stage ended, **Then** its notification names the next stage ("Bulk ferment
+   done: shape next"), and tapping it opens the routine at the "Start next stage" button. The
+   next stage starts only when the baker taps that button (gate 1, Q1), and only then is its
+   notification scheduled.
 5. **Given** a routine is cancelled, **Then** every notification it scheduled is withdrawn.
 6. **Given** the baker has built a routine, **Then** it can be saved on the device and started
    again later.
@@ -224,8 +226,9 @@ asks again on its own.
   cool), or typed freely.
 - **FR-007**: Running a routine MUST show the stage position, the current stage, its time left
   (or "when you're ready" for a hands-on stage) and the next stage.
-- **FR-008**: How a stage leads into the next MUST follow the chaining rule settled at gate 1
-  (Q1).
+- **FR-008**: The next stage MUST start only when the baker taps **"Start next stage"** (gate 1,
+  Q1: manual). A stage-end notification names the next stage, and tapping it opens the routine
+  screen at that button.
 - **FR-009**: Routines MUST be savable on the device, then started, edited, renamed and deleted.
   Durations come from the baker; see Q3.
 
@@ -239,13 +242,17 @@ asks again on its own.
   withdraws the pending notification. Adding time re-schedules it.
 - **FR-012**: The notification channel MUST carry timers only. Nothing promotional,
   informational or content-related is ever sent on it (F27; F16 is a separate channel later).
-- **FR-013**: **Android tolerance**: the app MUST NOT request exact-alarm permission, and uses the
-  platform's inexact scheduling. The tolerance, stated in the in-app timer help and in the plan:
-  **on Android a notification may arrive late when the device is idle. The design target is
-  within about 10 minutes of the end time, and never early.** The on-screen countdown and the
-  in-app alert are exact. The owner rules on the stated wording at gate 1 if it differs. The
-  platform's actual window is verified on an Android device before release (Android
-  verification is owed; no emulator here).
+- **FR-013**: **Android tolerance** (owner's F27 decision, wording ruled at gate 1): the app MUST
+  NOT request exact-alarm permission, and uses the platform's inexact scheduling. The timer help
+  says: **"On Android a notification may arrive late while the device is idle, typically by up
+  to about 10 minutes, and never early."** The on-screen countdown and the in-app alert are
+  exact. The platform's actual window is verified on a real Android device before release
+  (owed; stated on every PR).
+- **FR-013a**: Short timers are not guaranteed to be on time under Android's idle mode either. So
+  **when a bake stage starts on Android**, the app says so **once**, plainly: the notification
+  may be late while the device is idle, and keeping the timer screen open keeps the device awake
+  (FR-020). "Bake stage" means a stage whose picked name is Bake or Preheat. The notice is shown
+  once per install, and it is never shown on iOS.
 - **FR-014**: Scheduled notifications MUST survive a device restart. If the platform drops them,
   they are re-scheduled from the stored end times at the next launch.
 - **FR-015**: Notification texts MUST be in the current UI language, re-scheduled when the
@@ -320,7 +327,25 @@ asks again on its own.
 9. **In-app completion alert**: which timer or stage ended; dismiss, or "Start next stage".
 10. **Entry point** to timers when none is running (see Q2).
 
-## Clarifications — questions carried with defaults
+## Clarifications
+
+### Gate 1 rulings (coordinator, 2026-09-24, at `e118563`)
+
+- **Q1 → manual "Start next stage"** (the default). The stage-end notification names the next
+  stage ("Bulk ferment done: shape next"). Tapping it opens the routine at that button (FR-008,
+  US2-4).
+- **Q2 → the working default is accepted.** Design-mobile draws the entry point as options,
+  including a row in More, and the owner picks on the walk. A More row beyond MA-24 needs his
+  word at that point.
+- **Q3 → no preset durations** (constitution IV). The baker's own saved routines cover reuse.
+- **FR-013 reworded**: "typically by up to about 10 minutes, and never early", with no "design
+  target", because the platform decides. FR-013a is added: a one-time Android notice when a bake
+  stage starts.
+- **Seam**: the chip mounts in Home lane 1's app-root and shell. It is built in
+  `packages/features/timers`, and the one wiring change is made only after Home 1's More-walk PR
+  has merged, announced through the owner first.
+
+### Questions as carried to gate 1 (record)
 
 **Q1 — How does one stage lead into the next?**
 Default **(A) Gated.** When a timed stage ends, the next stage starts when the baker taps
