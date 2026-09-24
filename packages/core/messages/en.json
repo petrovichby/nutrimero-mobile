@@ -227,6 +227,54 @@
         "pl": "Polish",
         "uk": "Ukrainian"
       }
+    },
+    "tabs": {
+      "recipes": "Recipes",
+      "builder": "Builder",
+      "shopping": "Shopping",
+      "pantry": "Pantry",
+      "more": "More"
+    },
+    "recipes": {
+      "title": "Recipes",
+      "connectOnce": "Recipes download the first time you’re connected."
+    },
+    "soon": {
+      "back": "Back to recipes",
+      "builder": {
+        "title": "Builder",
+        "body": "The builder is still in the oven — soon it’ll show what you can bake from your shelf.",
+        "art": "Engraved illustration of a tiered layer cake being assembled on a turntable, a palette knife beside it"
+      },
+      "pantry": {
+        "title": "Pantry",
+        "body": "Your pantry is still being built — soon a thirty-second weekly update keeps it right.",
+        "art": "Engraved illustration of well-stocked pantry shelves with labelled jars, a flour sack and a crock of eggs"
+      },
+      "shopping": {
+        "title": "Shopping",
+        "body": "Shopping lists are still rising — soon they’ll gather everything a recipe is missing.",
+        "art": "Engraved illustration of a wicker market basket with a paper bag of flour, a bottle of milk and a few eggs"
+      }
+    },
+    "more": {
+      "title": "More",
+      "clearTitle": "Clear my data on this device",
+      "clearHint": "Your dietary profile, units and pantry",
+      "version": "{app} · version {version}"
+    },
+    "clearData": {
+      "title": "Clear your data on this device?",
+      "lead": "This deletes from this device:",
+      "items": {
+        "profile": "your dietary profile",
+        "units": "your choice of units",
+        "pantry": "the staples in your pantry"
+      },
+      "restart": "You’ll start again from the first question. This can’t be undone.",
+      "keeps": "Your app language stays as it is.",
+      "cancel": "Cancel",
+      "confirm": "Clear my data"
     }
   }
 }

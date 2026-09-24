@@ -227,6 +227,54 @@
         "pl": "lengyel",
         "uk": "ukrán"
       }
+    },
+    "tabs": {
+      "recipes": "Receptek",
+      "builder": "Tervező",
+      "shopping": "Bevásárlás",
+      "pantry": "Kamra",
+      "more": "Továbbiak"
+    },
+    "recipes": {
+      "title": "Receptek",
+      "connectOnce": "A receptek az első csatlakozáskor töltődnek le."
+    },
+    "soon": {
+      "back": "Vissza a receptekhez",
+      "builder": {
+        "title": "Tervező",
+        "body": "A tervező még a sütőben van – hamarosan megmutatja, mit süthetsz abból, ami a polcodon van.",
+        "art": "Gravírozott illusztráció egy forgótányéron összeállított emeletes tortáról, mellette egy spatula"
+      },
+      "pantry": {
+        "title": "Kamra",
+        "body": "A kamrád még épül – hamarosan egy heti 30 másodperces frissítés naprakészen tartja.",
+        "art": "Gravírozott illusztráció jól feltöltött kamrapolcokról feliratos befőttesüvegekkel, egy lisztes zsákkal és egy tál tojással"
+      },
+      "shopping": {
+        "title": "Bevásárlás",
+        "body": "A bevásárlólisták még kelnek – hamarosan összegyűjtenek mindent, ami egy recepthez hiányzik.",
+        "art": "Gravírozott illusztráció egy fonott piaci kosárról egy papírzacskó liszttel, egy üveg tejjel és néhány tojással"
+      }
+    },
+    "more": {
+      "title": "Továbbiak",
+      "clearTitle": "Adataim törlése erről az eszközről",
+      "clearHint": "Az étrendi profilod, mértékegységeid és kamrád",
+      "version": "{app} · {version} verzió"
+    },
+    "clearData": {
+      "title": "Törlöd az adataidat erről az eszközről?",
+      "lead": "Ez törlődik erről az eszközről:",
+      "items": {
+        "profile": "az étrendi profilod",
+        "units": "a mértékegység-választásod",
+        "pantry": "a kamrád alapanyagai"
+      },
+      "restart": "Újra az első kérdéssel kezdesz. Ez nem vonható vissza.",
+      "keeps": "Az alkalmazás nyelve nem változik.",
+      "cancel": "Mégse",
+      "confirm": "Adataim törlése"
     }
   }
 }

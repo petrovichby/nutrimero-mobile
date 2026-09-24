@@ -21,7 +21,8 @@
           "configureAndroidBackup": true
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-router"
     ],
     "ios": {
       "bundleIdentifier": "org.nutrimero.homebaker",

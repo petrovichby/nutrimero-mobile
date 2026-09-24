@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../theme/provider";
@@ -7,15 +8,17 @@ import { textRole } from "./text-style";
 import { useReduceMotion } from "./use-reduce-motion";
 
 /**
- * A confirmation before a destructive action (DESIGN.md *Buttons*: destructive with a confirmation
- * step; 001 FR-013). It names what will happen; the confirm and cancel actions are the same size
- * and sit together — cancel is never a small link. The scrim, the system back button and the
- * cancel action all cancel; nothing traps the user. Rises as a sheet, or fades under Reduce Motion.
+ * A confirmation before a destructive action, as a bottom sheet (09-more-clear-data; DESIGN.md
+ * MA-24): a grab handle, the question, what happens (the caller's body), then Cancel and the
+ * destructive action side by side at **the same size**. The scrim, the system back button and
+ * Cancel all cancel; nothing traps the user. Rises, or fades under Reduce Motion.
+ *
+ * The corner radius is DESIGN.md's 12pt maximum; the corpus draws 20 (flagged to design-mobile).
  */
 export function ConfirmSheet({
   visible,
   title,
-  body,
+  children,
   confirmLabel,
   cancelLabel,
   onConfirm,
@@ -23,13 +26,14 @@ export function ConfirmSheet({
 }: {
   visible: boolean;
   title: string;
-  body: string;
+  children: ReactNode;
   confirmLabel: string;
   cancelLabel: string;
   onConfirm: () => void;
   onCancel: () => void;
 }) {
   const theme = useTheme();
+  const { color } = theme;
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
   return (
@@ -45,31 +49,41 @@ export function ConfirmSheet({
           accessibilityRole="button"
           accessibilityLabel={cancelLabel}
           onPress={onCancel}
-          style={[StyleSheet.absoluteFill, { backgroundColor: theme.color.scrim }]}
+          style={[StyleSheet.absoluteFill, { backgroundColor: color.sheetScrim }]}
         />
         <View
           accessibilityViewIsModal
+          accessibilityRole="alert"
           style={[
             styles.sheet,
             {
-              backgroundColor: theme.color.surface,
-              shadowColor: theme.color.shadowColor,
-              paddingBottom: Math.max(insets.bottom, tokens.spacing.screenMargin),
+              backgroundColor: color.surface,
+              shadowColor: color.shadowColor,
+              paddingBottom: Math.max(insets.bottom, tokens.spacing.sectionGap) + 6,
             },
           ]}
         >
+          <View style={[styles.grab, { backgroundColor: color.outlineStrong }]} />
           <Text
             accessibilityRole="header"
-            style={[textRole(theme, "headlineSm"), { color: theme.color.heading }]}
+            style={[textRole(theme, "headlineMd"), styles.title, { color: color.heading }]}
           >
             {title}
           </Text>
-          <Text style={[textRole(theme, "bodyMd"), styles.body, { color: theme.color.ink2 }]}>
-            {body}
-          </Text>
+          {children}
           <View style={styles.actions}>
-            <Button label={confirmLabel} variant="destructive" onPress={onConfirm} />
-            <Button label={cancelLabel} variant="secondary" onPress={onCancel} />
+            <Button
+              label={cancelLabel}
+              variant="secondary"
+              onPress={onCancel}
+              style={styles.action}
+            />
+            <Button
+              label={confirmLabel}
+              variant="destructive"
+              onPress={onConfirm}
+              style={styles.action}
+            />
           </View>
         </View>
       </View>
@@ -82,14 +96,22 @@ const styles = StyleSheet.create({
   sheet: {
     borderTopLeftRadius: tokens.radius.xl,
     borderTopRightRadius: tokens.radius.xl,
-    paddingTop: tokens.spacing.sectionGap,
-    paddingHorizontal: tokens.spacing.screenMargin,
+    paddingTop: 10,
+    paddingHorizontal: 20,
     // DESIGN.md MA-8: a sheet is a genuinely floating element — offset 6, blur 18.
     shadowOffset: { width: 0, height: -6 },
     shadowRadius: 18,
     shadowOpacity: 1,
     elevation: 12,
   },
-  body: { marginTop: tokens.spacing.unit * 2 },
-  actions: { marginTop: tokens.spacing.sectionGap, gap: tokens.spacing.unit * 3 },
+  grab: {
+    width: 40,
+    height: 5,
+    borderRadius: tokens.radius.full,
+    alignSelf: "center",
+    marginBottom: 16,
+  },
+  title: { marginBottom: tokens.spacing.unit * 2 },
+  actions: { flexDirection: "row", gap: 10, marginTop: 20 },
+  action: { flex: 1 },
 });

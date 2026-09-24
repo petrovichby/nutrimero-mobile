@@ -46,6 +46,10 @@ export interface Roles {
   statusBg: string;
   destructive: string;
   onDestructive: string;
+  /** Destructive TEXT and glyphs on a surface (the More row) — see PENDING_DECLARATION. */
+  destructiveInk: string;
+  /** The scrim behind a bottom sheet — see PENDING_DECLARATION. */
+  sheetScrim: string;
   focusRing: string;
   scrim: string;
   shadowColor: string;
@@ -91,6 +95,8 @@ function homeRoles(scheme: Scheme): Roles {
     statusBg: ramp.surface2,
     destructive: ramp.destructive,
     onDestructive: ramp.onDestructive,
+    destructiveInk: scheme === "light" ? ramp.destructive : PENDING_DECLARATION.destructiveInkDark,
+    sheetScrim: PENDING_DECLARATION.sheetScrim,
     focusRing: ramp.focusRing,
     scrim: ramp.scrim,
     shadowColor: ramp.shadow.color,
@@ -140,6 +146,9 @@ function proRoles(scheme: Scheme): Roles {
     statusBg: ramp.surfaceContainerHigh,
     destructive: g.mobile.destructive[scheme],
     onDestructive: g.mobile.destructive.on,
+    destructiveInk:
+      scheme === "light" ? g.mobile.destructive.light : PENDING_DECLARATION.destructiveInkDark,
+    sheetScrim: withAlpha("#000000", 0.45),
     focusRing: ramp.focusRing,
     // DESIGN.md MA-8 shadow alphas (0.14 tinted light, 0.45 black dark); scrim a step lighter.
     scrim: scheme === "light" ? withAlpha(g.pro.light.primary, 0.1) : withAlpha("#000000", 0.35),
@@ -154,6 +163,20 @@ function proRoles(scheme: Scheme): Roles {
     stampLine: stamp.line,
   };
 }
+
+/**
+ * Values the approved corpus draws that DESIGN.md does not declare yet (09-more, 09-more-clear-data;
+ * flagged to design-mobile 2026-09-24). Kept here, named, until MA-18 declares them; then they come
+ * from the generated tokens and this table is emptied (a test lists it, so it cannot grow quietly).
+ *
+ * - destructiveInkDark: the danger row's label and glyph in dark. The declared destructive FILL
+ *   (#a03325) is ~2.4:1 as text on the dark surfaces.
+ * - sheetScrim: the scrim behind the Clear my data sheet, heavier than the declared page scrim.
+ */
+export const PENDING_DECLARATION = {
+  destructiveInkDark: "#e8a598",
+  sheetScrim: "rgba(40,24,14,0.45)",
+} as const;
 
 export function rolesFor(app: App, scheme: Scheme): Roles {
   return app === "home" ? homeRoles(scheme) : proRoles(scheme);

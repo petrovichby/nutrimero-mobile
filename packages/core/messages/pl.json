@@ -227,6 +227,54 @@
         "pl": "polski",
         "uk": "ukraiński"
       }
+    },
+    "tabs": {
+      "recipes": "Przepisy",
+      "builder": "Kreator",
+      "shopping": "Zakupy",
+      "pantry": "Spiżarnia",
+      "more": "Więcej"
+    },
+    "recipes": {
+      "title": "Przepisy",
+      "connectOnce": "Przepisy pobiorą się, gdy pierwszy raz połączysz się z internetem."
+    },
+    "soon": {
+      "back": "Wróć do przepisów",
+      "builder": {
+        "title": "Kreator",
+        "body": "Kreator jeszcze się piecze — wkrótce pokaże, co możesz upiec z tego, co masz na półce.",
+        "art": "Grawerowana ilustracja piętrowego tortu składanego na obrotowej podstawie, obok szpatułka"
+      },
+      "pantry": {
+        "title": "Spiżarnia",
+        "body": "Twoja spiżarnia jest jeszcze w budowie — wkrótce 30-sekundowa aktualizacja raz w tygodniu utrzyma ją w porządku.",
+        "art": "Grawerowana ilustracja pełnych półek spiżarni z opisanymi słoikami, workiem mąki i garnkiem jajek"
+      },
+      "shopping": {
+        "title": "Zakupy",
+        "body": "Listy zakupów jeszcze rosną — wkrótce zbiorą wszystko, czego brakuje do przepisu.",
+        "art": "Grawerowana ilustracja wiklinowego koszyka z papierową torbą mąki, butelką mleka i kilkoma jajkami"
+      }
+    },
+    "more": {
+      "title": "Więcej",
+      "clearTitle": "Usuń moje dane z tego urządzenia",
+      "clearHint": "Twój profil żywieniowy, jednostki i spiżarnia",
+      "version": "{app} · wersja {version}"
+    },
+    "clearData": {
+      "title": "Usunąć twoje dane z tego urządzenia?",
+      "lead": "Z tego urządzenia zostanie usunięte:",
+      "items": {
+        "profile": "twój profil żywieniowy",
+        "units": "twój wybór jednostek",
+        "pantry": "podstawowe produkty w twojej spiżarni"
+      },
+      "restart": "Zaczniesz od nowa od pierwszego pytania. Tego nie można cofnąć.",
+      "keeps": "Język aplikacji pozostanie bez zmian.",
+      "cancel": "Anuluj",
+      "confirm": "Usuń moje dane"
     }
   }
 }

@@ -5,16 +5,18 @@ import {
   resolveLocale,
 } from "@nutrimero/core";
 import { Cover, FirstRunFlow } from "@nutrimero/feature-first-run";
-import { ThemeProvider, tokens, uiFace } from "@nutrimero/ui";
+import { ThemeProvider } from "@nutrimero/ui";
 import { fontAssets } from "@nutrimero/ui/native";
 import { useFonts } from "expo-font";
 import { getLocales } from "expo-localization";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { devicePreferences, homeStore, ready } from "./boot";
+import { devicePreferences, homeStore, ready } from "../src/boot";
+import { type Shell, ShellProvider } from "../src/shell";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
 // settled, the bundled faces are loaded, and the root view has laid out — so no text ever paints
@@ -35,7 +37,11 @@ if (__DEV__) {
 
 const deviceLanguageTags = () => getLocales().map((tag) => tag.languageTag);
 
-export function AppRoot() {
+/**
+ * The root: boot, faces, locale, and the first-run gate. Until first run is complete the tabs do
+ * not exist; completing it mounts them on Recipes, and Clear my data unmounts them again.
+ */
+export default function RootLayout() {
   const [booted, setBooted] = useState(false);
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   // The locale is state, so the in-app choice (FR-026, IX 1.2.0) re-renders in place — no restart.
@@ -47,8 +53,7 @@ export function AppRoot() {
   const [fontsLoaded, fontError] = useFonts(fontAssets);
 
   useEffect(() => {
-    // A store failure must not strand the user on the splash: reads fall back to their defaults,
-    // and first run surfaces the "could not be saved" state (001 edge cases) in phase 5.
+    // A store failure must not strand the user on the splash: reads fall back to their defaults.
     ready
       .then(() => devicePreferences.uiLocale())
       .then((choice) => setLocale(resolveLocale(choice, deviceLanguageTags())))
@@ -57,6 +62,29 @@ export function AppRoot() {
       .catch(() => setOnboarded(false))
       .finally(() => setBooted(true));
   }, []);
+
+  const chooseLocale = useCallback((choice: Locale | null) => {
+    setLocale(resolveLocale(choice, deviceLanguageTags()));
+    // The choice shows at once; if storing it fails it lasts only until the next launch.
+    devicePreferences.setUiLocale(choice).catch(() => undefined);
+  }, []);
+
+  const clearData = useCallback(async () => {
+    // Home's keys only — the language is a device preference and stays (FR-027).
+    await homeStore.wipeAll();
+    setOnboarded(false);
+  }, []);
+
+  const shell = useMemo<Shell>(
+    () => ({
+      t,
+      locale,
+      deviceLocale: resolveLocale(null, deviceLanguageTags()),
+      chooseLocale,
+      clearData,
+    }),
+    [t, locale, chooseLocale, clearData],
+  );
 
   // The native splash (the cream field) holds until the faces load; the composed cover then shows
   // only while boot is still settling — never for a fixed duration (001 FR-001/FR-002).
@@ -67,62 +95,26 @@ export function AppRoot() {
   return (
     <SafeAreaProvider>
       <ThemeProvider app="home" locale={locale}>
-        <View style={styles.fill} onLayout={() => SplashScreen.hideAsync()}>
-          {!booted || onboarded === null ? (
-            <Cover t={t} />
-          ) : onboarded ? (
-            <Placeholder t={t} locale={locale} />
-          ) : (
-            <FirstRunFlow
-              t={t}
-              locale={locale}
-              store={homeStore}
-              onComplete={() => setOnboarded(true)}
-            />
-          )}
-        </View>
+        <ShellProvider value={shell}>
+          <View style={styles.fill} onLayout={() => SplashScreen.hideAsync()}>
+            {!booted || onboarded === null ? (
+              <Cover t={t} />
+            ) : onboarded ? (
+              <Stack screenOptions={{ headerShown: false }} />
+            ) : (
+              <FirstRunFlow
+                t={t}
+                locale={locale}
+                store={homeStore}
+                onComplete={() => setOnboarded(true)}
+              />
+            )}
+          </View>
+          <StatusBar style="auto" />
+        </ShellProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
 }
 
-/**
- * Where first run lands until the Recipes tab's connect-once state is drawn (design-mobile): the
- * bootstrap placeholder, unchanged. Not a shipped screen.
- */
-function Placeholder({ t, locale }: { t: ReturnType<typeof createTranslator>; locale: Locale }) {
-  return (
-    <View style={styles.container}>
-      <Text accessibilityRole="header" style={[styles.name, { fontFamily: uiFace(locale, "700") }]}>
-        {t("app.homeBaker.name")}
-      </Text>
-      <Text style={[styles.tagline, { fontFamily: uiFace(locale) }]}>
-        {t("app.homeBaker.tagline")}
-      </Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  fill: { flex: 1 },
-  container: {
-    flex: 1,
-    backgroundColor: tokens.color.illustrationCanvas,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: tokens.spacing.screenMargin,
-  },
-  name: {
-    color: tokens.color.primary,
-    fontSize: tokens.type.headlineLg.fontSize,
-    lineHeight: tokens.type.headlineLg.lineHeight,
-    // No fontWeight: the registered face (uiFace(locale, "700")) is the weight.
-  },
-  tagline: {
-    color: tokens.color.onSurface,
-    fontSize: tokens.type.bodyLg.fontSize,
-    lineHeight: tokens.type.bodyLg.lineHeight,
-    marginTop: tokens.spacing.unit * 2,
-  },
-});
+const styles = StyleSheet.create({ fill: { flex: 1 } });
