@@ -1,6 +1,6 @@
 ---
 name: Nutrimero Mobile
-status: 0.5.1 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
+status: 0.5.2 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
   Pro Baker inherits the web ramps verbatim (web DESIGN.md frontmatter / nutrimero-design
@@ -177,6 +177,11 @@ so the register is carried by wording. Home stays warm and plain and may use con
 English is formal: no contractions, no casual idiom** ("cannot be recorded", not "can't be
 recorded"). One app never mixes registers. The catalog review for each locale checks it.
 
+**User-facing text says *device*, never *phone*, in every language** (MA-26; owner, 2026-09-24):
+de *Gerät*, not *Telefon* or *Handy*; hu *eszköz*; lt *įrenginys*; pl *urządzenie*; be *прылада*;
+uk *пристрій*. The apps are planned for tablets, and possibly as iOS apps running on macOS.
+Internal names (classes, frame labels) are not user-facing. Both apps; a catalog test enforces it.
+
 ## Layout & touch
 
 - **4pt rhythm.** All spacing is multiples of the 4pt unit; screen edge margin 16pt.
@@ -195,16 +200,21 @@ recorded"). One app never mixes registers. The catalog review for each locale ch
 
 - Bottom tab bar, maximum five items, labels always visible (icon-only tabs are prohibited).
   - Home Baker: **Recipes · Builder · Shopping · Pantry · More**
-  - Pro Baker (phone): **Production · Recipes · Costing · Orders · More**
-  - Pro Baker (tablet): left navigation rail + split view, mirroring the web shell's sidebar
-    semantics (`aria-current` equivalent: `accessibilityState.selected`).
+  - Pro Baker: **Labels · Recipes · Costing · Orders · More** (MA-23). There is no Production tab
+    until a production-plan entity is specced (owner ruling). Destinations not yet in the app show
+    an honest "not in the app yet" state. On tablet the rail is **light**, mirroring the web
+    sidebar (`aria-current` equivalent: `accessibilityState.selected`), and carries the square
+    mark; lime marks the active item. Navy chrome is not used, because the navy logo can never sit
+    on navy.
+- **More** (Home Baker, MA-24) holds Language, Clear my data on this device, and the app and
+  version line — nothing else in 001.
 - Modal flows (builder wizard, paywall, onboarding) present as full-screen sheets with an
   explicit close affordance top-left and never trap the user (hardware back always works).
 - **More → Language** (MA-22). The seven UI languages are listed in their own names (English,
   Deutsch, Magyar, Lietuvių, Беларуская, Polski, Українська), each with its name in the current UI
   language beneath and tagged with its own language for assistive tech. The current language is
-  marked. The phone's language carries a "Your phone’s language" tag, and until a language is
-  picked the app follows the phone. Endonyms in another script set in that script's face (G-1:
+  marked. The device's language carries a "Your device’s language" tag, and until a language is
+  picked the app follows the device (MA-26). Endonyms in another script set in that script's face (G-1:
   Cyrillic in Onest), never in a platform default. Corpus: `08-language.html`,
   `08-language-dark.html`.
 
@@ -289,6 +299,29 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   structure outline (rust / navy), and in dark the `outline-strong` edge with `ink` text; destructive = the `destructive` role pair (oxblood
   family, both schemes — e.g. the swipe-remove action) with confirmation step or undo. One
   primary action per screen.
+- **Clear my data** (Home Baker, MA-24) confirms in a bottom sheet that names what is deleted
+  (dietary profile, choice of units, pantry staples), says the user starts again from the first
+  question and that it cannot be undone, and that the app language stays. **Cancel and the
+  destructive action are the same size.** Corpus: `09-more-clear-data.html`.
+- **Retry appears only after a real failure or a timeout** (MA-24), never as a resting state. A
+  connect-once state with nothing to retry has no action (`01-recipes-connect-once.html`).
+- **Unbuilt tabs** (MA-24) show an engraving, one sentence, and one quiet action back to Recipes
+  (`03-builder-soon`, `04-pantry-soon`, `05-shopping-soon`, each with a dark twin).
+- **Pro Baker's Label desk** (MA-23; corpus `mobile/pro-baker/`, 29 frames):
+  - **Readiness and cell states** are text + glyph: Ready (success), N Incomplete (error),
+    **Not Issuable Yet** and **Not Yet Possible** (neutral, dashed — a gap the bakery *cannot*
+    fix, e.g. P-02 Additives, is never error colour and never a path to a fix).
+  - **The rendered label is printed matter**: white in both schemes, emphasis only where the api
+    marks it, each nutrition value tappable for its source figure and rounding rule.
+  - **The match verdict is the server's**, with its check time; a comparison with the current
+    preview marks no differences.
+  - **The plan screen** gives "Plans on nutrimero.org" and "Not Now" equal weight, with nothing
+    purchased in-app.
+  - **Sign-in:** "Sign in with your nutrimero.org account" (email and password, a link-out for
+    accounts and recovery). The provider row is reserved for Google and Apple (a pair) and HÁLÓS,
+    and stays collapsed until they ship; provider buttons use each provider's official assets.
+  - **Label languages:** the selector offers the five EU label languages the api proves (en, de,
+    hu, lt, pl), independent of the UI language.
 - **Status, count and note roles are named, never borrowed** (MA-21). `status-positive` (the
   web `success` family, verbatim) marks a good status — the cheapest basket, a full pantry match.
   `note-assurance` (surface-1, outline edge, ink text, heading glyph) carries a quiet reassurance
@@ -314,9 +347,12 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
 - **Stamp face: Stardos Stencil 700** (Latin) / **Yeseva One 400** (Cyrillic, be/uk; G-2) —
   the on-image provenance stamp ONLY (the `provenance-stamp` role). The splash wordmark's weight
   800 is the only use of 800, and it belongs to the `splash-wordmark` role.
-- **Display face (brand moments only): Pacifico** (Google Fonts, 400) — splash title, screen
-  mastheads (Recipes/Builder/Pantry/Shopping), paywall headline. Never in body, rows, buttons,
-  chips, or any Operate control. Chosen for the 1950s–60s cookbook voice (period-true brush
+- **Display face: Pacifico** (Google Fonts, 400) — **the splash title and every page title**, the
+  H1 of every Home Baker screen, present and future: tab mastheads, More, Language, the onboarding
+  steps, the recipe detail's title, the paywall headline (MA-25; owner, 2026-09-24). Titles may
+  wrap to two lines. **Steps are not page titles:** baking mode's H1 is the current *step*, an
+  Operate instruction, and stays in the UI face, as does any step-by-step instruction heading.
+  Never in body, rows, buttons, chips, or any Operate control. Chosen for the 1950s–60s cookbook voice (period-true brush
   lettering revival) and for charset coverage: Latin, Latin-Ext, Cyrillic, Cyrillic-Ext,
   Vietnamese — covers all seven UI locales, be and uk included (verified). Masthead metrics
   31/46; splash 56/86.
@@ -418,6 +454,12 @@ or any Operate ergonomics:
 
 ## Amendment log
 
+- 0.5.2 (2026-09-24) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `32a4a1aa`
+  by the Home lane: MA-23 Pro Baker's Label desk as approved (tabs Labels · Recipes · Costing ·
+  Orders · More, light rail, readiness states, printed-matter label, server match verdict, plan
+  screen, sign-in, label languages); MA-24 the Home shell (More, Clear my data sheet with
+  same-size actions, retry only after a real failure, unbuilt tabs); MA-25 Pacifico sets every
+  page title, steps excepted; MA-26 "device", never "phone" — including MA-22's Language tag.
 - 0.5.1 (2026-09-23) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `4cf875b6`
   (C1 at `a7e02fd2`), by the Home lane: MA-18's `colors-home` re-pasted whole — the C1–C4 roles
   are ruled, so `status-positive`, `note-assurance` and `count-neutral` join both schemes
