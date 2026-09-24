@@ -1,5 +1,5 @@
 import type { Translator } from "@nutrimero/core";
-import { Button, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
+import { Button, PageTitle, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
 import type { ReactNode } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -71,17 +71,12 @@ export function OnboardingFrame({
   );
 }
 
-/** The step heading and its one-line explanation (headline-lg, then body-md in ink-2). */
+/** The step's page title (MA-25: Pacifico — onboarding steps are pages, not instructions) and its one-line explanation (body-md in ink-2). */
 export function StepHeading({ title, body }: { title: string; body: string }) {
   const theme = useTheme();
   return (
     <View style={styles.heading}>
-      <Text
-        accessibilityRole="header"
-        style={[textRole(theme, "headlineLg"), { color: theme.color.heading }]}
-      >
-        {title}
-      </Text>
+      <PageTitle>{title}</PageTitle>
       <Text style={[textRole(theme, "bodyMd"), styles.lede, { color: theme.color.ink2 }]}>
         {body}
       </Text>

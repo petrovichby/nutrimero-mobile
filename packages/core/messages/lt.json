@@ -1,11 +1,11 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Profesionalios kepimo žinios namuose"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Jūsų receptai kepykloje"
     }
   },
@@ -159,13 +159,12 @@
       "continue": "Toliau",
       "units": {
         "title": "Kaip matuoji?",
-        "body": "Kiekvienas receptas perskaičiuojamas akimirksniu – tai gali pakeisti bet kada.",
+        "body": "Kiekvienas receptas perskaičiuojamas akimirksniu.",
         "group": "Matavimo vienetai",
         "metric": "Metrinė",
         "metricUnits": "gramai · mililitrai · °C",
         "imperial": "Imperinė",
         "imperialUnits": "puodeliai · uncijos · °F",
-        "sampleImperial": "3¼ puodelio",
         "convertLabel": "Taip atrodys tavo receptai",
         "rows": {
           "flourCup": "1 puodelis miltų",
@@ -180,11 +179,16 @@
           "celsius": "{celsius, number} °C",
           "fahrenheit": "{fahrenheit, number} °F"
         },
-        "tip": "Kepėjo patarimas: sverti gramais – didžiausias tikslumo patobulinimas; mūsų receptai pirmiausia rašomi metrine sistema."
+        "tip": "Kepėjo patarimas: sverti gramais – didžiausias tikslumo patobulinimas; mūsų receptai pirmiausia rašomi metrine sistema.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "puodelio"
+        }
       },
       "diet": {
         "title": "Į ką turėtume atkreipti dėmesį?",
-        "body": "Pažymėsime netinkančius receptus ir pasiūlysime tinkamų pakaitalų.",
+        "body": "Pažymėsime netinkančius receptus.",
         "group": "Mitybos ir alergenų profilis",
         "options": {
           "glutenFree": "Be glitimo",
@@ -196,7 +200,7 @@
         },
         "privacyTitle": "Lieka tavo įrenginyje.",
         "privacyBody": "Tavo mitybos profilis niekada neįkeliamas ir naudojamas tik tam, kad filtruotų, ką matai.",
-        "note": "Alergenų žymos paimtos iš patikrintų sudedamųjų dalių deklaracijų – vis tiek visada patikrink produktų etiketes."
+        "note": "Alergenų žymos paimtos iš mūsų sudedamųjų dalių duomenų – vis tiek visada patikrink produktų etiketes."
       },
       "pantry": {
         "title": "Kas yra tavo kepimo lentynoje?",
@@ -212,8 +216,8 @@
       "title": "Kalba",
       "intro": "Pasirink kalbą, kuria nori kepti.",
       "group": "Programėlės kalba",
-      "phoneTag": "Tavo telefono kalba",
-      "note": "Kol nepasirinksi, nutrimero naudos tavo telefono kalbą.",
+      "deviceTag": "Tavo įrenginio kalba",
+      "note": "Kol nepasirinksi, nutrimero naudos tavo įrenginio kalbą.",
       "names": {
         "en": "anglų",
         "de": "vokiečių",

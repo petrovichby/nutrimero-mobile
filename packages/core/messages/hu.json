@@ -1,11 +1,11 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Professzionális sütési tudás otthonra"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Az Ön receptjei a pékségben"
     }
   },
@@ -159,13 +159,12 @@
       "continue": "Tovább",
       "units": {
         "title": "Hogyan mérsz?",
-        "body": "Minden recept azonnal átvált – ezt bármikor módosíthatod.",
+        "body": "Minden recept azonnal átvált.",
         "group": "Mértékegységek",
         "metric": "Metrikus",
         "metricUnits": "gramm · milliliter · °C",
         "imperial": "Angolszász",
         "imperialUnits": "csésze · uncia · °F",
-        "sampleImperial": "3¼ csésze",
         "convertLabel": "Így fognak kinézni a receptjeid",
         "rows": {
           "flourCup": "1 csésze liszt",
@@ -180,11 +179,16 @@
           "celsius": "{celsius, number} °C",
           "fahrenheit": "{fahrenheit, number} °F"
         },
-        "tip": "Péktipp: a grammra mérés a legnagyobb lépés a pontosság felé – receptjeink elsősorban metrikusak."
+        "tip": "Péktipp: a grammra mérés a legnagyobb lépés a pontosság felé – receptjeink elsősorban metrikusak.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "csésze"
+        }
       },
       "diet": {
         "title": "Mire figyeljünk?",
-        "body": "Megjelöljük a nem megfelelő recepteket, és megfelelő helyettesítéseket javaslunk.",
+        "body": "Megjelöljük a nem megfelelő recepteket.",
         "group": "Étrendi és allergénprofil",
         "options": {
           "glutenFree": "Gluténmentes",
@@ -196,7 +200,7 @@
         },
         "privacyTitle": "Az eszközödön marad.",
         "privacyBody": "Az étrendi profilodat soha nem töltjük fel, és csak arra használjuk, hogy szűrjük, mit látsz.",
-        "note": "Az allergénjelzések ellenőrzött összetevő-nyilatkozatokból származnak – azért mindig nézd meg a termékcímkéket is."
+        "note": "Az allergénjelzések az összetevő-adatainkból származnak – azért mindig nézd meg a termékcímkéket is."
       },
       "pantry": {
         "title": "Mi van a sütőpolcodon?",
@@ -212,8 +216,8 @@
       "title": "Nyelv",
       "intro": "Válaszd ki, milyen nyelven szeretnél sütni.",
       "group": "Alkalmazás nyelve",
-      "phoneTag": "A telefonod nyelve",
-      "note": "Amíg nem választasz, a nutrimero a telefonod nyelvét követi.",
+      "deviceTag": "Az eszközöd nyelve",
+      "note": "Amíg nem választasz, a nutrimero az eszközöd nyelvét követi.",
       "names": {
         "en": "angol",
         "de": "német",

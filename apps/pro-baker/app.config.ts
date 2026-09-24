@@ -22,7 +22,7 @@ export default function config({ config }: ConfigContext): ExpoConfig {
   assertReleasable(process.env.EAS_BUILD_PROFILE, entitlements.source);
   return {
     ...config,
-    name: "Nutrimero Pro Baker",
+    name: "nutrimero Pro Baker",
     slug: "nutrimero-pro-baker",
     version: "0.1.0",
     orientation: "default",

@@ -10,7 +10,7 @@ describe("createTranslator", () => {
   });
 
   it("keeps brand names identical across locales", () => {
-    expect(createTranslator("lt")("app.homeBaker.name")).toBe("Nutrimero Home Baker");
+    expect(createTranslator("lt")("app.homeBaker.name")).toBe("nutrimero Home Baker");
   });
 });
 

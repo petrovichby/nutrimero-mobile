@@ -1,11 +1,11 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Professionelles Backwissen für zu Hause"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Ihre Rezepte in der Backstube"
     }
   },
@@ -159,13 +159,12 @@
       "continue": "Weiter",
       "units": {
         "title": "Wie misst du?",
-        "body": "Jedes Rezept rechnet sofort um – du kannst das jederzeit ändern.",
+        "body": "Jedes Rezept rechnet sofort um.",
         "group": "Maßeinheiten",
         "metric": "Metrisch",
         "metricUnits": "Gramm · Milliliter · °C",
         "imperial": "Imperial",
         "imperialUnits": "Tassen · Unzen · °F",
-        "sampleImperial": "3¼ Tassen",
         "convertLabel": "So lesen sich deine Rezepte",
         "rows": {
           "flourCup": "1 Tasse Mehl",
@@ -180,11 +179,16 @@
           "celsius": "{celsius, number} °C",
           "fahrenheit": "{fahrenheit, number} °F"
         },
-        "tip": "Bäckertipp: In Gramm zu wiegen bringt die größte Genauigkeit – unsere Rezepte sind zuerst metrisch geschrieben."
+        "tip": "Bäckertipp: In Gramm zu wiegen bringt die größte Genauigkeit – unsere Rezepte sind zuerst metrisch geschrieben.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "Tassen"
+        }
       },
       "diet": {
         "title": "Worauf sollen wir achten?",
-        "body": "Wir markieren Rezepte, die nicht passen, und schlagen Alternativen vor, die passen.",
+        "body": "Wir markieren Rezepte, die nicht passen.",
         "group": "Ernährungs- und Allergenprofil",
         "options": {
           "glutenFree": "Glutenfrei",
@@ -196,7 +200,7 @@
         },
         "privacyTitle": "Bleibt auf deinem Gerät.",
         "privacyBody": "Dein Ernährungsprofil wird nie hochgeladen und nur genutzt, um zu filtern, was du siehst.",
-        "note": "Allergenhinweise stammen aus geprüften Zutatenangaben – prüfe trotzdem immer die Produktetiketten."
+        "note": "Allergenhinweise stammen aus unseren Zutatendaten – prüfe trotzdem immer die Produktetiketten."
       },
       "pantry": {
         "title": "Was steht in deinem Backregal?",
@@ -212,8 +216,8 @@
       "title": "Sprache",
       "intro": "Wähle die Sprache, in der du backen möchtest.",
       "group": "App-Sprache",
-      "phoneTag": "Sprache deines Telefons",
-      "note": "Bis du eine auswählst, folgt nutrimero der Sprache deines Telefons.",
+      "deviceTag": "Sprache deines Geräts",
+      "note": "Bis du eine auswählst, folgt nutrimero der Sprache deines Geräts.",
       "names": {
         "en": "Englisch",
         "de": "Deutsch",

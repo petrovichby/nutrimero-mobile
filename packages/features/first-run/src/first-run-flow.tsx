@@ -69,6 +69,7 @@ export function FirstRunFlow({
     return (
       <UnitsStep
         t={t}
+        locale={locale}
         units={units}
         onChange={setUnits}
         onContinue={() => finish("units", "answered", () => store.setUnits(units))}

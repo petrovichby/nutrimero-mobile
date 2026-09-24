@@ -3,6 +3,7 @@ export { ConfirmSheet } from "./components/confirm-sheet";
 export { EmptyState } from "./components/empty-state";
 export { Masthead } from "./components/masthead";
 export { OfflineBanner } from "./components/offline-banner";
+export { PageTitle } from "./components/page-title";
 export { Plate } from "./components/plate";
 export { ProvenanceStamp } from "./components/provenance-stamp";
 export { Screen } from "./components/screen";

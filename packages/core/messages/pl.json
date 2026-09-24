@@ -1,11 +1,11 @@
 {
   "app": {
     "homeBaker": {
-      "name": "Nutrimero Home Baker",
+      "name": "nutrimero Home Baker",
       "tagline": "Profesjonalna wiedza piekarska w domu"
     },
     "proBaker": {
-      "name": "Nutrimero Pro Baker",
+      "name": "nutrimero Pro Baker",
       "tagline": "Państwa przepisy w piekarni"
     }
   },
@@ -159,13 +159,12 @@
       "continue": "Dalej",
       "units": {
         "title": "Jak mierzysz?",
-        "body": "Każdy przepis przelicza się od razu — możesz to zmienić w każdej chwili.",
+        "body": "Każdy przepis przelicza się od razu.",
         "group": "Jednostki",
         "metric": "Metryczny",
         "metricUnits": "gramy · mililitry · °C",
         "imperial": "Imperialny",
         "imperialUnits": "szklanki · uncje · °F",
-        "sampleImperial": "3¼ szklanki",
         "convertLabel": "Tak będą wyglądać twoje przepisy",
         "rows": {
           "flourCup": "1 szklanka mąki",
@@ -180,11 +179,16 @@
           "celsius": "{celsius, number} °C",
           "fahrenheit": "{fahrenheit, number} °F"
         },
-        "tip": "Rada piekarza: ważenie w gramach to największy krok ku dokładności — nasze przepisy są pisane najpierw w systemie metrycznym."
+        "tip": "Rada piekarza: ważenie w gramach to największy krok ku dokładności — nasze przepisy są pisane najpierw w systemie metrycznym.",
+        "sample": {
+          "metricUnit": "g",
+          "imperialValue": "3¼",
+          "imperialUnit": "szklanki"
+        }
       },
       "diet": {
         "title": "Na co mamy uważać?",
-        "body": "Oznaczymy przepisy, które nie pasują, i zaproponujemy pasujące zamienniki.",
+        "body": "Oznaczymy przepisy, które nie pasują.",
         "group": "Profil żywieniowy i alergenowy",
         "options": {
           "glutenFree": "Bez glutenu",
@@ -196,7 +200,7 @@
         },
         "privacyTitle": "Zostaje na twoim urządzeniu.",
         "privacyBody": "Twój profil żywieniowy nigdy nie jest wysyłany i służy tylko do filtrowania tego, co widzisz.",
-        "note": "Oznaczenia alergenów pochodzą ze sprawdzonych deklaracji składników — mimo to zawsze sprawdzaj etykiety produktów."
+        "note": "Oznaczenia alergenów pochodzą z naszych danych o składnikach — mimo to zawsze sprawdzaj etykiety produktów."
       },
       "pantry": {
         "title": "Co masz na półce do pieczenia?",
@@ -212,8 +216,8 @@
       "title": "Język",
       "intro": "Wybierz język, w którym chcesz piec.",
       "group": "Język aplikacji",
-      "phoneTag": "Język twojego telefonu",
-      "note": "Dopóki nie wybierzesz, nutrimero używa języka twojego telefonu.",
+      "deviceTag": "Język twojego urządzenia",
+      "note": "Dopóki nie wybierzesz, nutrimero używa języka twojego urządzenia.",
       "names": {
         "en": "angielski",
         "de": "niemiecki",

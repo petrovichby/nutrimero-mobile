@@ -20,7 +20,7 @@ export function SelectionCard({
 }: {
   title: string;
   description?: string;
-  /** Leading 64pt sample (e.g. "420 g"), rendered on the scheme-fixed canvas. */
+  /** Leading 76pt sample tile (value over unit, 07-onboarding-units), on the scheme-fixed canvas. */
   sample?: ReactNode;
   selected: boolean;
   onPress: () => void;
@@ -72,8 +72,9 @@ const styles = StyleSheet.create({
   },
   pressed: { opacity: 0.9 },
   sample: {
-    width: 64,
-    height: 64,
+    width: 76,
+    height: 76,
+    gap: 1,
     borderRadius: tokens.radius.lg,
     alignItems: "center",
     justifyContent: "center",

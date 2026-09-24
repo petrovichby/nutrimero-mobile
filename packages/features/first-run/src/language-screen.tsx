@@ -1,28 +1,28 @@
 import { LOCALES, type Locale, type Translator } from "@nutrimero/core";
-import { Glyph, Screen, textRole, tokens, uiFace, useTheme } from "@nutrimero/ui";
+import { Glyph, PageTitle, Screen, textRole, tokens, uiFace, useTheme } from "@nutrimero/ui";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 /**
  * More → Language (08-language; DESIGN.md MA-22; 001 FR-026). The seven UI languages in their own
  * names, each set in its own script's face (Беларуская in Onest even inside an English UI) and
  * tagged with its own language for assistive tech; beneath each, its name in the current UI
- * language — or, for the phone's language, the "Your phone's language" tag. Choosing the phone's
- * language removes the override (the app follows the phone again); any other stores it. The
+ * language — or, for the device's language, the "Your device's language" tag. Choosing the device's
+ * language removes the override (the app follows the device again); any other stores it. The
  * caller applies the choice in place — no restart.
  */
 export function LanguageScreen({
   t,
   current,
-  phoneLocale,
+  deviceLocale,
   onChoose,
   onBack,
 }: {
   t: Translator;
-  /** The language the UI is in now (override, else the phone's). */
+  /** The language the UI is in now (override, else the device's). */
   current: Locale;
-  /** The phone's own UI locale (the system default, IX 1.2.0 rule 1). */
-  phoneLocale: Locale;
-  /** `null` = follow the phone (removes the override). */
+  /** The device's own UI locale (the system default, IX 1.2.0 rule 1). */
+  deviceLocale: Locale;
+  /** `null` = follow the device (removes the override). */
   onChoose: (choice: Locale | null) => void;
   onBack: () => void;
 }) {
@@ -44,12 +44,7 @@ export function LanguageScreen({
         </Pressable>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text
-          accessibilityRole="header"
-          style={[textRole(theme, "headlineLg"), { color: color.heading }]}
-        >
-          {t("home.language.title")}
-        </Text>
+        <PageTitle>{t("home.language.title")}</PageTitle>
         <Text style={[textRole(theme, "bodyMd"), styles.intro, { color: color.ink2 }]}>
           {t("home.language.intro")}
         </Text>
@@ -60,16 +55,16 @@ export function LanguageScreen({
         >
           {LOCALES.map((code, index) => {
             const selected = code === current;
-            const isPhone = code === phoneLocale;
+            const isDevice = code === deviceLocale;
             const endonym = t(`common.languageEndonym.${code}`);
-            const sub = isPhone ? t("home.language.phoneTag") : t(`home.language.names.${code}`);
+            const sub = isDevice ? t("home.language.deviceTag") : t(`home.language.names.${code}`);
             return (
               <Pressable
                 key={code}
                 accessibilityRole="radio"
                 accessibilityState={{ checked: selected }}
                 accessibilityLabel={`${endonym}, ${sub}`}
-                onPress={() => onChoose(isPhone ? null : code)}
+                onPress={() => onChoose(isDevice ? null : code)}
                 style={({ pressed }) => [
                   styles.row,
                   index > 0 && { borderTopWidth: 1, borderTopColor: color.outline },
@@ -91,11 +86,11 @@ export function LanguageScreen({
                   >
                     {endonym}
                   </Text>
-                  {isPhone ? (
+                  {isDevice ? (
                     <Text
                       style={[
                         textRole(theme, "labelSm"),
-                        styles.phoneTag,
+                        styles.deviceTag,
                         {
                           color: color.ink2,
                           borderColor: color.outlineStrong,
@@ -158,7 +153,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: tokens.spacing.screenMargin,
   },
   rowText: { flex: 1, alignItems: "flex-start", gap: 2 },
-  phoneTag: {
+  deviceTag: {
     marginTop: 3,
     paddingHorizontal: tokens.spacing.unit * 2,
     paddingVertical: 3,

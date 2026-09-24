@@ -1,4 +1,10 @@
-import { celsiusFromFahrenheit, roundToStep, type Translator } from "@nutrimero/core";
+import {
+  celsiusFromFahrenheit,
+  formatNumber,
+  type Locale,
+  roundToStep,
+  type Translator,
+} from "@nutrimero/core";
 import type { Units } from "@nutrimero/feature-home-data";
 import { SelectionCard, textRole, tokens, useTheme } from "@nutrimero/ui";
 import { StyleSheet, Text, View } from "react-native";
@@ -16,12 +22,14 @@ const BUTTER_STICK_G = 113;
  */
 export function UnitsStep({
   t,
+  locale,
   units,
   onChange,
   onContinue,
   onSkip,
 }: {
   t: Translator;
+  locale: Locale;
   units: Units;
   onChange: (units: Units) => void;
   onContinue: () => void;
@@ -29,7 +37,21 @@ export function UnitsStep({
 }) {
   const theme = useTheme();
   const { color } = theme;
-  const sample = [textRole(theme, "bodyLg", "700"), styles.tabular, { color: color.canvasHeading }];
+  // The 76pt sample tile: value over unit (07-onboarding-units, design ruling 2026-09-24).
+  const tile = (value: string, unit: string) => (
+    <>
+      <Text
+        style={[
+          styles.sampleValue,
+          styles.tabular,
+          { fontFamily: theme.face("700"), color: color.canvasHeading },
+        ]}
+      >
+        {value}
+      </Text>
+      <Text style={[textRole(theme, "labelMd"), { color: color.canvasInk }]}>{unit}</Text>
+    </>
+  );
   const rows =
     units === "metric"
       ? [
@@ -81,16 +103,17 @@ export function UnitsStep({
         <SelectionCard
           title={t("home.onboarding.units.metric")}
           description={t("home.onboarding.units.metricUnits")}
-          sample={
-            <Text style={sample}>{t("home.onboarding.units.values.grams", { grams: 420 })}</Text>
-          }
+          sample={tile(formatNumber(420, locale), t("home.onboarding.units.sample.metricUnit"))}
           selected={units === "metric"}
           onPress={() => onChange("metric")}
         />
         <SelectionCard
           title={t("home.onboarding.units.imperial")}
           description={t("home.onboarding.units.imperialUnits")}
-          sample={<Text style={sample}>{t("home.onboarding.units.sampleImperial")}</Text>}
+          sample={tile(
+            t("home.onboarding.units.sample.imperialValue"),
+            t("home.onboarding.units.sample.imperialUnit"),
+          )}
           selected={units === "imperial"}
           onPress={() => onChange("imperial")}
         />
@@ -132,6 +155,7 @@ export function UnitsStep({
 const styles = StyleSheet.create({
   cards: { gap: tokens.spacing.unit * 3 },
   tabular: { fontVariant: ["tabular-nums"] },
+  sampleValue: { fontSize: 24, lineHeight: 28 },
   convert: {
     marginTop: 18,
     borderRadius: tokens.radius.xl,

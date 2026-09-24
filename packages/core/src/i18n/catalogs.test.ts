@@ -40,6 +40,8 @@ const IDENTICAL_ALLOWED: Record<string, "all" | readonly string[]> = {
   "app.proBaker.name": "all",
   "home.cover.wordmark": "all", // the brand, lowercase (MA-14)
   "home.cover.title": "all", // the app name
+  "home.onboarding.units.sample.imperialValue": "all", // a numeral with a vulgar fraction
+  "home.onboarding.units.sample.metricUnit": ["de", "hu", "lt", "pl"], // Latin "g"; be/uk use "г"
   "home.onboarding.units.values.celsius": "all",
   "home.onboarding.units.values.fahrenheit": "all",
   "home.onboarding.units.values.grams": ["de", "hu", "lt", "pl"], // Latin "g"; be/uk use "г"
@@ -150,6 +152,27 @@ describe("plural arguments", () => {
         for (const match of message.matchAll(/\{\s*(\w+)\s*,\s*plural\s*,/g)) {
           if (match[1] !== "count") offenders.push(`${locale} ${key}: ${match[1]}`);
         }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
+
+/**
+ * "Device", never "phone" (owner, 2026-09-24): the apps are planned for tablets and possibly iOS
+ * apps on macOS, so no user-facing text in any language names the phone. A case-insensitive
+ * substring match, so inflections are caught too (Telefons, telefonas, тэлефона, телефону …).
+ */
+const PHONE_WORDS = ["phone", "telefon", "handy", "тэлефон", "телефон", "smartphone"];
+
+describe("device, never phone", () => {
+  it("no catalog value in any language names the phone", () => {
+    const offenders: string[] = [];
+    for (const locale of LOCALES) {
+      for (const [key, message] of Object.entries(flatten(messages[locale]))) {
+        const lower = message.toLocaleLowerCase(locale);
+        const word = PHONE_WORDS.find((phoneWord) => lower.includes(phoneWord));
+        if (word) offenders.push(`${locale} ${key}: ${word}`);
       }
     }
     expect(offenders).toEqual([]);
