@@ -40,37 +40,21 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   selecting densities in the script (rejected — the rule would hide in a build step instead of
   living in tested code next to the manifest).
 
-## R3 — Admissibility and the choice of one density (gate-1 Q1, Q2)
+## R3 — The chosen density comes from the api (gate-1 Q1, Q2 as corrected)
 
-- **Decision**: a pure function `resolveVolume(ingredient, formId, stateId, manifest)` returns
-  one of:
-  - `{ kind: "value", gramsPerMl, row, confirmations }` — the chosen row, and for a proven
-    AI-derived row the published sources that confirm it;
-  - `{ kind: "inconsistent", rows }` — admissible rows disagree by more than 5 % and no ruled
-    pick exists (FR-005a): **no volume conversion**;
-  - `{ kind: "none" }` — no admissible row (FR-007).
-- **Steps**:
-  1. **Density per row** = `referenceMassG / referenceVolumeMl` (a 5 ml spoon row and a 100 ml row
-     both become g/ml; the spoon rows are therefore density evidence like any other).
-  2. **Classify each row's source** against a closed list (R4). AI-derived: sources starting
-     "OpenAI" or containing "AI-assisted". A row whose source is on neither list fails the build —
-     a new source can never slip in unclassified.
-  3. **Admissible** = not AI-derived, or AI-derived with a *confirmed* verdict in
-     `density-evidence.md` (FR-004a).
-  4. **A ruled pick** in the manifest (FR-005a) wins outright; it must name one of the
-     ingredient's own FID rows (test).
-  5. **Band**: if `max / min ≤ 1.05` over the admissible densities → the fixed rule; else
-     `inconsistent`.
-  6. **Fixed rule**: highest confidence (`HIGH` > `MEDIUM` > `LOW`), then method (`MEASURED` >
-     `LITERATURE` > `CALCULATED` > `ESTIMATE`), then **source order** (gate-2 item 3), then FID
-     row id (a total order, so the result is deterministic).
-- **Piece weights**: every row is from one source (Markus's 2026-09-03 table, `ESTIMATE`/
-  `MEDIUM`, not AI-labelled) and there is one row per size class, so no choice arises; they are
-  admissible and shown with their confidence.
-- **The inconsistency report**: `pnpm measures:report` (a script over the generated snapshot and
-  the manifest) prints every inconsistent ingredient with each row's source and value — the list
-  brought to the owner. Wheat flour (52.8 / 58 / 65) and sugar (84.5 / 85 / 95) are already known
-  to be on it.
+- **Decision**: the app applies **no** admissibility or choice rule. The api defines the density
+  choice (the 5 % band, the fixed rule, resolved picks, the multi-source admission of AI-derived
+  rows) once for every reader, in its upcoming `change/002`; the snapshot copies the api's
+  **chosen density** per ingredient, form and state with the sources it records, and copies FID's
+  raw rows too, for the provenance view. Where the api has no chosen density, the app shows no
+  volume conversion (FR-005).
+- **What the lane still computes — offline, for the evidence, never in the app**: a survey script
+  over the local api (or the seed files) that lists, for the curated set, every AI-derived row
+  and every group of admissible rows more than 5 % apart. That list is the input to
+  `density-evidence.md` (R4) and to the api's overlays. Wheat flour (52.8 / 58 / 65) and sugar
+  (84.5 / 85 / 95) are already on it.
+- **Superseded** (first plan, before the correction): an app-side `resolveVolume`, a
+  `RULED_PICKS` manifest and a `SOURCE_ORDER` — withdrawn; the api is the single definition.
 
 ## R4 — Multi-source proof and `density-evidence.md` (gate-1 Q1)
 
@@ -81,8 +65,9 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 
   Verdicts: `confirmed` (≥ 2 independent published sources within 5 % of the FID value),
   `unconfirmed` (fewer than two found), `disputed` (a source outside 5 %). A test asserts that
-  every AI-derived row in the curated set has exactly one evidence line, that `confirmed` lines
-  carry ≥ 2 sources each within 5 %, and that the app admits exactly the confirmed rows.
+  every AI-derived row in the curated set has exactly one evidence line and that `confirmed` lines
+  carry ≥ 2 sources each within 5 %. The file **feeds the api's overlays**; the app admits
+  nothing itself — it shows the api's choice.
 - **Independence**: two sources are independent when neither republishes the other. USDA-derived
   compilations (FID's own "USDA FDC via iForge") count as USDA once; a national food-composition
   table (Fineli, Health Canada CNF, FAO/INFOODS, McCance & Widdowson, Frida/DTU, BLS) counts once
@@ -92,9 +77,9 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   national food-composition tables above (household-measure weights); USDA FoodData Central
   (SR Legacy "portion" weights); established baking references with published weight tables
   (e.g. King Arthur's ingredient weight chart) — each with URL and locus.
-- **When**: after the owner confirms the curated set (R5) — the evidence covers the AI-derived rows
-  of that set only (gate-1 scope). The work is research by the lane (web), reviewed by the owner
-  in the evidence PR.
+- **When**: now, in parallel with the api's change (the coordinator's sequencing) — over the
+  **draft** set (R5), so the evidence is ready when the owner confirms the set. Inconsistencies
+  are listed with every row's source and value (FR-005a), flour first.
 - **Alternatives**: a TypeScript manifest with a generated Markdown view (rejected — the owner
   asked for the Markdown file as the committed evidence; one authority, parsed by the test).
 
@@ -111,22 +96,22 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   volume conversion (AI-only and unproven, or inconsistent), so the owner confirms knowing the
   cost.
 
-## R6 — Measuring standards
+## R6 — Units come from the api (corrected Q3)
 
-- **Decision** (gate-1 Q3), exact definitions in `packages/core/src/units/standards.ts`:
-
-  | Standard | cup | tbsp | tsp | fl oz |
-  |---|---|---|---|---|
-  | US customary | 236.5882365 ml (8 US fl oz) | 14.78676478 ml (½ fl oz) | 4.928921594 ml (⅓ tbsp) | 29.5735295625 ml |
-  | metric | 250 ml | 15 ml | 5 ml | — |
-  | UK | 284.130625 ml (½ imperial pint) | 15 ml | 5 ml | 28.4130625 ml |
-  | Australian | 250 ml | 20 ml | 5 ml | — |
-
-  Displayed values round these (236.6 ml, 14.8 ml, 4.9 ml); arithmetic uses the exact ones.
-- **Default display** (FR-009): US and metric side by side. **Setting**: US + metric (default),
-  UK, Australian — one choice, persisted.
-- **FID's 240 ml cup** is not used; its unit table stays FID's (nutrition-label cup). The
-  discrepancy goes to the api lane via the coordinator (gate-1 Q3).
+- **Decision**: the app holds **no unit constants**. The api defines the units (`change/002`):
+  the standard cup 250 ml (Markus M1), the US cup 236.59 ml for American recipes, tsp 5 ml and
+  tbsp 15 ml (Markus M34), and the rest of FID's unit set. The snapshot copies those definitions;
+  core's conversion functions take a factor from the snapshot instead of a constant.
+- **Existing constant**: `packages/core/src/units/convert.ts` holds `GRAMS_PER_OUNCE =
+  28.349523125` (001). It moves onto the api's ounce definition in 004 — the api's current FID
+  unit table says 28.35, so the two differ in the fourth decimal; `change/002` decides which is the
+  platform's ounce, and 001's units card follows it.
+- **Temperature** (°C ↔ °F) is a formula, not a unit definition; it stays in core.
+- **No setting**: both cups are always shown, labelled (FR-009). UK and Australian measures are
+  not in the platform's definitions today (an AU tablespoon of 20 ml would contradict M34's
+  15 ml); they enter only if the api defines them.
+- **Superseded**: the first plan's `MEASURING_STANDARDS` table (US customary 14.79 / 4.93 ml
+  spoons, UK, AU) — withdrawn.
 
 ## R7 — Fractions, rounding, and plurals
 
@@ -166,12 +151,10 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   diacritics of the seven UI locales' keyboards.
 - **Privacy**: search runs in memory; the term is neither stored nor sent (FR-012).
 
-## R10 — The standard setting
+## R10 — No device setting
 
-- **Decision**: a Home key, `nutrimero.home.measureStandard` (`"usMetric" | "uk" | "au"`), in
-  `HOME_KEYS`, so Home's wiper and Clear my data reset it (spec assumption); the byte-budget test
-  covers it. The Clear my data sheet's list does not change (it names what matters; the setting
-  is a display preference — owner may rule otherwise at gate 2).
+- **Decision**: 004 stores nothing (FR-022). The first plan's `nutrimero.home.measureStandard` key
+  is withdrawn with the setting (R6).
 
 ## R11 — Screens and navigation
 
@@ -179,17 +162,24 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   (DESIGN.md); screens go through `impeccable`. The router side is ready either way: pushed routes
   `app/measures/index.tsx` (table + search) and `app/measures/[fidId].tsx` (ingredient +
   converter) on the root Stack; the entry point (a More row, a tab, or both) follows the concept.
-- **Converter state** is screen-local (amount, from, to, form/state); nothing but the standard
-  setting persists.
+- **Converter state** is screen-local (amount, from, to, form/state); nothing persists.
 
 ## R12 — The onboarding card (FR-023)
 
-- **Decision**: `units-step.tsx`'s `FLOUR_CUP_G = 120` becomes the measures package's resolved
-  wheat-flour value in a US cup once flour's pick is ruled; until then it stays, with a comment
-  naming FR-023. The butter stick (113 g) is ½ US cup of butter **by definition of the stick**
-  (4 oz = 113.4 g), not a density, and stays. design-mobile is told when the flour number changes.
+- **Decision**: `units-step.tsx`'s `FLOUR_CUP_G = 120` becomes the api's chosen wheat-flour
+  density in a US cup once the api has settled flour; until then it stays, with a comment naming
+  FR-023. The butter **stick** (113 g) is a unit (4 US oz): it stays only if the api's unit
+  definitions include it — asked of the api lane; otherwise the row is re-expressed with
+  design-mobile. design-mobile is told when either number changes.
 
 ## R13 — Contract and api asks
+
+- **`change/002`** (units + chosen density): 004's snapshot and build wait for its merge and the
+  contract sync that follows; the snapshot script then reads its fields.
+- **Open, to the api lane**: whether the butter *stick* is a platform unit (R12); and whether
+  Markus's 2026-09-03 piece-weight table was part of the delivery M34 disclosed as AI-generated —
+  if so, every piece weight is AI-derived and falls under Q1's multi-source rule, although its
+  source string does not say so.
 
 - `reserved.volumeToMass` / `reserved.pieceWeight`: **confirmed stable by the api lane
   (2026-09-24)** — schema unchanged since 2026-09-04. The snapshot keeps FID's full-precision
@@ -207,9 +197,10 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 
 ## R15 — Testing
 
-- **Vitest (node)**: admissibility and `resolveVolume` matrix (none / value / inconsistent /
-  pick), the closed source list, evidence-file parsing and its coverage of the set's AI-derived
-  rows, manifest picks name real FID rows, standards arithmetic, `formatMeasure` (glyph snapping,
+- **Vitest (node)**: the snapshot's chosen densities and unit definitions equal the api's at the
+  recorded commit (generated, never edited), evidence-file parsing and its coverage of the set's
+  AI-derived rows, conversion with snapshot factors (no constants — a test fails on a numeric unit
+  literal in the units module), `formatMeasure` (glyph snapping,
   locale formats, no plural on fractions), round trips over the whole set (SC-004), search top-3
   for every name of every ingredient (SC-005), every cup/spoon string carries its standard
   (SC-002), and a static no-network test for the measures package (FR-019).
