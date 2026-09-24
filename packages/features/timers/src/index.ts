@@ -1,5 +1,12 @@
 // @nutrimero/feature-timers (005): the platform-free core. Importable from Node (Vitest); the
 // native adapters (notifications, keep-awake) live in "./native".
+export {
+  type NotificationContent,
+  type NotificationData,
+  notificationContent,
+  routeOf,
+  stageLabel,
+} from "./model/content";
 export { durationParts, formatDuration } from "./model/duration";
 export {
   type Action,
@@ -17,6 +24,8 @@ export {
   transition,
   type View,
 } from "./model/item";
+export { performIntents, rescheduleAll, type SchedulerPort } from "./model/perform";
+export { shouldAskInContext, showsRefusedNote } from "./model/permission";
 export { MAX_ACTIVE_ITEMS, type Pending, reconcile } from "./model/reconcile";
 export {
   isBakeStage,
