@@ -97,10 +97,10 @@ with the Android-owed line.
 and asks for permission in context.
 **Independent test**: quickstart M1, M2 and M3.
 
-- [ ] T010 [US1] Write `packages/features/timers/src/native/scheduler.ts` (R1): `ensureChannel(t)` (the `home-timers` channel, HIGH, named in the UI language), `schedule(item, t)` (a `DATE` trigger at `endAt`, `data: {kind, itemId}`), `cancel(id)`, `pending()`, and `setNotificationHandler`. In the foreground the banner and list are off and the sound is on (R1, R9).
-- [ ] T011 [US1] Write `packages/features/timers/src/native/permission.ts` (FR-016, FR-017): `permission()` reads the status and `canAskAgain`. `requestInContext()` is called only from the first-start flow, only once (the `permissionAsked` pref), and never at launch or in onboarding.
-- [ ] T012 [US1] Write `packages/features/timers/src/native/lifecycle.ts`: on launch and on every foreground, `derive` everything, run `reconcile`, and apply the intents through the scheduler (FR-004, FR-014, US5-3). It also re-schedules every pending text when the UI language changes (FR-015).
-- [ ] T013 [US1] Add a build check, `packages/features/timers/src/android-permissions.test.ts`: evaluate `apps/home-baker`'s resolved config and assert that `SCHEDULE_EXACT_ALARM` and `USE_EXACT_ALARM` are absent. If `expo-notifications` contributes one, list it in `android.blockedPermissions` (gate 2 ruling) and keep the test as the proof. (The config edit itself is part of ⛔HOME1's wiring task T024; until then the test runs against the plugin's declared permissions.)
+- [x] T010 [US1] Write `packages/features/timers/src/native/scheduler.ts` (R1): `ensureChannel(t)` (the `home-timers` channel, HIGH, named in the UI language), `schedule(item, t)` (a `DATE` trigger at `endAt`, `data: {kind, itemId}`), `cancel(id)`, `pending()`, and `setNotificationHandler`. In the foreground the banner and list are off and the sound is on (R1, R9).
+- [x] T011 [US1] Write `packages/features/timers/src/native/permission.ts` (FR-016, FR-017): `permission()` reads the status and `canAskAgain`. `requestInContext()` is called only from the first-start flow, only once (the `permissionAsked` pref), and never at launch or in onboarding.
+- [x] T012 [US1] Write `packages/features/timers/src/native/lifecycle.ts`: on launch and on every foreground, `derive` everything, run `reconcile`, and apply the intents through the scheduler (FR-004, FR-014, US5-3). It also re-schedules every pending text when the UI language changes (FR-015).
+- [x] T013 [US1] Add a build check, `packages/features/timers/src/android-permissions.test.ts`: evaluate `apps/home-baker`'s resolved config and assert that `SCHEDULE_EXACT_ALARM` and `USE_EXACT_ALARM` are absent. If `expo-notifications` contributes one, list it in `android.blockedPermissions` (gate 2 ruling) and keep the test as the proof. (The config edit itself is part of ⛔HOME1's wiring task T024; until then the test runs against the plugin's declared permissions.)
 - [ ] T014 [US1] (⛔WALK) Build `packages/features/timers/src/screens/new-timer.tsx` and `timer-screen.tsx`:
   - large time left, via the display-only refresh (R8)
   - pause/resume, +1 min and +5 min, cancel, and the done state
@@ -115,7 +115,7 @@ and asks for permission in context.
 **Goal**: routines with one notification per timed stage, manual chaining, and saved routines.
 **Independent test**: quickstart M4.
 
-- [ ] T016 [US2] Write `packages/features/timers/src/native/routing.ts` (gate 1, Q1): the response listener plus `getLastNotificationResponse()` at cold start. A stage notification opens the routine screen at "Start next stage".
+- [x] T016 [US2] Write `packages/features/timers/src/native/routing.ts` (gate 1, Q1): the response listener plus `getLastNotificationResponse()` at cold start. A stage notification opens the routine screen at "Start next stage".
 - [ ] T017 [US2] (⛔WALK) Build `packages/features/timers/src/screens/routine-editor.tsx`, `routine-screen.tsx` and `saved-routines.tsx`:
   - stages with picks or free text, and a duration or hands-on
   - "n / N", the current stage in the UI face (steps are not page titles), and the next stage
@@ -142,7 +142,7 @@ and asks for permission in context.
 
 **Independent test**: quickstart M6.
 
-- [ ] T019 [US4] Write `packages/features/timers/src/native/keep-awake.ts` (R5): `useTimerKeepAwake(tag, focused)`, active only while the timer or routine screen is focused in the foreground, and released within a second of leaving. Use it in T014 and T017's screens.
+- [x] T019 [US4] Write `packages/features/timers/src/native/keep-awake.ts` (R5): `useTimerKeepAwake(tag, focused)`, active only while the timer or routine screen is focused in the foreground, and released within a second of leaving. Use it in T014 and T017's screens.
 
 ---
 
