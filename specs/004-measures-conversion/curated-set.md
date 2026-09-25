@@ -1,8 +1,9 @@
-# Curated set per market — DRAFT for the owner's confirmation (004 FR-018, FR-026)
+# Curated set per market — CONFIRMED by the owner, 2026-09-25 (004 FR-018, FR-026)
 
 Drafted 2026-09-24 by the Home lane from FID's seed files at nutrimero-api `4a4356b` (= `contract/SOURCE`),
 one entry per concept (where FID holds duplicates, the staple or the entry with the most rows); the 13
-staples included. **Not yet confirmed** — the owner is ruling this list and the ten picks.
+staples included. **Confirmed by the owner on 2026-09-25** ("set ok"), with the ten density picks ruled the
+same day ("picks as recommended"; rice flour 0.630, potato starch by weight only).
 
 **Every volume and piece row is an AI-delivered claim** (api lane finding, 2026-09-24): the sources FID
 records — "USDA FDC via iForge", Health Canada CNF, Fineli, FAO/INFOODS, "OpenAI category estimate" — are
@@ -11,12 +12,13 @@ were disclosed as AI-generated. Piece weights are Markus's M28 table, method und
 once it is **verified against its named record, or confirmed by two independent published sources within
 5 %** — the evidence is in `density-evidence.md`.
 
-**183 ingredients** — volume: **114 verified**, **10 pick (owner ruling)**, **44 no verified volume**, **15 no volume data**. Pieces: 16 ingredients carry
+**183 ingredients** — volume: **114 verified**, **10 picks ruled** (9 with a value, potato starch by weight only), **44 no verified volume**, **15 no volume data**. Pieces: 16 ingredients carry
 piece rows; **one row is confirmed** (pear, large) and one only as a peeled weight (banana, medium) — no
 screen shows a piece weight until more are verified.
 
-Status: **verified** = the value(s) the app may show (g/ml, per FID form); **pick** = one of the ten
-inconsistencies, suggested pick in `density-evidence.md` §B, owner ruling; **no verified volume** = rows
+Status: **verified** = the value(s) the app may show (g/ml, per FID form); **pick — ruled** = one of the ten
+inconsistencies, ruled by the owner on 2026-09-25 (`density-evidence.md` §B); the value reaches the app as the
+api's chosen density; **no verified volume** = rows
 exist but none passed — the ingredient shows no volume conversion; **no volume data** = FID has no row.
 
 
@@ -32,7 +34,8 @@ classes; every market-scoped value will come from the api's units-and-density ch
 | **US** (later) | core **+ US flour names** (all-purpose, bread, cake, self-rising, high-gluten — marked **US market only** in the tables) | US cup 236.59 ml, stick | US classes (FID's current values are minimums, §D) |
 | any other region, or none | core only (QM1) | cup 250 ml, tsp 5, tbsp 15 | **no egg grades** (QM1 — e.g. BY and UA grade eggs differently) |
 
-The **core** is the 183 draft ingredients below minus the five US flour names: **178**. US units chosen in
+The **core** is the **183** ingredients below, **5** of them US-only flour names — so EU and other markets show
+**178**, the US market all 183. US units chosen in
 onboarding switch on the US cup and the stick in any market but do not change the set.
 
 ### DE / AT / CH — the 13 German Type flours (by weight only, FR-027)
@@ -115,7 +118,7 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 
 | FID id | Name (FID base name) | Volume rows (claims) | Passed | Status | Value (g/ml) | Pieces | Note |
 |---|---|---|---|---|---|---|---|
-| `389D858` | wheat flour | 3 | 1 | **pick** | CNF 0.528 | — |  |
+| `389D858` | wheat flour | 3 | 1 | **pick — ruled** | 0.528 (CNF all-purpose, spooned) | — |  |
 | `969E29F` | all purpose flour | 2 | 2 | verified | powder: 0.528 | — | · **US market only** |
 | `582A6A6` | bread flour | 1 | 0 | no verified volume |  | — | · **US market only** |
 | `72328B4` | cake flour | 1 | 1 | verified | powder: 0.482 | — | · **US market only** |
@@ -127,18 +130,18 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 | `249843A` | green spelt flour | 1 | 0 | no verified volume |  | — |  |
 | `207D0B1` | emmer wheat flour | 1 | 0 | no verified volume |  | — |  |
 | `2D515EB` | einkorn wholemeal flour | 1 | 0 | no verified volume |  | — |  |
-| `06C84DD` | rye flour | 2 | 2 | **pick** | USDA 0.431 | — |  |
+| `06C84DD` | rye flour | 2 | 2 | **pick — ruled** | 0.431 (USDA medium rye) | — |  |
 | `6A0F476` | wholemeal rye flour | 1 | 0 | no verified volume |  | — |  |
 | `8AF892A` | barley flour | 1 | 1 | verified | powder: 0.550 | — |  |
-| `108FD92` | buckwheat flour | 2 | 2 | **pick** | USDA 0.507 | — |  |
+| `108FD92` | buckwheat flour | 2 | 2 | **pick — ruled** | 0.507 (USDA) | — |  |
 | `494F110` | oat flour | 1 | 1 | verified | powder: 0.440 | — |  |
-| `4A1C787` | rice flour | 2 | 2 | **pick** | USDA 0.668 or HERR 41 0.630 (owner) | — |  |
+| `4A1C787` | rice flour | 2 | 2 | **pick — ruled** | **0.630** (HERR 41 white rice flour) | — |  |
 | `623BE7D` | brown rice flour | 1 | 1 | verified | powder: 0.668 | — |  |
-| `631E984` | corn flour | 2 | 1 | **pick** | USDA 0.4945 | — |  |
+| `631E984` | corn flour | 2 | 1 | **pick — ruled** | 0.4945 (USDA) | — |  |
 | `21C7B98` | chickpea flour | 1 | 1 | verified | powder: 0.389 | — |  |
 | `847932F` | almond flour | 1 | 1 | verified | powder: 0.406 | — |  |
 | `14B516A` | degreased almond flour | 1 | 0 | no verified volume |  | — |  |
-| `0C12CC1` | millet flour | 2 | 2 | **pick** | USDA 0.503 (SR 119 g) | — |  |
+| `0C12CC1` | millet flour | 2 | 2 | **pick — ruled** | 0.503 (USDA SR 119 g) | — |  |
 | `31AAB6F` | quinoa flour | 1 | 1 | verified | powder: 0.473 | — |  |
 | `8A2BF40` | sorghum flour | 1 | 1 | verified | powder: 0.575 | — |  |
 | `604C980` | teff flour | 1 | 1 | verified | powder: 0.592 | — |  |
@@ -162,7 +165,7 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 | FID id | Name (FID base name) | Volume rows (claims) | Passed | Status | Value (g/ml) | Pieces | Note |
 |---|---|---|---|---|---|---|---|
 | `3B304CE` | cornstarch | 4 | 4 | verified | powder: 0.533–0.550 | — |  |
-| `87FA108` | potato starch | 4 | 1 | **pick** | KA 0.642 or Norway/KTL 0.70 (owner) | — |  |
+| `87FA108` | potato starch | 4 | 1 | **pick — ruled** | **no volume value** — by weight only | — |  |
 | `6EE785F` | tapioca starch | 1 | 0 | no verified volume |  | — |  |
 | `30CD9C8` | xanthan gum | 1 | 0 | no verified volume |  | — |  |
 
@@ -170,7 +173,7 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 
 | FID id | Name (FID base name) | Volume rows (claims) | Passed | Status | Value (g/ml) | Pieces | Note |
 |---|---|---|---|---|---|---|---|
-| `4BEC221` | sugar | 6 | 5 | **pick** | CNF/USDA 0.845 | — |  |
+| `4BEC221` | sugar | 6 | 5 | **pick — ruled** | 0.845 (CNF/USDA) | — |  |
 | `5CD04A8` | brown sugar | 3 | 1 | verified | granules: 0.613 | — | unpacked measure — recipes mean packed |
 | `88BB32C` | light brown sugar | 1 | 1 | verified | granules: 0.613 | — | unpacked measure — recipes mean packed |
 | `409F577` | dark brown sugar | 1 | 1 | verified | granules: 0.613 | — | unpacked measure — recipes mean packed |
@@ -224,7 +227,7 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 | `667BFED` | skimmed milk | 2 | 2 | verified | liquid: 1.031–1.036 | — |  |
 | `55CD18B` | buttermilk | 3 | 3 | verified | liquid: 1.000–1.036 | — |  |
 | `1C42BB3` | heavy cream | 4 | 4 | verified | liquid: 1.000–1.006 | — |  |
-| `60999CF` | sour cream | 4 | 3 | **pick** | Fineli 1.00 | — |  |
+| `60999CF` | sour cream | 4 | 3 | **pick — ruled** | 1.00 (Fineli) | — |  |
 | `6B43198` | creme fraiche | 3 | 3 | verified | viscous_liquid: 1.000 | — |  |
 | `921F9E2` | yogurt | 3 | 2 | verified | viscous_liquid: 1.000–1.036 | — |  |
 | `5E4C940` | greek yogurt | 1 | 1 | verified | viscous_liquid: 1.036 | — |  |
@@ -266,7 +269,7 @@ rūšies, pirmos rūšies, ekstra). Ranges from Malsena's product specifications
 
 | FID id | Name (FID base name) | Volume rows (claims) | Passed | Status | Value (g/ml) | Pieces | Note |
 |---|---|---|---|---|---|---|---|
-| `5CDA2A6` | cocoa powder | 5 | 5 | **pick** | CNF/USDA 0.363 | — |  |
+| `5CDA2A6` | cocoa powder | 5 | 5 | **pick — ruled** | 0.363 (CNF/USDA) | — |  |
 | `761F94E` | dark cocoa powder | 1 | 0 | no verified volume |  | — |  |
 | `53E711F` | black cocoa powder | 1 | 1 | verified | powder: 0.364 | — |  |
 | `799A3C7` | fat-reduced cocoa powder | 1 | 1 | verified | powder: 0.364 | — |  |

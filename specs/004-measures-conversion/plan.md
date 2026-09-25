@@ -1,64 +1,60 @@
 # Implementation Plan: Measures table & ingredient-aware conversion
 
-**Branch**: `spec/004-measures-conversion` | **Date**: 2026-09-24 | **Spec**: [spec.md](spec.md)
+**Branch**: `spec/004-measures-conversion` | **Date**: 2026-09-25 | **Spec**: [spec.md](spec.md)
 
-**Input**: Feature specification from `specs/004-measures-conversion/spec.md` (gate 1 passed
-2026-09-24 with rulings Q1–Q3).
+**Input**: `specs/004-measures-conversion/spec.md`. Gate 1 passed 2026-09-24, was corrected the same day, and
+passed again market-aware at `7d3f486` (2026-09-25). Also recorded in the spec: the units systems by region, the
+owner's F23 walk (all eight stops approved), and the owner's rulings on the ten density picks and the per-market
+set.
 
-**Status**: **Reopened — the spec is back at gate 1 (2026-09-25, market-aware).** This plan predates the
-market ruling; it is revised after gate 1 closes (QM1–QM3). Already known: the market is the device region
-(research R17, no new dependency); set membership, household units, egg grading and the onboarding sample
-become market-scoped reads from the api's change; the snapshot gains the market dimension.
-Also known (owner, 2026-09-25): **three units systems** — Metric, US, and UK Imperial (no cups) — offered two
-at a time by region on 001's Units step (EU: Metric/US; US: US/Metric; others: Metric/Imperial). home-data's
-stored `units` widens from `metric | imperial` to three values, with the UK system under a new value and the
-legacy `imperial` read as `us` (tested). The step, the card's three variants (drawn by design-mobile) and the
-household units per system are 004 scope; the unit definitions, including the imperial fluid ounce and pint,
-are the api's.
-**FR-028 delivery (coordinator, 2026-09-25):** it stays in 004's PR. It ships early — with a units-only
-sample, no density numbers — only if the owner walks design-mobile's three variants well before the api
-change lands; otherwise it ships with the build.
+**Status**: **At gate 2.** The build waits for the api's units-and-density change, which carries the market
+dimension.
 
 ## Summary
 
-Ship a free Measures destination in Home Baker. It covers a curated set of ~150–200 bakery
-ingredients: each ingredient's cup, spoon and piece measures in grams, a two-way converter,
-on-device search by any FID name, and the provenance of every ingredient-specific number.
+Ship a free Measures destination in Home Baker. It is market-aware: the device **region** selects the market
+(DE, AT, CH, HU, LT, PL at launch; US later; any other region gets the core set with metric units and no egg
+grades). Measures shows each ingredient's kitchen measures and exact weight, a two-way converter, on-device
+search by any FID name, and the provenance of every number.
 
-Mobile follows the platform's agreements (the gate-1 correction). **Units and the chosen density
-are defined in the api**, in its upcoming `change/002`, and the app reads both from a
-script-produced snapshot, taken from a local api at `contract/SOURCE`'s commit once that change
-lands. The lane's job on data is the **evidence**: `density-evidence.md`, with multi-source proof
-for AI-derived rows and every inconsistency listed with its sources, which feeds the api's
-overlays. The app holds no unit constants and no choice rule. It makes no runtime api calls and
-adds no dependency.
+- **Set** (confirmed by the owner, `curated-set.md`): a 183-entry core, 5 of them US-only flour names, plus the 13
+  German Type flours for DE/AT/CH, which show by weight only.
+- **Density** (ruled by the owner): the api's chosen value per ingredient, form and state. That covers the
+  owner's ten picks, with rice flour at 0.630 and potato starch by weight only, and the rows
+  `density-evidence.md` verified.
+- **Units**: three systems — Metric, US, UK Imperial (no cups) — offered two at a time by region on 001's Units
+  step (FR-028). A recipe from another system switches measures "just this time" and never touches the setting
+  (FR-029).
+- **Constraints**: the app holds no unit constants, no density rule and no market table; all of them come from
+  the api through a script-produced snapshot. No runtime api calls, and no new dependency.
 
 ## Technical Context
 
-**Language/Version**: TypeScript 6.0 (strict), React 19.2, React Native 0.86, Expo SDK 57; scripts
-on Node 22 type stripping.
+**Language/Version**: TypeScript 6.0 (strict), React 19.2, React Native 0.86, Expo SDK 57; scripts on Node 22
+type stripping.
 
-**Primary Dependencies**: existing only: `use-intl`, the FormatJS Intl polyfills, `expo-router`,
-`@nutrimero/core`/`ui`/`feature-home-data`. **No new dependency** (research R16).
+**Primary Dependencies**: existing only: `expo-localization` (`regionCode` for the market, R17), `use-intl`, the
+FormatJS Intl polyfills, `expo-router`, `@nutrimero/core`/`ui`/`feature-home-data`. **No new dependency.**
 
-**Storage**: none on the device (FR-022); the ingredient data and unit definitions ship in the
-bundle.
+**Storage**: no new key. The existing Home key `nutrimero.home.units` widens from `metric | imperial` to
+`metric | us | ukImperial`; the legacy `imperial` reads as `us` (FR-028, R18). The market is read, never stored.
+The ingredient data, unit definitions and market tables ship in the bundle (snapshot).
 
-**Testing**: Vitest (node) for all logic, data and instruments (research R15); quickstart
-walkthrough plus VoiceOver/TalkBack on device.
+**Testing**: Vitest (node) for all logic, data and instruments; quickstart per market (the simulator's region
+switched through `simctl`), VoiceOver/TalkBack.
 
 **Target Platform**: iOS and Android phones, portrait; tablet per DESIGN.md.
 
 **Project Type**: mobile app in the pnpm monorepo (thin app, shared packages).
 
-**Performance Goals**: search results as you type (< 16 ms per keystroke over ~200 × ~20 keys);
-the converter updates on every keystroke.
+**Performance Goals**: search results as you type (< 16 ms per keystroke over ~200 × ~20 keys); the converter
+updates on every keystroke.
 
-**Constraints**: fully offline; zero network requests; seven UI locales; no plural on a fraction;
-44pt targets; 1.3× text; generated files never hand-edited.
+**Constraints**: fully offline; zero network requests; seven UI locales; no plural on a fraction; 44pt targets;
+1.3× text; generated files never hand-edited.
 
-**Scale/Scope**: ~150–200 ingredients; ~3 screens (list/search, ingredient + converter,
-provenance sheet); the exact screen count follows design-mobile's concept.
+**Scale/Scope**: 183 + 13 ingredients; the screens are the F23 corpus's eight approved stops (design-mobile is
+landing them).
 
 ## Constitution Check
 
@@ -67,89 +63,109 @@ provenance sheet); the exact screen count follows design-mobile's concept.
 | # | Principle | Verdict | How |
 |---|---|---|---|
 | I | Stack settled | ✅ | No stack change |
-| II | Contract consumer | ✅ | Units and density choice are api work first (`change/002`), then a contract sync; the snapshot script reads generated-typed endpoints; no runtime calls |
-| III | Core + packs | ✅ | New `packages/features/measures`; formatting extends `packages/core/src/units`; routes only in the app; seam announced via the coordinator |
-| IV | FID-only data (the pattern applied to units, per F23) | ✅ | Every number is the api's: chosen densities and unit definitions from the snapshot; AI-derived rows reach a screen only through the api's multi-source admission, fed by the lane's evidence (FR-004a); no app-side choice |
-| V | Honest provenance | ✅ | Every ingredient-specific number exposes its source, method, confidence and confirmations |
-| VI | Privacy by architecture | ✅ | No personal data; nothing stored; search is in memory |
-| VII | Entitlements server-side | ✅ n/a | Free tier; no tier logic |
-| VIII | Offline first-class | ✅ | Everything ships in the bundle; no network path exists (static test) |
-| IX | Multilingual | ✅ | All strings in seven catalogs; shared unit formatters in core; whole-number plural rule kept (R7, R8) |
-| X | Design from tokens | ✅ | No screen before the F23 concept is ported to DESIGN.md; built through impeccable; a11y built in |
-| XI | Stop conditions | ✅ | No new dependency category; no new top-level package (a feature package is the III shape) |
-| XII | The gates | ✅ | Both gates; PRs only; CI green; generated snapshot is suppression-class if hand-edited; the evidence file is test-enforced |
+| II | Contract consumer | ✅ | Units, markets and density choice are api work first (the units-and-density change), then a contract sync; the snapshot script reads generated-typed endpoints; no runtime calls |
+| III | Core + packs | ✅ | New `packages/features/measures`; formatting extends `packages/core/src/units`; the units type widens in `feature-home-data`; routes only in the app; every `packages/*` change is announced through the coordinator |
+| IV | FID-only data (applied to units, F23) | ✅ | Every number is the api's (chosen densities, unit definitions, market tables); the lane's evidence feeds the api's overlays; no app-side choice |
+| V | Honest provenance | ✅ | Each ingredient-specific number exposes the sources the api records |
+| VI | Privacy by architecture | ✅ | No personal data; the region is read, never stored or sent; search is in memory; the units choice is an existing Home key under Home's wiper |
+| VII | Entitlements server-side | ✅ n/a | Free tier |
+| VIII | Offline first-class | ✅ | Everything ships in the bundle; no network path (static test) |
+| IX | Multilingual | ✅ | "Kitchen measures / Exact by weight", "US", "Imperial" and the unit labels in seven catalogs with owner string review; shared unit formatters in core; whole-number plural rule kept |
+| X | Design from tokens | ✅ | Screens from the F23 corpus through the DESIGN.md port, built with impeccable; accessibility built in |
+| XI | Stop conditions | ✅ | No new dependency category; no new top-level package |
+| XII | The gates | ✅ | Both gates; PRs only; CI green; the generated snapshot is suppression-class if hand-edited |
 
 **Post-design re-check**: all ✅; Complexity Tracking empty.
 
 ## Gate-2 items
 
-1. **Owner: confirm the curated set** (FR-018). It arrives as a table with the evidence (phase 2),
-   flagged per candidate: AI-only, inconsistent, pieces only.
-2. ~~api: `reserved` stable~~ — **confirmed stable** by the api lane (2026-09-24): full-precision
-   strings, density = mass over volume to 6 places, empty is not zero; `losses` and
-   `dryMatterPercent` are not derived from.
-3. **api `change/002`**: units and the chosen density (rule plus resolved picks). The snapshot
-   (phase 3) waits for it and for the contract sync that follows.
-4. **Open to the api lane** (R13): (a) whether the butter *stick* is a platform unit (FR-023);
-   (b) whether Markus's 2026-09-03 piece-weight table is part of the delivery M34 disclosed as
-   AI-generated. If it is, all 2,010 piece weights are AI-derived and fall under Q1, although
-   their source string doesn't say so.
-5. **Spoken amounts** (R8): FR-021 read as a label–value form ("US cup: 1.125"), not fractions
-   spelled out in words in seven languages.
-6. **Order**: phases 1 and 2 need neither the api change nor design. Phase 3 needs `change/002`,
-   and phase 4 needs design-mobile's F23 concept.
+1. **What the api's units-and-density change must carry** (a report for the coordinator to relay; phase 3 reads
+   exactly these, with names following the api's contract):
+   - **market resolution**: region → market for DE, AT, CH, HU, LT, PL and US, and the default for every other
+     region (core set, metric, no egg grades);
+   - **units systems per market**: which two systems the Units step offers and which is preselected (FR-028);
+   - **unit definitions**: the 250 ml cup, the US cup 236.59 ml, tsp 5 ml and tbsp 15 ml everywhere, the ounce,
+     the pound, the **imperial fluid ounce and pint**, and the butter stick if it becomes a platform unit;
+   - **set membership per market**: the core, US-only and DE/AT/CH entries of `curated-set.md`;
+   - **egg grading per market**: none yet, so no size weights (FR-007a);
+   - **chosen density** per ingredient, form and state, with its recorded sources. This includes values that are
+     not an FID row: **rice flour 0.630 (HERR 41)** comes as an overlay. "No volume value" is stated
+     explicitly: potato starch, and the 44 unverified ingredients, which carry no chosen value;
+   - **piece weights**: which ones are admitted (today only large pear, 230 g).
+2. **Piece weights in v1.** One piece weight is confirmed (large pear); banana medium is confirmed only as a
+   peeled weight. Proposal: **004 shows no piece weights at all** until the api admits a meaningful set; a single
+   size of a single fruit would read as broken. The ruling decides whether the piece row is drawn empty or
+   hidden.
+3. **Early delivery of FR-028** (the Units step). This needs the region → systems mapping, which is market data
+   the app must not hold (FR-025). Two ways: (a) wait for the api change; (b) the api lane publishes the market
+   table first, a small slice of its change. The early path also needs the owner to have walked design-mobile's
+   three variants.
+4. **Spoken amounts** (R8, carried over): FR-021 is read as a label–value form ("US cup: 1.125"); fractions are
+   not spelled out in words in seven languages.
+5. **Seam** (III): `feature-home-data`'s `Units` type widens (stored values `metric | us | ukImperial`, legacy
+   `imperial` → `us`). Pro does not read it. `packages/core/src/units` gains formatters that take their factor as
+   an argument. Both are announced through the coordinator before merge.
+6. **Order**: phase 1 needs neither the api change nor design. Phase 2 (the Units step) waits on item 3.
+   Phase 3 waits on the api change. Phase 4 waits on phase 3 and on design-mobile's F23 corpus through the
+   DESIGN.md port.
 
 ## Phases
 
-### Phase 1 — Core formatting (no data, no design, no api change)
+### Phase 0 — Evidence and set (done)
 
-- `packages/core/src/units`: `toPracticalFraction`, `formatMeasure`, `parseAmount`,
-  `foldForSearch`, and conversion functions that take their factor as an argument (no unit
-  constants — R6), with tests. Extend the font-coverage test for ⅛–⅞, ⅓, ⅔, ⁄ and °.
+`density-evidence.md` (every row checked; the picks ruled), `curated-set.md` (confirmed), and the api-lane
+gaps (FID gaps and duplicates, HU/PL/LT flour classes, Type-flour defects), all on #39.
 
-### Phase 2 — Draft set and evidence (now, in parallel with the api change)
+### Phase 1 — Core formatting (no api change, no design)
 
-- Draft the curated set from the local api or the seed files at `4a4356b` (R5).
-- The survey: every AI-derived row and every group of rows more than 5 % apart in the draft set
-  (R3).
-- The web research, committed as `density-evidence.md` (R4): per ingredient, its FID rows, at
-  least two independent published sources per AI-derived row, and a verdict. Inconsistencies are
-  listed with every row's source and value, wheat flour first, then sugar.
-- **PR**: the draft set table for the owner plus the evidence. It feeds the api's overlays.
+- `packages/core/src/units`: `convertByFactor`, `toPracticalFraction`, `formatMeasure`, `parseAmount`,
+  `foldForSearch`, with tests. No unit constants: 001's `GRAMS_PER_OUNCE` becomes a factor argument, fed from
+  the snapshot in phase 3. The font-coverage test gains ⅛–⅞, ⅓, ⅔, ⁄ and °.
 
-### Phase 3 — Snapshot (after api `change/002` and the contract sync)
+### Phase 2 — Units systems (FR-028) — on gate-2 item 3
 
-- `scripts/fid-snapshot.mts` gains its second output (R2): FID rows, the api's chosen densities
-  with their recorded sources, the api's unit definitions, localized vocabulary names and search
-  keys, all at the same api commit as the staples file.
-- `packages/features/measures`: the generated snapshot, `MEASURES_FID_IDS` (the owner-confirmed
-  set), `convert`, `searchIngredients`, `ingredientName`, with tests.
-- `GRAMS_PER_OUNCE` in core moves onto the api's ounce (R6).
+- `feature-home-data`: `UNITS = ["metric", "us", "ukImperial"]`; the read maps the legacy `imperial` → `us`
+  (tested: a stored legacy value, each new value, and corrupt values reading as the default).
+- `first-run` Units step: the two options and the preselection by market; a stored choice outside the pair is
+  shown selected beside it; each option lists its units; the three card variants as drawn, with a units-only
+  sample until phase 3.
+- Catalogs: "US" and "Imperial" (UK) and their unit lists, seven locales, owner string review.
 
-### Phase 4 — Screens (needs design-mobile's F23 concept → DESIGN.md port)
+### Phase 3 — Snapshot (after the api's change and the contract sync)
 
-- Through `impeccable`: the measures list with search, the ingredient view (measures table,
-  converter, variants, pieces) and the provenance sheet. Routes
-  `app/measures/…`, and the entry point per the concept.
-- Hermes `String.prototype.normalize` check on device (R9).
-- **PR**: screens plus routes plus the catalog strings (seven locales, owner string review).
+- `scripts/fid-snapshot.mts` gains its second output: FID rows (for provenance), the api's chosen densities with
+  their sources, unit definitions, market tables (resolution, systems, set membership, egg grading), localized
+  vocabulary names and search keys, all at the same api commit as the staples file.
+- `packages/features/measures`: the generated snapshot, `market(regionCode)`, `convert`, `searchIngredients`,
+  `ingredientName`, with tests (SC-004, SC-005, SC-008: no US-only item outside the US market or US units, and
+  no Type flour outside DE/AT/CH).
 
-### Phase 5 — Onboarding card and cleanup
+### Phase 4 — Screens (after phase 3 and the F23 corpus → DESIGN.md port)
 
-- FR-023: `units-step` shows the api's chosen flour density once flour is settled; the butter
-  stick per the api's answer (gate-2 item 4a). Tell design-mobile.
-- Static no-network test for the measures package; round-trip and search tests over the final
-  set (SC-004, SC-005).
+- Through `impeccable`, faithful to the eight approved stops:
+  - the list and search, filtered by market;
+  - the ingredient view with "Kitchen measures / Exact by weight" (FR-030), variants, and pieces per item 2;
+  - the converter with the "just this time" switch (FR-029): screen-local state that names the default, returns
+    in one tap, and never writes the setting;
+  - the provenance sheet.
+- Routes `app/measures/…` and the entry point as drawn. Hermes `String.prototype.normalize` check on device.
+
+### Phase 5 — Onboarding card (FR-023) and cleanup
+
+- The card's market and units variants with the api's densities: flour by weight in EU markets; the US cup of
+  flour and "1 stick butter" only for US units. design-mobile is told of number changes through the
+  coordinator.
+- Static no-network test for the measures package.
 
 ### Phase 6 — Verify
 
-- Quickstart on iOS (26.5, and iOS 27 after the scene fix) and on Android when possible; all seven
-  locales, light and dark, 1.3×, VoiceOver and TalkBack; an impeccable critique pass against the
-  concept.
+- Quickstart per market: DE, AT, CH, HU, LT, PL, US, and one other region, set on the simulator (iOS 27 and
+  26.5). Android on an emulator when available (still owed). All seven locales, light and dark, 1.3×,
+  VoiceOver and TalkBack; an impeccable critique against the corpus.
 
-**PR shape**: phase 1 as its own PR (announced for III), phase 2 as the evidence PR (one or more),
-phase 3 as the snapshot PR, phase 4 as the screens PR, and phases 5 and 6 with or after it. Every `packages/*` PR is announced to
-the pro lane through the coordinator.
+**PR shape**: phase 1 as its own PR; phase 2 as its own PR (early or with the build); phase 3 as the snapshot
+PR; phases 4 and 5 as the screens PR; phase 6 in each PR's notes. Every `packages/*` PR is announced through
+the coordinator.
 
 ## Project Structure
 
@@ -159,30 +175,32 @@ the pro lane through the coordinator.
 specs/004-measures-conversion/
 ├── spec.md
 ├── plan.md                 # this file
-├── research.md             # R1–R16
+├── research.md             # R1–R19
 ├── data-model.md
 ├── quickstart.md
 ├── contracts/modules.md
-├── density-evidence.md     # phase 3 (gate-1 Q1)
+├── density-evidence.md     # phase 0 (done) — every row checked; picks ruled
+├── curated-set.md          # phase 0 (done) — confirmed per market
 └── checklists/requirements.md
 ```
 
 ### Source Code (repository root)
 
 ```text
-packages/core/src/units/{fraction,format,parse,fold,convert}.ts   # + tests; no unit constants
+packages/core/src/units/{fraction,format,parse,fold,convert}.ts    # + tests; no unit constants
+packages/features/home-data/src/{types,home-store}.ts              # Units widened, legacy read (phase 2)
+packages/features/first-run/src/units-step.tsx                     # by market, three variants (phases 2, 5)
 packages/features/measures/
 ├── src/measures-snapshot.generated.ts   # script output — never hand-edited
-├── src/measures-set.ts                  # the owner-confirmed ids (MEASURES_FID_IDS)
-├── src/{convert,search,names}.ts        # + tests
+├── src/{market,convert,search,names}.ts # + tests
 └── src/screens/                          # phase 4
-packages/features/first-run/src/units-step.tsx                     # FR-023 (phase 5)
 apps/home-baker/app/measures/{index,[fidId]}.tsx                   # routes only
-scripts/{fid-snapshot.mts,measures-survey.mts}   # survey feeds the evidence, not the app
+scripts/fid-snapshot.mts                                           # second output (phase 3)
 ```
 
-**Structure Decision**: III's shape. A new feature package, because F30, F04, F24 and Pro's F17
-consume ingredient-aware conversion independently of these screens.
+**Structure Decision**: III's shape. A new feature package, because F30, F04, F24 and Pro's F17 consume
+ingredient-aware conversion independently of these screens. FR-029's rule is inherited by those features'
+measure sheets.
 
 ## Complexity Tracking
 

@@ -49,6 +49,12 @@ export { MEASURES_FID_IDS } from "./measures-set";
 // Screens (after the DESIGN.md port): MeasuresScreen, IngredientMeasures, Converter, ProvenanceSheet
 ```
 
+## `@nutrimero/feature-home-data` (widened)
+
+```ts
+export const UNITS = ["metric", "us", "ukImperial"] as const; // legacy stored "imperial" reads as "us"
+```
+
 ## `apps/home-baker`
 
 Routes only: `app/measures/index.tsx`, `app/measures/[fidId].tsx`; the entry row or tab per the

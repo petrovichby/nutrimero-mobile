@@ -65,6 +65,12 @@ One table row per **AI-derived FID volume row in the curated set**:
 
 Parsed by a test. It **feeds the api's overlays**; the app shows the api's choice, not the file's.
 
+## Units system (Home store, existing key)
+
+| Key | Values | Legacy | Default |
+|---|---|---|---|
+| `nutrimero.home.units` | `metric` · `us` · `ukImperial` | `imperial` → `us` on read (tested) | the market's preselected system |
+
 ## Market (run time, not stored)
 
 `market` = the api's market for the device region (`regionCode`), resolved per QM1 for unknown regions.

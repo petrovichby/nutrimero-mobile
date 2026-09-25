@@ -4,9 +4,9 @@
 
 **Created**: 2026-09-24
 
-**Status**: **Gate 1 PASSED (market-aware) at `7d3f486`, 2026-09-25** — rulings QM1–QM3 below. Next:
-the plan update to gate 2 once the owner has ruled the ten picks and confirmed the per-market set; the build
-still waits for the api's units-and-density change (with the market dimension).
+**Status**: **Gate 1 PASSED (market-aware) at `7d3f486`, 2026-09-25**; the owner's F23 walk, density picks and
+set confirmation recorded below. **The plan is at gate 2.** The build waits for the api's units-and-density
+change (with the market dimension).
 
 **Input**: Coordinator assignment "004 — F23 measures and conversion": the ledger entry F23
 (`nutrimero-docs` `f7756e1`, `mobile/FEATURES.md`, accepted 2026-09-24, **free tier**). A
@@ -137,6 +137,16 @@ The questions as put:
 
 design-mobile lands the F23 screens in the corpus; they are the visual authority for 004's screens, through
 the DESIGN.md port (X).
+
+### The owner's rulings, 2026-09-25 — "picks as recommended, set ok"
+
+- **The ten density picks** as in `density-evidence.md` §B, with two specified: **rice flour 0.630 g/ml**
+  (USDA HERR 41 white rice flour, spooned; King Arthur within 5 %) and **potato starch: no volume value**
+  (by weight only — a single US-method source). The picks reach the app as the **api's chosen densities**,
+  through the snapshot (FR-005).
+- **The per-market set is CONFIRMED as drafted** (`curated-set.md`): **183** entries in the core, of which **5**
+  are US-only flour names (shown only for the US market); **plus the 13 German Type flours for DE/AT/CH, by
+  weight only**; the HU/PL/LT flour classes as api-lane gaps.
 
 ## Gate 1 — the data survey
 
@@ -399,7 +409,8 @@ onboarding with region DE: the US cup and the stick appear.
   rows more than 5 % apart) to the api lane and the owner with every row's source and value, as
   part of the evidence (FR-004a) — never picking silently. Wheat flour `389D858` first (Health
   Canada 52.8, FAO 58, Fineli 65 g/100 ml — Fineli's is the semi-coarse flour); sugar `4BEC221`
-  next (84.5 / 85 / 95).
+  next (84.5 / 85 / 95). **Ruled 2026-09-25**: the ten picks as recommended (§B), rice flour 0.630, potato
+  starch no volume value.
 - **FR-006**: Forms and preparation states MUST be offered only where FID holds separate data for
   them, named with FID's names; the app MUST NOT invent a variant (e.g. "sifted") FID has no data
   for.
@@ -501,8 +512,9 @@ onboarding with region DE: the US cup and the stick appear.
   carries the api commit; a hand edit is a suppression-class violation (Constitution XII). The
   set's ingredient list is curated (FR-018) and every listed ingredient MUST resolve, or the build
   fails.
-- **FR-018**: The set MUST be ~150–200 bakery ingredients per market (FR-026), proposed by the lane from FID
-  and confirmed by the owner, as the 13 staples were; the 13 staples are in every market's set.
+- **FR-018**: The set MUST be the owner-confirmed per-market set (`curated-set.md`, confirmed 2026-09-25): a
+  183-entry core — 5 of them US-only flour names — plus the 13 German Type flours for DE/AT/CH; the 13 staples
+  are in every market's set.
 - **FR-019**: The feature MUST work fully offline and make no api call (Constitution VIII); the
   set updates only with the app.
 
@@ -580,11 +592,10 @@ onboarding with region DE: the US cup and the stick appear.
 - **api units-and-density change** (`change/002`), **now with the market dimension**: unit definitions per
   market, egg grading per market, set membership per market, and the chosen density (rule + resolved
   picks), then a contract sync. 004's snapshot and build wait for it.
-- **api lane — flour gaps**: HU BL, PL typ and LT flour classes are not in FID (`curated-set-draft.md`);
+- **api lane — flour gaps**: HU BL, PL typ and LT flour classes are not in FID (`curated-set.md`);
   German Type flour defects (Dinkelmehl Type 812's base name is "Dinkelmehl Type plant1brand" with no
   English name; the Hungarian Weizen names use underscores; the Weizen values are US proxies).
-- **Owner**: QM1–QM3; confirmation of the per-market set (FR-018, FR-026); the ten picks (market-independent,
-  ruled into the api, FR-005a).
+- **Owner**: ruled — QM1–QM3; the per-market set (confirmed 2026-09-25); the ten picks (2026-09-25).
 - **Multi-source evidence** (FR-004a): the lane's web research, committed as
   `density-evidence.md`, feeding the api's overlays.
 - **api lane** (via the coordinator): FID's unit table defines the cup as 240 ml, the US

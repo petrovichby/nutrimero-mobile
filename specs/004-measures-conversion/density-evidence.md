@@ -9,7 +9,7 @@ inconsistencies (§B — their picks stand), and the piece weights (§D); §E ro
 
 **Purpose.** Feeds the api's density overlays (gate-1 correction, 2026-09-24): the api defines the
 choice rule and the resolved picks once for every reader; this file is the lane's evidence. It
-covers the **draft** curated set (`curated-set-draft.md`, 183 ingredients, not yet confirmed) at
+covers the **draft** curated set (`curated-set.md`, 183 ingredients, not yet confirmed) at
 nutrimero-api `4a4356b` (= `contract/SOURCE`). Researched 2026-09-24 by the Home lane (web
 research fanned out to four research agents; every value below is one a researcher read on the
 cited page — spot-checked by the lane: USDA FDC 169640 honey, the King Arthur weight chart, CNF
@@ -375,6 +375,10 @@ not invent numbers here; the problems are which food a row was mapped to.
 
 ## B. Inconsistencies (Q2) — published rows more than 5 % apart
 
+**Ruled by the owner, 2026-09-25 — "picks as recommended"**: every suggested pick below stands, with rice
+flour at **0.630** (HERR 41 white rice flour; King Arthur 0.600 within 5 %) and potato starch at **no volume
+value** (by weight only — a single US-method source). The picks reach the app as the api's chosen densities.
+
 Researched by tracing every FID row to its original record. **Cross-cutting finding:** the Nordic
 decilitre figures (Fineli, and its upstream KTL B3/2001 *Ruokamittoja*, and Norway) run 10–25 %
 denser than US spooned-cup figures for the same flour; none of the Nordic sources states a filling
@@ -455,7 +459,7 @@ Compendium Vol. 5 §5; EU Regulation (EC) No 589/2008 Art. 4(1). W = whole / in 
 ## E. Per ingredient
 
 The roll-up (which rows passed, and the value the app may show per FID form) is the status column of
-`curated-set-draft.md`. In short: **114 verified**, **10 pick (owner)**, **44 no verified volume** (the
+`curated-set.md`. In short: **114 verified**, **10 pick (owner)**, **44 no verified volume** (the
 wheat-variety flours — bread, high-gluten, spelt, green spelt, einkorn, emmer, durum, wholemeal rye; every
 syrup except honey, maple and agave; the fruit jams; the ground spices; oats; quark; mascarpone; dried yeast;
 kosher salt; cream of tartar; xanthan; rose and orange-blossom water), **15 no volume data**. Where an
@@ -516,7 +520,7 @@ with underscores ("búzaliszt_405_típus").
    Roggen types have no volume row; no Type-specific published volume weight exists — the types show by
    weight only. Name defects: `3FB1F22` "Dinkelmehl Type plant1brand"; Hungarian Weizen names with
    underscores. **HU, PL, LT flour classes are absent from FID** — listed per country in
-   `curated-set-draft.md`, with their standards (MÉ 2-201/2020; PN-A-74022:2003, PN-A-74032:2002;
+   `curated-set.md`, with their standards (MÉ 2-201/2020; PN-A-74022:2003, PN-A-74032:2002;
    LST 1133:2003), and no equivalences.
 8. **Mappings** (§A3): CNF and Fineli values are genuine, but eight rows are mapped from another variant
    (light sour cream, semi-coarse flour, raw 4.4 % milk, blackstrap molasses, natural peanut butter, lean

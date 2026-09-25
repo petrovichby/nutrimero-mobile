@@ -228,6 +228,27 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 - **Alternatives**: the UI language (rejected by the ruling — a German speaker in Vilnius is in the LT
   market); `measurementSystem` (not used — QM1 ruled); a stored market choice (QM2 ruled: not in 004).
 
+## R18 — Units systems and the stored choice (owner and coordinator, 2026-09-25)
+
+- **Decision**: three systems — `metric`, `us`, `ukImperial` — stored under the existing Home key
+  `nutrimero.home.units`. Reads map the legacy `imperial` (001's cups · ounces · °F option) → `us`; unknown or
+  corrupt values read as the market's preselected system. The UK system has its own value, so nothing is
+  ambiguous. A stored system is honoured in any region; the Units step shows it selected beside the region's
+  pair. No migration write is needed: mapping on read is idempotent and tested.
+- **Household units per system** (FR-009), all from the api: metric — 250 ml cup; us — US cup, stick; ukImperial —
+  ounce, pound, imperial fl oz, pint, no cups; spoons 5/15 ml in all three.
+- **Alternatives**: a one-off migration write (rejected — reading is enough and survives restores); reusing
+  `imperial` for UK (rejected — ambiguous with the legacy value).
+
+## R19 — "Just this time" (FR-029)
+
+- **Decision**: the switch is screen-local state of the conversion view — `{ temporary: UnitsSystem | null }` —
+  initialised from the source's system when it differs from the baker's own. The view names the default
+  ("Your measures: Metric") with a one-tap return, and it never calls `setUnits`. Leaving the view discards it.
+  A test asserts the Home store is unchanged after a temporary switch.
+- **Inheritance**: later recipe features (003's measure sheet, F11, F25/F26, F30) reuse the same state shape
+  and the same labels from the measures package, so the rule is one implementation, not a convention.
+
 ## R16 — Dependencies
 
 - **Decision**: none new. Conversion is arithmetic; the snapshot is data; search is string code.

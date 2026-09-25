@@ -25,7 +25,20 @@ git diff packages/features/measures/src/measures-snapshot.generated.ts
 
 Expected: both generated files carry the same api commit; the diff is reviewed in the PR.
 
-## 3. On device (offline)
+## 3. On device (offline), per market
+
+Set the simulator's region, not its language, for each market (e.g. `xcrun simctl spawn booted defaults write
+-g AppleLocale de_DE` and relaunch; for "German UI, LT region" use `AppleLanguages (de)` with `AppleLocale lt_LT`).
+Walk DE, AT, CH, HU, LT, PL, US and one other region (GB).
+
+| Check | Expected |
+|---|---|
+| Units step, region DE | Metric (preselected) / US; each lists its units |
+| Units step, region US | US (preselected) / Metric |
+| Units step, region GB | Metric (preselected) / Imperial (oz · lb · imp fl oz · pints · °F — no cups) |
+| Stored legacy `imperial` | reads as US; shown selected, even beside another region's pair |
+| Recipe from another system | "just this time" switch names your default; one tap back; Units setting unchanged |
+| Region GB | core set, metric, no egg grades |
 
 Airplane mode on, fresh install, complete first run, open Measures.
 
