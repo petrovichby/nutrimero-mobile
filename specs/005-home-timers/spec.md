@@ -241,6 +241,13 @@ asks again on its own.
 - **FR-010**: Every timed stage and every timer MUST schedule **one local notification** for its
   end time, naming what ended (and, for a routine stage, what comes next). No server is involved,
   and it works with no network.
+- **FR-010b (amendment, 2026-09-25, owner)**: On iOS, a timer or stage notification MUST be
+  **Time Sensitive** (`interruptionLevel: timeSensitive`, with the app's
+  `com.apple.developer.usernotifications.time-sensitive` entitlement), so it can break through a
+  Focus the baker has allowed Time Sensitive notifications for. Found in the T027 iPhone run: with
+  a Focus on, the timer was delivered silently "while you were in Focus". The baker stays in
+  control in iOS Settings; the app never asks for Critical Alerts. Android is unchanged (the
+  channel is already HIGH importance; no Do Not Disturb override).
 - **FR-011**: A routine MUST have at most one pending notification at any time: its current
   stage's. The next is scheduled when that stage starts. Cancelling, pausing or dismissing
   withdraws the pending notification. Adding time re-schedules it.

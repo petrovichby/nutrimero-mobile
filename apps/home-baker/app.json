@@ -28,7 +28,10 @@
     ],
     "ios": {
       "bundleIdentifier": "org.nutrimero.homebaker",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "entitlements": {
+        "com.apple.developer.usernotifications.time-sensitive": true
+      }
     },
     "android": {
       "package": "org.nutrimero.homebaker",
