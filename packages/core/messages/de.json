@@ -370,7 +370,8 @@
           "minutesMore": "Fünf Minuten mehr",
           "quick": "Schnellauswahl",
           "help": "Von 5 Sekunden bis 48 Stunden. Tippe auf die Zahlen, um sie einzugeben.",
-          "start": "Timer starten"
+          "start": "Timer starten",
+          "limit": "{count, plural, one {Höchstens # Timer oder Ablauf gleichzeitig. Beende oder blende ihn aus, um einen weiteren zu starten.} other {Höchstens # Timer und Abläufe gleichzeitig. Beende oder blende einen aus, um einen weiteren zu starten.}}"
         },
         "permission": {
           "title": "Soll ich dich erinnern, wenn es fertig ist?",
@@ -400,7 +401,8 @@
           "maxStages": "Ein Ablauf hat höchstens 12 Schritte",
           "save": "Speichern",
           "saveAndStart": "Speichern und starten",
-          "tooLong": "Dieser Ablauf ist zu lang zum Speichern – kürze einen Schrittnamen oder entferne einen Schritt."
+          "tooLong": "Dieser Ablauf ist zu lang zum Speichern – kürze einen Schrittnamen oder entferne einen Schritt.",
+          "savedLimit": "{count, plural, one {Du kannst # gespeicherten Ablauf behalten. Lösche einen, um diesen zu speichern.} other {Du kannst # gespeicherte Abläufe behalten. Lösche einen, um diesen zu speichern.}}"
         },
         "picker": {
           "common": "Übliche Schritte",

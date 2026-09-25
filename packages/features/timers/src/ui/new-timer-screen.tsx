@@ -2,8 +2,9 @@ import { Button, Glyph, PageTitle, Screen, textRole, tokens, useTheme } from "@n
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { formatDuration } from "../model/duration";
+import { atActiveLimit, MAX_ACTIVE_ITEMS } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_SECONDS, MIN_SECONDS, validName } from "../model/stage";
-import { BackBar, Choice, styles as parts, RoundButton, Sheet } from "./parts";
+import { BackBar, Choice, styles as parts, Refusal, RoundButton, Sheet } from "./parts";
 import { useTimers } from "./timers-context";
 
 const QUICK = [300, 600, 1200, 2700, 3600, 5400, 7200, 43_200] as const;
@@ -38,6 +39,8 @@ export function NewTimerScreen({
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
   const valid = seconds >= MIN_SECONDS && seconds <= MAX_SECONDS;
+  // 17c: ten timers and routines running is the most; the eleventh is refused in words.
+  const full = atActiveLimit(items.length);
   const spoken = formatDuration(seconds, t).spoken;
   const clamp = (value: number) => Math.min(MAX_SECONDS, Math.max(0, value));
 
@@ -180,10 +183,11 @@ export function NewTimerScreen({
         </Text>
       </ScrollView>
       <View style={styles.dock}>
+        {full && <Refusal text={t("home.timers.ui.newTimer.limit", { count: MAX_ACTIVE_ITEMS })} />}
         <Button
           label={t("home.timers.ui.newTimer.start")}
           onPress={onStart}
-          disabled={!valid || busy}
+          disabled={!valid || full || busy}
         />
       </View>
 
@@ -253,7 +257,12 @@ const styles = StyleSheet.create({
   },
   quick: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 12 },
   help: { marginTop: 10 },
-  dock: { paddingHorizontal: tokens.spacing.screenMargin, paddingBottom: 12, paddingTop: 8 },
+  dock: {
+    paddingHorizontal: tokens.spacing.screenMargin,
+    paddingBottom: 12,
+    paddingTop: 8,
+    gap: 10,
+  },
   ask: {
     width: 56,
     height: 56,

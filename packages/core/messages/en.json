@@ -370,7 +370,8 @@
           "minutesMore": "Five minutes more",
           "quick": "Quick durations",
           "help": "From 5 seconds to 48 hours. Tap the numbers to type them.",
-          "start": "Start timer"
+          "start": "Start timer",
+          "limit": "{count, plural, one {# timer or routine is the most at once. Stop or dismiss it to start another.} other {# timers and routines is the most at once. Stop or dismiss one to start another.}}"
         },
         "permission": {
           "title": "Want a nudge when it’s done?",
@@ -400,7 +401,8 @@
           "maxStages": "12 stages is the most a routine can have",
           "save": "Save",
           "saveAndStart": "Save and start",
-          "tooLong": "This routine is too long to save — shorten a stage name or remove a stage."
+          "tooLong": "This routine is too long to save — shorten a stage name or remove a stage.",
+          "savedLimit": "{count, plural, one {You can keep # saved routine. Delete one to save this.} other {You can keep # saved routines. Delete one to save this.}}"
         },
         "picker": {
           "common": "Common stages",

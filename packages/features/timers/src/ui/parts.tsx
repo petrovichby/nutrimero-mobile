@@ -75,21 +75,27 @@ export function Pill({
   label,
   onPress,
   a11yLabel,
+  disabled = false,
 }: {
   label: string;
   onPress: () => void;
   a11yLabel?: string;
+  /** 21b: off at the limit; the refusal above the list says why. */
+  disabled?: boolean;
 }) {
   const theme = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={a11yLabel ?? label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.pill,
         { backgroundColor: theme.color.action },
         pressed && styles.pressed,
+        disabled && styles.disabled,
       ]}
     >
       <Text style={[textRole(theme, "bodyMd", "700"), { color: theme.color.onAction }]}>
@@ -202,6 +208,25 @@ export function RefusedNote({
           {actionLabel}
         </Text>
       </Pressable>
+    </View>
+  );
+}
+
+/**
+ * A refusal at the action (19c too long, 17c ten running, 19d twenty saved): one sentence with an
+ * icon, above the disabled action, announced as an alert. Words and a glyph, never colour alone.
+ */
+export function Refusal({ text }: { text: string }) {
+  const theme = useTheme();
+  const { color } = theme;
+  return (
+    <View
+      accessibilityRole="alert"
+      accessibilityLiveRegion="polite"
+      style={[styles.refusal, { borderColor: color.destructiveInk }]}
+    >
+      <Glyph name="info" size={18} color={color.destructiveInk} />
+      <Text style={[textRole(theme, "bodySm"), styles.noteText, { color: color.ink }]}>{text}</Text>
     </View>
   );
 }
@@ -394,6 +419,15 @@ export const styles = StyleSheet.create({
     marginTop: 16,
   },
   noteText: { flex: 1 },
+  refusal: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: tokens.radius.lg,
+    borderWidth: 1,
+  },
   noteAct: {
     alignSelf: "center",
     minHeight: 44,

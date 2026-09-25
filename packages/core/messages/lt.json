@@ -370,7 +370,8 @@
           "minutesMore": "Penkiomis minutėmis daugiau",
           "quick": "Greiti laikai",
           "help": "Nuo 5 sekundžių iki 48 valandų. Paliesk skaičius, kad juos įvestum.",
-          "start": "Paleisti laikmatį"
+          "start": "Paleisti laikmatį",
+          "limit": "{count, plural, one {Vienu metu daugiausia # laikmatis ar eiga. Sustabdyk arba užverk vieną, kad paleistum kitą.} few {Vienu metu daugiausia # laikmačiai ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} many {Vienu metu daugiausia # laikmačio ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} other {Vienu metu daugiausia # laikmačių ir eigų. Sustabdyk arba užverk vieną, kad paleistum kitą.}}"
         },
         "permission": {
           "title": "Priminti, kai bus baigta?",
@@ -400,7 +401,8 @@
           "maxStages": "Eigoje gali būti daugiausia 12 etapų",
           "save": "Išsaugoti",
           "saveAndStart": "Išsaugoti ir pradėti",
-          "tooLong": "Ši eiga per ilga išsaugoti – sutrumpink etapo pavadinimą arba pašalink etapą."
+          "tooLong": "Ši eiga per ilga išsaugoti – sutrumpink etapo pavadinimą arba pašalink etapą.",
+          "savedLimit": "{count, plural, one {Gali laikyti # išsaugotą eigą. Ištrink vieną, kad išsaugotum šią.} few {Gali laikyti # išsaugotas eigas. Ištrink vieną, kad išsaugotum šią.} many {Gali laikyti # išsaugotos eigos. Ištrink vieną, kad išsaugotum šią.} other {Gali laikyti # išsaugotų eigų. Ištrink vieną, kad išsaugotum šią.}}"
         },
         "picker": {
           "common": "Dažni etapai",
