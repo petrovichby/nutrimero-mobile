@@ -7,8 +7,20 @@ passed again market-aware at `7d3f486` (2026-09-25). Also recorded in the spec: 
 owner's F23 walk (all eight stops approved), and the owner's rulings on the ten density picks and the per-market
 set.
 
-**Status**: **At gate 2** (UK market profile added 2026-09-25, FR-031). The build waits for the api's
-units-and-density change, which carries the market dimension.
+**Status**: **Gate 2 PASSED at `77c0e60` (2026-09-25), except item 2 (piece weights), which is with the
+owner.**
+- Item 1 has been relayed to the api lane.
+- Item 3 takes path (b): the api's first, small PR lands the market table and the unit definitions. Phase 2
+  unblocks once that lands and the owner has walked the three variants.
+- Item 4 is accepted: label–value spoken amounts.
+- Item 5 is accepted: the seam changes are additive, and the coordinator announces them.
+- Item 6: **GO on phase 1.**
+- Item 2 is with the owner. The coordinator recommends, as the alternative to no piece weights: eggs as their
+  market's statutory size ranges in shell (no single weight); banana medium peeled at about 120 g; pear large at
+  230 g; nothing else. Research into a sourced typical *cracked* egg weight per EU and UK grade continues and is
+  reported through the coordinator.
+
+The build of phases 3–5 waits for the api's units-and-density change.
 
 ## Summary
 
