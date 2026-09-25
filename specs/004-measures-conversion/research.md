@@ -216,17 +216,17 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   setting under Language & Region on iOS, Region settings on Android". It is independent of the UI
   language (`languageCode`) and of the locale's `measurementSystem`. Read at launch and on return to the
   foreground; never stored, never sent.
-- **Mapping region → market**: DE, AT, CH, HU, LT, PL (launch), US (later); anything else per QM1
-  (recommended: the EU default profile). The mapping itself, and every market-scoped value (units shown,
+- **Mapping region → market**: DE, AT, CH, HU, LT, PL (launch), US (later); anything else, or no region, gets the core
+  set with metric and no egg grades (QM1, ruled). The mapping itself, and every market-scoped value (units shown,
   egg grading, set membership, onboarding sample), comes from the api's units-and-density change with the
   market dimension — the app holds no market table (FR-025).
 - **Set per market** (FR-026): the snapshot carries, per ingredient, the markets it belongs to (from the api);
   the list and search filter by the current market. The market-neutral core is the draft's 183 minus the US
   flour names; DE/AT/CH add the 13 Type flours.
-- **Units vs market**: the user's units choice (001; QM3) and the market are separate components — US units
+- **Units vs market**: the user's units choice (001, relabelled "US" — QM3, FR-028) and the market are separate components — US units
   switch on the US cup and the stick in any market; they do not change the set.
 - **Alternatives**: the UI language (rejected by the ruling — a German speaker in Vilnius is in the LT
-  market); `measurementSystem` (kept only as a QM1 option); a stored market choice (QM2).
+  market); `measurementSystem` (not used — QM1 ruled); a stored market choice (QM2 ruled: not in 004).
 
 ## R16 — Dependencies
 
