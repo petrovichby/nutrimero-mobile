@@ -42,6 +42,15 @@ export function RoutineScreen({
   useTimerKeepAwake(`routine-${id}`, focused && item !== undefined);
 
   // Once the store has been read, a missing item was dismissed, cancelled or cleared: leave.
+  // 18c (a46f00c8): while this screen is open, its item's ending turns it to done in place.
+  const { setOnScreen } = timers;
+  const present = item !== undefined;
+  useEffect(() => {
+    if (!focused || !present) return;
+    setOnScreen(id);
+    return () => setOnScreen(null);
+  }, [focused, present, id, setOnScreen]);
+
   useEffect(() => {
     if (loaded && item === undefined) onBack();
   }, [loaded, item, onBack]);

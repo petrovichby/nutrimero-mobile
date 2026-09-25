@@ -333,6 +333,7 @@
           "open": "Відкрити таймери"
         },
         "agoShort": "{duration} тому",
+        "justNow": "щойно",
         "endsAt": "закінчиться о {time}",
         "endedAt": "закінчився о {time}",
         "doneAt": "{ago}, о {time}",

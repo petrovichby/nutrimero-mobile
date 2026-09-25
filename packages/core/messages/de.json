@@ -333,6 +333,7 @@
           "open": "Timer öffnen"
         },
         "agoShort": "vor {duration}",
+        "justNow": "gerade eben",
         "endsAt": "endet um {time}",
         "endedAt": "endete um {time}",
         "doneAt": "{ago}, um {time}",

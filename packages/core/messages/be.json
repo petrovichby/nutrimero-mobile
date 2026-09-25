@@ -333,6 +333,7 @@
           "open": "Адкрыць таймеры"
         },
         "agoShort": "{duration} таму",
+        "justNow": "толькі што",
         "endsAt": "скончыцца а {time}",
         "endedAt": "скончыўся а {time}",
         "doneAt": "{ago}, а {time}",

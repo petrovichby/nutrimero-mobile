@@ -333,6 +333,7 @@
           "open": "Atidaryti laikmačius"
         },
         "agoShort": "prieš {duration}",
+        "justNow": "ką tik",
         "endsAt": "baigsis {time}",
         "endedAt": "baigėsi {time}",
         "doneAt": "{ago}, {time}",
