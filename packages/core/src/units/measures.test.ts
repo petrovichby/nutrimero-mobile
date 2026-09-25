@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { convertByFactor } from "./convert";
 import { foldForSearch, foldWithoutNormalize } from "./fold";
-import { formatMeasure, formatMeasureRange, formatSpokenAmount } from "./format";
+import {
+  formatMeasure,
+  formatMeasureRange,
+  formatPoundsOunces,
+  formatSpokenAmount,
+} from "./format";
 import { toPracticalFraction } from "./fraction";
 import { parseAmount } from "./parse";
 
@@ -72,6 +77,32 @@ describe("formatMeasure (004 FR-013, FR-014, FR-015)", () => {
   it("speaks a decimal, never a glyph (gate-2 item 4)", () => {
     expect(formatSpokenAmount(1.125, "en")).toBe("1.125");
     expect(formatSpokenAmount(1.125, "de")).toBe("1,125");
+  });
+});
+
+describe("the kitchen chart's formats (MA-29, design 802f19e9)", () => {
+  it("shows grams with one decimal under 10 g and whole grams from 10 g", () => {
+    expect(formatMeasure(2.64, "gramsFine", "g", "en")).toBe(`2.6${NBSP}g`);
+    expect(formatMeasure(7.94, "gramsFine", "g", "de")).toBe(`7,9${NBSP}g`);
+    expect(formatMeasure(4, "gramsFine", "g", "en")).toBe(`4${NBSP}g`);
+    expect(formatMeasure(52.8, "gramsFine", "g", "en")).toBe(`53${NBSP}g`);
+    expect(formatMeasure(132.4, "gramsFine", "g", "en")).toBe(`132${NBSP}g`);
+  });
+
+  it("shows ounces to the eighth, as the US and UK charts do", () => {
+    expect(formatMeasure(4.375, "ounces", "oz", "en")).toBe(`4⅜${NBSP}oz`);
+    expect(formatMeasure(1.1, "ounces", "oz", "en")).toBe(`1⅛${NBSP}oz`);
+    expect(formatMeasure(0.33, "ounces", "oz", "en")).toBe(`⅜${NBSP}oz`);
+    // The egg frame: 2 medium eggs ≈ 102 g ≈ 3⅝ oz.
+    expect(formatMeasure(102 / 28.349523125, "ounces", "oz", "en")).toBe(`3⅝${NBSP}oz`);
+  });
+
+  it("writes pounds and ounces like the imperial card (MA-28)", () => {
+    expect(formatPoundsOunces(17.625, "lb", "oz", "en")).toBe(`1${NBSP}lb 1⅝${NBSP}oz`);
+    expect(formatPoundsOunces(8.75, "lb", "oz", "en")).toBe(`8¾${NBSP}oz`);
+    expect(formatPoundsOunces(16, "lb", "oz", "en")).toBe(`1${NBSP}lb`);
+    expect(formatPoundsOunces(15.97, "lb", "oz", "en")).toBe(`1${NBSP}lb`);
+    expect(() => formatPoundsOunces(-1, "lb", "oz", "en")).toThrow(RangeError);
   });
 });
 

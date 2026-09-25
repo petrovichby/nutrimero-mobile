@@ -64,6 +64,7 @@ export {
   formatMeasure,
   formatMeasureRange,
   formatNumber,
+  formatPoundsOunces,
   formatSpokenAmount,
   type MeasureKind,
 } from "./units/format";

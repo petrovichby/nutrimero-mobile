@@ -2,7 +2,8 @@
  * Practical kitchen fractions (004 FR-013, research R7): cups snap to eighths and thirds, spoons
  * to quarters. The exact value always travels with the snapped one, so a screen can show both.
  */
-export type FractionKind = "cup" | "spoon";
+/** cup: eighths and thirds; spoon: quarters; eighth: eighths only (ounces, MA-29 charts). */
+export type FractionKind = "cup" | "spoon" | "eighth";
 
 const GLYPHS: Readonly<Record<string, string>> = {
   "1/8": "⅛",
@@ -35,6 +36,17 @@ const STEPS: Readonly<Record<FractionKind, readonly (readonly [number, number])[
     [1, 4],
     [1, 2],
     [3, 4],
+    [1, 1],
+  ],
+  eighth: [
+    [0, 1],
+    [1, 8],
+    [1, 4],
+    [3, 8],
+    [1, 2],
+    [5, 8],
+    [3, 4],
+    [7, 8],
     [1, 1],
   ],
 };
