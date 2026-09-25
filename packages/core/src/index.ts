@@ -62,6 +62,7 @@ export {
 export { foldForSearch } from "./units/fold";
 export {
   formatMeasure,
+  formatMeasureRange,
   formatNumber,
   formatSpokenAmount,
   type MeasureKind,

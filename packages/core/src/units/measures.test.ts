@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { convertByFactor } from "./convert";
 import { foldForSearch, foldWithoutNormalize } from "./fold";
-import { formatMeasure, formatSpokenAmount } from "./format";
+import { formatMeasure, formatMeasureRange, formatSpokenAmount } from "./format";
 import { toPracticalFraction } from "./fraction";
 import { parseAmount } from "./parse";
 
@@ -72,6 +72,27 @@ describe("formatMeasure (004 FR-013, FR-014, FR-015)", () => {
   it("speaks a decimal, never a glyph (gate-2 item 4)", () => {
     expect(formatSpokenAmount(1.125, "en")).toBe("1.125");
     expect(formatSpokenAmount(1.125, "de")).toBe("1,125");
+  });
+});
+
+describe("formatMeasureRange (004 FR-007a, MA-29 eggs)", () => {
+  it("writes a closed range once with its unit, and multiplies like the egg frames", () => {
+    // 2 medium eggs: 2 × 53 – 2 × 63 g in shell.
+    expect(formatMeasureRange(2 * 53, 2 * 63, "grams", "g", "en")).toBe(`106–126${NBSP}g`);
+    expect(formatMeasureRange(53, 63, "grams", "g", "de")).toBe(`53–63${NBSP}g`);
+  });
+
+  it("writes the open ends of the smallest and largest bands", () => {
+    expect(formatMeasureRange(null, 53, "grams", "g", "en")).toBe(`<${NBSP}53${NBSP}g`);
+    expect(formatMeasureRange(2 * 73, null, "grams", "g", "en")).toBe(`≥${NBSP}146${NBSP}g`);
+  });
+
+  it("never rounds a limit to 5 g, even above 100 g", () => {
+    expect(formatMeasureRange(3 * 53, 3 * 63, "grams", "g", "en")).toBe(`159–189${NBSP}g`);
+  });
+
+  it("refuses a range with no bound", () => {
+    expect(() => formatMeasureRange(null, null, "grams", "g", "en")).toThrow(RangeError);
   });
 });
 
