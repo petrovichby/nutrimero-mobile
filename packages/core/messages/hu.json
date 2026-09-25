@@ -259,8 +259,9 @@
     },
     "more": {
       "title": "Továbbiak",
+      "timersHint": "Időzítők és menetrendek",
       "clearTitle": "Adataim törlése erről az eszközről",
-      "clearHint": "Az étrendi profilod, mértékegységeid és kamrád",
+      "clearHint": "Az étrendi profilod, mértékegységeid, kamrád és időzítőid",
       "version": "{app} · {version} verzió"
     },
     "clearData": {
@@ -269,7 +270,8 @@
       "items": {
         "profile": "az étrendi profilod",
         "units": "a mértékegység-választásod",
-        "pantry": "a kamrád alapanyagai"
+        "pantry": "a kamrád alapanyagai",
+        "timers": "az időzítőid és mentett menetrendjeid"
       },
       "restart": "Újra az első kérdéssel kezdesz. Ez nem vonható vissza.",
       "keeps": "Az alkalmazás nyelve nem változik.",
@@ -325,7 +327,6 @@
       "refused": {
         "openSettings": "Beállítások megnyitása"
       },
-      "clearDataLine": "az időzítőid és mentett menetrendjeid",
       "ui": {
         "chip": {
           "others": "{count, plural, one {és még # időzítő} other {és még # időzítő}}",

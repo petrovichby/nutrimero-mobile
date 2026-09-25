@@ -160,11 +160,17 @@ and asks for permission in context.
 
 ## Phase 8: Wiring — the one app-root change (⛔HOME1)
 
-- [ ] T021 Send the **seam announcement** through the owner before touching `apps/home-baker`: the chip in the shell, the wiper registered before `restore()`, the `expo-notifications` plugin in the app config, and the lifecycle hook in the root layout.
-- [ ] T022 In `apps/home-baker/src/boot.ts`, call `registerTimersWiper(session, timerStore, scheduler.cancelAll)` **before** `session.restore()`. Add `apps/home-baker/src/boot-timers.test.ts`, proving the fresh-install wipe reaches `"home.timers"`.
-- [ ] T023 In `apps/home-baker/src/shell.tsx` (the Home shell), mount `<TimerChip/>` on every Home screen, and mount `lifecycle` (T012) and `routing` (T016) once in `apps/home-baker/app/_layout.tsx`.
-- [ ] T024 Add `expo-notifications` and `expo-keep-awake` to `apps/home-baker/package.json` (autolinking resolves from the app), and the `expo-notifications` plugin (channel only; no remote setup) to `apps/home-baker/app.json`. Set `android.blockedPermissions` if T013 finds an exact-alarm permission.
-- [ ] T025 Confirm that Home 1's Clear my data now runs every registered wiper (quickstart M8), and that the Clear-my-data sheet shows "your timers and saved routines" (T009's key).
+> **PR 4 note (2026-09-25):** the wiring. T021: announced, and the coordinator relays Home's acknowledgement before merge.
+> T022: the composition is tested in `apps/home-baker/src/boot-timers.test.ts` and the source order in
+> `scripts/home-boot-order.test.ts`. T023: the chip is mounted in the tabs layout, above the bar; lifecycle, routing, the sheet and the
+> completion alert are in `apps/home-baker/src/timers-root.tsx`. T025: the Clear-my-data line is `home.clearData.items.timers`, and
+> More's subtitle now names timers. The on-device part of T025 is M8 in T027.
+
+- [x] T021 Send the **seam announcement** through the owner before touching `apps/home-baker`: the chip in the shell, the wiper registered before `restore()`, the `expo-notifications` plugin in the app config, and the lifecycle hook in the root layout.
+- [x] T022 In `apps/home-baker/src/boot.ts`, call `registerTimersWiper(session, timerStore, scheduler.cancelAll)` **before** `session.restore()`. Add `apps/home-baker/src/boot-timers.test.ts`, proving the fresh-install wipe reaches `"home.timers"`.
+- [x] T023 In `apps/home-baker/src/shell.tsx` (the Home shell), mount `<TimerChip/>` on every Home screen, and mount `lifecycle` (T012) and `routing` (T016) once in `apps/home-baker/app/_layout.tsx`.
+- [x] T024 Add `expo-notifications` and `expo-keep-awake` to `apps/home-baker/package.json` (autolinking resolves from the app), and the `expo-notifications` plugin (channel only; no remote setup) to `apps/home-baker/app.json`. Set `android.blockedPermissions` if T013 finds an exact-alarm permission.
+- [x] T025 Confirm that Home 1's Clear my data now runs every registered wiper (quickstart M8), and that the Clear-my-data sheet shows "your timers and saved routines" (T009's key).
 
 ---
 

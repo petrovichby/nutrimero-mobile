@@ -2,7 +2,8 @@ import type { Translator } from "@nutrimero/core";
 import { ConfirmSheet, textRole, useTheme } from "@nutrimero/ui";
 import { StyleSheet, Text, View } from "react-native";
 
-const ITEMS = ["profile", "units", "pantry"] as const;
+// Timers and saved routines (005) are wiped by their own registered wiper in the same sequence.
+const ITEMS = ["profile", "units", "pantry", "timers"] as const;
 
 /**
  * Clear my data on this device (09-more-clear-data; 001 FR-013; DESIGN.md MA-24): names what is

@@ -47,6 +47,8 @@ export interface TimersValue {
   readonly t: Translator;
   readonly locale: string;
   readonly now: number;
+  /** False until the store has been read once; a screen for a missing item waits for it. */
+  readonly loaded: boolean;
   readonly items: readonly Item[];
   readonly saved: readonly SavedRoutine[];
   readonly prefs: Prefs;
@@ -118,6 +120,7 @@ export function TimersProvider({
   children: ReactNode;
 }) {
   const [items, setItems] = useState<readonly Item[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [saved, setSaved] = useState<readonly SavedRoutine[]>([]);
   const [prefs, setPrefs] = useState<Prefs>(DEFAULT_PREFS);
   const [permission, setPermission] = useState<Permission>("undetermined");
@@ -136,6 +139,7 @@ export function TimersProvider({
     setSaved(nextSaved);
     setPrefs(nextPrefs);
     setNow(Date.now());
+    setLoaded(true);
   }, [store]);
 
   useEffect(() => {
@@ -207,6 +211,7 @@ export function TimersProvider({
       t,
       locale,
       now,
+      loaded,
       items,
       saved,
       prefs,
@@ -259,7 +264,21 @@ export function TimersProvider({
       openSettings: platform.openSettings,
       newId: createId,
     }),
-    [alerts, apply, items, locale, now, permission, platform, prefs, reload, saved, store, t],
+    [
+      alerts,
+      apply,
+      items,
+      loaded,
+      locale,
+      now,
+      permission,
+      platform,
+      prefs,
+      reload,
+      saved,
+      store,
+      t,
+    ],
   );
 
   return <TimersContext.Provider value={value}>{children}</TimersContext.Provider>;

@@ -259,8 +259,9 @@
     },
     "more": {
       "title": "Mehr",
+      "timersHint": "Timer und Abläufe",
       "clearTitle": "Meine Daten auf diesem Gerät löschen",
-      "clearHint": "Dein Ernährungsprofil, Einheiten und Vorrat",
+      "clearHint": "Dein Ernährungsprofil, Einheiten, Vorrat und Timer",
       "version": "{app} · Version {version}"
     },
     "clearData": {
@@ -269,7 +270,8 @@
       "items": {
         "profile": "dein Ernährungsprofil",
         "units": "deine Wahl der Maßeinheiten",
-        "pantry": "die Grundzutaten in deinem Vorrat"
+        "pantry": "die Grundzutaten in deinem Vorrat",
+        "timers": "deine Timer und gespeicherten Abläufe"
       },
       "restart": "Du beginnst wieder mit der ersten Frage. Das kann nicht rückgängig gemacht werden.",
       "keeps": "Die Sprache der App bleibt, wie sie ist.",
@@ -325,7 +327,6 @@
       "refused": {
         "openSettings": "Einstellungen öffnen"
       },
-      "clearDataLine": "deine Timer und gespeicherten Abläufe",
       "ui": {
         "chip": {
           "others": "{count, plural, one {und # weiterer Timer} other {und # weitere Timer}}",
