@@ -1,6 +1,6 @@
 import { createTranslator } from "@nutrimero/core";
 import { describe, expect, it } from "vitest";
-import { nextStageLine } from "./describe";
+import { agoFor, nextStageLine } from "./describe";
 
 const en = createTranslator("en");
 
@@ -16,5 +16,13 @@ describe("the next-stage line (20–20c)", () => {
   it("says hands-on, and take your time once the stage before it has ended", () => {
     expect(nextStageLine(shape, false, true, en)).toBe("hands-on");
     expect(nextStageLine(shape, true, false, en)).toBe("hands-on · take your time");
+  });
+});
+
+describe("how long ago something ended (16, 18b)", () => {
+  it("counts seconds under a minute, then whole minutes", () => {
+    expect(agoFor(0, 13_000, en)).toBe("13 s ago");
+    expect(agoFor(0, 416_000, en)).toBe("6 min ago");
+    expect(agoFor(0, 3_725_000, en)).toBe("1 h 2 min ago");
   });
 });

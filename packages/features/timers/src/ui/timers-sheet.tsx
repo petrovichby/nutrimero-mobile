@@ -44,7 +44,7 @@ export function TimersSheet({
         closeLabel={closeLabel}
         onClose={onClose}
       />
-      <ScrollView style={styles.list} bounces={false}>
+      <ScrollView style={styles.list} contentContainerStyle={styles.listContent} bounces={false}>
         {views.map((view, index) => (
           <SheetRow
             key={view.id}
@@ -208,7 +208,10 @@ function SheetRow({
 }
 
 const styles = StyleSheet.create({
-  list: { maxHeight: 360, marginTop: 4 },
+  // The list runs to the sheet's edges so a done row's tint is full-bleed (16: margin 0 -16px);
+  // a ScrollView clips its children, so the bleed has to be inside it.
+  list: { maxHeight: 360, marginTop: 4, marginHorizontal: -16 },
+  listContent: { paddingHorizontal: 16 },
   row: { flexDirection: "row", alignItems: "center", gap: 12, minHeight: 72, paddingVertical: 10 },
   doneRow: { marginHorizontal: -16, paddingHorizontal: 18 },
   main: { flex: 1, flexDirection: "row", alignItems: "center", gap: 12, minHeight: 44 },

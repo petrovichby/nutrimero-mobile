@@ -102,7 +102,7 @@ function doneTitle(view: View, t: Translator, locale: string): string {
 /**
  * The timers state for every screen (005 contracts/timers-package.md). The stored end times are
  * the truth; `now` is a display-only refresh (research R8) that runs once a second while anything
- * is running and the app is in the foreground — it never writes. When a running item's end
+ * is running or done and the app is in the foreground — it never writes. When a running item's end
  * passes while the app is open, the in-app alert takes over from the banner (US1-5): text, a
  * vibration, and a screen-reader announcement (FR-019).
  */
@@ -155,14 +155,14 @@ export function TimersProvider({
     return () => subscription.remove();
   }, [platform, reload, store]);
 
-  const anyRunning = items.some(
-    (item) => item.clock.status === "running" && item.clock.endAt > now,
-  );
+  // A running clock counts down, and a done one reads "3 min ago" — both need the refresh (T027:
+  // a done item's "ago" froze when only running items ticked). Paused and hands-on items don't.
+  const ticking = items.some((item) => item.clock.status === "running");
   useEffect(() => {
-    if (!anyRunning || !active) return;
+    if (!ticking || !active) return;
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
-  }, [anyRunning, active]);
+  }, [ticking, active]);
 
   // Completion while open: running → done between two display refreshes.
   useEffect(() => {

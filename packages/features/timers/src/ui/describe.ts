@@ -24,8 +24,13 @@ export interface Described {
   readonly doneTitle: string;
 }
 
+/**
+ * "13 s ago" under a minute, then whole minutes ("3 min ago", as drawn in 16 and 18b) — a line
+ * that ticks every second past the first minute is noise, not information.
+ */
 export function agoFor(endedAt: number, now: number, t: Translator): string {
-  const { text } = formatDuration(Math.max(0, (now - endedAt) / 1000), t);
+  const seconds = Math.max(0, Math.floor((now - endedAt) / 1000));
+  const { text } = formatDuration(seconds < 60 ? seconds : seconds - (seconds % 60), t);
   return t("home.timers.ui.agoShort", { duration: text });
 }
 
