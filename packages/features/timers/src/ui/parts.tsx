@@ -1,16 +1,6 @@
-import { Glyph, type GlyphName, textRole, tokens, useReduceMotion, useTheme } from "@nutrimero/ui";
-import { type ReactNode, useEffect, useRef } from "react";
-import {
-  Animated,
-  Easing,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-  type ViewStyle,
-} from "react-native";
+import { Glyph, type GlyphName, textRole, tokens, useSheetRise, useTheme } from "@nutrimero/ui";
+import type { ReactNode } from "react";
+import { Animated, Modal, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
@@ -282,28 +272,7 @@ export function Sheet({
   const theme = useTheme();
   const { color } = theme;
   const insets = useSafeAreaInsets();
-  const reduceMotion = useReduceMotion();
-  const { height } = useWindowDimensions();
-  // Starts below the screen so no frame shows it in place before it rises.
-  const rise = useRef(new Animated.Value(reduceMotion ? 0 : height)).current;
-  useEffect(() => {
-    if (visible) return;
-    // Back below the screen once the fade-out has finished, ready for the next rise.
-    const id = setTimeout(() => rise.setValue(reduceMotion ? 0 : height), 300);
-    return () => clearTimeout(id);
-  }, [visible, reduceMotion, height, rise]);
-  const onShow = () => {
-    if (reduceMotion) {
-      rise.setValue(0);
-      return;
-    }
-    Animated.timing(rise, {
-      toValue: 0,
-      duration: 240,
-      easing: Easing.out(Easing.cubic),
-      useNativeDriver: true,
-    }).start();
-  };
+  const { translateY: rise, onShow } = useSheetRise(visible);
   return (
     <Modal
       visible={visible}

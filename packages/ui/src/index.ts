@@ -12,6 +12,7 @@ export { TabBar, type TabItem } from "./components/tab-bar";
 export { textRole } from "./components/text-style";
 export { ToggleChip } from "./components/toggle-chip";
 export { useReduceMotion } from "./components/use-reduce-motion";
+export { useSheetRise } from "./components/use-sheet-rise";
 export {
   displayFace,
   FONT_FILES,
