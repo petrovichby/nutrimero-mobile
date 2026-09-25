@@ -181,3 +181,90 @@ describe("device, never phone", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+/**
+ * A number and its unit never wrap apart (owner, 2026-09-25): a no-break space (U+00A0) joins them
+ * in every string of every language — "250 g", "{grams, number} g", "1 cup", "{value} хв", and
+ * a type number such as "Type 550". A plain space between a number (a digit or an ICU number
+ * argument) and a unit, or between "type" and its number, fails here.
+ */
+const UNIT_WORDS = [
+  "g",
+  "kg",
+  "mg",
+  "ml",
+  "l",
+  "dl",
+  "cl",
+  "°C",
+  "°F",
+  "oz",
+  "lb",
+  "fl oz",
+  "cup",
+  "cups",
+  "stick",
+  "sticks",
+  "tsp",
+  "tbsp",
+  "pint",
+  "pints",
+  "min",
+  "min.",
+  "h",
+  "s",
+  "sec",
+  "EL",
+  "TL",
+  "perc",
+  "mp",
+  "óra",
+  "val.",
+  "godz.",
+  "г",
+  "кг",
+  "мг",
+  "мл",
+  "л",
+  "хв",
+  "хв.",
+  "с",
+  "год",
+  "гадз.",
+  "гадз",
+  "ч",
+  "мін",
+];
+const escaped = [...UNIT_WORDS]
+  .sort((a, b) => b.length - a.length)
+  .map((unit) => unit.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+  .join("|");
+const NUMBER_SPACE_UNIT = new RegExp(
+  `(?:\\d|\\{[a-zA-Z]+(?:, ?number[^}]*)?\\}) (?:${escaped})(?![0-9A-Za-zÀ-žЀ-ӿ])`,
+  "u",
+);
+const TYPE_SPACE_NUMBER = /\b(?:[Tt]ype|[Tt]yp|típus|tipas|[Тт]ып|[Тт]ип) \d/u;
+
+describe("a number and its unit never wrap apart", () => {
+  it("joins every number and unit with a no-break space, in every language", () => {
+    const offenders: string[] = [];
+    for (const locale of LOCALES) {
+      for (const [key, message] of Object.entries(flatten(messages[locale]))) {
+        if (NUMBER_SPACE_UNIT.test(message) || TYPE_SPACE_NUMBER.test(message)) {
+          offenders.push(`${locale} ${key}: ${message}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it("catches a plain space (the check itself)", () => {
+    expect(NUMBER_SPACE_UNIT.test("250 g")).toBe(true);
+    expect(NUMBER_SPACE_UNIT.test("{grams, number} g")).toBe(true);
+    expect(NUMBER_SPACE_UNIT.test("{value} хв")).toBe(true);
+    expect(TYPE_SPACE_NUMBER.test("Weizenmehl Type 550")).toBe(true);
+    expect(NUMBER_SPACE_UNIT.test("250 g")).toBe(false);
+    expect(NUMBER_SPACE_UNIT.test("2 eggs")).toBe(false);
+    expect(NUMBER_SPACE_UNIT.test("1 hour")).toBe(false);
+  });
+});

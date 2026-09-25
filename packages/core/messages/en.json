@@ -167,17 +167,17 @@
         "imperialUnits": "cups · ounces · °F",
         "convertLabel": "How your recipes will read",
         "rows": {
-          "flourCup": "1 cup flour",
-          "flourGrams": "{grams, number} g flour",
-          "butterStick": "1 stick butter",
-          "butterGrams": "{grams, number} g butter"
+          "flourCup": "1 cup flour",
+          "flourGrams": "{grams, number} g flour",
+          "butterStick": "1 stick butter",
+          "butterGrams": "{grams, number} g butter"
         },
         "values": {
-          "cup": "1 cup",
-          "stick": "1 stick",
-          "grams": "{grams, number} g",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "cup": "1 cup",
+          "stick": "1 stick",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Bakers’ tip: weighing in grams is the single biggest accuracy upgrade — our recipes are written metric-first.",
         "sample": {
@@ -293,9 +293,9 @@
         "cool": "cool"
       },
       "unit": {
-        "hours": "{value} h",
-        "minutes": "{value} min",
-        "seconds": "{value} s"
+        "hours": "{value} h",
+        "minutes": "{value} min",
+        "seconds": "{value} s"
       },
       "spoken": {
         "hours": "{count, plural, one {# hour} other {# hours}}",

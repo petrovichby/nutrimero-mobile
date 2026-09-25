@@ -22,8 +22,15 @@ describe("durations in words (FR-022, research R10)", () => {
 
   it("reads compactly on screen and in words for screen readers (en)", () => {
     const t = createTranslator("en");
-    expect(formatDuration(5400, t)).toEqual({ text: "1 h 30 min", spoken: "1 hour 30 minutes" });
-    expect(formatDuration(61, t)).toEqual({ text: "1 min 1 s", spoken: "1 minute 1 second" });
+    // The whole duration never wraps (owner, 2026-09-25): no-break spaces throughout.
+    expect(formatDuration(5400, t)).toEqual({
+      text: "1\u00A0h\u00A030\u00A0min",
+      spoken: "1 hour 30 minutes",
+    });
+    expect(formatDuration(61, t)).toEqual({
+      text: "1\u00A0min\u00A01\u00A0s",
+      spoken: "1 minute 1 second",
+    });
   });
 
   it("formats in every UI language with integer counts only", () => {

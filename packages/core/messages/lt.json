@@ -168,16 +168,16 @@
         "convertLabel": "Taip atrodys tavo receptai",
         "rows": {
           "flourCup": "1 puodelis miltų",
-          "flourGrams": "{grams, number} g miltų",
+          "flourGrams": "{grams, number} g miltų",
           "butterStick": "1 lazdelė sviesto",
-          "butterGrams": "{grams, number} g sviesto"
+          "butterGrams": "{grams, number} g sviesto"
         },
         "values": {
           "cup": "1 puodelis",
           "stick": "1 lazdelė",
-          "grams": "{grams, number} g",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Kepėjo patarimas: sverti gramais – didžiausias tikslumo patobulinimas; mūsų receptai pirmiausia rašomi metrine sistema.",
         "sample": {
@@ -293,9 +293,9 @@
         "cool": "aušinimas"
       },
       "unit": {
-        "hours": "{value} val.",
-        "minutes": "{value} min.",
-        "seconds": "{value} s"
+        "hours": "{value} val.",
+        "minutes": "{value} min.",
+        "seconds": "{value} s"
       },
       "spoken": {
         "hours": "{count, plural, one {# valanda} few {# valandos} many {# valandos} other {# valandų}}",

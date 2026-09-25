@@ -7,6 +7,10 @@ import type { Translator } from "@nutrimero/core";
  *
  * The parts: from one hour, hours and minutes; from one minute, minutes and seconds; below a
  * minute, seconds. A zero part is left out ("2 h", not "2 h 0 min").
+ *
+ * On screen the whole duration never wraps (owner, 2026-09-25): each number joins its unit with a
+ * no-break space in the catalog, and the parts join with one too ("1 h 30 min" is one unit). The
+ * spoken form is not displayed, so it keeps ordinary spaces.
  */
 export function durationParts(
   totalSeconds: number,
@@ -41,7 +45,7 @@ export function formatDuration(
           ? t("home.timers.unit.minutes", { value })
           : t("home.timers.unit.seconds", { value }),
     )
-    .join(" ");
+    .join("\u00A0");
   const spoken = parts
     .map(({ unit, value }) =>
       unit === "hours"
