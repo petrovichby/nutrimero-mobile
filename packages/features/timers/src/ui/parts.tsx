@@ -207,6 +207,25 @@ export function RefusedNote({
 }
 
 /**
+ * A refusal at the action (19c too long, 17c ten running, 19d twenty saved): one sentence with an
+ * icon, above the disabled action, announced as an alert. Words and a glyph, never colour alone.
+ */
+export function Refusal({ text }: { text: string }) {
+  const theme = useTheme();
+  const { color } = theme;
+  return (
+    <View
+      accessibilityRole="alert"
+      accessibilityLiveRegion="polite"
+      style={[styles.refusal, { borderColor: color.destructiveInk }]}
+    >
+      <Glyph name="info" size={18} color={color.destructiveInk} />
+      <Text style={[textRole(theme, "bodySm"), styles.noteText, { color: color.ink }]}>{text}</Text>
+    </View>
+  );
+}
+
+/**
  * A bottom sheet (16, 17b, 19b, 20d): grab handle, scrim that closes it, system back closes it,
  * rises — or fades under Reduce Motion. The children own the content and actions.
  */
@@ -394,6 +413,15 @@ export const styles = StyleSheet.create({
     marginTop: 16,
   },
   noteText: { flex: 1 },
+  refusal: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: tokens.radius.lg,
+    borderWidth: 1,
+  },
   noteAct: {
     alignSelf: "center",
     minHeight: 44,

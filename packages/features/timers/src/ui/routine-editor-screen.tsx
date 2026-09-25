@@ -13,9 +13,10 @@ import {
 import { stageLabel } from "../model/content";
 import { formatDuration } from "../model/duration";
 import { dropIndex, moveEntry, stepAside } from "../model/editing";
+import { atSavedLimit, MAX_SAVED_ROUTINES } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_STAGES, type Stage, validName } from "../model/stage";
 import { routineFits } from "../store/timer-store";
-import { BackBar, styles as parts } from "./parts";
+import { BackBar, styles as parts, Refusal } from "./parts";
 import { StagePicker } from "./stage-picker";
 import { useTimers } from "./timers-context";
 
@@ -31,7 +32,8 @@ const ROW_HEIGHT = 60;
  * The routine editor (19), its stage picker (19b) and its too-long refusal (19c). Stages reorder
  * by dragging the grip, or by Move up / Move down for assistive technology (coordinator,
  * 2026-09-25). At twelve stages the add row says why it is off. A routine that would not fit the
- * device store is refused at the save action, before anything is written.
+ * device store is refused at the save action, before anything is written; so is a new routine
+ * past the twentieth saved one (19d).
  */
 export function RoutineEditorScreen({
   routineId = null,
@@ -63,7 +65,9 @@ export function RoutineEditorScreen({
   const finalName = validName(name) ?? t("home.timers.defaultRoutineName");
   const fits = routineFits(finalName, stages);
   const full = rows.length >= MAX_STAGES;
-  const canSave = rows.length > 0 && fits && !busy;
+  // 19d: a new routine past the twentieth is refused here, not by a failed write.
+  const savedFull = atSavedLimit(timers.saved.length, existing !== null);
+  const canSave = rows.length > 0 && fits && !savedFull && !busy;
   const target =
     drag === null ? null : dropIndex(drag.from, drag.dy, rowHeight.current, rows.length);
   const editing = picking?.index ?? null;
@@ -189,18 +193,10 @@ export function RoutineEditorScreen({
       </ScrollView>
 
       <View style={styles.dock}>
-        {!fits && (
-          <View
-            accessibilityRole="alert"
-            accessibilityLiveRegion="polite"
-            style={[styles.refuse, { borderColor: color.destructiveInk }]}
-          >
-            <Glyph name="info" size={18} color={color.destructiveInk} />
-            <Text style={[textRole(theme, "bodySm"), parts.flex, { color: color.ink }]}>
-              {t("home.timers.ui.editor.tooLong")}
-            </Text>
-          </View>
+        {savedFull && (
+          <Refusal text={t("home.timers.ui.editor.savedLimit", { count: MAX_SAVED_ROUTINES })} />
         )}
+        {!fits && <Refusal text={t("home.timers.ui.editor.tooLong")} />}
         <View style={styles.saves}>
           <Button
             label={t("home.timers.ui.editor.save")}
@@ -432,15 +428,6 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 8,
     gap: 10,
-  },
-  refuse: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: tokens.radius.lg,
-    borderWidth: 1,
   },
   saves: { flexDirection: "row", gap: 10 },
   primary: { flex: 1.3 },

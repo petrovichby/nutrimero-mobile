@@ -370,7 +370,8 @@
           "minutesMore": "Öt perccel több",
           "quick": "Gyors időtartamok",
           "help": "5 másodperctől 48 óráig. Koppints a számokra a beírásukhoz.",
-          "start": "Időzítő indítása"
+          "start": "Időzítő indítása",
+          "limit": "{count, plural, one {# időzítőd fut. Állíts le egyet, hogy újat indíthass.} other {# időzítőd fut. Állíts le egyet, hogy újat indíthass.}}"
         },
         "permission": {
           "title": "Szóljunk, ha kész?",
@@ -400,7 +401,8 @@
           "maxStages": "Egy menetrendben legfeljebb 12 lépés lehet",
           "save": "Mentés",
           "saveAndStart": "Mentés és indítás",
-          "tooLong": "Ez a menetrend túl hosszú a mentéshez – rövidíts egy lépésnevet, vagy távolíts el egy lépést."
+          "tooLong": "Ez a menetrend túl hosszú a mentéshez – rövidíts egy lépésnevet, vagy távolíts el egy lépést.",
+          "savedLimit": "{count, plural, one {# mentett menetrendet tarthatsz meg. Törölj egyet, hogy ezt elmenthesd.} other {# mentett menetrendet tarthatsz meg. Törölj egyet, hogy ezt elmenthesd.}}"
         },
         "picker": {
           "common": "Gyakori lépések",

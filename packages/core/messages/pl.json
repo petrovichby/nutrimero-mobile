@@ -370,7 +370,8 @@
           "minutesMore": "Pięć minut więcej",
           "quick": "Szybki wybór",
           "help": "Od 5 sekund do 48 godzin. Dotknij liczb, aby je wpisać.",
-          "start": "Uruchom minutnik"
+          "start": "Uruchom minutnik",
+          "limit": "{count, plural, one {Masz # uruchomiony minutnik. Zatrzymaj jeden, by uruchomić kolejny.} few {Masz # uruchomione minutniki. Zatrzymaj jeden, by uruchomić kolejny.} many {Masz # uruchomionych minutników. Zatrzymaj jeden, by uruchomić kolejny.} other {Masz # uruchomionego minutnika. Zatrzymaj jeden, by uruchomić kolejny.}}"
         },
         "permission": {
           "title": "Dać znać, gdy będzie gotowe?",
@@ -400,7 +401,8 @@
           "maxStages": "Plan może mieć najwyżej 12 etapów",
           "save": "Zapisz",
           "saveAndStart": "Zapisz i zacznij",
-          "tooLong": "Ten plan jest za długi, by go zapisać – skróć nazwę etapu albo usuń etap."
+          "tooLong": "Ten plan jest za długi, by go zapisać – skróć nazwę etapu albo usuń etap.",
+          "savedLimit": "{count, plural, one {Możesz trzymać # zapisany plan. Usuń jeden, by zapisać ten.} few {Możesz trzymać # zapisane plany. Usuń jeden, by zapisać ten.} many {Możesz trzymać # zapisanych planów. Usuń jeden, by zapisać ten.} other {Możesz trzymać # zapisanego planu. Usuń jeden, by zapisać ten.}}"
         },
         "picker": {
           "common": "Typowe etapy",
