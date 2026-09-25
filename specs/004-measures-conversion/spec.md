@@ -70,7 +70,7 @@ correction governs.
 
 - **The market comes from the device REGION** (the operating system's Region setting, read on the device),
   not from the UI language: a German-speaking baker whose device region is Lithuania is in the LT market.
-  **Assumed launch markets: DE, AT, CH, HU, LT, PL.** US and others come later; the model supports them.
+  **Assumed launch markets: DE, AT, CH, HU, LT, PL** — the UK added on 2026-09-25 (below). US and others come later; the model supports them.
 - **EU markets default to metric, the 250 ml cup, and EU egg grades** once the api defines them. FR-007a
   stands: no egg size weight until then. **The US cup and the butter stick appear only for the US market,
   or when the user chooses US units.**
@@ -147,6 +147,21 @@ the DESIGN.md port (X).
 - **The per-market set is CONFIRMED as drafted** (`curated-set.md`): **183** entries in the core, of which **5**
   are US-only flour names (shown only for the US market); **plus the 13 German Type flours for DE/AT/CH, by
   weight only**; the HU/PL/LT flour classes as api-lane gaps.
+
+### UK market profile — the owner, 2026-09-25
+
+The launch markets are **DE, AT, CH, HU, LT, PL and the UK** (device region `GB`).
+- **Units step**: **Metric** (preselected) or **Imperial** (UK: ounces, pounds, imperial fl oz and pints, °F, no
+  cups). This is FR-028's "other regions" pair, now named for the UK market. Regions outside the launch markets
+  keep the same pair under QM1.
+- **Eggs**: **UK grades** (small, medium, large, very large), once the api defines them from the UK's retained
+  standard. No size weight until then (FR-007a).
+- **Set**: the core **minus the 5 US-only flour names**.
+- **Names — a known gap.** FID has no en-GB names, so UK users see the en-US names ("all purpose flour", "heavy
+  cream") until the api supplies **sourced** en-GB names. The app never invents a name.
+- **"Cornflour" means cornstarch in the UK.** A US "corn flour" (`631E984`, whole-grain maize flour) is never shown
+  to UK users under that name. With no sourced en-GB name to show instead, `631E984` is **left out of the UK set**
+  until the api supplies one (FR-031).
 
 ## Gate 1 — the data survey
 
@@ -440,7 +455,8 @@ onboarding with region DE: the US cup and the stick appear.
 
 **Markets**
 
-- **FR-024**: The market MUST be derived from the device's region setting (read on the device through the
+- **FR-024**: The market MUST be derived from the device's region setting (launch markets DE, AT, CH, HU,
+  LT, PL, UK; US later) (read on the device through the
   already-admitted localisation module), never from the UI language; it is re-read when the app returns to
   the foreground. A region outside the known markets — or no region — resolves to the core set with metric units and no egg
   grades (QM1). The market is not stored and not sent
@@ -482,6 +498,16 @@ onboarding with region DE: the US cup and the stick appear.
   stored choice as selected, beside the region's usual pair (ruled 2026-09-25). Stored values: `metric`, `us`,
   `ukImperial`; the legacy `imperial` reads as `us` (ruled; tested). The system switches household
   units (FR-009) and never changes the set.
+
+- **FR-031**: The **UK market** (device region `GB`) MUST have its own profile:
+  - **Units step**: Metric (preselected) or Imperial (UK), per FR-028.
+  - **Eggs**: UK grades (small, medium, large, very large) once the api defines them from the UK's retained
+    standard; until then no size weight (FR-007a).
+  - **Set**: the core without the 5 US-only flour names, and without `631E984` "corn flour". In the UK
+    "cornflour" means cornstarch, so a US corn flour is never shown to UK users under that name; it returns only
+    with a sourced en-GB name from the api.
+  - **Names**: shown in English from FID's en-US names until the api supplies sourced en-GB names. This is a known
+    gap. The app never invents or respells an ingredient name.
 
 **Search**
 
@@ -592,6 +618,8 @@ onboarding with region DE: the US cup and the stick appear.
 - **api units-and-density change** (`change/002`), **now with the market dimension**: unit definitions per
   market, egg grading per market, set membership per market, and the chosen density (rule + resolved
   picks), then a contract sync. 004's snapshot and build wait for it.
+- **api lane — UK**: UK egg grades (from the UK's retained standard); sourced **en-GB ingredient names** (FID has
+  none; UK users see en-US names meanwhile); an en-GB name for `631E984` before it can return to the UK set.
 - **api lane — flour gaps**: HU BL, PL typ and LT flour classes are not in FID (`curated-set.md`);
   German Type flour defects (Dinkelmehl Type 812's base name is "Dinkelmehl Type plant1brand" with no
   English name; the Hungarian Weizen names use underscores; the Weizen values are US proxies).

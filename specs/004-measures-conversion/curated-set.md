@@ -32,10 +32,11 @@ classes; every market-scoped value will come from the api's units-and-density ch
 | **DE, AT, CH** | core **+ the 13 German Type flours** (below) | cup 250 ml, tsp 5, tbsp 15 | EU grades once the api defines them (FR-007a) |
 | **HU, PL, LT** | core; national flour classes are **api-lane gaps** (below) — no equivalences | cup 250 ml, tsp 5, tbsp 15 | EU grades once defined |
 | **US** (later) | core **+ US flour names** (all-purpose, bread, cake, self-rising, high-gluten — marked **US market only** in the tables) | US cup 236.59 ml, stick | US classes (FID's current values are minimums, §D) |
+| **UK** (`GB`) | core **minus the 5 US-only names and `631E984` corn flour** (UK "cornflour" = cornstarch; returns with a sourced en-GB name) — **180**; en-US names until the api supplies en-GB names (known gap) | Metric (250 ml cup) or Imperial (oz, lb, imp fl oz, pints — no cups); tsp 5, tbsp 15 | UK grades (small … very large) once the api defines them; none until then |
 | any other region, or none | core only (QM1) | cup 250 ml, tsp 5, tbsp 15 | **no egg grades** (QM1 — e.g. BY and UA grade eggs differently) |
 
 The **core** is the **183** ingredients below, **5** of them US-only flour names — so EU and other markets show
-**178**, the US market all 183. US units chosen in
+**178**, the UK **180** (without `631E984` corn flour), the US market all 183. US units chosen in
 onboarding switch on the US cup and the stick in any market but do not change the set.
 
 ### DE / AT / CH — the 13 German Type flours (by weight only, FR-027)

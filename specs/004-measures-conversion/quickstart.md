@@ -29,16 +29,17 @@ Expected: both generated files carry the same api commit; the diff is reviewed i
 
 Set the simulator's region, not its language, for each market (e.g. `xcrun simctl spawn booted defaults write
 -g AppleLocale de_DE` and relaunch; for "German UI, LT region" use `AppleLanguages (de)` with `AppleLocale lt_LT`).
-Walk DE, AT, CH, HU, LT, PL, US and one other region (GB).
+Walk DE, AT, CH, HU, LT, PL, UK (GB), US and one other region (e.g. BY).
 
 | Check | Expected |
 |---|---|
 | Units step, region DE | Metric (preselected) / US; each lists its units |
 | Units step, region US | US (preselected) / Metric |
-| Units step, region GB | Metric (preselected) / Imperial (oz · lb · imp fl oz · pints · °F — no cups) |
+| Units step, region GB (UK) | Metric (preselected) / Imperial (oz · lb · imp fl oz · pints · °F — no cups) |
+| Region GB — set | no US-only flour names; no "corn flour" entry; en-US names (known gap) |
 | Stored legacy `imperial` | reads as US; shown selected, even beside another region's pair |
 | Recipe from another system | "just this time" switch names your default; one tap back; Units setting unchanged |
-| Region GB | core set, metric, no egg grades |
+| Region BY (other) | core set, metric, no egg grades |
 
 Airplane mode on, fresh install, complete first run, open Measures.
 

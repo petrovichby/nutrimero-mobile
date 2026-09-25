@@ -7,13 +7,13 @@ passed again market-aware at `7d3f486` (2026-09-25). Also recorded in the spec: 
 owner's F23 walk (all eight stops approved), and the owner's rulings on the ten density picks and the per-market
 set.
 
-**Status**: **At gate 2.** The build waits for the api's units-and-density change, which carries the market
+**Status**: **At gate 2** (UK market profile added 2026-09-25, FR-031). The build waits for the api's units-and-density change, which carries the market
 dimension.
 
 ## Summary
 
 Ship a free Measures destination in Home Baker. It is market-aware: the device **region** selects the market
-(DE, AT, CH, HU, LT, PL at launch; US later; any other region gets the core set with metric units and no egg
+(DE, AT, CH, HU, LT, PL and the UK at launch; US later; any other region gets the core set with metric units and no egg
 grades). Measures shows each ingredient's kitchen measures and exact weight, a two-way converter, on-device
 search by any FID name, and the provenance of every number.
 
@@ -81,13 +81,16 @@ landing them).
 
 1. **What the api's units-and-density change must carry** (a report for the coordinator to relay; phase 3 reads
    exactly these, with names following the api's contract):
-   - **market resolution**: region → market for DE, AT, CH, HU, LT, PL and US, and the default for every other
+   - **market resolution**: region → market for DE, AT, CH, HU, LT, PL, **UK (`GB`)** and US, and the default for every other
      region (core set, metric, no egg grades);
    - **units systems per market**: which two systems the Units step offers and which is preselected (FR-028);
    - **unit definitions**: the 250 ml cup, the US cup 236.59 ml, tsp 5 ml and tbsp 15 ml everywhere, the ounce,
      the pound, the **imperial fluid ounce and pint**, and the butter stick if it becomes a platform unit;
    - **set membership per market**: the core, US-only and DE/AT/CH entries of `curated-set.md`;
-   - **egg grading per market**: none yet, so no size weights (FR-007a);
+   - **egg grading per market**: EU grades, and **UK grades** (small, medium, large, very large, from the UK's
+    retained standard). None yet, so no size weights (FR-007a);
+  - **en-GB ingredient names**, sourced (FID has none), and an en-GB name for `631E984` before it returns to the
+    UK set (FR-031);
    - **chosen density** per ingredient, form and state, with its recorded sources. This includes values that are
      not an FID row: **rice flour 0.630 (HERR 41)** comes as an overlay. "No volume value" is stated
      explicitly: potato starch, and the 44 unverified ingredients, which carry no chosen value;
@@ -159,7 +162,7 @@ gaps (FID gaps and duplicates, HU/PL/LT flour classes, Type-flour defects), all 
 
 ### Phase 6 — Verify
 
-- Quickstart per market: DE, AT, CH, HU, LT, PL, US, and one other region, set on the simulator (iOS 27 and
+- Quickstart per market: DE, AT, CH, HU, LT, PL, **UK**, US, and one other region (e.g. BY), set on the simulator (iOS 27 and
   26.5). Android on an emulator when available (still owed). All seven locales, light and dark, 1.3×,
   VoiceOver and TalkBack; an impeccable critique against the corpus.
 
