@@ -320,8 +320,7 @@
         }
       },
       "help": {
-        "androidLate": "Na Androidzie powiadomienie może się spóźnić, gdy urządzenie jest bezczynne – zwykle do około 10 minut, ale nigdy nie przychodzi za wcześnie.",
-        "forceStop": "Jeśli wymusisz zatrzymanie aplikacji, powiadomienia wstrzymają się, dopóki jej znowu nie otworzysz."
+        "androidForceStop": "Jeśli na Androidzie wymusisz zatrzymanie aplikacji, powiadomienia wstrzymają się, dopóki jej znowu nie otworzysz."
       },
       "refused": {
         "openSettings": "Otwórz ustawienia"

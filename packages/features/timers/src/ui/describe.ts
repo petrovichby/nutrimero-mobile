@@ -3,6 +3,7 @@ import { stageLabel } from "../model/content";
 import { formatDuration } from "../model/duration";
 import { capitalizeFirst, clockText, timeOfDay } from "../model/format";
 import type { View } from "../model/item";
+import type { Stage } from "../model/stage";
 
 /**
  * How one item reads on the chip, in the sheet and in announcements — one source, so the chip and
@@ -94,4 +95,22 @@ export function describe(view: View, t: Translator, locale: string, now: number)
       .filter((part): part is string => typeof part === "string" && part.length > 0)
       .join(", "),
   };
+}
+
+/**
+ * The line under "Next" on the routine screen (20–20c). A timed next stage promises a
+ * notification only when notifications are allowed; otherwise it gives the duration alone, and
+ * the refused note on the same screen says why (coordinator, 2026-09-25).
+ */
+export function nextStageLine(
+  next: Stage,
+  ended: boolean,
+  permitted: boolean,
+  t: Translator,
+): string {
+  if (next.seconds === null) {
+    return ended ? t("home.timers.ui.routine.takeYourTime") : t("home.timers.ui.editor.handsOn");
+  }
+  const duration = formatDuration(next.seconds, t).text;
+  return permitted ? t("home.timers.ui.routine.nextTimed", { duration }) : duration;
 }

@@ -320,8 +320,7 @@
         }
       },
       "help": {
-        "androidLate": "Auf Android kann eine Benachrichtigung verspätet ankommen, während das Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
-        "forceStop": "Wenn du die App zwangsweise beendest, pausieren die Hinweise, bis du sie wieder öffnest."
+        "androidForceStop": "Wenn du die App auf Android zwangsweise beendest, pausieren die Hinweise, bis du sie wieder öffnest."
       },
       "refused": {
         "openSettings": "Einstellungen öffnen"

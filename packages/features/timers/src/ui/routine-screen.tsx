@@ -7,6 +7,7 @@ import { capitalizeFirst, clockText, timeOfDay } from "../model/format";
 import { derive } from "../model/item";
 import { isBakeStage } from "../model/stage";
 import { useTimerKeepAwake } from "../native/keep-awake";
+import { nextStageLine } from "./describe";
 import {
   AwakeFootnote,
   BackBar,
@@ -74,13 +75,7 @@ export function RoutineScreen({
   const nextSub =
     stage.next === null
       ? null
-      : stage.next.seconds === null
-        ? view.status === "done"
-          ? t("home.timers.ui.routine.takeYourTime")
-          : t("home.timers.ui.editor.handsOn")
-        : t("home.timers.ui.routine.nextTimed", {
-            duration: formatDuration(stage.next.seconds, t).text,
-          });
+      : nextStageLine(stage.next, view.status === "done", permission === "granted", t);
 
   return (
     <Screen edges={["top", "left", "right", "bottom"]}>

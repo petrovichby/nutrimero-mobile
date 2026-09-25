@@ -320,8 +320,7 @@
         }
       },
       "help": {
-        "androidLate": "Androidon az értesítés késhet, amíg az eszköz tétlen – jellemzően legfeljebb kb. 10 percet, de sosem érkezik korábban.",
-        "forceStop": "Ha kényszerítve leállítod az alkalmazást, az értesítések szünetelnek, amíg újra meg nem nyitod."
+        "androidForceStop": "Ha Androidon kényszerítve leállítod az alkalmazást, az értesítések szünetelnek, amíg újra meg nem nyitod."
       },
       "refused": {
         "openSettings": "Beállítások megnyitása"

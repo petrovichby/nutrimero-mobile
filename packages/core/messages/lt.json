@@ -320,8 +320,7 @@
         }
       },
       "help": {
-        "androidLate": "Android sistemoje pranešimas gali vėluoti, kol įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada neateina anksčiau.",
-        "forceStop": "Jei priverstinai sustabdysi programėlę, pranešimai bus sustabdyti, kol ją vėl atidarysi."
+        "androidForceStop": "Jei Android sistemoje priverstinai sustabdysi programėlę, pranešimai bus sustabdyti, kol ją vėl atidarysi."
       },
       "refused": {
         "openSettings": "Atidaryti nustatymus"

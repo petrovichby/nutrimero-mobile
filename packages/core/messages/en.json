@@ -320,8 +320,7 @@
         }
       },
       "help": {
-        "androidLate": "On Android a notification may arrive late while the device is idle, typically by up to about 10 minutes, and never early.",
-        "forceStop": "If you force-stop the app, alerts pause until you open it again."
+        "androidForceStop": "On Android, if you force-stop the app, alerts pause until you open it again."
       },
       "refused": {
         "openSettings": "Open settings"
