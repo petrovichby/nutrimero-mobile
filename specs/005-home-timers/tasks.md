@@ -189,6 +189,16 @@ and asks for permission in context.
   > scheduler now rounds up (`notBefore`), re-measured at +0.04 to +0.96 s. A done item's "ago" froze (the refresh ticked
   > only while counting down); the sheet's done row was clipped, not full-bleed. **Still owed on a real iPhone:** M2
   > (locked device), M5 (deny), M6 (auto-lock), M9 (VoiceOver, 1.3×).
+  >
+  > **Owner's iPhone run, 2026-09-25** (iPhone 13 mini, iOS 27, dev build signed with a personal team; bundle id and push
+  > entitlement changed in the ignored `ios/` only). **Pass:** M1, M2 (lock-screen banner with Focus off; with a Focus on
+  > it was delivered silently, hence FR-010b / #52), M5, M6 (screen lock held only while a timer screen is visible,
+  > released once it is collapsed; read on the device), M9. **Found and fixed:** the whole app never dimmed in a dev build,
+  > because Expo's dev wrapper holds keep-awake app-wide once `expo-keep-awake` is installed; the timers root now releases
+  > that dev tag (#47). Owner change requests made on the phone went to #49 (typed duration, ±1 min steps, 0:0:0 start;
+  > the scrim fades, only the sheet rises) and #52 (Time Sensitive). **Still open for T027:** M4 end to end on the phone
+  > (tapping a locked-screen stage notification opens "Start next stage"), C3 with a real device restart, and a release
+  > build rerun of M6. The simulator covered M3, M4 (in part), M7, M8, C3 and C4.
 - [ ] T028 **Android, on a real device (owed; say so on every PR until done)**: C1 (lateness against FR-013's wording), C2 (force-stop), C5 (the bake-stage notice), and M1–M9 on Android. **A C1 or C2 disagreement goes to the owner before release.**
 - [ ] T029 VoiceOver and TalkBack walkthroughs of every surface in the seven languages (SC-007). Record the findings in the PR.
 
