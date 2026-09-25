@@ -25,6 +25,9 @@ export const notificationScheduler: SchedulerPort & {
         body: content.body,
         data: { ...content.data },
         sound: "default",
+        // FR-010b (owner, 2026-09-25): a timer ending is time-sensitive — it breaks through a
+        // Focus the baker has allowed Time Sensitive notifications for. iOS 15+; ignored before.
+        interruptionLevel: "timeSensitive",
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
