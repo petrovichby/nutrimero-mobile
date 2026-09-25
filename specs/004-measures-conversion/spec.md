@@ -95,6 +95,17 @@ correction governs.
   loses a stored choice — the stored value is mapped on read or migrated, tested (FR-028); design-mobile
   relabels the drawing.
 
+### Units by region — the owner, 2026-09-25 (extends QM1 and QM3, and 001's Units step)
+
+Users outside the EU and the US must have a clear choice between metric and imperial:
+- **EU markets**: **Metric** (preselected) or **US**.
+- **US region**: **US** (preselected) or **Metric**.
+- **All other regions** (GB, BY, UA, no region, …): **Metric** (preselected) or **Imperial** — UK imperial:
+  ounces, pounds, imperial fluid ounces and pints, °F; **no cups**.
+Each option lists its units on the card. Spoons stay 5 and 15 ml everywhere. The unit definitions — including
+the new imperial fluid ounce and pint — come from the api. The stored choice keeps working: mapped on read,
+tested. design-mobile draws the three variants (FR-028, FR-009).
+
 The questions as put:
 
 
@@ -312,6 +323,8 @@ onboarding with region DE: the US cup and the stick appear.
 - **The region changes while the app runs** (travel, settings): the market is re-read on return to the
   foreground; nothing is stored, so nothing goes stale.
 - **No region reported** (possible on some devices): core set, metric, no egg grades (QM1).
+- **A UK-imperial baker converts a cup-based recipe**: the recipe's cup can be converted *from* (the converter
+  still knows the api's cup definitions); no cup is offered as a target or shown in the measures table.
 - **A US-units baker in an EU market**: sees the US cup and the stick (QM3) but keeps the EU market's flour
   set — units and set membership are separate market components.
 
@@ -385,11 +398,12 @@ onboarding with region DE: the US cup and the stick appear.
 
 **Units**
 
-- **FR-008**: Every cup and spoon value MUST be labelled with its unit's name wherever it appears
-  ("cup (250 ml)", "US cup (236.59 ml)", "tsp", "tbsp").
-- **FR-009**: The cups, spoons and other household units shown MUST be the ones the api defines **for the
-  market**: in EU markets the 250 ml cup and spoons of 5 and 15 ml; the US cup and the butter stick only for
-  the US market or when the user has chosen US units (QM3). There is no separate cup/spoon setting.
+- **FR-008**: Every cup, spoon and fluid measure MUST be labelled with its unit's name wherever it appears
+  ("cup (250 ml)", "US cup (236.59 ml)", "imp fl oz", "pint (568 ml)", "tsp", "tbsp").
+- **FR-009**: The household units shown MUST follow the user's units system (FR-028), with definitions from the
+  api: **Metric** — the 250 ml cup; **US** — the US cup (236.59 ml) and the butter stick; **Imperial** (UK) —
+  ounces, pounds, the imperial fluid ounce and pint, **no cups**. Spoons are **5 and 15 ml in every system**.
+  There is no separate cup/spoon setting.
 - **FR-010**: Unit definitions (millilitres per cup and spoon, grams per ounce, and any other unit
   factor) MUST be read from the snapshot of the api's unit definitions; the app holds **no unit
   constants of its own**. The values ruled today: standard cup 250 ml (M1), US cup 236.59 ml, tsp
@@ -420,10 +434,17 @@ onboarding with region DE: the US cup and the stick appear.
   whole wheat flour") and do not count; until a type-specific value is verified, the type shows by weight
   only.
 
-- **FR-028**: 001's Units step MUST label its non-metric choice **"US"** (US customary: cups · ounces · °F) in
-  all seven catalogs (owner string review), not "Imperial". A choice already stored as imperial MUST read as
-  US — mapped on read or migrated once — so no user loses it; a test covers the stored legacy value. That
-  choice switches on the US cup and the butter stick in any market (FR-009) and does not change the set.
+- **FR-028**: 001's Units step MUST offer two systems chosen by region (owner, 2026-09-25), each option listing
+  its units on the card (catalog strings, seven locales, owner string review):
+  - EU markets: **Metric** (preselected: grams · millilitres · °C) or **US** (US customary: cups · ounces · °F);
+  - US region: **US** (preselected) or **Metric**;
+  - every other region, or none: **Metric** (preselected) or **Imperial** (UK: ounces · pounds · imperial fl oz
+    and pints · °F — no cups).
+  The word "Imperial" is used **only** for the UK system. The stored choice MUST keep working, mapped on read and
+  tested: today's stored `imperial` was the cups · ounces · °F option and reads as **US**; the new UK choice is
+  stored under its own value, so no stored value is ambiguous. A stored system is honoured in any region, even
+  one whose Units step would not offer it (a US choice kept after moving to GB). The system switches household
+  units (FR-009) and never changes the set.
 
 **Search**
 

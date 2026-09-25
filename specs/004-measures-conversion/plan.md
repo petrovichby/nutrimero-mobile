@@ -9,6 +9,12 @@
 market ruling; it is revised after gate 1 closes (QM1–QM3). Already known: the market is the device region
 (research R17, no new dependency); set membership, household units, egg grading and the onboarding sample
 become market-scoped reads from the api's change; the snapshot gains the market dimension.
+Also known (owner, 2026-09-25): **three units systems** — Metric, US, and UK Imperial (no cups) — offered two
+at a time by region on 001's Units step (EU: Metric/US; US: US/Metric; others: Metric/Imperial). home-data's
+stored `units` widens from `metric | imperial` to three values, with the UK system under a new value and the
+legacy `imperial` read as `us` (tested). The step, the card's three variants (drawn by design-mobile) and the
+household units per system are 004 scope; the unit definitions, including the imperial fluid ounce and pint,
+are the api's.
 
 ## Summary
 
