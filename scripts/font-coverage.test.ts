@@ -91,6 +91,15 @@ describe("character coverage", () => {
     }
   });
 
+  it("every UI face carries the measure glyphs, regular and bold (004 FR-013)", () => {
+    const glyphs = "⅛¼⅓⅜½⅝⅔¾⅞⁄°";
+    for (const locale of LOCALES) {
+      for (const weight of ["400", "700"] as const) {
+        expect(missing(glyphs, uiFace(locale, weight)), `${locale} ${weight}`).toEqual([]);
+      }
+    }
+  });
+
   it("the reader finds a face's gaps (Plus Jakarta Sans carries no Cyrillic)", () => {
     expect(missing("Ілюстрацыя", "PlusJakartaSans-400").length).toBeGreaterThan(0);
   });

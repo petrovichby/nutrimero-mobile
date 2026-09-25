@@ -53,9 +53,18 @@ export { createSession } from "./session/session";
 export type { Wiper, WipeSequence } from "./session/wipe";
 export {
   celsiusFromFahrenheit,
+  convertByFactor,
   fahrenheitFromCelsius,
   gramsFromOunces,
   ouncesFromGrams,
   roundToStep,
 } from "./units/convert";
-export { formatNumber } from "./units/format";
+export { foldForSearch } from "./units/fold";
+export {
+  formatMeasure,
+  formatNumber,
+  formatSpokenAmount,
+  type MeasureKind,
+} from "./units/format";
+export { type FractionKind, type PracticalFraction, toPracticalFraction } from "./units/fraction";
+export { parseAmount } from "./units/parse";
