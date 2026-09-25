@@ -371,7 +371,7 @@
           "quick": "Quick durations",
           "help": "From 5 seconds to 48 hours. Tap the numbers to type them.",
           "start": "Start timer",
-          "limit": "{count, plural, one {You have # timer running. Stop one to start another.} other {You have # timers running. Stop one to start another.}}"
+          "limit": "{count, plural, one {# timer or routine is the most at once. Stop or dismiss it to start another.} other {# timers and routines is the most at once. Stop or dismiss one to start another.}}"
         },
         "permission": {
           "title": "Want a nudge when it’s done?",

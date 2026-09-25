@@ -371,7 +371,7 @@
           "quick": "Schnellauswahl",
           "help": "Von 5 Sekunden bis 48 Stunden. Tippe auf die Zahlen, um sie einzugeben.",
           "start": "Timer starten",
-          "limit": "{count, plural, one {Du hast # Timer laufen. Beende einen, um einen weiteren zu starten.} other {Du hast # Timer laufen. Beende einen, um einen weiteren zu starten.}}"
+          "limit": "{count, plural, one {Höchstens # Timer oder Ablauf gleichzeitig. Beende oder blende ihn aus, um einen weiteren zu starten.} other {Höchstens # Timer und Abläufe gleichzeitig. Beende oder blende einen aus, um einen weiteren zu starten.}}"
         },
         "permission": {
           "title": "Soll ich dich erinnern, wenn es fertig ist?",

@@ -371,7 +371,7 @@
           "quick": "Szybki wybór",
           "help": "Od 5 sekund do 48 godzin. Dotknij liczb, aby je wpisać.",
           "start": "Uruchom minutnik",
-          "limit": "{count, plural, one {Masz # uruchomiony minutnik. Zatrzymaj jeden, by uruchomić kolejny.} few {Masz # uruchomione minutniki. Zatrzymaj jeden, by uruchomić kolejny.} many {Masz # uruchomionych minutników. Zatrzymaj jeden, by uruchomić kolejny.} other {Masz # uruchomionego minutnika. Zatrzymaj jeden, by uruchomić kolejny.}}"
+          "limit": "{count, plural, one {Naraz możesz mieć najwyżej # minutnik lub plan. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} few {Naraz możesz mieć najwyżej # minutniki i plany. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} many {Naraz możesz mieć najwyżej # minutników i planów. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} other {Naraz możesz mieć najwyżej # minutnika i planu. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.}}"
         },
         "permission": {
           "title": "Dać znać, gdy będzie gotowe?",

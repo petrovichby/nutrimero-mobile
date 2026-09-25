@@ -371,7 +371,7 @@
           "quick": "Greiti laikai",
           "help": "Nuo 5 sekundžių iki 48 valandų. Paliesk skaičius, kad juos įvestum.",
           "start": "Paleisti laikmatį",
-          "limit": "{count, plural, one {Tau veikia # laikmatis. Sustabdyk vieną, kad paleistum kitą.} few {Tau veikia # laikmačiai. Sustabdyk vieną, kad paleistum kitą.} many {Tau veikia # laikmačio. Sustabdyk vieną, kad paleistum kitą.} other {Tau veikia # laikmačių. Sustabdyk vieną, kad paleistum kitą.}}"
+          "limit": "{count, plural, one {Vienu metu daugiausia # laikmatis ar eiga. Sustabdyk arba užverk vieną, kad paleistum kitą.} few {Vienu metu daugiausia # laikmačiai ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} many {Vienu metu daugiausia # laikmačio ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} other {Vienu metu daugiausia # laikmačių ir eigų. Sustabdyk arba užverk vieną, kad paleistum kitą.}}"
         },
         "permission": {
           "title": "Priminti, kai bus baigta?",

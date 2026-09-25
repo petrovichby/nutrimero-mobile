@@ -371,7 +371,7 @@
           "quick": "Gyors időtartamok",
           "help": "5 másodperctől 48 óráig. Koppints a számokra a beírásukhoz.",
           "start": "Időzítő indítása",
-          "limit": "{count, plural, one {# időzítőd fut. Állíts le egyet, hogy újat indíthass.} other {# időzítőd fut. Állíts le egyet, hogy újat indíthass.}}"
+          "limit": "{count, plural, one {Egyszerre legfeljebb # időzítő vagy menetrend lehet. Állítsd le vagy vesd el, hogy újat indíthass.} other {Egyszerre legfeljebb # időzítő és menetrend lehet. Állíts le vagy vess el egyet, hogy újat indíthass.}}"
         },
         "permission": {
           "title": "Szóljunk, ha kész?",
