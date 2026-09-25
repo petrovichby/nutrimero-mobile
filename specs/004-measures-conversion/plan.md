@@ -15,6 +15,9 @@ stored `units` widens from `metric | imperial` to three values, with the UK syst
 legacy `imperial` read as `us` (tested). The step, the card's three variants (drawn by design-mobile) and the
 household units per system are 004 scope; the unit definitions, including the imperial fluid ounce and pint,
 are the api's.
+**FR-028 delivery (coordinator, 2026-09-25):** it stays in 004's PR. It ships early — with a units-only
+sample, no density numbers — only if the owner walks design-mobile's three variants well before the api
+change lands; otherwise it ships with the build.
 
 ## Summary
 

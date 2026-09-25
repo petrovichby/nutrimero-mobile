@@ -443,7 +443,9 @@ onboarding with region DE: the US cup and the stick appear.
   The word "Imperial" is used **only** for the UK system. The stored choice MUST keep working, mapped on read and
   tested: today's stored `imperial` was the cups · ounces · °F option and reads as **US**; the new UK choice is
   stored under its own value, so no stored value is ambiguous. A stored system is honoured in any region, even
-  one whose Units step would not offer it (a US choice kept after moving to GB). The system switches household
+  one whose Units step would not offer it (a US choice kept after moving to GB): the Units step then shows the
+  stored choice as selected, beside the region's usual pair (ruled 2026-09-25). Stored values: `metric`, `us`,
+  `ukImperial`; the legacy `imperial` reads as `us` (ruled; tested). The system switches household
   units (FR-009) and never changes the set.
 
 **Search**
