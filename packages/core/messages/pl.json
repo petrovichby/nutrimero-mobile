@@ -25,7 +25,7 @@
     "readiness": {
       "ready": "Gotowe",
       "incomplete": "{count, plural, one {Brakujące kategorie: #} few {Brakujące kategorie: #} many {Brakujące kategorie: #} other {Brakujące kategorie: #}}",
-      "notIssuable": "Jeszcze nie do wydania — dodatków nie można jeszcze zapisać w Nutrimero",
+      "notIssuable": "Jeszcze nie do wydania — dodatków nie można jeszcze zapisać w nutrimero",
       "noLabelTypes": "Brak przypisanych typów etykiet"
     },
     "category": {
@@ -47,7 +47,7 @@
         "cannot_be_held": "Ten rodzaj wpisu nie może tego zawierać",
         "mass_unresolvable": "Nie można ustalić masy"
       },
-      "systemCannotBeHeld": "W Nutrimero jeszcze niemożliwe",
+      "systemCannotBeHeld": "W nutrimero jeszcze niemożliwe",
       "where": "{what} — dla: {where}",
       "occurrences": "{count, plural, one {Miejsc: #} few {Miejsc: #} many {Miejsc: #} other {Miejsc: #}}",
       "datum": {
@@ -88,7 +88,7 @@
         "purchased_item": "kupiony artykuł {name}",
         "recipe": "przepis {name}",
         "product": "produkt {name}",
-        "system": "platforma Nutrimero",
+        "system": "platforma nutrimero",
         "other": "{type} {name} (obiekt)"
       }
     },
