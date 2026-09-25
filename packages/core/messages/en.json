@@ -293,14 +293,14 @@
         "cool": "cool"
       },
       "unit": {
-        "hours": "{value} h",
-        "minutes": "{value} min",
-        "seconds": "{value} s"
+        "hours": "{value} h",
+        "minutes": "{value} min",
+        "seconds": "{value} s"
       },
       "spoken": {
-        "hours": "{count, plural, one {# hour} other {# hours}}",
-        "minutes": "{count, plural, one {# minute} other {# minutes}}",
-        "seconds": "{count, plural, one {# second} other {# seconds}}"
+        "hours": "{count, plural, one {# hour} other {# hours}}",
+        "minutes": "{count, plural, one {# minute} other {# minutes}}",
+        "seconds": "{count, plural, one {# second} other {# seconds}}"
       },
       "left": "{duration} left",
       "doneAgo": "Done · {duration} ago",
@@ -333,6 +333,7 @@
           "open": "Open timers"
         },
         "agoShort": "{duration} ago",
+        "justNow": "just now",
         "endsAt": "ends at {time}",
         "endedAt": "ended at {time}",
         "doneAt": "{ago}, at {time}",
@@ -361,15 +362,18 @@
         },
         "newTimer": {
           "nameLabel": "Name",
+          "duration": "Duration",
           "hours": "hours",
           "minutes": "minutes",
           "seconds": "seconds",
-          "hourLess": "One hour less",
-          "hourMore": "One hour more",
-          "minutesLess": "Five minutes less",
-          "minutesMore": "Five minutes more",
+          "hoursLess": "One hour less",
+          "hoursMore": "One hour more",
+          "minutesLess": "One minute less",
+          "minutesMore": "One minute more",
+          "secondsLess": "One second less",
+          "secondsMore": "One second more",
           "quick": "Quick durations",
-          "help": "From 5 seconds to 48 hours. Tap the numbers to type them.",
+          "help": "From 5 seconds to 48 hours. Tap a number to type it.",
           "start": "Start timer",
           "limit": "{count, plural, one {# timer or routine is the most at once. Stop or dismiss it to start another.} other {# timers and routines is the most at once. Stop or dismiss one to start another.}}"
         },
@@ -398,6 +402,7 @@
           "moveDown": "Move down",
           "durationA11y": "Duration of {stage}: {duration}",
           "addStage": "Add a stage",
+          "editStage": "Edit stage",
           "maxStages": "12 stages is the most a routine can have",
           "save": "Save",
           "saveAndStart": "Save and start",
@@ -427,7 +432,7 @@
         },
         "android": {
           "title": "One thing about Android",
-          "late": "On Android, a notification may arrive late while your device is idle — typically by up to about 10 minutes, and never early.",
+          "late": "On Android, a notification may arrive late while your device is idle — typically by up to about 10 minutes, and never early.",
           "keepOpen": "For a bake, keep this screen open: your device stays awake, and the timer on screen is exact.",
           "gotIt": "Got it",
           "once": "We’ll only mention this once."

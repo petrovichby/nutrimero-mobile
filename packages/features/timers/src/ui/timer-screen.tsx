@@ -5,7 +5,7 @@ import { formatDuration } from "../model/duration";
 import { clockText, elapsedShare, timeOfDay } from "../model/format";
 import { derive } from "../model/item";
 import { useTimerKeepAwake } from "../native/keep-awake";
-import { agoFor } from "./describe";
+import { agoFor, leftLabel } from "./describe";
 import { AwakeFootnote, BackBar, Control, QuietDestructive, RefusedNote } from "./parts";
 import { useTimers } from "./timers-context";
 
@@ -31,6 +31,15 @@ export function TimerScreen({
   useTimerKeepAwake(`timer-${id}`, focused && item !== undefined);
 
   // Once the store has been read, a missing item was dismissed, cancelled or cleared: leave.
+  // 18c (a46f00c8): while this screen is open, its item's ending turns it to done in place.
+  const { setOnScreen } = timers;
+  const present = item !== undefined;
+  useEffect(() => {
+    if (!focused || !present) return;
+    setOnScreen(id);
+    return () => setOnScreen(null);
+  }, [focused, present, id, setOnScreen]);
+
   useEffect(() => {
     if (loaded && item === undefined) onBack();
   }, [loaded, item, onBack]);
@@ -60,6 +69,12 @@ export function TimerScreen({
         >
           {view.name}
         </Text>
+        {view.status === "paused" && (
+          // 18d-timer-paused (f7b75e5f): "paused" under the name; Resume is the main control.
+          <Text style={[textRole(theme, "bodyMd"), styles.paused, { color: color.ink2 }]}>
+            {t("home.timers.ui.sheet.paused")}
+          </Text>
+        )}
 
         {done ? (
           <>
@@ -107,9 +122,7 @@ export function TimerScreen({
               accessibilityLabel={
                 view.secondsLeft === null
                   ? undefined
-                  : t("home.timers.ui.leftA11y", {
-                      duration: formatDuration(view.secondsLeft, t).spoken,
-                    })
+                  : leftLabel(view.secondsLeft, view.status === "paused", t, locale)
               }
               style={[styles.big, { color: color.heading, fontFamily: theme.face("700") }]}
             >
@@ -190,6 +203,7 @@ export function TimerScreen({
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
+  paused: { marginTop: 2 },
   content: { paddingHorizontal: tokens.spacing.screenMargin, paddingBottom: 24 },
   big: {
     marginTop: 20,

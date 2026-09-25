@@ -3,7 +3,6 @@ import {
   ConfirmSheet,
   Glyph,
   type GlyphName,
-  PageTitle,
   Screen,
   textRole,
   tokens,
@@ -16,7 +15,7 @@ import { timedSeconds } from "../model/format";
 import { atActiveLimit, MAX_ACTIVE_ITEMS } from "../model/limits";
 import { MAX_NAME_LENGTH, validName } from "../model/stage";
 import type { SavedRoutine } from "../store/timer-store";
-import { BackBar, Pill, styles as parts, Refusal, Sheet, SheetHead } from "./parts";
+import { BackBar, DetailTitle, Pill, styles as parts, Refusal, Sheet, SheetHead } from "./parts";
 import { useTimers } from "./timers-context";
 
 /**
@@ -66,13 +65,14 @@ export function SavedRoutinesScreen({
         onPress={onBack}
       />
       <ScrollView contentContainerStyle={styles.content}>
-        <PageTitle>{t("home.timers.ui.saved.title")}</PageTitle>
+        <DetailTitle>{t("home.timers.ui.saved.title")}</DetailTitle>
         {listFull && saved.length > 0 && (
           <View style={styles.refusal}>
             <Refusal text={t("home.timers.ui.newTimer.limit", { count: MAX_ACTIVE_ITEMS })} />
           </View>
         )}
         <View>
+          {/* 21e-routines-empty (f7b75e5f, as built). */}
           {saved.length === 0 ? (
             <Text style={[textRole(theme, "bodyMd"), styles.empty, { color: color.ink2 }]}>
               {t("home.timers.ui.saved.empty")}
@@ -202,6 +202,7 @@ export function SavedRoutinesScreen({
         </Pressable>
       </ScrollView>
 
+      {/* 21c-routine-rename (f7b75e5f, as built): title, ✕, the name pre-filled and focused, Save. */}
       <Sheet
         visible={renaming !== null}
         onClose={() => setRenaming(null)}
@@ -235,6 +236,7 @@ export function SavedRoutinesScreen({
         />
       </Sheet>
 
+      {/* 21d-routine-delete (f7b75e5f, as built): the shared confirm sheet. */}
       <ConfirmSheet
         visible={deleting !== null}
         title={t("home.timers.ui.saved.deleteTitle")}

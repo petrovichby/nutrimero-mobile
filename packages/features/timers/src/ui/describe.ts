@@ -25,12 +25,13 @@ export interface Described {
 }
 
 /**
- * "13 s ago" under a minute, then whole minutes ("3 min ago", as drawn in 16 and 18b) — a line
- * that ticks every second past the first minute is noise, not information.
+ * "just now" at first (18c, a46f00c8: "just now, at 15:44"), then whole minutes ("3 min ago", as
+ * drawn in 16 and 18b). The frames draw no seconds, so the first minute reads "just now".
  */
 export function agoFor(endedAt: number, now: number, t: Translator): string {
   const seconds = Math.max(0, Math.floor((now - endedAt) / 1000));
-  const { text } = formatDuration(seconds < 60 ? seconds : seconds - (seconds % 60), t);
+  if (seconds < 60) return t("home.timers.ui.justNow");
+  const { text } = formatDuration(seconds - (seconds % 60), t);
   return t("home.timers.ui.agoShort", { duration: text });
 }
 
@@ -118,4 +119,18 @@ export function nextStageLine(
   }
   const duration = formatDuration(next.seconds, t).text;
   return permitted ? t("home.timers.ui.routine.nextTimed", { duration }) : duration;
+}
+
+/**
+ * The big readout, spoken: "1 hour 10 minutes left", or while paused "Paused, 1 hour 10 minutes
+ * left" (18d-timer-paused / 20e-routine-paused, nutrimero-design f7b75e5f).
+ */
+export function leftLabel(
+  secondsLeft: number,
+  paused: boolean,
+  t: Translator,
+  locale: string,
+): string {
+  const left = t("home.timers.ui.leftA11y", { duration: formatDuration(secondsLeft, t).spoken });
+  return paused ? `${capitalizeFirst(t("home.timers.ui.sheet.paused"), locale)}, ${left}` : left;
 }

@@ -293,14 +293,14 @@
         "cool": "Abkühlen"
       },
       "unit": {
-        "hours": "{value} Std.",
-        "minutes": "{value} Min.",
-        "seconds": "{value} Sek."
+        "hours": "{value} Std.",
+        "minutes": "{value} Min.",
+        "seconds": "{value} Sek."
       },
       "spoken": {
-        "hours": "{count, plural, one {# Stunde} other {# Stunden}}",
-        "minutes": "{count, plural, one {# Minute} other {# Minuten}}",
-        "seconds": "{count, plural, one {# Sekunde} other {# Sekunden}}"
+        "hours": "{count, plural, one {# Stunde} other {# Stunden}}",
+        "minutes": "{count, plural, one {# Minute} other {# Minuten}}",
+        "seconds": "{count, plural, one {# Sekunde} other {# Sekunden}}"
       },
       "left": "noch {duration}",
       "doneAgo": "Fertig · seit {duration}",
@@ -333,6 +333,7 @@
           "open": "Timer öffnen"
         },
         "agoShort": "vor {duration}",
+        "justNow": "gerade eben",
         "endsAt": "endet um {time}",
         "endedAt": "endete um {time}",
         "doneAt": "{ago}, um {time}",
@@ -361,15 +362,18 @@
         },
         "newTimer": {
           "nameLabel": "Bezeichnung",
+          "duration": "Dauer",
           "hours": "Stunden",
           "minutes": "Minuten",
           "seconds": "Sekunden",
-          "hourLess": "Eine Stunde weniger",
-          "hourMore": "Eine Stunde mehr",
-          "minutesLess": "Fünf Minuten weniger",
-          "minutesMore": "Fünf Minuten mehr",
+          "hoursLess": "Eine Stunde weniger",
+          "hoursMore": "Eine Stunde mehr",
+          "minutesLess": "Eine Minute weniger",
+          "minutesMore": "Eine Minute mehr",
+          "secondsLess": "Eine Sekunde weniger",
+          "secondsMore": "Eine Sekunde mehr",
           "quick": "Schnellauswahl",
-          "help": "Von 5 Sekunden bis 48 Stunden. Tippe auf die Zahlen, um sie einzugeben.",
+          "help": "Von 5 Sekunden bis 48 Stunden. Tippe auf eine Zahl, um sie einzugeben.",
           "start": "Timer starten",
           "limit": "{count, plural, one {Höchstens # Timer oder Ablauf gleichzeitig. Beende oder blende ihn aus, um einen weiteren zu starten.} other {Höchstens # Timer und Abläufe gleichzeitig. Beende oder blende einen aus, um einen weiteren zu starten.}}"
         },
@@ -398,6 +402,7 @@
           "moveDown": "Nach unten",
           "durationA11y": "Dauer von {stage}: {duration}",
           "addStage": "Schritt hinzufügen",
+          "editStage": "Schritt bearbeiten",
           "maxStages": "Ein Ablauf hat höchstens 12 Schritte",
           "save": "Speichern",
           "saveAndStart": "Speichern und starten",
@@ -427,7 +432,7 @@
         },
         "android": {
           "title": "Eine Sache zu Android",
-          "late": "Auf Android kann eine Benachrichtigung verspätet kommen, während dein Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
+          "late": "Auf Android kann eine Benachrichtigung verspätet kommen, während dein Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
           "keepOpen": "Lass beim Backen diesen Bildschirm offen: Dein Gerät bleibt wach, und der Timer auf dem Bildschirm ist genau.",
           "gotIt": "Verstanden",
           "once": "Wir sagen das nur einmal."

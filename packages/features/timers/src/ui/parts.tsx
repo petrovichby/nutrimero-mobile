@@ -9,6 +9,27 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
  * decorative inside a labelled control (DESIGN.md: glyph + text, colour never alone).
  */
 
+/**
+ * A detail page's title (New timer, New routine, Routines — nutrimero-design ff47b350, owner walk
+ * 2026-09-25: "it's a 'detail' page, not top level"): Plus Jakarta Sans at headline-lg, heading ink.
+ * Pacifico stays on top-level pages and More's own pages.
+ */
+export function DetailTitle({ children }: { children: string }) {
+  const theme = useTheme();
+  return (
+    <Text
+      accessibilityRole="header"
+      style={[
+        textRole(theme, "headlineLg", "700"),
+        styles.detailTitle,
+        { color: theme.color.heading },
+      ]}
+    >
+      {children}
+    </Text>
+  );
+}
+
 /** "‹ Timers": back to a named place (the topbar of 17–21). */
 export function BackBar({
   place,
@@ -355,6 +376,7 @@ export function Choice({
 
 export const styles = StyleSheet.create({
   flex: { flex: 1 },
+  detailTitle: { marginTop: 4, marginBottom: 4 },
   center: { textAlign: "center" },
   pressed: { opacity: 0.85 },
   disabled: { opacity: 0.45 },
