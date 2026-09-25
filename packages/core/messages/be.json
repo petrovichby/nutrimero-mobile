@@ -168,16 +168,16 @@
         "convertLabel": "Так будуць выглядаць твае рэцэпты",
         "rows": {
           "flourCup": "1 кубак мукі",
-          "flourGrams": "{grams, number} г мукі",
+          "flourGrams": "{grams, number} г мукі",
           "butterStick": "1 брусок масла",
-          "butterGrams": "{grams, number} г масла"
+          "butterGrams": "{grams, number} г масла"
         },
         "values": {
           "cup": "1 кубак",
           "stick": "1 брусок",
-          "grams": "{grams, number} г",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "grams": "{grams, number} г",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Парада пекара: узважванне ў грамах — самае вялікае паляпшэнне дакладнасці; нашы рэцэпты пішуцца перш за ўсё ў метрычнай сістэме.",
         "sample": {
@@ -291,9 +291,9 @@
         "cool": "астуджэнне"
       },
       "unit": {
-        "hours": "{value} гадз.",
-        "minutes": "{value} хв",
-        "seconds": "{value} с"
+        "hours": "{value} гадз.",
+        "minutes": "{value} хв",
+        "seconds": "{value} с"
       },
       "spoken": {
         "hours": "{count, plural, one {# гадзіна} few {# гадзіны} many {# гадзін} other {# гадзіны}}",

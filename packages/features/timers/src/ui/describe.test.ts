@@ -9,8 +9,8 @@ describe("the next-stage line (20–20c)", () => {
   const shape = { name: { key: "shape" as const }, seconds: null };
 
   it("promises a notification only when notifications are allowed", () => {
-    expect(nextStageLine(coldProof, false, true, en)).toBe("12 h · you’ll get a notification");
-    expect(nextStageLine(coldProof, false, false, en)).toBe("12 h");
+    expect(nextStageLine(coldProof, false, true, en)).toBe("12\u00A0h · you’ll get a notification");
+    expect(nextStageLine(coldProof, false, false, en)).toBe("12\u00A0h");
   });
 
   it("says hands-on, and take your time once the stage before it has ended", () => {

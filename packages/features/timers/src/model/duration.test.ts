@@ -22,8 +22,15 @@ describe("durations in words (FR-022, research R10)", () => {
 
   it("reads compactly on screen and in words for screen readers (en)", () => {
     const t = createTranslator("en");
-    expect(formatDuration(5400, t)).toEqual({ text: "1 h 30 min", spoken: "1 hour 30 minutes" });
-    expect(formatDuration(61, t)).toEqual({ text: "1 min 1 s", spoken: "1 minute 1 second" });
+    // A number and its unit are joined by a no-break space (owner, 2026-09-25); parts by a space.
+    expect(formatDuration(5400, t)).toEqual({
+      text: "1\u00A0h 30\u00A0min",
+      spoken: "1 hour 30 minutes",
+    });
+    expect(formatDuration(61, t)).toEqual({
+      text: "1\u00A0min 1\u00A0s",
+      spoken: "1 minute 1 second",
+    });
   });
 
   it("formats in every UI language with integer counts only", () => {

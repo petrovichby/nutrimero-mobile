@@ -168,16 +168,16 @@
         "convertLabel": "Tak będą wyglądać twoje przepisy",
         "rows": {
           "flourCup": "1 szklanka mąki",
-          "flourGrams": "{grams, number} g mąki",
+          "flourGrams": "{grams, number} g mąki",
           "butterStick": "1 kostka masła (stick)",
-          "butterGrams": "{grams, number} g masła"
+          "butterGrams": "{grams, number} g masła"
         },
         "values": {
           "cup": "1 szklanka",
           "stick": "1 kostka (stick)",
-          "grams": "{grams, number} g",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Rada piekarza: ważenie w gramach to największy krok ku dokładności — nasze przepisy są pisane najpierw w systemie metrycznym.",
         "sample": {
@@ -291,9 +291,9 @@
         "cool": "studzenie"
       },
       "unit": {
-        "hours": "{value} godz.",
-        "minutes": "{value} min",
-        "seconds": "{value} s"
+        "hours": "{value} godz.",
+        "minutes": "{value} min",
+        "seconds": "{value} s"
       },
       "spoken": {
         "hours": "{count, plural, one {# godzina} few {# godziny} many {# godzin} other {# godziny}}",

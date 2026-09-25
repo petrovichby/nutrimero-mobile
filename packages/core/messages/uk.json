@@ -168,16 +168,16 @@
         "convertLabel": "Так виглядатимуть твої рецепти",
         "rows": {
           "flourCup": "1 чашка борошна",
-          "flourGrams": "{grams, number} г борошна",
+          "flourGrams": "{grams, number} г борошна",
           "butterStick": "1 брусок масла",
-          "butterGrams": "{grams, number} г масла"
+          "butterGrams": "{grams, number} г масла"
         },
         "values": {
           "cup": "1 чашка",
           "stick": "1 брусок",
-          "grams": "{grams, number} г",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "grams": "{grams, number} г",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Порада пекаря: зважування в грамах — найбільше покращення точності; наші рецепти пишуться насамперед у метричній системі.",
         "sample": {
@@ -291,9 +291,9 @@
         "cool": "охолодження"
       },
       "unit": {
-        "hours": "{value} год",
-        "minutes": "{value} хв",
-        "seconds": "{value} с"
+        "hours": "{value} год",
+        "minutes": "{value} хв",
+        "seconds": "{value} с"
       },
       "spoken": {
         "hours": "{count, plural, one {# година} few {# години} many {# годин} other {# години}}",

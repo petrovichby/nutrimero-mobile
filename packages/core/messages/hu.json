@@ -168,16 +168,16 @@
         "convertLabel": "Így fognak kinézni a receptjeid",
         "rows": {
           "flourCup": "1 csésze liszt",
-          "flourGrams": "{grams, number} g liszt",
-          "butterStick": "1 stick vaj",
-          "butterGrams": "{grams, number} g vaj"
+          "flourGrams": "{grams, number} g liszt",
+          "butterStick": "1 stick vaj",
+          "butterGrams": "{grams, number} g vaj"
         },
         "values": {
           "cup": "1 csésze",
-          "stick": "1 stick",
-          "grams": "{grams, number} g",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "stick": "1 stick",
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Péktipp: a grammra mérés a legnagyobb lépés a pontosság felé – receptjeink elsősorban metrikusak.",
         "sample": {
@@ -291,9 +291,9 @@
         "cool": "hűtés"
       },
       "unit": {
-        "hours": "{value} óra",
-        "minutes": "{value} perc",
-        "seconds": "{value} mp"
+        "hours": "{value} óra",
+        "minutes": "{value} perc",
+        "seconds": "{value} mp"
       },
       "spoken": {
         "hours": "{count, plural, one {# óra} other {# óra}}",

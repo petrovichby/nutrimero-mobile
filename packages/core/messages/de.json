@@ -168,16 +168,16 @@
         "convertLabel": "So lesen sich deine Rezepte",
         "rows": {
           "flourCup": "1 Tasse Mehl",
-          "flourGrams": "{grams, number} g Mehl",
+          "flourGrams": "{grams, number} g Mehl",
           "butterStick": "1 Stick Butter",
-          "butterGrams": "{grams, number} g Butter"
+          "butterGrams": "{grams, number} g Butter"
         },
         "values": {
           "cup": "1 Tasse",
           "stick": "1 Stick",
-          "grams": "{grams, number} g",
-          "celsius": "{celsius, number} °C",
-          "fahrenheit": "{fahrenheit, number} °F"
+          "grams": "{grams, number} g",
+          "celsius": "{celsius, number} °C",
+          "fahrenheit": "{fahrenheit, number} °F"
         },
         "tip": "Bäckertipp: In Gramm zu wiegen bringt die größte Genauigkeit – unsere Rezepte sind zuerst metrisch geschrieben.",
         "sample": {
