@@ -1,6 +1,6 @@
 ---
 name: Nutrimero Mobile
-status: 0.5.3 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
+status: 0.5.4 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
   Pro Baker inherits the web ramps verbatim (web DESIGN.md frontmatter / nutrimero-design
@@ -206,12 +206,32 @@ Internal names (classes, frame labels) are not user-facing. Both apps; a catalog
     sidebar (`aria-current` equivalent: `accessibilityState.selected`), and carries the square
     mark; lime marks the active item. Navy chrome is not used, because the navy logo can never sit
     on navy.
-- **More** (Home Baker, MA-24; MA-27) holds **Timers**, Language, Clear my data on this device,
-  and the app and version line (MA-27, owner's word beyond MA-24). Timers open from More before
+- **More** (Home Baker, MA-24; MA-27; MA-28) holds **Timers**, **Units** (MA-28), Language, Clear my data on
+  this device, and the app and version line (MA-27, owner's word beyond MA-24). Timers open from More before
   any is running; once something runs, **the timer chip** takes over on every screen. The
   masthead "Timers" button was not chosen.
 - Modal flows (builder wizard, paywall, onboarding) present as full-screen sheets with an
   explicit close affordance top-left and never trap the user (hardware back always works).
+- **The Units step and More → Units** (Home Baker, MA-28; owner walk 2026-09-25). The step asks two things:
+  - **The system:** **Metric** (grams · millilitres · °C) or **Imperial** (ounces · pounds · °F).
+  - **Where your measures come from · optional:** a region row — **My device** (the default; it shows the
+    region the device reports) · **UK** · **US** · **Europe** · **Asia · later** (shown, not yet available).
+  The two answers decide the details. Imperial + US means US cups and butter sticks. Imperial + Europe means UK
+  ounces, fluid ounces and pints, with no cups. Metric reads by weight and millilitres. The preview card follows
+  both answers. The same system choice and region row are the **More → Units** setting. Home carries the strings
+  in all seven languages.
+  - **The UK:** a launch market with its own conventions. Metric stays the default, and on a UK device the region
+    row defaults to "My device · UK". **Imperial lists the UK imperial units in full** — ounces · pounds · fluid
+    ounces · pints · °F (a UK fluid ounce is 28.4 ml, a UK pint 568 ml) — and shows **no cups**; that is a product
+    choice, not a claim that cups are invalid in the UK. **"UK" is never the same thing as "Imperial"**: most UK
+    bakers want metric, which is why Metric stays preselected. Wording checked against UK government guidance.
+  - **A recipe from another region is an exception, not a new default.** A baker following another region's
+    book switches the measures for that conversion or recipe, "just this time", naming the default, and never
+    touches the default set here.
+  - Corpus: `07-onboarding-units.html` (Metric, following the device), `07-onboarding-units-imperial-us.html`,
+    `07-onboarding-units-imperial-europe.html`, `07-onboarding-units-uk.html`,
+    `07-onboarding-units-imperial-uk.html`, each with a dark twin. The US card's cup values are placeholders
+    until the api's chosen density.
 - **More → Language** (MA-22). The seven UI languages are listed in their own names (English,
   Deutsch, Magyar, Lietuvių, Беларуская, Polski, Українська), each with its name in the current UI
   language beneath and tagged with its own language for assistive tech. The current language is
@@ -482,6 +502,14 @@ or any Operate ergonomics:
 ---
 
 ## Amendment log
+
+- 0.5.4 (2026-09-25) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `93cf290a` by Home lane 1,
+  **MA-28 only**, on the coordinator's instruction. It covers the Units step's system choice, the "where your
+  measures come from" region row (My device · UK · US · Europe · Asia later), More → Units, and the UK variants.
+  **Not ported here**:
+  - **MA-29** (F23 measures): its egg frames are being redrawn to spec 004's egg ruling, and the rest awaits its
+    own port.
+  - **MA-25's later additions**, deferred from 0.5.3; not named in this instruction.
 
 - 0.5.3 (2026-09-25) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `08c1e4c9`
   by Home lane 2, **MA-27 only** (the owner's ruling of 2026-09-25; MA-25's later additions stay
