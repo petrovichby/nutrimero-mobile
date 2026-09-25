@@ -13,7 +13,8 @@ import { useTimers } from "./timers-context";
  * over from the banner, over whatever screen is showing — what ended, what is next, and one
  * action: Start next stage for a routine (gate 1, Q1: manual), Dismiss for a timer or a last
  * stage. Later only closes the alert; the item stays done in the sheet and on the chip.
- * Mount once at the app root, above the screens.
+ * A timer's variant reads "ended at …" with Later / Dismiss (22b-timer-alert-timer, f7b75e5f).
+ * Never over the ending item's own screen (18c, a46f00c8). Mount once at the app root.
  */
 export function CompletionAlert({ onOpen }: { onOpen: (id: string) => void }) {
   const theme = useTheme();

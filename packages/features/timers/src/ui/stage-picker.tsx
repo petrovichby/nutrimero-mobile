@@ -23,7 +23,8 @@ type Length =
   | { readonly kind: "other" };
 
 /**
- * Add a stage (19b): a common stage (a localized pick) or the baker's own name, then how long —
+ * Add a stage (19b) and edit one (19f-stage-edit, d74e8ed3: "other…" with typed hours and
+ * minutes, and Save): a common stage (a localized pick) or the baker's own name, then how long —
  * hands-on, a quick duration, or other…. The same sheet edits a stage when the editor opens it on
  * one; the action then reads Save. There are no preset durations per stage (gate 1, Q3).
  */
@@ -92,7 +93,12 @@ export function StagePicker({
   return (
     <Sheet visible={visible} onClose={onClose} closeLabel={closeLabel}>
       <SheetHead
-        title={t("home.timers.ui.editor.addStage")}
+        title={
+          // 19f-stage-edit (nutrimero-design d74e8ed3): "Edit stage" when editing, else "Add a stage".
+          initial !== null
+            ? t("home.timers.ui.editor.editStage")
+            : t("home.timers.ui.editor.addStage")
+        }
         closeLabel={closeLabel}
         onClose={onClose}
       />

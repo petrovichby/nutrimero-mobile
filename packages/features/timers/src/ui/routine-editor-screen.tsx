@@ -250,6 +250,10 @@ export function RoutineEditorScreen({
   );
 }
 
+/**
+ * One stage row. Dragging it (19g-stage-drag, f7b75e5f, as built) lifts it onto the surface, to
+ * the card's edges, with a shadow; the other rows step aside.
+ */
 function StageRow({
   stage,
   index,

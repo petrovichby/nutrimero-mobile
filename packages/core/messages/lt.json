@@ -293,14 +293,14 @@
         "cool": "aušinimas"
       },
       "unit": {
-        "hours": "{value} val.",
-        "minutes": "{value} min.",
-        "seconds": "{value} s"
+        "hours": "{value} val.",
+        "minutes": "{value} min.",
+        "seconds": "{value} s"
       },
       "spoken": {
-        "hours": "{count, plural, one {# valanda} few {# valandos} many {# valandos} other {# valandų}}",
-        "minutes": "{count, plural, one {# minutė} few {# minutės} many {# minutės} other {# minučių}}",
-        "seconds": "{count, plural, one {# sekundė} few {# sekundės} many {# sekundės} other {# sekundžių}}"
+        "hours": "{count, plural, one {# valanda} few {# valandos} many {# valandos} other {# valandų}}",
+        "minutes": "{count, plural, one {# minutė} few {# minutės} many {# minutės} other {# minučių}}",
+        "seconds": "{count, plural, one {# sekundė} few {# sekundės} many {# sekundės} other {# sekundžių}}"
       },
       "left": "Liko: {duration}",
       "doneAgo": "Baigta · praėjo: {duration}",
@@ -373,7 +373,7 @@
           "secondsLess": "Sekunde mažiau",
           "secondsMore": "Sekunde daugiau",
           "quick": "Greiti laikai",
-          "help": "Nuo 5 sekundžių iki 48 valandų. Paliesk skaičių, kad jį įvestum.",
+          "help": "Nuo 5 sekundžių iki 48 valandų. Paliesk skaičių, kad jį įvestum.",
           "start": "Paleisti laikmatį",
           "limit": "{count, plural, one {Vienu metu daugiausia # laikmatis ar eiga. Sustabdyk arba užverk vieną, kad paleistum kitą.} few {Vienu metu daugiausia # laikmačiai ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} many {Vienu metu daugiausia # laikmačio ir eigos. Sustabdyk arba užverk vieną, kad paleistum kitą.} other {Vienu metu daugiausia # laikmačių ir eigų. Sustabdyk arba užverk vieną, kad paleistum kitą.}}"
         },
@@ -402,6 +402,7 @@
           "moveDown": "Žemyn",
           "durationA11y": "Trukmė ({stage}): {duration}",
           "addStage": "Pridėti etapą",
+          "editStage": "Redaguoti etapą",
           "maxStages": "Eigoje gali būti daugiausia 12 etapų",
           "save": "Išsaugoti",
           "saveAndStart": "Išsaugoti ir pradėti",
@@ -431,7 +432,7 @@
         },
         "android": {
           "title": "Vienas dalykas apie Android",
-          "late": "Android sistemoje pranešimas gali vėluoti, kol tavo įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada ne anksčiau.",
+          "late": "Android sistemoje pranešimas gali vėluoti, kol tavo įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada ne anksčiau.",
           "keepOpen": "Kepdamas palik šį ekraną atvertą: įrenginys neužmigs, o laikmatis ekrane bus tikslus.",
           "gotIt": "Supratau",
           "once": "Tai minėsime tik kartą."
