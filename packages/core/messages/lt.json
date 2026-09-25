@@ -184,6 +184,32 @@
           "metricUnit": "g",
           "imperialValue": "3¼",
           "imperialUnit": "puodelio"
+        },
+        "choice": {
+          "body": "Kiekvienas receptas perskaičiuojamas akimirksniu – tai gali pakeisti bet kada.",
+          "imperialUnits": "uncijos · svarai · °F",
+          "imperialUnitsUk": "uncijos · svarai · skysčio uncijos · pintos · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "oz"
+          },
+          "region": {
+            "label": "Tavo matai iš",
+            "optional": "· nebūtina",
+            "device": "Mano įrenginys",
+            "uk": "JK",
+            "us": "JAV",
+            "europe": "Europa",
+            "asia": "Azija",
+            "later": "· vėliau",
+            "deviceA11y": "Sekti mano įrenginio regioną, {region}",
+            "asiaA11y": "Azija, vėliau – dar neprieinama"
+          },
+          "preview": {
+            "flour": "miltai",
+            "butter": "sviestas",
+            "milk": "pienas"
+          }
         }
       },
       "diet": {

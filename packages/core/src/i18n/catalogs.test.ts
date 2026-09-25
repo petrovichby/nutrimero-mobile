@@ -51,6 +51,10 @@ const IDENTICAL_ALLOWED: Record<string, "all" | readonly string[]> = {
   "home.timers.unit.minutes": ["pl"], // Polish writes "min", as English does (005)
   "home.timers.unit.seconds": ["lt", "pl"], // the SI "s"; be/uk use Cyrillic "с" (005)
   "home.timers.stage.autolyse": ["de"], // the baking term is the same word in German (005)
+  "home.onboarding.units.choice.sample.imperialValue": "all", // a numeral with a vulgar fraction (004)
+  "home.onboarding.units.choice.sample.imperialUnit": ["de", "hu", "lt", "pl"], // Latin "oz"; be/uk "унц." (004)
+  "home.onboarding.units.choice.region.optional": ["de"], // German writes "optional" too (004)
+  "home.onboarding.units.choice.region.uk": ["de", "hu", "pl"], // "UK" as the chip label (MA-28, 004)
 };
 const ENDONYM_PREFIX = "common.languageEndonym."; // a language's own name is the same everywhere
 

@@ -184,6 +184,32 @@
           "metricUnit": "г",
           "imperialValue": "3¼",
           "imperialUnit": "кубка"
+        },
+        "choice": {
+          "body": "Кожны рэцэпт пералічваецца імгненна — гэта можна змяніць у любы час.",
+          "imperialUnits": "унцыі · фунты · °F",
+          "imperialUnitsUk": "унцыі · фунты · вадкія унцыі · пінты · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "унц."
+          },
+          "region": {
+            "label": "Твае меры з",
+            "optional": "· неабавязкова",
+            "device": "Мая прылада",
+            "uk": "Брытанія",
+            "us": "ЗША",
+            "europe": "Еўропа",
+            "asia": "Азія",
+            "later": "· пазней",
+            "deviceA11y": "Рэгіён маёй прылады, {region}",
+            "asiaA11y": "Азія, пазней — пакуль недаступна"
+          },
+          "preview": {
+            "flour": "мука",
+            "butter": "масла",
+            "milk": "малако"
+          }
         }
       },
       "diet": {

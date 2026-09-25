@@ -184,6 +184,32 @@
           "metricUnit": "g",
           "imperialValue": "3¼",
           "imperialUnit": "szklanki"
+        },
+        "choice": {
+          "body": "Każdy przepis przelicza się od razu – możesz to zmienić w każdej chwili.",
+          "imperialUnits": "uncje · funty · °F",
+          "imperialUnitsUk": "uncje · funty · uncje płynu · pinty · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "oz"
+          },
+          "region": {
+            "label": "Twoje miary pochodzą z",
+            "optional": "· opcjonalnie",
+            "device": "Moje urządzenie",
+            "uk": "UK",
+            "us": "USA",
+            "europe": "Europa",
+            "asia": "Azja",
+            "later": "· później",
+            "deviceA11y": "Region mojego urządzenia, {region}",
+            "asiaA11y": "Azja, później – jeszcze niedostępne"
+          },
+          "preview": {
+            "flour": "mąka",
+            "butter": "masło",
+            "milk": "mleko"
+          }
         }
       },
       "diet": {

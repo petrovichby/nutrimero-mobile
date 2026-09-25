@@ -184,6 +184,32 @@
           "metricUnit": "g",
           "imperialValue": "3¼",
           "imperialUnit": "csésze"
+        },
+        "choice": {
+          "body": "Minden recept azonnal átváltódik – ezt bármikor megváltoztathatod.",
+          "imperialUnits": "uncia · font · °F",
+          "imperialUnitsUk": "uncia · font · folyadékuncia · pint · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "oz"
+          },
+          "region": {
+            "label": "A mértékegységeid innen valók",
+            "optional": "· nem kötelező",
+            "device": "Az eszközöm",
+            "uk": "UK",
+            "us": "USA",
+            "europe": "Európa",
+            "asia": "Ázsia",
+            "later": "· később",
+            "deviceA11y": "Az eszközöm régióját követi, {region}",
+            "asiaA11y": "Ázsia, később – még nem érhető el"
+          },
+          "preview": {
+            "flour": "liszt",
+            "butter": "vaj",
+            "milk": "tej"
+          }
         }
       },
       "diet": {

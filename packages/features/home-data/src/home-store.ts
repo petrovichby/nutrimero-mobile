@@ -4,11 +4,13 @@ import {
   DIETARY_OPTIONS,
   type DietaryOption,
   INITIAL_ONBOARDING,
+  MEASURES_REGIONS,
   ONBOARDING_STEPS,
   type OnboardingState,
   type StepState,
   UNITS,
   type Units,
+  type UnitsChoice,
 } from "./types";
 
 /**
@@ -19,6 +21,13 @@ import {
 export interface HomeStore {
   units(): Promise<Units>;
   setUnits(units: Units): Promise<void>;
+  /**
+   * The system and the region together (004 FR-028). A legacy stored `imperial` with no region —
+   * 001's cups · ounces · °F — reads as Imperial with region US (owner ruling, 2026-09-25).
+   */
+  unitsChoice(): Promise<UnitsChoice>;
+  /** Writes both, so an explicit choice is never read as the legacy one. */
+  setUnitsChoice(choice: UnitsChoice): Promise<void>;
   dietaryProfile(): Promise<readonly DietaryOption[]>;
   setDietaryProfile(options: readonly DietaryOption[]): Promise<void>;
   pantrySeed(): Promise<readonly string[]>;
@@ -83,6 +92,16 @@ export function createHomeStore(adapter: DeviceStoreAdapter): HomeStore {
     },
     setUnits(units) {
       return write(HOME_KEYS.units, units);
+    },
+    async unitsChoice() {
+      const system = member(UNITS, parse(await adapter.get(HOME_KEYS.units))) ?? "metric";
+      const region = member(MEASURES_REGIONS, parse(await adapter.get(HOME_KEYS.measuresRegion)));
+      if (region !== undefined) return { system, region };
+      return { system, region: system === "imperial" ? "us" : "device" };
+    },
+    async setUnitsChoice(choice) {
+      await write(HOME_KEYS.units, member(UNITS, choice.system) ?? "metric");
+      await write(HOME_KEYS.measuresRegion, member(MEASURES_REGIONS, choice.region) ?? "device");
     },
     async dietaryProfile() {
       return canonicalOptions(parse(await adapter.get(HOME_KEYS.dietaryProfile)));

@@ -1,6 +1,8 @@
 /** ADR 0001 condition 6: Home's namespace in the shared device store. */
 export const HOME_KEYS = {
   units: "nutrimero.home.units",
+  /** Where your measures come from (004 FR-028): Home data, reset by Clear my data (FR-022). */
+  measuresRegion: "nutrimero.home.measuresRegion",
   dietaryProfile: "nutrimero.home.dietaryProfile",
   pantrySeed: "nutrimero.home.pantrySeed",
   onboarding: "nutrimero.home.onboarding",

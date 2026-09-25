@@ -184,6 +184,32 @@
           "metricUnit": "г",
           "imperialValue": "3¼",
           "imperialUnit": "чашки"
+        },
+        "choice": {
+          "body": "Кожен рецепт перераховується миттєво — це можна змінити будь-коли.",
+          "imperialUnits": "унції · фунти · °F",
+          "imperialUnitsUk": "унції · фунти · рідкі унції · пінти · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "унц."
+          },
+          "region": {
+            "label": "Твої міри з",
+            "optional": "· необов'язково",
+            "device": "Мій пристрій",
+            "uk": "Британія",
+            "us": "США",
+            "europe": "Європа",
+            "asia": "Азія",
+            "later": "· пізніше",
+            "deviceA11y": "Регіон мого пристрою, {region}",
+            "asiaA11y": "Азія, пізніше — поки недоступно"
+          },
+          "preview": {
+            "flour": "борошно",
+            "butter": "масло",
+            "milk": "молоко"
+          }
         }
       },
       "diet": {

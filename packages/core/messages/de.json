@@ -184,6 +184,32 @@
           "metricUnit": "g",
           "imperialValue": "3¼",
           "imperialUnit": "Tassen"
+        },
+        "choice": {
+          "body": "Jedes Rezept rechnet sofort um – du kannst das jederzeit ändern.",
+          "imperialUnits": "Unzen · Pfund · °F",
+          "imperialUnitsUk": "Unzen · Pfund · Flüssigunzen · Pints · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "oz"
+          },
+          "region": {
+            "label": "Deine Maße kommen aus",
+            "optional": "· optional",
+            "device": "Mein Gerät",
+            "uk": "UK",
+            "us": "USA",
+            "europe": "Europa",
+            "asia": "Asien",
+            "later": "· später",
+            "deviceA11y": "Der Region meines Geräts folgen, {region}",
+            "asiaA11y": "Asien, später – noch nicht verfügbar"
+          },
+          "preview": {
+            "flour": "Mehl",
+            "butter": "Butter",
+            "milk": "Milch"
+          }
         }
       },
       "diet": {
