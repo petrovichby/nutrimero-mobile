@@ -11,11 +11,12 @@ import { ensureTimersChannel, notificationScheduler } from "./scheduler";
 export async function reconcileNow(
   store: TimerStore,
   t: Translator,
+  locale: string,
   now = Date.now(),
 ): Promise<void> {
   const permitted = (await readPermission(store)) === "granted";
   const intents = reconcile(await store.items(), await notificationScheduler.pending(), now);
-  await performIntents(intents, { store, scheduler: notificationScheduler, t, permitted });
+  await performIntents(intents, { store, scheduler: notificationScheduler, t, locale, permitted });
 }
 
 /**
@@ -26,12 +27,12 @@ export function useTimersLifecycle(store: TimerStore, t: Translator, locale: str
   const firstLocale = useRef(locale);
 
   useEffect(() => {
-    void ensureTimersChannel(t).then(() => reconcileNow(store, t));
+    void ensureTimersChannel(t).then(() => reconcileNow(store, t, locale));
     const subscription = AppState.addEventListener("change", (state) => {
-      if (state === "active") void reconcileNow(store, t);
+      if (state === "active") void reconcileNow(store, t, locale);
     });
     return () => subscription.remove();
-  }, [store, t]);
+  }, [store, t, locale]);
 
   useEffect(() => {
     if (locale === firstLocale.current) return;
@@ -40,7 +41,13 @@ export function useTimersLifecycle(store: TimerStore, t: Translator, locale: str
       await ensureTimersChannel(t);
       const permitted = (await readPermission(store)) === "granted";
       const intents = rescheduleAll(await store.items(), Date.now());
-      await performIntents(intents, { store, scheduler: notificationScheduler, t, permitted });
+      await performIntents(intents, {
+        store,
+        scheduler: notificationScheduler,
+        t,
+        locale,
+        permitted,
+      });
     })();
   }, [locale, store, t]);
 }

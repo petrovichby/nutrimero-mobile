@@ -278,17 +278,17 @@
     },
     "timers": {
       "stage": {
-        "mix": "Mieszanie",
-        "autolyse": "Autoliza",
-        "bulkFerment": "Fermentacja w masie",
-        "stretchAndFold": "Rozciąganie i składanie",
-        "preShape": "Wstępne formowanie",
-        "shape": "Formowanie",
-        "proof": "Garowanie",
-        "coldProof": "Garowanie w chłodzie",
-        "preheat": "Nagrzewanie",
-        "bake": "Pieczenie",
-        "cool": "Studzenie"
+        "mix": "mieszanie",
+        "autolyse": "autoliza",
+        "bulkFerment": "fermentacja w masie",
+        "stretchAndFold": "rozciąganie i składanie",
+        "preShape": "wstępne formowanie",
+        "shape": "formowanie",
+        "proof": "garowanie",
+        "coldProof": "garowanie w chłodzie",
+        "preheat": "nagrzewanie",
+        "bake": "pieczenie",
+        "cool": "studzenie"
       },
       "unit": {
         "hours": "{value} godz.",
@@ -323,17 +323,132 @@
         "androidLate": "Na Androidzie powiadomienie może się spóźnić, gdy urządzenie jest bezczynne – zwykle do około 10 minut, ale nigdy nie przychodzi za wcześnie.",
         "forceStop": "Jeśli wymusisz zatrzymanie aplikacji, powiadomienia wstrzymają się, dopóki jej znowu nie otworzysz."
       },
-      "notice": {
-        "androidBake": "Na Androidzie powiadomienie o tym etapie może się spóźnić, gdy twoje urządzenie jest bezczynne. Zostaw ten ekran otwarty, a urządzenie nie uśnie."
-      },
-      "permission": {
-        "reason": "Czy możemy powiadomić cię o końcu odliczania, nawet gdy aplikacja jest zamknięta?"
-      },
       "refused": {
-        "note": "Powiadomienia działają tylko przy otwartej aplikacji. Minutniki i tak kończą się na ekranie i wibrują, bez dźwięku.",
         "openSettings": "Otwórz ustawienia"
       },
-      "clearDataLine": "twoje minutniki i zapisane plany"
+      "clearDataLine": "twoje minutniki i zapisane plany",
+      "ui": {
+        "chip": {
+          "others": "{count, plural, one {i jeszcze # minutnik} few {i jeszcze # minutniki} many {i jeszcze # minutników} other {i jeszcze # minutnika}}",
+          "open": "Otwórz minutniki"
+        },
+        "agoShort": "{duration} temu",
+        "endsAt": "koniec o {time}",
+        "endedAt": "zakończono o {time}",
+        "doneAt": "{ago}, o {time}",
+        "back": "Wróć: {place}",
+        "close": "Zamknij",
+        "cancel": "Anuluj",
+        "dismiss": "Odrzuć",
+        "done": "Gotowe",
+        "pause": "Wstrzymaj",
+        "resume": "Wznów",
+        "addA11y": "Dodaj: {duration}",
+        "awake": "Ekran nie zgaśnie, dopóki to jest otwarte",
+        "leftA11y": "Zostało: {duration}",
+        "sheet": {
+          "title": "Minutniki",
+          "done": "gotowe · {ago}",
+          "paused": "wstrzymany",
+          "routineLine": "{position} / {total} · {stage} · dalej: {next}",
+          "routineLineLast": "{position} / {total} · {stage} · ostatni etap",
+          "pauseA11y": "Wstrzymaj: {name}",
+          "resumeA11y": "Wznów: {name}",
+          "openA11y": "Otwórz: {name}",
+          "newTimer": "Nowy minutnik",
+          "newRoutine": "Nowy plan",
+          "savedRoutines": "Zapisane plany"
+        },
+        "newTimer": {
+          "nameLabel": "Nazwa",
+          "hours": "godziny",
+          "minutes": "minuty",
+          "seconds": "sekundy",
+          "hourLess": "Godzina mniej",
+          "hourMore": "Godzina więcej",
+          "minutesLess": "Pięć minut mniej",
+          "minutesMore": "Pięć minut więcej",
+          "quick": "Szybki wybór",
+          "help": "Od 5 sekund do 48 godzin. Dotknij liczb, aby je wpisać.",
+          "start": "Uruchom minutnik"
+        },
+        "permission": {
+          "title": "Dać znać, gdy będzie gotowe?",
+          "body": "Zezwól na powiadomienia, a minutniki dadzą znać o końcu, nawet gdy urządzenie jest zablokowane.",
+          "continue": "Dalej",
+          "either": "Minutnik i tak wystartuje."
+        },
+        "refused": {
+          "title": "Powiadomienia tylko przy otwartej aplikacji.",
+          "body": "Powiadomienia nutrimero są wyłączone na tym urządzeniu, więc minutniki kończą się na ekranie z wibracją i bez dźwięku."
+        },
+        "timer": {
+          "cancel": "Anuluj minutnik",
+          "doneA11y": "{name}: gotowe, {ago}"
+        },
+        "editor": {
+          "newTitle": "Nowy plan",
+          "editTitle": "Edytuj plan",
+          "stagesHeader": "Etapy · przeciągnij, aby zmienić kolejność",
+          "stagesCount": "Etapy · {current} z 12",
+          "handsOn": "ręcznie",
+          "removeA11y": "Usuń: {stage}",
+          "moveUp": "Wyżej",
+          "moveDown": "Niżej",
+          "durationA11y": "Czas trwania ({stage}): {duration}",
+          "addStage": "Dodaj etap",
+          "maxStages": "Plan może mieć najwyżej 12 etapów",
+          "save": "Zapisz",
+          "saveAndStart": "Zapisz i zacznij",
+          "tooLong": "Ten plan jest za długi, by go zapisać – skróć nazwę etapu albo usuń etap."
+        },
+        "picker": {
+          "common": "Typowe etapy",
+          "orOwn": "Albo nazwij po swojemu",
+          "ownPlaceholder": "np. laminowanie",
+          "howLong": "Jak długo?",
+          "other": "inny…",
+          "add": "Dodaj: {stage}"
+        },
+        "routine": {
+          "positionA11y": "Etap {position} z {total}",
+          "next": "Dalej",
+          "takeYourTime": "ręcznie · bez pośpiechu",
+          "nextTimed": "{duration} · dostaniesz powiadomienie",
+          "doneEarly": "Wcześniej gotowe",
+          "cancel": "Anuluj plan",
+          "stageDone": "{stage}: gotowe",
+          "whenReady": "kiedy będziesz gotowy",
+          "startNext": "Zacznij następny etap: {stage}",
+          "doneNext": "Gotowe – następny etap",
+          "finish": "Zakończ plan"
+        },
+        "android": {
+          "title": "Jedna rzecz o Androidzie",
+          "late": "Na Androidzie powiadomienie może się spóźnić, gdy twoje urządzenie jest bezczynne – zwykle do około 10 minut, ale nigdy nie przychodzi za wcześnie.",
+          "keepOpen": "Przy pieczeniu zostaw ten ekran otwarty: urządzenie nie uśnie, a minutnik na ekranie jest dokładny.",
+          "gotIt": "Rozumiem",
+          "once": "Wspominamy o tym tylko raz."
+        },
+        "saved": {
+          "title": "Plany",
+          "summary": "{count, plural, one {# etap · {duration} z minutnikiem} few {# etapy · {duration} z minutnikiem} many {# etapów · {duration} z minutnikiem} other {# etapu · {duration} z minutnikiem}}",
+          "start": "Zacznij",
+          "moreA11y": "Więcej: {name}",
+          "edit": "Edytuj etapy",
+          "rename": "Zmień nazwę",
+          "delete": "Usuń",
+          "empty": "Zapisz plan, a poczeka tu na następny raz.",
+          "deleteTitle": "Usunąć ten plan?",
+          "deleteBody": "{name} i jego etapy zostaną usunięte z tego urządzenia.",
+          "renameTitle": "Zmień nazwę planu"
+        },
+        "alert": {
+          "routineSub": "{routine} · dalej: {next}",
+          "later": "Później",
+          "startNext": "Zacznij następny etap"
+        }
+      }
     }
   }
 }

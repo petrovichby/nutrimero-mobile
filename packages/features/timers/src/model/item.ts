@@ -9,9 +9,13 @@ import type { Stage } from "./stage";
  * a dropped refresh or a restart can never drift it. Scheduling is described as intents; the
  * native adapter performs them and writes the notification id back.
  */
+/**
+ * `total` is the clock's full length in seconds, kept only so a screen can draw how far along it
+ * is (18-timer's bar). It is display data, never truth: the end time decides everything.
+ */
 export type Clock =
-  | { readonly status: "running"; readonly endAt: number }
-  | { readonly status: "paused"; readonly remaining: number };
+  | { readonly status: "running"; readonly endAt: number; readonly total?: number }
+  | { readonly status: "paused"; readonly remaining: number; readonly total?: number };
 
 export interface Timer {
   readonly id: string;
@@ -46,6 +50,8 @@ export type Action =
   | { readonly type: "resume" }
   | { readonly type: "addTime"; readonly seconds: number }
   | { readonly type: "cancel" }
+  /** "Done early" (spec 005 amendment, 2026-09-25): the running clock ends now. */
+  | { readonly type: "finishEarly" }
   | { readonly type: "dismiss" }
   /** Routines: after a timed stage is done (gate 1, Q1: manual). */
   | { readonly type: "startNextStage" }
@@ -79,7 +85,7 @@ function secondsLeft(endAt: number, now: number): number {
 function clockFor(stage: Stage, now: number): RoutineRun["clock"] {
   return stage.seconds === null
     ? { status: "waiting" }
-    : { status: "running", endAt: now + stage.seconds * 1000 };
+    : { status: "running", endAt: now + stage.seconds * 1000, total: stage.seconds };
 }
 
 export function createTimer(input: {
@@ -92,7 +98,7 @@ export function createTimer(input: {
     id: input.id,
     kind: "timer",
     name: input.name,
-    clock: { status: "running", endAt: input.now + input.seconds * 1000 },
+    clock: { status: "running", endAt: input.now + input.seconds * 1000, total: input.seconds },
     notificationId: null,
   };
   return { item, intents: [{ type: "schedule", itemId: item.id }], applied: true };
@@ -122,6 +128,14 @@ export function startRoutine(input: {
   return { item, intents, applied: true };
 }
 
+function totalOf(clock: Clock): { total?: number } {
+  return clock.total === undefined ? {} : { total: clock.total };
+}
+
+function grown(clock: Clock, seconds: number): { total?: number } {
+  return clock.total === undefined ? {} : { total: clock.total + seconds };
+}
+
 function withClock(item: Item, clock: Clock): Item {
   return item.kind === "timer"
     ? { ...item, clock, notificationId: null }
@@ -136,21 +150,33 @@ export function transition(item: Item, action: Action, now: number): Outcome {
     case "pause": {
       if (clock.status !== "running" || done) return unchanged(item);
       return {
-        item: withClock(item, { status: "paused", remaining: secondsLeft(clock.endAt, now) }),
+        item: withClock(item, {
+          status: "paused",
+          remaining: secondsLeft(clock.endAt, now),
+          ...totalOf(clock),
+        }),
         intents: cancelPending(item),
         applied: true,
       };
     }
     case "resume": {
       if (clock.status !== "paused") return unchanged(item);
-      const next = withClock(item, { status: "running", endAt: now + clock.remaining * 1000 });
+      const next = withClock(item, {
+        status: "running",
+        endAt: now + clock.remaining * 1000,
+        ...totalOf(clock),
+      });
       return { item: next, intents: [{ type: "schedule", itemId: item.id }], applied: true };
     }
     case "addTime": {
       if (!Number.isInteger(action.seconds) || action.seconds <= 0) return unchanged(item);
       if (clock.status === "paused") {
         return {
-          item: withClock(item, { status: "paused", remaining: clock.remaining + action.seconds }),
+          item: withClock(item, {
+            status: "paused",
+            remaining: clock.remaining + action.seconds,
+            ...grown(clock, action.seconds),
+          }),
           intents: [],
           applied: true,
         };
@@ -159,13 +185,35 @@ export function transition(item: Item, action: Action, now: number): Outcome {
       // A done timer restarts from now; a running one extends its end time (FR-011: re-schedule).
       const endAt = (done ? now : clock.endAt) + action.seconds * 1000;
       return {
-        item: withClock(item, { status: "running", endAt }),
+        item: withClock(
+          item,
+          done
+            ? { status: "running", endAt, total: action.seconds }
+            : { status: "running", endAt, ...grown(clock, action.seconds) },
+        ),
         intents: [...cancelPending(item), { type: "schedule", itemId: item.id }],
         applied: true,
       };
     }
     case "cancel":
       return { item: null, intents: cancelPending(item), applied: true };
+    case "finishEarly": {
+      // The end time becomes now and the pending notification is withdrawn; the stage then reads
+      // done and offers "Start next stage" (a timer offers Dismiss), exactly as if it had ended.
+      if (clock.status === "paused") {
+        return {
+          item: withClock(item, { status: "running", endAt: now }),
+          intents: cancelPending(item),
+          applied: true,
+        };
+      }
+      if (clock.status !== "running" || done) return unchanged(item);
+      return {
+        item: withClock(item, { status: "running", endAt: now }),
+        intents: cancelPending(item),
+        applied: true,
+      };
+    }
     case "dismiss": {
       if (!done) return unchanged(item);
       if (item.kind === "routine" && item.index < item.stages.length - 1) return unchanged(item);

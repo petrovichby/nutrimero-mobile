@@ -7,6 +7,7 @@ import {
   createTimerStore,
   DEFAULT_PREFS,
   MAX_SAVED_ROUTINES,
+  routineFits,
   type SavedRoutine,
   TIMER_KEYS,
   VALUE_CEILING_BYTES,
@@ -74,6 +75,12 @@ describe("the timers store (research R6)", () => {
     expect(utf8ByteLength(JSON.stringify(saved))).toBeGreaterThan(VALUE_CEILING_BYTES);
     expect(await store.saveRoutine(saved)).toEqual({ ok: false, reason: "size" });
     expect(adapter.snapshot()).toEqual({}); // nothing written, not even the index
+  });
+
+  it("tells the editor before saving whether a routine fits, as a run at its longest (19c)", () => {
+    const cyrillic: Stage = { name: { text: "ж".repeat(MAX_NAME_LENGTH) }, seconds: MAX_SECONDS };
+    expect(routineFits("ж".repeat(MAX_NAME_LENGTH), Array(MAX_STAGES).fill(cyrillic))).toBe(true);
+    expect(routineFits("Emoji", worstStages)).toBe(false);
   });
 
   it("skips an index id with no value, and a corrupt value, without throwing", async () => {

@@ -50,7 +50,7 @@ describe("a timer's truth is its end time (FR-003, FR-004)", () => {
       endsAt: T0 + 90_000,
     });
     // The same stored item at any later time: derivation only.
-    expect(timer.clock).toEqual({ status: "running", endAt: T0 + 90_000 });
+    expect(timer.clock).toEqual({ status: "running", endAt: T0 + 90_000, total: 90 });
   });
 
   it("pauses to the seconds left and resumes to a new end time, cancelling and re-scheduling", () => {
@@ -59,10 +59,10 @@ describe("a timer's truth is its end time (FR-003, FR-004)", () => {
       notificationId: "n1",
     };
     const paused = transition(timer, { type: "pause" }, T0 + 4 * MIN);
-    expect(paused.item?.clock).toEqual({ status: "paused", remaining: 360 });
+    expect(paused.item?.clock).toEqual({ status: "paused", remaining: 360, total: 600 });
     expect(paused.intents).toEqual([{ type: "cancel", notificationId: "n1" }]);
     const resumed = transition(must(paused.item), { type: "resume" }, T0 + 60 * MIN);
-    expect(resumed.item?.clock).toEqual({ status: "running", endAt: T0 + 66 * MIN });
+    expect(resumed.item?.clock).toEqual({ status: "running", endAt: T0 + 66 * MIN, total: 600 });
     expect(resumed.intents).toEqual([{ type: "schedule", itemId: "t1" }]);
   });
 
@@ -74,9 +74,10 @@ describe("a timer's truth is its end time (FR-003, FR-004)", () => {
     expect(transition(timer, { type: "addTime", seconds: 300 }, T0 + 10_000).item?.clock).toEqual({
       status: "running",
       endAt: T0 + 360_000,
+      total: 360,
     });
     const late = transition(timer, { type: "addTime", seconds: 60 }, T0 + 10 * MIN);
-    expect(late.item?.clock).toEqual({ status: "running", endAt: T0 + 11 * MIN });
+    expect(late.item?.clock).toEqual({ status: "running", endAt: T0 + 11 * MIN, total: 60 });
     expect(late.intents).toEqual([
       { type: "cancel", notificationId: "n1" },
       { type: "schedule", itemId: "t1" },
@@ -167,6 +168,35 @@ describe("routines: manual chaining, one notification at a time (gate 1 Q1, FR-0
       notificationId: null,
     };
     expect(transition(handsOnLast, { type: "doneHandsOn" }, T0).item).toBeNull();
+  });
+});
+
+describe("done early (spec 005 amendment 2026-09-25)", () => {
+  it("ends a running stage now, withdraws its notification, then offers the next stage", () => {
+    const run = routine();
+    const early = transition(run, { type: "finishEarly" }, T0 + 60 * MIN);
+    expect(early.item?.clock).toEqual({ status: "running", endAt: T0 + 60 * MIN });
+    expect(early.intents).toEqual([{ type: "cancel", notificationId: "n1" }]);
+    expect(derive(must(early.item), T0 + 60 * MIN).status).toBe("done");
+    expect(transition(must(early.item), { type: "startNextStage" }, T0 + 60 * MIN).applied).toBe(
+      true,
+    );
+  });
+
+  it("ends a paused clock too, and does nothing to a done or hands-on one", () => {
+    const paused: Item = {
+      ...routine(),
+      clock: { status: "paused", remaining: 600 },
+      notificationId: null,
+    };
+    expect(transition(paused, { type: "finishEarly" }, T0).item?.clock).toEqual({
+      status: "running",
+      endAt: T0,
+    });
+    const done = routine();
+    expect(transition(done, { type: "finishEarly" }, T0 + 5 * 3600_000).applied).toBe(false);
+    const waiting: Item = { ...routine(), index: 1, clock: { status: "waiting" } };
+    expect(transition(waiting, { type: "finishEarly" }, T0).applied).toBe(false);
   });
 });
 

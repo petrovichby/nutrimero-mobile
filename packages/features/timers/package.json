@@ -6,19 +6,22 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./native": "./src/native.ts"
+    "./native": "./src/native.ts",
+    "./screens": "./src/ui/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@nutrimero/core": "workspace:*",
+    "@nutrimero/ui": "workspace:*",
     "expo-keep-awake": "~57.0.2",
     "expo-notifications": "~57.0.20"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-safe-area-context": "*"
   },
   "devDependencies": {
     "@types/react": "~19.2.18",

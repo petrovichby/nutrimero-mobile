@@ -278,17 +278,17 @@
     },
     "timers": {
       "stage": {
-        "mix": "Mix",
-        "autolyse": "Autolyse",
-        "bulkFerment": "Bulk ferment",
-        "stretchAndFold": "Stretch and fold",
-        "preShape": "Pre-shape",
-        "shape": "Shape",
-        "proof": "Proof",
-        "coldProof": "Cold proof",
-        "preheat": "Preheat",
-        "bake": "Bake",
-        "cool": "Cool"
+        "mix": "mix",
+        "autolyse": "autolyse",
+        "bulkFerment": "bulk ferment",
+        "stretchAndFold": "stretch and fold",
+        "preShape": "pre-shape",
+        "shape": "shape",
+        "proof": "proof",
+        "coldProof": "cold proof",
+        "preheat": "preheat",
+        "bake": "bake",
+        "cool": "cool"
       },
       "unit": {
         "hours": "{value} h",
@@ -323,17 +323,132 @@
         "androidLate": "On Android a notification may arrive late while the device is idle, typically by up to about 10 minutes, and never early.",
         "forceStop": "If you force-stop the app, alerts pause until you open it again."
       },
-      "notice": {
-        "androidBake": "On Android the alert for this stage may be late while your device is idle. Keep this screen open and your device stays awake."
-      },
-      "permission": {
-        "reason": "Can we notify you when a timer ends, even when the app is closed?"
-      },
       "refused": {
-        "note": "Alerts only work while the app is open. Timers still finish on screen and vibrate, with no sound.",
         "openSettings": "Open settings"
       },
-      "clearDataLine": "your timers and saved routines"
+      "clearDataLine": "your timers and saved routines",
+      "ui": {
+        "chip": {
+          "others": "{count, plural, one {and # more timer} other {and # more timers}}",
+          "open": "Open timers"
+        },
+        "agoShort": "{duration} ago",
+        "endsAt": "ends at {time}",
+        "endedAt": "ended at {time}",
+        "doneAt": "{ago}, at {time}",
+        "back": "Back to {place}",
+        "close": "Close",
+        "cancel": "Cancel",
+        "dismiss": "Dismiss",
+        "done": "Done",
+        "pause": "Pause",
+        "resume": "Resume",
+        "addA11y": "Add {duration}",
+        "awake": "Your screen stays on while this is open",
+        "leftA11y": "{duration} left",
+        "sheet": {
+          "title": "Timers",
+          "done": "done · {ago}",
+          "paused": "paused",
+          "routineLine": "{position} / {total} · {stage} · next: {next}",
+          "routineLineLast": "{position} / {total} · {stage} · last stage",
+          "pauseA11y": "Pause {name}",
+          "resumeA11y": "Resume {name}",
+          "openA11y": "Open {name}",
+          "newTimer": "New timer",
+          "newRoutine": "New routine",
+          "savedRoutines": "Saved routines"
+        },
+        "newTimer": {
+          "nameLabel": "Name",
+          "hours": "hours",
+          "minutes": "minutes",
+          "seconds": "seconds",
+          "hourLess": "One hour less",
+          "hourMore": "One hour more",
+          "minutesLess": "Five minutes less",
+          "minutesMore": "Five minutes more",
+          "quick": "Quick durations",
+          "help": "From 5 seconds to 48 hours. Tap the numbers to type them.",
+          "start": "Start timer"
+        },
+        "permission": {
+          "title": "Want a nudge when it’s done?",
+          "body": "Allow notifications and your timers can tell you when they end, even with your device locked.",
+          "continue": "Continue",
+          "either": "Your timer starts either way."
+        },
+        "refused": {
+          "title": "Alerts only while the app is open.",
+          "body": "Notifications are off for nutrimero on this device, so timers end on screen with a vibration and no sound."
+        },
+        "timer": {
+          "cancel": "Cancel timer",
+          "doneA11y": "{name} is done, {ago}"
+        },
+        "editor": {
+          "newTitle": "New routine",
+          "editTitle": "Edit routine",
+          "stagesHeader": "Stages · drag to reorder",
+          "stagesCount": "Stages · {current} of 12",
+          "handsOn": "hands-on",
+          "removeA11y": "Remove {stage}",
+          "moveUp": "Move up",
+          "moveDown": "Move down",
+          "durationA11y": "Duration of {stage}: {duration}",
+          "addStage": "Add a stage",
+          "maxStages": "12 stages is the most a routine can have",
+          "save": "Save",
+          "saveAndStart": "Save and start",
+          "tooLong": "This routine is too long to save — shorten a stage name or remove a stage."
+        },
+        "picker": {
+          "common": "Common stages",
+          "orOwn": "Or name your own",
+          "ownPlaceholder": "e.g. laminate",
+          "howLong": "How long?",
+          "other": "other…",
+          "add": "Add {stage}"
+        },
+        "routine": {
+          "positionA11y": "Stage {position} of {total}",
+          "next": "Next",
+          "takeYourTime": "hands-on · take your time",
+          "nextTimed": "{duration} · you’ll get a notification",
+          "doneEarly": "Done early",
+          "cancel": "Cancel routine",
+          "stageDone": "{stage} is done",
+          "whenReady": "when you’re ready",
+          "startNext": "Start next stage: {stage}",
+          "doneNext": "Done — next stage",
+          "finish": "Finish routine"
+        },
+        "android": {
+          "title": "One thing about Android",
+          "late": "On Android, a notification may arrive late while your device is idle — typically by up to about 10 minutes, and never early.",
+          "keepOpen": "For a bake, keep this screen open: your device stays awake, and the timer on screen is exact.",
+          "gotIt": "Got it",
+          "once": "We’ll only mention this once."
+        },
+        "saved": {
+          "title": "Routines",
+          "summary": "{count, plural, one {# stage · {duration} timed} other {# stages · {duration} timed}}",
+          "start": "Start",
+          "moreA11y": "More for {name}",
+          "edit": "Edit stages",
+          "rename": "Rename",
+          "delete": "Delete",
+          "empty": "Save a routine and it waits here for next time.",
+          "deleteTitle": "Delete this routine?",
+          "deleteBody": "{name} and its stages are removed from this device.",
+          "renameTitle": "Rename routine"
+        },
+        "alert": {
+          "routineSub": "{routine} · next: {next}",
+          "later": "Later",
+          "startNext": "Start next stage"
+        }
+      }
     }
   }
 }

@@ -278,17 +278,17 @@
     },
     "timers": {
       "stage": {
-        "mix": "Maišymas",
-        "autolyse": "Autolizė",
-        "bulkFerment": "Pirminis kildinimas",
-        "stretchAndFold": "Tempimas ir lankstymas",
-        "preShape": "Išankstinis formavimas",
-        "shape": "Formavimas",
-        "proof": "Kildinimas",
-        "coldProof": "Šaltas kildinimas",
-        "preheat": "Įkaitinimas",
-        "bake": "Kepimas",
-        "cool": "Aušinimas"
+        "mix": "maišymas",
+        "autolyse": "autolizė",
+        "bulkFerment": "pirminis kildinimas",
+        "stretchAndFold": "tempimas ir lankstymas",
+        "preShape": "išankstinis formavimas",
+        "shape": "formavimas",
+        "proof": "kildinimas",
+        "coldProof": "šaltas kildinimas",
+        "preheat": "įkaitinimas",
+        "bake": "kepimas",
+        "cool": "aušinimas"
       },
       "unit": {
         "hours": "{value} val.",
@@ -323,17 +323,132 @@
         "androidLate": "Android sistemoje pranešimas gali vėluoti, kol įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada neateina anksčiau.",
         "forceStop": "Jei priverstinai sustabdysi programėlę, pranešimai bus sustabdyti, kol ją vėl atidarysi."
       },
-      "notice": {
-        "androidBake": "Android sistemoje šio etapo pranešimas gali vėluoti, kol tavo įrenginys neaktyvus. Palik šį ekraną atvertą ir įrenginys neužmigs."
-      },
-      "permission": {
-        "reason": "Ar galime tau pranešti, kai baigsis laikmatis, net jei programėlė uždaryta?"
-      },
       "refused": {
-        "note": "Pranešimai veikia tik kai programėlė atidaryta. Laikmačiai vis tiek baigiasi ekrane ir vibruoja, be garso.",
         "openSettings": "Atidaryti nustatymus"
       },
-      "clearDataLine": "tavo laikmačiai ir išsaugotos eigos"
+      "clearDataLine": "tavo laikmačiai ir išsaugotos eigos",
+      "ui": {
+        "chip": {
+          "others": "{count, plural, one {ir dar # laikmatis} few {ir dar # laikmačiai} many {ir dar # laikmačio} other {ir dar # laikmačių}}",
+          "open": "Atidaryti laikmačius"
+        },
+        "agoShort": "prieš {duration}",
+        "endsAt": "baigsis {time}",
+        "endedAt": "baigėsi {time}",
+        "doneAt": "{ago}, {time}",
+        "back": "Atgal: {place}",
+        "close": "Uždaryti",
+        "cancel": "Atšaukti",
+        "dismiss": "Užverti",
+        "done": "Baigta",
+        "pause": "Pristabdyti",
+        "resume": "Tęsti",
+        "addA11y": "Pridėti: {duration}",
+        "awake": "Kol tai atverta, ekranas neužges",
+        "leftA11y": "Liko: {duration}",
+        "sheet": {
+          "title": "Laikmačiai",
+          "done": "baigta · {ago}",
+          "paused": "pristabdyta",
+          "routineLine": "{position} / {total} · {stage} · toliau: {next}",
+          "routineLineLast": "{position} / {total} · {stage} · paskutinis etapas",
+          "pauseA11y": "Pristabdyti: {name}",
+          "resumeA11y": "Tęsti: {name}",
+          "openA11y": "Atidaryti: {name}",
+          "newTimer": "Naujas laikmatis",
+          "newRoutine": "Nauja eiga",
+          "savedRoutines": "Išsaugotos eigos"
+        },
+        "newTimer": {
+          "nameLabel": "Pavadinimas",
+          "hours": "valandos",
+          "minutes": "minutės",
+          "seconds": "sekundės",
+          "hourLess": "Valanda mažiau",
+          "hourMore": "Valanda daugiau",
+          "minutesLess": "Penkiomis minutėmis mažiau",
+          "minutesMore": "Penkiomis minutėmis daugiau",
+          "quick": "Greiti laikai",
+          "help": "Nuo 5 sekundžių iki 48 valandų. Paliesk skaičius, kad juos įvestum.",
+          "start": "Paleisti laikmatį"
+        },
+        "permission": {
+          "title": "Priminti, kai bus baigta?",
+          "body": "Leisk pranešimus ir laikmačiai praneš, kai baigsis, net jei įrenginys užrakintas.",
+          "continue": "Tęsti toliau",
+          "either": "Laikmatis bet kokiu atveju pasileis."
+        },
+        "refused": {
+          "title": "Pranešimai tik atidarius programėlę.",
+          "body": "Šiame įrenginyje nutrimero pranešimai išjungti, todėl laikmačiai baigiasi ekrane su vibracija ir be garso."
+        },
+        "timer": {
+          "cancel": "Atšaukti laikmatį",
+          "doneA11y": "{name}: baigta, {ago}"
+        },
+        "editor": {
+          "newTitle": "Nauja eiga",
+          "editTitle": "Redaguoti eigą",
+          "stagesHeader": "Etapai · tempk, kad pakeistum tvarką",
+          "stagesCount": "Etapai · {current} iš 12",
+          "handsOn": "rankomis",
+          "removeA11y": "Pašalinti: {stage}",
+          "moveUp": "Aukštyn",
+          "moveDown": "Žemyn",
+          "durationA11y": "Trukmė ({stage}): {duration}",
+          "addStage": "Pridėti etapą",
+          "maxStages": "Eigoje gali būti daugiausia 12 etapų",
+          "save": "Išsaugoti",
+          "saveAndStart": "Išsaugoti ir pradėti",
+          "tooLong": "Ši eiga per ilga išsaugoti – sutrumpink etapo pavadinimą arba pašalink etapą."
+        },
+        "picker": {
+          "common": "Dažni etapai",
+          "orOwn": "Arba pavadink savaip",
+          "ownPlaceholder": "pvz., sluoksniavimas",
+          "howLong": "Kiek laiko?",
+          "other": "kita…",
+          "add": "Pridėti: {stage}"
+        },
+        "routine": {
+          "positionA11y": "{position} etapas iš {total}",
+          "next": "Toliau",
+          "takeYourTime": "rankomis · neskubėk",
+          "nextTimed": "{duration} · gausi pranešimą",
+          "doneEarly": "Baigta anksčiau",
+          "cancel": "Atšaukti eigą",
+          "stageDone": "{stage}: baigta",
+          "whenReady": "kai būsi pasiruošęs",
+          "startNext": "Pradėti kitą etapą: {stage}",
+          "doneNext": "Baigta – kitas etapas",
+          "finish": "Užbaigti eigą"
+        },
+        "android": {
+          "title": "Vienas dalykas apie Android",
+          "late": "Android sistemoje pranešimas gali vėluoti, kol tavo įrenginys neaktyvus – paprastai iki maždaug 10 minučių, bet niekada ne anksčiau.",
+          "keepOpen": "Kepdamas palik šį ekraną atvertą: įrenginys neužmigs, o laikmatis ekrane bus tikslus.",
+          "gotIt": "Supratau",
+          "once": "Tai minėsime tik kartą."
+        },
+        "saved": {
+          "title": "Eigos",
+          "summary": "{count, plural, one {# etapas · {duration} su laikmačiu} few {# etapai · {duration} su laikmačiu} many {# etapo · {duration} su laikmačiu} other {# etapų · {duration} su laikmačiu}}",
+          "start": "Pradėti",
+          "moreA11y": "Daugiau: {name}",
+          "edit": "Redaguoti etapus",
+          "rename": "Pervadinti",
+          "delete": "Ištrinti",
+          "empty": "Išsaugok eigą – ji čia lauks kito karto.",
+          "deleteTitle": "Ištrinti šią eigą?",
+          "deleteBody": "{name} ir jos etapai bus pašalinti iš šio įrenginio.",
+          "renameTitle": "Pervadinti eigą"
+        },
+        "alert": {
+          "routineSub": "{routine} · toliau: {next}",
+          "later": "Vėliau",
+          "startNext": "Pradėti kitą etapą"
+        }
+      }
     }
   }
 }
