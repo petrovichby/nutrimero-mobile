@@ -1,11 +1,19 @@
-import { Button, Glyph, PageTitle, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
+import { Button, Glyph, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { formatDuration } from "../model/duration";
 import { split, stepped, typed, type Unit } from "../model/duration-input";
 import { atActiveLimit, MAX_ACTIVE_ITEMS } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_SECONDS, MIN_SECONDS, validName } from "../model/stage";
-import { BackBar, Choice, styles as parts, Refusal, RoundButton, Sheet } from "./parts";
+import {
+  BackBar,
+  Choice,
+  DetailTitle,
+  styles as parts,
+  Refusal,
+  RoundButton,
+  Sheet,
+} from "./parts";
 import { useTimers } from "./timers-context";
 
 const QUICK = [300, 600, 1200, 2700, 3600, 5400, 7200, 43_200] as const;
@@ -62,7 +70,7 @@ export function NewTimerScreen({
         onPress={onBack}
       />
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <PageTitle>{t("home.timers.ui.sheet.newTimer")}</PageTitle>
+        <DetailTitle>{t("home.timers.ui.sheet.newTimer")}</DetailTitle>
         <Text style={[textRole(theme, "labelMd"), styles.label, { color: color.ink2 }]}>
           {t("home.timers.ui.newTimer.nameLabel")}
         </Text>
