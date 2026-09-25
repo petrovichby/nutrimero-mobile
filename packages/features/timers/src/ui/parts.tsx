@@ -1,6 +1,6 @@
-import { Glyph, type GlyphName, textRole, tokens, useReduceMotion, useTheme } from "@nutrimero/ui";
+import { Glyph, type GlyphName, textRole, tokens, useSheetRise, useTheme } from "@nutrimero/ui";
 import type { ReactNode } from "react";
-import { Modal, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
+import { Animated, Modal, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
@@ -253,8 +253,10 @@ export function Refusal({ text }: { text: string }) {
 }
 
 /**
- * A bottom sheet (16, 17b, 19b, 20d): grab handle, scrim that closes it, system back closes it,
- * rises — or fades under Reduce Motion. The children own the content and actions.
+ * A bottom sheet (16, 17b, 19b, 20d): grab handle, scrim that closes it, system back closes it.
+ * The scrim fades in place and only the sheet rises (owner, T027 iPhone run: the whole overlay
+ * sliding up read wrong); under Reduce Motion it only fades. DESIGN.md motion: 150–250 ms.
+ * The children own the content and actions.
  */
 export function Sheet({
   visible,
@@ -270,12 +272,13 @@ export function Sheet({
   const theme = useTheme();
   const { color } = theme;
   const insets = useSafeAreaInsets();
-  const reduceMotion = useReduceMotion();
+  const { translateY: rise, onShow } = useSheetRise(visible);
   return (
     <Modal
       visible={visible}
       transparent
-      animationType={reduceMotion ? "fade" : "slide"}
+      animationType="fade"
+      onShow={onShow}
       onRequestClose={onClose}
       statusBarTranslucent
     >
@@ -286,7 +289,7 @@ export function Sheet({
           onPress={onClose}
           style={[StyleSheet.absoluteFill, { backgroundColor: color.sheetScrim }]}
         />
-        <View
+        <Animated.View
           accessibilityViewIsModal
           style={[
             styles.sheet,
@@ -294,12 +297,13 @@ export function Sheet({
               backgroundColor: color.surface,
               shadowColor: color.shadowColor,
               paddingBottom: Math.max(insets.bottom, tokens.spacing.sectionGap) + 2,
+              transform: [{ translateY: rise }],
             },
           ]}
         >
           <View style={[styles.grab, { backgroundColor: color.outlineStrong }]} />
           {children}
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );

@@ -1,17 +1,18 @@
 import type { ReactNode } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../theme/provider";
 import { tokens } from "../tokens";
 import { Button } from "./button";
 import { textRole } from "./text-style";
-import { useReduceMotion } from "./use-reduce-motion";
+import { useSheetRise } from "./use-sheet-rise";
 
 /**
  * A confirmation before a destructive action, as a bottom sheet (09-more-clear-data; DESIGN.md
  * MA-24): a grab handle, the question, what happens (the caller's body), then Cancel and the
  * destructive action side by side at **the same size**. The scrim, the system back button and
- * Cancel all cancel; nothing traps the user. Rises, or fades under Reduce Motion.
+ * Cancel all cancel; nothing traps the user. The one sheet motion (useSheetRise, MA-27 round 3):
+ * the dim fades in place and only the sheet rises; everything fades under Reduce Motion.
  *
  * The corner radius is DESIGN.md's 12pt maximum; the corpus draws 20 (flagged to design-mobile).
  */
@@ -35,12 +36,13 @@ export function ConfirmSheet({
   const theme = useTheme();
   const { color } = theme;
   const insets = useSafeAreaInsets();
-  const reduceMotion = useReduceMotion();
+  const { translateY, onShow } = useSheetRise(visible);
   return (
     <Modal
       visible={visible}
       transparent
-      animationType={reduceMotion ? "fade" : "slide"}
+      animationType="fade"
+      onShow={onShow}
       onRequestClose={onCancel}
       statusBarTranslucent
     >
@@ -51,7 +53,7 @@ export function ConfirmSheet({
           onPress={onCancel}
           style={[StyleSheet.absoluteFill, { backgroundColor: color.sheetScrim }]}
         />
-        <View
+        <Animated.View
           accessibilityViewIsModal
           accessibilityRole="alert"
           style={[
@@ -60,6 +62,7 @@ export function ConfirmSheet({
               backgroundColor: color.surface,
               shadowColor: color.shadowColor,
               paddingBottom: Math.max(insets.bottom, tokens.spacing.sectionGap) + 6,
+              transform: [{ translateY }],
             },
           ]}
         >
@@ -85,7 +88,7 @@ export function ConfirmSheet({
               style={styles.action}
             />
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
