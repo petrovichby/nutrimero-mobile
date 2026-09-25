@@ -293,14 +293,14 @@
         "cool": "hűtés"
       },
       "unit": {
-        "hours": "{value} óra",
-        "minutes": "{value} perc",
-        "seconds": "{value} mp"
+        "hours": "{value} óra",
+        "minutes": "{value} perc",
+        "seconds": "{value} mp"
       },
       "spoken": {
-        "hours": "{count, plural, one {# óra} other {# óra}}",
-        "minutes": "{count, plural, one {# perc} other {# perc}}",
-        "seconds": "{count, plural, one {# másodperc} other {# másodperc}}"
+        "hours": "{count, plural, one {# óra} other {# óra}}",
+        "minutes": "{count, plural, one {# perc} other {# perc}}",
+        "seconds": "{count, plural, one {# másodperc} other {# másodperc}}"
       },
       "left": "még {duration}",
       "doneAgo": "Kész · {duration} óta",
@@ -373,7 +373,7 @@
           "secondsLess": "Egy másodperccel kevesebb",
           "secondsMore": "Egy másodperccel több",
           "quick": "Gyors időtartamok",
-          "help": "5 másodperctől 48 óráig. Koppints egy számra a beírásához.",
+          "help": "5 másodperctől 48 óráig. Koppints egy számra a beírásához.",
           "start": "Időzítő indítása",
           "limit": "{count, plural, one {Egyszerre legfeljebb # időzítő vagy menetrend lehet. Állítsd le vagy vesd el, hogy újat indíthass.} other {Egyszerre legfeljebb # időzítő és menetrend lehet. Állíts le vagy vess el egyet, hogy újat indíthass.}}"
         },
@@ -402,6 +402,7 @@
           "moveDown": "Lejjebb",
           "durationA11y": "{stage} időtartama: {duration}",
           "addStage": "Lépés hozzáadása",
+          "editStage": "Lépés szerkesztése",
           "maxStages": "Egy menetrendben legfeljebb 12 lépés lehet",
           "save": "Mentés",
           "saveAndStart": "Mentés és indítás",
@@ -431,7 +432,7 @@
         },
         "android": {
           "title": "Egy dolog az Androidról",
-          "late": "Androidon az értesítés késhet, amíg az eszközöd tétlen – jellemzően legfeljebb kb. 10 percet, de sosem korábban.",
+          "late": "Androidon az értesítés késhet, amíg az eszközöd tétlen – jellemzően legfeljebb kb. 10 percet, de sosem korábban.",
           "keepOpen": "Sütésnél hagyd nyitva ezt a képernyőt: az eszközöd ébren marad, és a képernyőn lévő időzítő pontos.",
           "gotIt": "Értem",
           "once": "Ezt csak egyszer mondjuk el."

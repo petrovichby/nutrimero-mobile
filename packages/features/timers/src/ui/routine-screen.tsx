@@ -7,7 +7,7 @@ import { capitalizeFirst, clockText, timeOfDay } from "../model/format";
 import { derive } from "../model/item";
 import { isBakeStage } from "../model/stage";
 import { useTimerKeepAwake } from "../native/keep-awake";
-import { nextStageLine } from "./describe";
+import { leftLabel, nextStageLine } from "./describe";
 import {
   AwakeFootnote,
   BackBar,
@@ -144,9 +144,7 @@ export function RoutineScreen({
         {view.secondsLeft !== null && (
           <Text
             accessibilityRole="text"
-            accessibilityLabel={t("home.timers.ui.leftA11y", {
-              duration: formatDuration(view.secondsLeft, t).spoken,
-            })}
+            accessibilityLabel={leftLabel(view.secondsLeft, view.status === "paused", t, locale)}
             style={[styles.big, { color: color.heading, fontFamily: theme.face("700") }]}
           >
             {clockText(view.secondsLeft)}
@@ -172,7 +170,9 @@ export function RoutineScreen({
           <>
             <View style={styles.ctrls}>
               {view.status === "paused" ? (
+                // 20e-routine-paused (f7b75e5f): Resume is the main control, as on the timer.
                 <Control
+                  main
                   glyph="play"
                   label={t("home.timers.ui.resume")}
                   onPress={() => act({ type: "resume" })}
@@ -205,6 +205,9 @@ export function RoutineScreen({
           </>
         )}
 
+        {/* Ended: Start next stage (20b), or on the last stage a single "Finish routine" and no
+            Cancel (20g-routine-finish, f7b75e5f). The last stage running has no Next card
+            (20f-routine-last-stage). */}
         {view.status === "done" && (
           <>
             <Button

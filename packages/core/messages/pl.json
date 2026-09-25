@@ -293,14 +293,14 @@
         "cool": "studzenie"
       },
       "unit": {
-        "hours": "{value} godz.",
-        "minutes": "{value} min",
-        "seconds": "{value} s"
+        "hours": "{value} godz.",
+        "minutes": "{value} min",
+        "seconds": "{value} s"
       },
       "spoken": {
-        "hours": "{count, plural, one {# godzina} few {# godziny} many {# godzin} other {# godziny}}",
-        "minutes": "{count, plural, one {# minuta} few {# minuty} many {# minut} other {# minuty}}",
-        "seconds": "{count, plural, one {# sekunda} few {# sekundy} many {# sekund} other {# sekundy}}"
+        "hours": "{count, plural, one {# godzina} few {# godziny} many {# godzin} other {# godziny}}",
+        "minutes": "{count, plural, one {# minuta} few {# minuty} many {# minut} other {# minuty}}",
+        "seconds": "{count, plural, one {# sekunda} few {# sekundy} many {# sekund} other {# sekundy}}"
       },
       "left": "Do końca: {duration}",
       "doneAgo": "Gotowe · minęło: {duration}",
@@ -373,7 +373,7 @@
           "secondsLess": "Sekunda mniej",
           "secondsMore": "Sekunda więcej",
           "quick": "Szybki wybór",
-          "help": "Od 5 sekund do 48 godzin. Dotknij liczby, aby ją wpisać.",
+          "help": "Od 5 sekund do 48 godzin. Dotknij liczby, aby ją wpisać.",
           "start": "Uruchom minutnik",
           "limit": "{count, plural, one {Naraz możesz mieć najwyżej # minutnik lub plan. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} few {Naraz możesz mieć najwyżej # minutniki i plany. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} many {Naraz możesz mieć najwyżej # minutników i planów. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.} other {Naraz możesz mieć najwyżej # minutnika i planu. Zatrzymaj lub odrzuć jeden, by uruchomić kolejny.}}"
         },
@@ -402,6 +402,7 @@
           "moveDown": "Niżej",
           "durationA11y": "Czas trwania ({stage}): {duration}",
           "addStage": "Dodaj etap",
+          "editStage": "Edytuj etap",
           "maxStages": "Plan może mieć najwyżej 12 etapów",
           "save": "Zapisz",
           "saveAndStart": "Zapisz i zacznij",
@@ -431,7 +432,7 @@
         },
         "android": {
           "title": "Jedna rzecz o Androidzie",
-          "late": "Na Androidzie powiadomienie może się spóźnić, gdy twoje urządzenie jest bezczynne – zwykle do około 10 minut, ale nigdy nie przychodzi za wcześnie.",
+          "late": "Na Androidzie powiadomienie może się spóźnić, gdy twoje urządzenie jest bezczynne – zwykle do około 10 minut, ale nigdy nie przychodzi za wcześnie.",
           "keepOpen": "Przy pieczeniu zostaw ten ekran otwarty: urządzenie nie uśnie, a minutnik na ekranie jest dokładny.",
           "gotIt": "Rozumiem",
           "once": "Wspominamy o tym tylko raz."

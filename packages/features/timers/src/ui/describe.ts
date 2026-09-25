@@ -120,3 +120,17 @@ export function nextStageLine(
   const duration = formatDuration(next.seconds, t).text;
   return permitted ? t("home.timers.ui.routine.nextTimed", { duration }) : duration;
 }
+
+/**
+ * The big readout, spoken: "1 hour 10 minutes left", or while paused "Paused, 1 hour 10 minutes
+ * left" (18d-timer-paused / 20e-routine-paused, nutrimero-design f7b75e5f).
+ */
+export function leftLabel(
+  secondsLeft: number,
+  paused: boolean,
+  t: Translator,
+  locale: string,
+): string {
+  const left = t("home.timers.ui.leftA11y", { duration: formatDuration(secondsLeft, t).spoken });
+  return paused ? `${capitalizeFirst(t("home.timers.ui.sheet.paused"), locale)}, ${left}` : left;
+}

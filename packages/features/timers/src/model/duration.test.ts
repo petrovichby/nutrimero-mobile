@@ -22,8 +22,14 @@ describe("durations in words (FR-022, research R10)", () => {
 
   it("reads compactly on screen and in words for screen readers (en)", () => {
     const t = createTranslator("en");
-    expect(formatDuration(5400, t)).toEqual({ text: "1 h 30 min", spoken: "1 hour 30 minutes" });
-    expect(formatDuration(61, t)).toEqual({ text: "1 min 1 s", spoken: "1 minute 1 second" });
+    expect(formatDuration(5400, t)).toEqual({
+      text: "1\u00a0h 30\u00a0min",
+      spoken: "1\u00a0hour 30\u00a0minutes",
+    });
+    expect(formatDuration(61, t)).toEqual({
+      text: "1\u00a0min 1\u00a0s",
+      spoken: "1\u00a0minute 1\u00a0second",
+    });
   });
 
   it("formats in every UI language with integer counts only", () => {
@@ -39,8 +45,16 @@ describe("durations in words (FR-022, research R10)", () => {
   });
 
   it("declines the Slavic and Baltic plurals", () => {
-    expect(formatDuration(5 * 60, createTranslator("pl")).spoken).toBe("5 minut");
-    expect(formatDuration(2 * 60, createTranslator("uk")).spoken).toBe("2 хвилини");
-    expect(formatDuration(21 * 60, createTranslator("lt")).spoken).toBe("21 minutė");
+    expect(formatDuration(5 * 60, createTranslator("pl")).spoken).toBe("5\u00a0minut");
+    expect(formatDuration(2 * 60, createTranslator("uk")).spoken).toBe("2\u00a0хвилини");
+    expect(formatDuration(21 * 60, createTranslator("lt")).spoken).toBe("21\u00a0minutė");
+  });
+});
+
+describe("a number and its unit never wrap apart (owner, nutrimero-design 802f19e9)", () => {
+  it("binds each number to its unit with U+00A0, and breaks only between parts", () => {
+    const { text, spoken } = formatDuration(5400, createTranslator("de"));
+    expect(text).toBe("1\u00a0Std. 30\u00a0Min.");
+    expect(spoken).toContain("1\u00a0Stunde");
   });
 });
