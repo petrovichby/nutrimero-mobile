@@ -498,6 +498,41 @@ weights, and the api admits them. For the api lane: drop the US-proxy rows for t
 `3FB1F22`'s base name ("Dinkelmehl Type plant1brand", no English name) and the Hungarian Weizen names written
 with underscores ("búzaliszt_405_típus").
 
+## G. Piece weights the sources cannot settle — for the owner (2026-09-25)
+
+The owner's ruling: no letter to Markus; FR-007a stands (no piece weight shows until two sources verify it);
+where sources cannot settle one that matters for 004's set, it is listed here with what was found, and the owner
+helps decide. Ordered by how much it matters — staples first, then the fruit baking recipes count by the piece.
+Every value is from §D (W = whole / in shell, E = edible portion).
+
+1. **Egg** (`14A64E9`, staple) — the one that matters most ("2 eggs").
+   - FID's 35 / 42 / 50 / 58 / 65 g are the **US/Canadian minimum** weights per class, not typical eggs.
+   - EU grades (Reg. (EC) 589/2008) are **ranges**, with no typical value: S < 53, M 53–63, L 63–73, XL ≥ 73 g in
+     shell. The UK uses small, medium, large and very large (the retained standard).
+   - Typical values found: KTL (Finland) small 53 / medium 63 / large 73 g W; Norway a raw egg 63 g gross / 55 g net;
+     USDA 38 / 44 / 50 / 56 g E (small … extra large); Health Canada 41.6 / 46.4 / 52.7 / 58.1 g E.
+   - **To decide**: the basis (in shell or edible — recipes weigh cracked egg) and a typical value per grade for the
+     api to define with its EU/UK grades. The sources disagree on both.
+2. **Banana** (`8648FEE`) — banana bread counts bananas.
+   - Medium is confirmed **only peeled**: USDA 118 g E, Norway 120 g net. Whole: Norway 180 g gross, KTL 190 g W.
+   - Other sizes disagree by basis (USDA sizes are peeled; KTL's are with peel).
+   - **To decide**: show peeled weights (what the recipe uses) — then medium is settled — or none.
+3. **Lemon, lime, orange** (`6D4BDC1`, `8BE7328`, `58ED733`) — "zest and juice of 1 lemon".
+   - Lemon medium: KTL 120 g W, Norway 150 g gross, USDA 58 g E. Lime medium: USDA 67 g, Norway 80 g gross, 65 g net.
+     Orange: whole and peeled values differ by 25–40 %; national sizes differ too.
+   - **To decide**: whole-fruit weight per market, or none. No two sources agree on any class.
+4. **Apple** (`5C1AE0D`) — apple cakes count apples.
+   - National sizes differ widely: medium USDA 182 g, KTL 200 g, Norway 140 g. Large USDA 223 g, KTL 280 g,
+     Norway 180 g.
+   - **To decide**: whether a per-market typical apple is meaningful at all (Norway's and USDA's medium differ by
+     30 %).
+5. **Pear** — large (230 g) is confirmed (USDA 230, KTL 240); medium sits on the 5 % line (USDA 178, KTL 190). One
+   confirmed size would read as broken on screen (plan, gate-2 item 2).
+6. **Lower priority for baking**: coconut (FID medium 1000 g is about twice any source); dates (FID 10 g vs 8 g
+   dried whole, 7.1 g pitted); fig (USDA 40 / 50 / 64 g vs FID 45 / 60 / 80 g); plum, rhubarb, sour cherries and
+   zucchini (sources disagree, and rhubarb and cherries are only ever published unclassed); duck and quail egg
+   (a single USDA value each, 70 g and 9 g).
+
 ## C. For the api lane — data problems the research found
 
 1. **Mislabelled provenance.** Potato starch's "USDA FDC via iForge" 152 g/cup is King Arthur's
