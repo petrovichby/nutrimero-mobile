@@ -163,6 +163,37 @@ The launch markets are **DE, AT, CH, HU, LT, PL and the UK** (device region `GB`
   to UK users under that name. With no sourced en-GB name to show instead, `631E984` is **left out of the UK set**
   until the api supplies one (FR-031).
 
+### Amendment 2026-09-25 — the owner's walk: design-mobile MA-28 and MA-29
+
+Landed in the corpus at `ba9f5d09` (MA-28), `77ca7202` / `bea3100d` (F23, MA-29) and `93cf290a` (the UK). This
+amendment governs where it differs from the rulings above; the points marked **open** await the coordinator.
+
+- **MA-28 supersedes QM2.** The Units step asks for the **system first**, then offers an optional **"where your
+  measures come from"** region row: **My device** (the default; it shows the region the device reports) · **UK** ·
+  **US** · **Europe** · **Asia (later**, shown but not available). The same row is a **More → Units** setting.
+  **The market is the region the user chose; by default, the device's region** (FR-024 amended). The UK frames
+  (`07-onboarding-units-uk`, `07-onboarding-units-imperial-uk`): Metric preselected; Imperial lists ounces, pounds,
+  fluid ounces, pints and °F, with no cups. **"UK" is never the same thing as "Imperial."**
+- **MA-29 — eggs** (FR-007a amended): exact in-shell bands **< 53 · 53–< 63 · 63–< 73 · ≥ 73 g**. There is **no
+  cup chip on egg screens**. The UK egg frame (`11c-convert-egg-uk`) uses UK names (small, medium, large, very
+  large), and its ranges multiply, e.g. "2 medium eggs = 106–126 g in shell". UK copy never says "EU bands".
+- **MA-29 — More and Units:** More holds **Timers, Measures, Units, Language**, then Clear my data and the
+  version line. **More → Units** holds the system, the region row, and **"Amounts in recipes": "Kitchen
+  measures" or "Exact, by weight"** (FR-030's pair, now a stored preference). Any recipe amount opens the
+  conversion as a sheet. Preparation state (sifted · spooned · packed) sits beside the input, and only where FID
+  holds the variant (FR-006).
+- **Open — A. How many systems?** The coordinator's relay says the step offers **Metric, US or Imperial**.
+  MA-28 as landed offers **two**: Metric or Imperial. The region then decides which imperial: Imperial + US means
+  US cups and sticks; Imperial + Europe or UK means UK ounces, fluid ounces and pints, with no cups. The two
+  readings store different things: FR-028's ruled values `metric · us · ukImperial`, against a system `metric ·
+  imperial` plus a region.
+- **Open — B. "Europe" as a chosen region.** DE, AT and CH add the 13 Type flours, and HU, LT and PL do not. So
+  "Europe" is not one market's set. The lane's proposal: "Europe" is the EU default (the core set, the 250 ml cup,
+  EU egg grades, no national flour classes). "My device" on a DE device keeps the DE market.
+- **Open — C. Where the choices live.** The region choice and "Amounts in recipes" are new stored preferences,
+  and FR-022 said Measures stores nothing. The lane's proposal: both are Home data like the units choice, so Clear
+  my data resets them; the interface language stays the only device preference.
+
 ## Gate 1 — the data survey
 
 The questions were all about **which numbers the app is allowed to show**. The data survey behind
@@ -431,12 +462,14 @@ onboarding with region DE: the US cup and the stick appear.
   for.
 - **FR-007**: A volume ↔ mass or piece ↔ mass conversion MUST NOT be offered for an ingredient the
   snapshot gives no chosen density or piece weight for; the app says the measure is not known.
-- **FR-007a** *(confirmed by the owner's F23 walk; piece weights ruled by the owner 2026-09-25, "pieces as
-  recommended")*: A piece weight MUST NOT be shown unless it is verified against its named published record or
+- **FR-007a** *(confirmed by the owner's F23 walk; piece weights ruled 2026-09-25, "pieces as recommended";
+  eggs amended by MA-29)*: A piece weight MUST NOT be shown unless it is verified against its named published record or
   confirmed by two independent published sources within 5 % (`density-evidence.md` §D, §G). The pieces shown in
   004 are exactly:
-  - **Eggs**: the market's **statutory size ranges, in shell**, with no single egg weight. EU: S < 53, M 53–63,
-    L 63–73, XL ≥ 73 g. UK: small, medium, large and very large, on the same bands. The grading comes from the api
+  - **Eggs**: the market's **statutory size ranges, in shell, with exact boundaries** — **< 53 · 53–< 63 · 63–< 73 ·
+    ≥ 73 g** — and no single egg weight. EU: S, M, L, XL. UK: small, medium, large, very large; UK copy never says
+    "EU bands". Ranges multiply with the count ("2 medium eggs = 106–126 g in shell"). There is **no cup chip on egg
+    screens**. The grading comes from the api
     per market (FR-025, FR-031); markets without grades show none.
   - **Banana, medium, peeled**: about **120 g** (USDA 118 g, Norway 120 g net), labelled as peeled.
   - **Pear, large**: **230 g** (USDA 230 g, KTL 240 g).
@@ -460,12 +493,12 @@ onboarding with region DE: the US cup and the stick appear.
 
 **Markets**
 
-- **FR-024**: The market MUST be derived from the device's region setting (launch markets DE, AT, CH, HU,
-  LT, PL, UK; US later) (read on the device through the
-  already-admitted localisation module), never from the UI language; it is re-read when the app returns to
-  the foreground. A region outside the known markets — or no region — resolves to the core set with metric units and no egg
-  grades (QM1). The market is not stored and not sent
-  anywhere.
+- **FR-024** *(amended 2026-09-25, MA-28)*: The market MUST be the region the user chose in the Units region
+  row (My device · UK · US · Europe · Asia later); by default "My device", which is the device's region setting,
+  read through the already-admitted localisation module and re-read on return to the foreground. It is never the
+  UI language. Launch markets are DE, AT, CH, HU, LT, PL and UK, with US later. A device region outside them, or
+  none, resolves to the core set with metric units and no egg grades (QM1). "Europe" follows open point B. The
+  chosen region is stored per open point C; the device's region is never stored or sent.
 - **FR-025**: Every market-scoped component — default units, the household units shown (FR-009), the egg
   grading (FR-007a), the curated set's membership (FR-026), the onboarding sample (FR-023) — MUST read from
   the api's units-and-density change, which carries the market dimension; the app holds no market table.
@@ -490,7 +523,7 @@ onboarding with region DE: the US cup and the stick appear.
 - **FR-030**: The two ways a measure is shown MUST be named with the wording pair **"Kitchen measures" /
   "Exact by weight"**, as drawn in the approved F23 screens, in all seven catalogs (owner string review; a
   translation keeps the pair's meaning, not a literal rendering).
-- **FR-028**: 001's Units step MUST offer two systems chosen by region (owner, 2026-09-25), each option listing
+- **FR-028** *(under amendment — MA-28, open point A)*: 001's Units step MUST offer two systems chosen by region (owner, 2026-09-25), each option listing
   its units on the card (catalog strings, seven locales, owner string review):
   - EU markets: **Metric** (preselected: grams · millilitres · °C) or **US** (US customary: cups · ounces · °F);
   - US region: **US** (preselected) or **Metric**;
@@ -556,7 +589,8 @@ onboarding with region DE: the US cup and the stick appear.
   are FID data, shown as stored (MA-14).
 - **FR-021**: Amounts MUST be announced by screen readers as spoken quantities ("one and one
   eighth US cups", not "1 ⅛"), and every control meets DESIGN.md's target and contrast rules (X).
-- **FR-022**: Measures MUST hold no personal data and store nothing on the device.
+- **FR-022** *(amended by MA-29, open point C)*: Measures MUST hold no personal data. The only stored choices are
+  the Units settings: the system, the region, and "Amounts in recipes".
 - **FR-023**: The onboarding units card (001) MUST follow the market (FR-025): in EU markets its sample shows
   flour **by weight** (no cup) and no butter stick; the US market shows the US cup of flour — with the api's
   chosen wheat-flour density in place of the comp's unsourced "120 g" — and "1 stick butter". Until the api's
