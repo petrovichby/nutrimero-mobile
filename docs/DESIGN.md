@@ -1,6 +1,6 @@
 ---
 name: Nutrimero Mobile
-status: 0.5.2 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
+status: 0.5.3 — binding. Ratified by the owner at 0.2.0 (2026-09-21) from the Home Baker v1 comp set; 0.3.0, 0.4.0 and 0.5.0 are amendments made at the owner's direction.
 inherits: nutrimero-web/docs/DESIGN.md (color schemes, contrast rules) · nutrimero-design (concept authority)
 colors-note: >
   Pro Baker inherits the web ramps verbatim (web DESIGN.md frontmatter / nutrimero-design
@@ -206,8 +206,10 @@ Internal names (classes, frame labels) are not user-facing. Both apps; a catalog
     sidebar (`aria-current` equivalent: `accessibilityState.selected`), and carries the square
     mark; lime marks the active item. Navy chrome is not used, because the navy logo can never sit
     on navy.
-- **More** (Home Baker, MA-24) holds Language, Clear my data on this device, and the app and
-  version line — nothing else in 001.
+- **More** (Home Baker, MA-24; MA-27) holds **Timers**, Language, Clear my data on this device,
+  and the app and version line (MA-27, owner's word beyond MA-24). Timers open from More before
+  any is running; once something runs, **the timer chip** takes over on every screen. The
+  masthead "Timers" button was not chosen.
 - Modal flows (builder wizard, paywall, onboarding) present as full-screen sheets with an
   explicit close affordance top-left and never trap the user (hardware back always works).
 - **More → Language** (MA-22). The seven UI languages are listed in their own names (English,
@@ -276,8 +278,29 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   Pro Baker) ("Founder #37 of 100") with the medal glyph.
 - **Quantity stepper:** the workhorse of scaling — 44pt +/− targets, direct text entry on tap,
   `data-mono` value, unit label from the FID unit catalog, never a bare number.
-- **Timers:** persistent chip while running (any screen), `accessibilityLiveRegion`/VoiceOver
-  announcements at completion; multiple named timers listed in a sheet.
+- **Timers** (MA-27; spec 005; corpus `15-timer-chip` … `22-timer-alert`, each with a dark twin):
+  - **The timer chip** sits bottom-left above the tab bar. It names the item ending soonest, with
+    its time left and a count of the others. It turns gold and says what is done when one ends,
+    and it never pulses under Reduce motion. `accessibilityLiveRegion`/VoiceOver announce
+    completions.
+  - **The timers sheet** lists done items first (Dismiss), then running and paused timers and
+    routines, each with its one action, and New timer, New routine and Saved routines.
+  - **Timer and routine screens keep the device awake**, and say so in a footnote.
+  - **A routine advances only when the baker taps** "Start next stage". A hands-on stage waits
+    for "Done — next stage".
+  - **The in-app completion alert** drops in over any screen, with Later and Start next stage.
+  - **The notification permission is asked once, at the first start, after one reason.** The
+    timer starts either way. If it is refused, timer surfaces carry "Alerts only while the app is
+    open" with Open settings.
+  - **The Android note** (spec 005 FR-013a), wording as drawn: "On Android, a notification may
+    arrive late while your device is idle — typically by up to about 10 minutes, and never early.
+    For a bake, keep this screen open: your device stays awake, and the timer on screen is exact."
+    It shows once per install, when a Bake or Preheat stage starts, and never on iOS.
+  - **A routine too long to save is refused at the save action.** The device store's per-item
+    budget is 1,900 bytes, reachable with 12 stages and long emoji names. The editor shows one
+    plain sentence above Save — "This routine is too long to save — shorten a stage name or remove
+    a stage." — and disables Save and Save and start until it fits. At 12 stages the add row says
+    "12 stages is the most a routine can have". Corpus: `19c-routine-too-long.html`.
 - **Allergen flags:** inherited rule verbatim — `tertiary` + glyph + accessible label naming
   the allergen; color never alone. Values, the same in both apps: light — bg `tertiary-fixed`
   `#ffd7d6`, ink `on-tertiary-fixed-variant` `#6f2725`, line `tertiary-fixed-dim` `#ffaaa8`;
@@ -300,8 +323,10 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   family, both schemes — e.g. the swipe-remove action) with confirmation step or undo. One
   primary action per screen.
 - **Clear my data** (Home Baker, MA-24) confirms in a bottom sheet that names what is deleted
-  (dietary profile, choice of units, pantry staples), says the user starts again from the first
-  question and that it cannot be undone, and that the app language stays. **Cancel and the
+  (dietary profile, choice of units, pantry staples, and — MA-27, after "the staples in your
+  pantry" — "your timers and saved routines"), says the user starts again from the first question
+  and that it cannot be undone, and that the app language stays. The More row's subtitle names
+  the timers too. **Cancel and the
   destructive action are the same size.** Corpus: `09-more-clear-data.html`.
 - **Retry appears only after a real failure or a timeout** (MA-24), never as a resting state. A
   connect-once state with nothing to retry has no action (`01-recipes-connect-once.html`).
@@ -352,6 +377,10 @@ Shared in `packages/ui`; every component ships with its accessibility props, not
   steps, the recipe detail's title, the paywall headline (MA-25; owner, 2026-09-24). Titles may
   wrap to two lines. **Steps are not page titles:** baking mode's H1 is the current *step*, an
   Operate instruction, and stays in the UI face, as does any step-by-step instruction heading.
+  **Typed names are not page titles either** (MA-27): a screen headed by a name the baker typed
+  (a timer's, a routine's) sets it in Plus Jakarta Sans. Pacifico titles stay on places (New
+  timer, New routine, Routines, More). The routine's current stage is a step, and is never
+  Pacifico.
   Never in body, rows, buttons, chips, or any Operate control. Chosen for the 1950s–60s cookbook voice (period-true brush
   lettering revival) and for charset coverage: Latin, Latin-Ext, Cyrillic, Cyrillic-Ext,
   Vietnamese — covers all seven UI locales, be and uk included (verified). Masthead metrics
@@ -453,6 +482,16 @@ or any Operate ergonomics:
 ---
 
 ## Amendment log
+
+- 0.5.3 (2026-09-25) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `08c1e4c9`
+  by Home lane 2, **MA-27 only** (the owner's ruling of 2026-09-25; MA-25's later additions stay
+  with Home lane 1's next port). MA-27, timers, routines and stage notifications (spec 005):
+  - More gains Timers (entry B, the owner's word beyond MA-24).
+  - The Timers component rules (the chip, the sheet, keep-awake footnotes, manual stage advance,
+    the completion alert, in-context permission, the Android note as drawn, the 1,900-byte
+    refusal).
+  - Clear my data's list gains "your timers and saved routines".
+  - Typed names head their screens in Plus Jakarta Sans.
 
 - 0.5.2 (2026-09-24) — ported from `nutrimero-design:mobile/AMENDMENTS.md` at design `32a4a1aa`
   by the Home lane: MA-23 Pro Baker's Label desk as approved (tabs Labels · Recipes · Costing ·
