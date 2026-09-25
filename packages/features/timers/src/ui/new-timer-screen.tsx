@@ -31,7 +31,9 @@ export function NewTimerScreen({
     number: items.filter((item) => item.kind === "timer").length + 1,
   });
   const [name, setName] = useState("");
-  const [seconds, setSeconds] = useState(5400);
+  // Starts at 0:0:0 (owner, T027 iPhone run): the baker types or steps their own time; Start
+  // stays off until it is at least 5 s.
+  const [seconds, setSeconds] = useState(0);
   const [asking, setAsking] = useState(false);
   const [busy, setBusy] = useState(false);
 
