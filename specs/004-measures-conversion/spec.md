@@ -182,7 +182,7 @@ amendment governs where it differs from the rulings above; the points marked **o
   measures" or "Exact, by weight"** (FR-030's pair, now a stored preference). Any recipe amount opens the
   conversion as a sheet. Preparation state (sifted · spooned · packed) sits beside the input, and only where FID
   holds the variant (FR-006).
-- **Open — A. How many systems?** The coordinator's relay says the step offers **Metric, US or Imperial**.
+- **A. How many systems?** *(Ruled 2026-09-25: two systems plus a region; see below.)* The coordinator's relay says the step offers **Metric, US or Imperial**.
   MA-28 as landed offers **two**: Metric or Imperial. The region then decides which imperial: Imperial + US means
   US cups and sticks; Imperial + Europe or UK means UK ounces, fluid ounces and pints, with no cups. The two
   readings store different things: FR-028's ruled values `metric · us · ukImperial`, against a system `metric ·
@@ -190,9 +190,21 @@ amendment governs where it differs from the rulings above; the points marked **o
 - **Open — B. "Europe" as a chosen region.** DE, AT and CH add the 13 Type flours, and HU, LT and PL do not. So
   "Europe" is not one market's set. The lane's proposal: "Europe" is the EU default (the core set, the 250 ml cup,
   EU egg grades, no national flour classes). "My device" on a DE device keeps the DE market.
-- **Open — C. Where the choices live.** The region choice and "Amounts in recipes" are new stored preferences,
+- **C. Where the choices live.** *(Ruled 2026-09-25: Home data; see below.)* The region choice and "Amounts in recipes" are new stored preferences,
   and FR-022 said Measures stores nothing. The lane's proposal: both are Home data like the units choice, so Clear
   my data resets them; the interface language stays the only device preference.
+
+### The owner's rulings on the Units step, 2026-09-25 (all yes)
+
+- **Open point A → two systems plus a region.** FR-028's stored `metric · us · ukImperial` is replaced by **two
+  systems — Metric and Imperial — plus a region**, per MA-28's walked frames (FR-028 amended).
+- **A stored old `imperial`** (001's cups · ounces · °F) **maps to Imperial with region US**, tested.
+- **Open point C → Home data.** The region choice and "Amounts in recipes" live in Home data, so Clear my data
+  resets them; its sheet already names "your choice of units" (FR-022).
+- **Build only the drawn combinations** (`07-onboarding-units`, `-imperial-us`, `-imperial-europe`, `-uk`,
+  `-imperial-uk` at design `93cf290a`). The undrawn ones are with design-mobile: Metric with US or UK chosen
+  explicitly, Imperial with My device on a US device, the "Asia · later" chip tapped, and the US card with no
+  density yet. So is open point B, "Europe" as a chosen region.
 
 ## Gate 1 — the data survey
 
@@ -531,19 +543,18 @@ onboarding with region DE: the US cup and the stick appear.
 - **FR-030**: The two ways a measure is shown MUST be named with the wording pair **"Kitchen measures" /
   "Exact by weight"**, as drawn in the approved F23 screens, in all seven catalogs (owner string review; a
   translation keeps the pair's meaning, not a literal rendering).
-- **FR-028** *(under amendment — MA-28, open point A)*: 001's Units step MUST offer two systems chosen by region (owner, 2026-09-25), each option listing
-  its units on the card (catalog strings, seven locales, owner string review):
-  - EU markets: **Metric** (preselected: grams · millilitres · °C) or **US** (US customary: cups · ounces · °F);
-  - US region: **US** (preselected) or **Metric**;
-  - every other region, or none: **Metric** (preselected) or **Imperial** (UK: ounces · pounds · imperial fl oz
-    and pints · °F — no cups).
-  The word "Imperial" is used **only** for the UK system. The stored choice MUST keep working, mapped on read and
-  tested: today's stored `imperial` was the cups · ounces · °F option and reads as **US**; the new UK choice is
-  stored under its own value, so no stored value is ambiguous. A stored system is honoured in any region, even
-  one whose Units step would not offer it (a US choice kept after moving to GB): the Units step then shows the
-  stored choice as selected, beside the region's usual pair (ruled 2026-09-25). Stored values: `metric`, `us`,
-  `ukImperial`; the legacy `imperial` reads as `us` (ruled; tested). The system switches household
-  units (FR-009) and never changes the set.
+- **FR-028** *(amended 2026-09-25 by the owner's rulings, MA-28)*: 001's Units step MUST ask two things, as
+  drawn at design `93cf290a`:
+  - **the system**: **Metric** (grams · millilitres · °C) or **Imperial** (ounces · pounds · °F; in the UK, with
+    fluid ounces and pints);
+  - **where your measures come from · optional**: a region row — **My device** (the default; it names the
+    region the device reports) · **UK** · **US** · **Europe** · **Asia · later** (shown, not available).
+  The two answers decide the details: Imperial + US means US cups and butter sticks; Imperial + Europe or UK means
+  UK ounces, fluid ounces and pints, with no cups; Metric reads by weight and millilitres. Metric is preselected.
+  Stored in Home data (`nutrimero.home.units` for the system, plus a region choice), reset by Clear my data. **A
+  stored legacy `imperial`** (001's cups · ounces · °F) **reads as Imperial with region US**; `metric` reads as
+  Metric with My device; both are tested. The same choices are the More → Units setting, once its frames are
+  approved. **Only the drawn combinations are built**; undrawn ones wait for their frames.
 
 - **FR-031**: The **UK market** (device region `GB`) MUST have its own profile:
   - **Units step**: Metric (preselected) or Imperial (UK), per FR-028.
@@ -597,8 +608,9 @@ onboarding with region DE: the US cup and the stick appear.
   are FID data, shown as stored (MA-14).
 - **FR-021**: Amounts MUST be announced by screen readers as spoken quantities ("one and one
   eighth US cups", not "1 ⅛"), and every control meets DESIGN.md's target and contrast rules (X).
-- **FR-022** *(amended by MA-29, open point C)*: Measures MUST hold no personal data. The only stored choices are
-  the Units settings: the system, the region, and "Amounts in recipes".
+- **FR-022** *(amended by MA-29; open point C ruled 2026-09-25)*: Measures MUST hold no personal data. The only
+  stored choices are the Units settings — the system, the region and "Amounts in recipes" — all **Home data**,
+  reset by Clear my data.
 - **FR-023**: The onboarding units card (001) MUST follow the market (FR-025): in EU markets its sample shows
   flour **by weight** (no cup) and no butter stick; the US market shows the US cup of flour — with the api's
   chosen wheat-flour density in place of the comp's unsourced "120 g" — and "1 stick butter". Until the api's

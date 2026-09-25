@@ -65,11 +65,13 @@ One table row per **AI-derived FID volume row in the curated set**:
 
 Parsed by a test. It **feeds the api's overlays**; the app shows the api's choice, not the file's.
 
-## Units system (Home store, existing key)
+## Units choices (Home store — reset by Clear my data)
 
 | Key | Values | Legacy | Default |
 |---|---|---|---|
-| `nutrimero.home.units` | `metric` · `us` · `ukImperial` | `imperial` → `us` on read (tested) | the market's preselected system |
+| `nutrimero.home.units` | `metric` · `imperial` | a stored `imperial` with no region reads as Imperial + US | `metric` |
+| region choice (new Home key) | `device` · `uk` · `us` · `europe` | — | `device` |
+| amounts in recipes (new Home key, with More → Units) | `kitchen` · `exact` | — | per the approved frame |
 
 ## Market (run time, not stored)
 

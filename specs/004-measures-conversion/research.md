@@ -228,17 +228,19 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 - **Alternatives**: the UI language (rejected by the ruling — a German speaker in Vilnius is in the LT
   market); `measurementSystem` (not used — QM1 ruled); a stored market choice (QM2 ruled: not in 004).
 
-## R18 — Units systems and the stored choice (owner and coordinator, 2026-09-25)
+## R18 — The units system, the region, and the stored choice (owner rulings 2026-09-25)
 
-- **Decision**: three systems — `metric`, `us`, `ukImperial` — stored under the existing Home key
-  `nutrimero.home.units`. Reads map the legacy `imperial` (001's cups · ounces · °F option) → `us`; unknown or
-  corrupt values read as the market's preselected system. The UK system has its own value, so nothing is
-  ambiguous. A stored system is honoured in any region; the Units step shows it selected beside the region's
-  pair. No migration write is needed: mapping on read is idempotent and tested.
-- **Household units per system** (FR-009), all from the api: metric — 250 ml cup; us — US cup, stick; ukImperial —
-  ounce, pound, imperial fl oz, pint, no cups; spoons 5/15 ml in all three.
-- **Alternatives**: a one-off migration write (rejected — reading is enough and survives restores); reusing
-  `imperial` for UK (rejected — ambiguous with the legacy value).
+- **Decision**: two stored Home values:
+  - the **system** under the existing key `nutrimero.home.units`: `metric | imperial`;
+  - a **region choice** under a new Home key: `device | uk | us | europe`. "Asia · later" is never stored.
+  - Both are in `HOME_KEYS`, so Home's wiper, Clear my data included, resets them.
+  - **"Amounts in recipes"** (`kitchen | exact`) is also Home data, stored when its More → Units frame is built.
+- **Legacy**: a stored `imperial` from before this change (001's cups · ounces · °F) with no region stored reads
+  as **Imperial + US**; `metric` reads as Metric + My device. Reads are idempotent and tested; no migration write.
+- **Resolution**: the region choice, with "My device" meaning the device region (R17), selects the market from
+  the api's market table. The system and the region together select the household units the api defines
+  (FR-009).
+- **Superseded**: the 2026-09-25 morning model (`metric | us | ukImperial`).
 
 ## R19 — "Just this time" (FR-029)
 
