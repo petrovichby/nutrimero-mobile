@@ -125,6 +125,19 @@ The questions as put:
   *(lane's recommendation — "imperial" is also the UK system, which is not what the card shows)*;
   (B) keep "Imperial" and treat it as US units without relabelling.
 
+### The owner's F23 walk — closed 2026-09-25, all eight stops approved
+
+- **"Just this time."** A recipe from another region switches measures *just this time*: the screen names the
+  user's default system with a one-tap way back, and **the Units setting is never touched**. This applies in
+  the conversion view and in the in-recipe measure sheet; 004 has no recipe view, so the sheet's behaviour is
+  recorded as **the rule later recipe features inherit** (FR-029).
+- **Wording.** The pair **"Kitchen measures / Exact by weight"**, as drawn (FR-030).
+- **Eggs.** EU grades in EU markets once the api defines them; no size weight until then (FR-007a, confirmed).
+- **Markets**, as already specified (FR-024–FR-026).
+
+design-mobile lands the F23 screens in the corpus; they are the visual authority for 004's screens, through
+the DESIGN.md port (X).
+
 ## Gate 1 — the data survey
 
 The questions were all about **which numbers the app is allowed to show**. The data survey behind
@@ -169,7 +182,8 @@ Type flours for DE/AT/CH; US flour names for the US) shipped as part of the app;
 **Out** (named so nothing is silently assumed): search over all of FID (waits for an api
 guest-read policy — the search itself exists, `q` on `/fid/ingredients`, but only for a signed-in
 caller); runtime refresh of the ingredient set (it updates with the app); scaling a recipe (F30);
-tin and pan sizes (F07/F30); converting inside a recipe view (no recipe view exists yet — 003);
+tin and pan sizes (F07/F30); converting inside a recipe view (no recipe view exists yet — 003; its
+measure sheet inherits FR-029's rule);
 DDT and oven calibration (F34); timers (005); user-entered densities or custom ingredients; gas
 marks; any unit, density or market rule defined in the app (the api defines all three); a UK or Australian
 cup/spoon setting unless the api defines those units; HU, PL and LT flour classes until FID holds them
@@ -391,7 +405,7 @@ onboarding with region DE: the US cup and the stick appear.
   for.
 - **FR-007**: A volume ↔ mass or piece ↔ mass conversion MUST NOT be offered for an ingredient the
   snapshot gives no chosen density or piece weight for; the app says the measure is not known.
-- **FR-007a**: A piece weight MUST NOT be shown unless it is verified against its named published record or
+- **FR-007a** *(confirmed by the owner's F23 walk, 2026-09-25)*: A piece weight MUST NOT be shown unless it is verified against its named published record or
   confirmed by two independent published sources within 5 % (`density-evidence.md` §D). Egg sizes follow the
   classes the user buys by: FID's current classes are US/Canadian minimums, which name EU eggs one grade too
   large, so eggs show no size-classed weight until the platform defines EU-graded values.
@@ -434,6 +448,16 @@ onboarding with region DE: the US cup and the stick appear.
   whole wheat flour") and do not count; until a type-specific value is verified, the type shows by weight
   only.
 
+- **FR-029**: When a baker converts measures from another units system than their own (a recipe from another
+  region), the conversion view MUST switch to that system **just this time**: it names the baker's default
+  system and offers a one-tap way back, and it **never writes the Units setting** (FR-028). The switch lasts
+  while that view is open. **Inherited rule:** every later feature that shows a recipe's measures — the
+  in-recipe measure sheet of 003's recipe detail, own recipes and imports (F11, F25/F26), scaling (F30) —
+  MUST behave the same way: a per-recipe, temporary switch that names the default, returns in one tap, and
+  never changes the setting.
+- **FR-030**: The two ways a measure is shown MUST be named with the wording pair **"Kitchen measures" /
+  "Exact by weight"**, as drawn in the approved F23 screens, in all seven catalogs (owner string review; a
+  translation keeps the pair's meaning, not a literal rendering).
 - **FR-028**: 001's Units step MUST offer two systems chosen by region (owner, 2026-09-25), each option listing
   its units on the card (catalog strings, seven locales, owner string review):
   - EU markets: **Metric** (preselected: grams · millilitres · °C) or **US** (US customary: cups · ounces · °F);
