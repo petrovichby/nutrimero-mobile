@@ -466,16 +466,24 @@ onboarding with region DE: the US cup and the stick appear.
   eggs amended by MA-29)*: A piece weight MUST NOT be shown unless it is verified against its named published record or
   confirmed by two independent published sources within 5 % (`density-evidence.md` §D, §G). The pieces shown in
   004 are exactly:
-  - **Eggs**: the market's **statutory size ranges, in shell, with exact boundaries** — **< 53 · 53–< 63 · 63–< 73 ·
-    ≥ 73 g** — and no single egg weight. EU: S, M, L, XL. UK: small, medium, large, very large; UK copy never says
-    "EU bands". Ranges multiply with the count ("2 medium eggs = 106–126 g in shell"). There is **no cup chip on egg
-    screens**. The grading comes from the api
-    per market (FR-025, FR-031); markets without grades show none.
+  - **Eggs** *(ruled by the owner 2026-09-25, "kept simple")*: the **in-shell bands stay the size definition** —
+    **< 53 · 53–< 63 · 63–< 73 · ≥ 73 g**, with the EU's S, M, L, XL and the UK's small, medium, large, very large
+    (UK copy never says "EU bands"). Ranges multiply with the count ("2 medium eggs = 106–126 g in shell"). There
+    is **no cup chip on egg screens**. **Recipe weights, without shell**, from one government measurement — the
+    UK Department of Health / Institute of Food Research *Nutrient analysis of eggs: Sampling Report*. A
+    government measurement is enough for household guidance; the two-source rule is for AI-derived or
+    unverified data:
+    - **medium ≈ 51 g without shell** (yolk ≈ 15 g, white ≈ 36 g);
+    - **large ≈ 57 g without shell** (yolk ≈ 17 g, white ≈ 41 g);
+    - **small and very large**: the legal in-shell range only (< 53 g; ≥ 73 g), with no calculated value.
+    These apply in the EU and UK markets alike, since they share the same legal bands, with the UK's grade names
+    in the UK. Consumer wording: **"without shell"** for recipe weights, **"in shell"** for the size class, and
+    **"≈"** throughout. The values reach the app from the api's units-and-density change, as all measure data
+    does.
   - **Banana, medium, peeled**: about **120 g** (USDA 118 g, Norway 120 g net), labelled as peeled.
   - **Pear, large**: **230 g** (USDA 230 g, KTL 240 g).
   - **Nothing else** — lemons, apples and every other piece stay out until two sources verify them.
-  Research into a sourced typical *cracked* egg weight per EU and UK grade continues; any result reaches the app
-  only by a later ruling.
+  (The cracked-weight research, `density-evidence.md` §H, closed with the owner's egg ruling above.)
 - **FR-008**: Every cup, spoon and fluid measure MUST be labelled with its unit's name wherever it appears
   ("cup (250 ml)", "US cup (236.59 ml)", "imp fl oz", "pint (568 ml)", "tsp", "tbsp").
 - **FR-009**: The household units shown MUST follow the user's units system (FR-028), with definitions from the

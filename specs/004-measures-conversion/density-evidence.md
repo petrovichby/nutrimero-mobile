@@ -533,30 +533,32 @@ Every value is from §D (W = whole / in shell, E = edible portion).
    zucchini (sources disagree, and rhubarb and cherries are only ever published unclassed); duck and quail egg
    (a single USDA value each, 70 g and 9 g).
 
-## H. Typical cracked egg weight per EU/UK grade — research (2026-09-25)
+## H. Egg weights per EU/UK grade — RULED (the owner, 2026-09-25, "kept simple")
 
-Requested by the coordinator after the piece-weight ruling (FR-007a). **Result: no grade is confirmed.** No national
-table or study was found that publishes a typical *cracked* (edible) weight per EU or UK grade, with a second
-independent source within 5 %.
+**The ruling.** A government measurement is enough for household guidance; the two-source rule is for AI-derived
+or unverified data. **Source**: UK Department of Health / Institute of Food Research, *Nutrient analysis of eggs:
+Sampling Report*
+(https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/167974/Nutrient_analysis_of_eggs_Sampling_Report.pdf).
+British Lion's figures derive from the same study (its 87.2 % edible share is the study's own), so they are not a
+second source and are not needed.
 
-| Grade | Published cracked value | Other evidence | Verdict |
-|---|---|---|---|
-| EU S / UK small | none | British Lion (egginfo.co.uk, protein table) "Small egg 48 g" (in shell, the band midpoint) | UNCONFIRMED |
-| EU M / UK medium | **British Lion** (egginfo.co.uk, health-professionals page): "average weight 58 g … edible portion 87.2 % … 2 average medium eggs = 101 g", i.e. **50.5 g per egg** — computed by them from 58 g in shell × 87.2 % (McCance & Widdowson 7th ed.) | Helsedirektoratet 2015 p. 12, "Egg, rå": 63 g gross, 55 g net — **no grade**, 9 % off | UNCONFIRMED (one source; the owner may rule whether British Lion counts as "its named published record") |
-| EU L / UK large | none | British Lion "Large egg 68 g"; BZfE (2019) "Gewichtsklasse L (etwa 70 Gramm)" — in shell, 3 % apart | UNCONFIRMED |
-| EU XL / UK very large | none | British Lion "Very large egg 78 g" (in shell) | UNCONFIRMED |
+| Grade (EU / UK) | Size class (in shell — the definition) | Recipe weight (without shell) |
+|---|---|---|
+| S / small | < 53 g | **none** — the legal range only |
+| M / medium | 53–< 63 g | **≈ 51 g** (yolk ≈ 15 g, white ≈ 36 g) |
+| L / large | 63–< 73 g | **≈ 57 g** (yolk ≈ 17 g, white ≈ 41 g) |
+| XL / very large | ≥ 73 g | **none** — the legal range only |
 
-**Confirmed — the edible share**: 87.2 % (British Lion, after McCance & Widdowson), 88 % (Helsedirektoratet, after
-Livsmedelsverket) and about 89.3 % (Lewko & Gornowicz 2016, *Roczniki Naukowe PTZ* 12(4), measured shell 10.75 %)
-agree within 5 %. A cracked weight *derived* from an in-shell weight with it would be labelled derived, not
-published.
+These apply in the EU and UK markets alike (the same legal bands; the UK's grade names in the UK). Consumer wording:
+"without shell" for recipe weights, "in shell" for the size class, "≈" throughout. The values reach the app from
+the api's units-and-density change (FR-007a).
 
-**Grade bands** are confirmed for both markets: the UK's retained Reg. 589/2008 Art. 4 (legislation.gov.uk) keeps
-the EU bands with the names very large / large / medium / small. **Switzerland** has no legal definition of the
-classes (SRF 2019, quoting GalloSuisse); it follows the EU classes in practice.
-
-**Not reachable**: Fineli (Cloudflare), Denmark's Frida (script-only), the FSA *Food Portion Sizes* (3rd ed.), the
-German BLS. The FSA book's egg rows or Fineli in a real browser are the most promising next sources.
+**The research that preceded the ruling** (2026-09-25) found no national table or study publishing a typical
+cracked weight per grade with a second independent source within 5 %, and it confirmed two things:
+- the edible share is 87–89 % (British Lion 87.2 % — the study's own figure; Helsedirektoratet 88 %; Lewko &
+  Gornowicz 2016, shell 10.75 %);
+- the UK's retained Reg. 589/2008 Art. 4 keeps the EU bands under UK names. Switzerland follows the classes in
+  practice, with no legal definition (SRF 2019, quoting GalloSuisse).
 
 ## C. For the api lane — data problems the research found
 
