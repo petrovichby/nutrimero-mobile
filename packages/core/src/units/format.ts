@@ -64,3 +64,24 @@ export function formatMeasure(
 export function formatSpokenAmount(value: number, locale: Locale): string {
   return formatNumber(value, locale, 3);
 }
+
+/**
+ * A range of measures (004 FR-007a, MA-29: eggs by size, in shell): "106–126 g", or an open end —
+ * "< 106 g" below the smallest band, "≥ 146 g" above the largest. The bounds are limits (statutory
+ * egg bands), so grams are written to the whole gram — never FR-013's 5 g display rounding, which
+ * would turn "106–126 g" into "105–125 g". The dash is an en dash; the unit is written once.
+ */
+export function formatMeasureRange(
+  min: number | null,
+  max: number | null,
+  kind: MeasureKind,
+  unitSymbol: string,
+  locale: Locale,
+): string {
+  if (min === null && max === null) throw new RangeError("A range needs at least one bound");
+  const bound = (value: number) =>
+    kind === "grams" ? formatNumber(Math.round(value), locale, 0) : amount(value, kind, locale);
+  if (min === null) return `<${NBSP}${bound(max ?? 0)}${NBSP}${unitSymbol}`;
+  if (max === null) return `≥${NBSP}${bound(min)}${NBSP}${unitSymbol}`;
+  return `${bound(min)}–${bound(max)}${NBSP}${unitSymbol}`;
+}
