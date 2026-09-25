@@ -62,7 +62,9 @@ export {
 export { foldForSearch } from "./units/fold";
 export {
   formatMeasure,
+  formatMeasureRange,
   formatNumber,
+  formatPoundsOunces,
   formatSpokenAmount,
   type MeasureKind,
 } from "./units/format";
