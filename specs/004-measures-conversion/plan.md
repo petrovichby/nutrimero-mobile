@@ -7,18 +7,19 @@ passed again market-aware at `7d3f486` (2026-09-25). Also recorded in the spec: 
 owner's F23 walk (all eight stops approved), and the owner's rulings on the ten density picks and the per-market
 set.
 
-**Status**: **At gate 2** (UK market profile added 2026-09-25, FR-031). The build waits for the api's units-and-density change, which carries the market
-dimension.
+**Status**: **At gate 2** (UK market profile added 2026-09-25, FR-031). The build waits for the api's
+units-and-density change, which carries the market dimension.
 
 ## Summary
 
 Ship a free Measures destination in Home Baker. It is market-aware: the device **region** selects the market
-(DE, AT, CH, HU, LT, PL and the UK at launch; US later; any other region gets the core set with metric units and no egg
-grades). Measures shows each ingredient's kitchen measures and exact weight, a two-way converter, on-device
+(DE, AT, CH, HU, LT, PL and the UK at launch; US later; any other region gets the core set with metric units
+and no egg grades). Measures shows each ingredient's kitchen measures and exact weight, a two-way converter, on-device
 search by any FID name, and the provenance of every number.
 
 - **Set** (confirmed by the owner, `curated-set.md`): a 183-entry core, 5 of them US-only flour names, plus the 13
-  German Type flours for DE/AT/CH, which show by weight only.
+  German Type flours for DE/AT/CH, which show by weight only. EU and other markets show 178; the UK 180 (without
+  the US corn flour, FR-031); the US all 183.
 - **Density** (ruled by the owner): the api's chosen value per ingredient, form and state. That covers the
   owner's ten picks, with rice flour at 0.630 and potato starch by weight only, and the rows
   `density-evidence.md` verified.
@@ -88,9 +89,9 @@ landing them).
      the pound, the **imperial fluid ounce and pint**, and the butter stick if it becomes a platform unit;
    - **set membership per market**: the core, US-only and DE/AT/CH entries of `curated-set.md`;
    - **egg grading per market**: EU grades, and **UK grades** (small, medium, large, very large, from the UK's
-    retained standard). None yet, so no size weights (FR-007a);
-  - **en-GB ingredient names**, sourced (FID has none), and an en-GB name for `631E984` before it returns to the
-    UK set (FR-031);
+     retained standard). None yet, so no size weights (FR-007a);
+   - **en-GB ingredient names**, sourced (FID has none), and an en-GB name for `631E984` before it returns to the
+     UK set (FR-031);
    - **chosen density** per ingredient, form and state, with its recorded sources. This includes values that are
      not an FID row: **rice flour 0.630 (HERR 41)** comes as an overlay. "No volume value" is stated
      explicitly: potato starch, and the 44 unverified ingredients, which carry no chosen value;
