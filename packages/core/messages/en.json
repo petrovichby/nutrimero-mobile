@@ -333,6 +333,7 @@
           "open": "Open timers"
         },
         "agoShort": "{duration} ago",
+        "justNow": "just now",
         "endsAt": "ends at {time}",
         "endedAt": "ended at {time}",
         "doneAt": "{ago}, at {time}",

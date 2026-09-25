@@ -20,8 +20,10 @@ describe("the next-stage line (20–20c)", () => {
 });
 
 describe("how long ago something ended (16, 18b)", () => {
-  it("counts seconds under a minute, then whole minutes", () => {
-    expect(agoFor(0, 13_000, en)).toBe("13 s ago");
+  it('reads "just now" in the first minute (18c), then whole minutes', () => {
+    expect(agoFor(0, 0, en)).toBe("just now");
+    expect(agoFor(0, 59_000, en)).toBe("just now");
+    expect(agoFor(0, 60_000, en)).toBe("1 min ago");
     expect(agoFor(0, 416_000, en)).toBe("6 min ago");
     expect(agoFor(0, 3_725_000, en)).toBe("1 h 2 min ago");
   });
