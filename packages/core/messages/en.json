@@ -259,8 +259,9 @@
     },
     "more": {
       "title": "More",
+      "timersHint": "Timers and routines",
       "clearTitle": "Clear my data on this device",
-      "clearHint": "Your dietary profile, units and pantry",
+      "clearHint": "Your dietary profile, units, pantry and timers",
       "version": "{app} · version {version}"
     },
     "clearData": {
@@ -269,7 +270,8 @@
       "items": {
         "profile": "your dietary profile",
         "units": "your choice of units",
-        "pantry": "the staples in your pantry"
+        "pantry": "the staples in your pantry",
+        "timers": "your timers and saved routines"
       },
       "restart": "You’ll start again from the first question. This can’t be undone.",
       "keeps": "Your app language stays as it is.",
@@ -325,7 +327,6 @@
       "refused": {
         "openSettings": "Open settings"
       },
-      "clearDataLine": "your timers and saved routines",
       "ui": {
         "chip": {
           "others": "{count, plural, one {and # more timer} other {and # more timers}}",

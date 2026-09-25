@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useShell } from "../../src/shell";
 
 export default function MoreTab() {
-  const { t, locale, clearData } = useShell();
+  const { t, locale, clearData, openTimers } = useShell();
   const [confirming, setConfirming] = useState(false);
   return (
     <>
@@ -13,6 +13,7 @@ export default function MoreTab() {
         t={t}
         locale={locale}
         version={Constants.expoConfig?.version ?? ""}
+        onTimers={openTimers}
         onLanguage={() => router.push("/language")}
         onClearData={() => setConfirming(true)}
       />

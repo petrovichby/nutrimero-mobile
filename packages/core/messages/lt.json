@@ -259,8 +259,9 @@
     },
     "more": {
       "title": "Daugiau",
+      "timersHint": "Laikmačiai ir eigos",
       "clearTitle": "Ištrinti mano duomenis šiame įrenginyje",
-      "clearHint": "Tavo mitybos profilis, matavimo vienetai ir sandėliukas",
+      "clearHint": "Tavo mitybos profilis, matavimo vienetai, sandėliukas ir laikmačiai",
       "version": "{app} · versija {version}"
     },
     "clearData": {
@@ -269,7 +270,8 @@
       "items": {
         "profile": "tavo mitybos profilis",
         "units": "tavo pasirinkti matavimo vienetai",
-        "pantry": "pagrindiniai produktai tavo sandėliuke"
+        "pantry": "pagrindiniai produktai tavo sandėliuke",
+        "timers": "tavo laikmačiai ir išsaugotos eigos"
       },
       "restart": "Pradėsi iš naujo nuo pirmo klausimo. To nebus galima atšaukti.",
       "keeps": "Programėlės kalba liks tokia pati.",
@@ -325,7 +327,6 @@
       "refused": {
         "openSettings": "Atidaryti nustatymus"
       },
-      "clearDataLine": "tavo laikmačiai ir išsaugotos eigos",
       "ui": {
         "chip": {
           "others": "{count, plural, one {ir dar # laikmatis} few {ir dar # laikmačiai} many {ir dar # laikmačio} other {ir dar # laikmačių}}",

@@ -160,11 +160,17 @@ and asks for permission in context.
 
 ## Phase 8: Wiring — the one app-root change (⛔HOME1)
 
-- [ ] T021 Send the **seam announcement** through the owner before touching `apps/home-baker`: the chip in the shell, the wiper registered before `restore()`, the `expo-notifications` plugin in the app config, and the lifecycle hook in the root layout.
-- [ ] T022 In `apps/home-baker/src/boot.ts`, call `registerTimersWiper(session, timerStore, scheduler.cancelAll)` **before** `session.restore()`. Add `apps/home-baker/src/boot-timers.test.ts`, proving the fresh-install wipe reaches `"home.timers"`.
-- [ ] T023 In `apps/home-baker/src/shell.tsx` (the Home shell), mount `<TimerChip/>` on every Home screen, and mount `lifecycle` (T012) and `routing` (T016) once in `apps/home-baker/app/_layout.tsx`.
-- [ ] T024 Add `expo-notifications` and `expo-keep-awake` to `apps/home-baker/package.json` (autolinking resolves from the app), and the `expo-notifications` plugin (channel only; no remote setup) to `apps/home-baker/app.json`. Set `android.blockedPermissions` if T013 finds an exact-alarm permission.
-- [ ] T025 Confirm that Home 1's Clear my data now runs every registered wiper (quickstart M8), and that the Clear-my-data sheet shows "your timers and saved routines" (T009's key).
+> **PR 4 note (2026-09-25):** the wiring. T021: announced, and the coordinator relays Home's acknowledgement before merge.
+> T022: the composition is tested in `apps/home-baker/src/boot-timers.test.ts` and the source order in
+> `scripts/home-boot-order.test.ts`. T023: the chip is mounted in the tabs layout, above the bar; lifecycle, routing, the sheet and the
+> completion alert are in `apps/home-baker/src/timers-root.tsx`. T025: the Clear-my-data line is `home.clearData.items.timers`, and
+> More's subtitle now names timers. The on-device part of T025 is M8 in T027.
+
+- [x] T021 Send the **seam announcement** through the owner before touching `apps/home-baker`: the chip in the shell, the wiper registered before `restore()`, the `expo-notifications` plugin in the app config, and the lifecycle hook in the root layout.
+- [x] T022 In `apps/home-baker/src/boot.ts`, call `registerTimersWiper(session, timerStore, scheduler.cancelAll)` **before** `session.restore()`. Add `apps/home-baker/src/boot-timers.test.ts`, proving the fresh-install wipe reaches `"home.timers"`.
+- [x] T023 In `apps/home-baker/src/shell.tsx` (the Home shell), mount `<TimerChip/>` on every Home screen, and mount `lifecycle` (T012) and `routing` (T016) once in `apps/home-baker/app/_layout.tsx`.
+- [x] T024 Add `expo-notifications` and `expo-keep-awake` to `apps/home-baker/package.json` (autolinking resolves from the app), and the `expo-notifications` plugin (channel only; no remote setup) to `apps/home-baker/app.json`. Set `android.blockedPermissions` if T013 finds an exact-alarm permission.
+- [x] T025 Confirm that Home 1's Clear my data now runs every registered wiper (quickstart M8), and that the Clear-my-data sheet shows "your timers and saved routines" (T009's key).
 
 ---
 
@@ -172,6 +178,27 @@ and asks for permission in context.
 
 - [ ] T026 [P] Owner's review of the lane-authored translations of `home.timers.*` in de, hu, lt, be, pl and uk (a release item). Run a 1.3× stress pass on all 10 surfaces across the seven languages, including German long words and Cyrillic be/uk in Onest.
 - [ ] T027 On devices, a development build: quickstart M1–M9 on iOS, plus **C3 and C4** on iOS.
+  > **Simulator run, 2026-09-25** (iPhone 18 Pro, iOS 27, fresh dev build of #47, driven over Metro's CDP; not yet a real
+  > iPhone). **Pass:** M1 (reason sheet, then the system prompt, at the first start only), M3 (kill and relaunch: `endAt`
+  > unchanged, one pending notification kept), M4 as far as a simulator goes (stage 1 notifies "Bulk ferment done: shape
+  > next"; the in-app alert starts the next stage; nothing is pending during the hands-on stage; stage 3 notifies), M7 (a
+  > language switch re-schedules the pending text in German at the same fire time), M8 (Clear my data: no items, no saved
+  > routines, no pending notification; the language is kept), C3 (delivered after a simulator restart with the app not
+  > running), C4 (10 at once: 10 pending, 10 delivered). Also checked: 17c, 19d, and screens 15b–22 against the drawings.
+  > **Found and fixed in #47:** iOS fired up to 0.9 s *early* (on a whole-second boundary at or before the date); the
+  > scheduler now rounds up (`notBefore`), re-measured at +0.04 to +0.96 s. A done item's "ago" froze (the refresh ticked
+  > only while counting down); the sheet's done row was clipped, not full-bleed. **Still owed on a real iPhone:** M2
+  > (locked device), M5 (deny), M6 (auto-lock), M9 (VoiceOver, 1.3×).
+  >
+  > **Owner's iPhone run, 2026-09-25** (iPhone 13 mini, iOS 27, dev build signed with a personal team; bundle id and push
+  > entitlement changed in the ignored `ios/` only). **Pass:** M1, M2 (lock-screen banner with Focus off; with a Focus on
+  > it was delivered silently, hence FR-010b / #52), M5, M6 (screen lock held only while a timer screen is visible,
+  > released once it is collapsed; read on the device), M9. **Found and fixed:** the whole app never dimmed in a dev build,
+  > because Expo's dev wrapper holds keep-awake app-wide once `expo-keep-awake` is installed; the timers root now releases
+  > that dev tag (#47). Owner change requests made on the phone went to #49 (typed duration, ±1 min steps, 0:0:0 start;
+  > the scrim fades, only the sheet rises) and #52 (Time Sensitive). **Still open for T027:** M4 end to end on the phone
+  > (tapping a locked-screen stage notification opens "Start next stage"), C3 with a real device restart, and a release
+  > build rerun of M6. The simulator covered M3, M4 (in part), M7, M8, C3 and C4.
 - [ ] T028 **Android, on a real device (owed; say so on every PR until done)**: C1 (lateness against FR-013's wording), C2 (force-stop), C5 (the bake-stage notice), and M1–M9 on Android. **A C1 or C2 disagreement goes to the owner before release.**
 - [ ] T029 VoiceOver and TalkBack walkthroughs of every surface in the seven languages (SC-007). Record the findings in the PR.
 

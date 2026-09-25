@@ -2,6 +2,7 @@ import type { Translator } from "@nutrimero/core";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import { routeOf } from "../model/content";
+import { notBefore } from "../model/fire-time";
 import type { SchedulerPort } from "../model/perform";
 import type { Pending } from "../model/reconcile";
 
@@ -27,7 +28,8 @@ export const notificationScheduler: SchedulerPort & {
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
-        date: content.at,
+        // iOS fires on a whole-second boundary at or before the date; never early (T027).
+        date: notBefore(content.at),
         channelId: TIMERS_CHANNEL_ID,
       },
     });

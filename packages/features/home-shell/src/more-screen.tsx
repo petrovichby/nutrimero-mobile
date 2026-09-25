@@ -12,14 +12,15 @@ import type { ReactNode } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 /**
- * More (09-more; DESIGN.md MA-24): Language, Clear my data on this device, and the app and version
- * line — nothing else in 001. Rows sit in grouped cards on surface-1; the destructive row carries
+ * More (09-more; DESIGN.md MA-24, MA-27): Timers, Language, Clear my data on this device, and the
+ * app and version line. Rows sit in grouped cards on surface-1; the destructive row carries
  * its danger colour on the glyph and label, never colour alone (the label names the action).
  */
 export function MoreScreen({
   t,
   locale,
   version,
+  onTimers,
   onLanguage,
   onClearData,
 }: {
@@ -27,6 +28,8 @@ export function MoreScreen({
   locale: Locale;
   /** The app version (Expo config), shown in the version line. */
   version: string;
+  /** Opens the timers sheet (005): the way in before anything runs; then the chip takes over. */
+  onTimers: () => void;
   onLanguage: () => void;
   onClearData: () => void;
 }) {
@@ -36,6 +39,14 @@ export function MoreScreen({
     <Screen>
       <Masthead title={t("home.more.title")} />
       <ScrollView contentContainerStyle={styles.content}>
+        <Group>
+          <MoreRow
+            glyph="timer"
+            title={t("home.timers.ui.sheet.title")}
+            hint={t("home.more.timersHint")}
+            onPress={onTimers}
+          />
+        </Group>
         <Group>
           <MoreRow
             glyph="globe"

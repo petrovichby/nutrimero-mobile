@@ -259,8 +259,9 @@
     },
     "more": {
       "title": "Więcej",
+      "timersHint": "Minutniki i plany",
       "clearTitle": "Usuń moje dane z tego urządzenia",
-      "clearHint": "Twój profil żywieniowy, jednostki i spiżarnia",
+      "clearHint": "Twój profil żywieniowy, jednostki, spiżarnia i minutniki",
       "version": "{app} · wersja {version}"
     },
     "clearData": {
@@ -269,7 +270,8 @@
       "items": {
         "profile": "twój profil żywieniowy",
         "units": "twój wybór jednostek",
-        "pantry": "podstawowe produkty w twojej spiżarni"
+        "pantry": "podstawowe produkty w twojej spiżarni",
+        "timers": "twoje minutniki i zapisane plany"
       },
       "restart": "Zaczniesz od nowa od pierwszego pytania. Tego nie można cofnąć.",
       "keeps": "Język aplikacji pozostanie bez zmian.",
@@ -325,7 +327,6 @@
       "refused": {
         "openSettings": "Otwórz ustawienia"
       },
-      "clearDataLine": "twoje minutniki i zapisane plany",
       "ui": {
         "chip": {
           "others": "{count, plural, one {i jeszcze # minutnik} few {i jeszcze # minutniki} many {i jeszcze # minutników} other {i jeszcze # minutnika}}",

@@ -26,13 +26,14 @@ export function TimerScreen({
   const theme = useTheme();
   const { color } = theme;
   const timers = useTimers();
-  const { t, locale, now, items, permission } = timers;
+  const { t, locale, now, loaded, items, permission } = timers;
   const item = items.find((entry) => entry.id === id);
   useTimerKeepAwake(`timer-${id}`, focused && item !== undefined);
 
+  // Once the store has been read, a missing item was dismissed, cancelled or cleared: leave.
   useEffect(() => {
-    if (item === undefined) onBack();
-  }, [item, onBack]);
+    if (loaded && item === undefined) onBack();
+  }, [loaded, item, onBack]);
   if (item === undefined) return null;
 
   const view = derive(item, now);

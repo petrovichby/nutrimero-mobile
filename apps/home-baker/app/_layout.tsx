@@ -5,6 +5,7 @@ import {
   resolveLocale,
 } from "@nutrimero/core";
 import { Cover, FirstRunFlow } from "@nutrimero/feature-first-run";
+import { presentTimersInForeground } from "@nutrimero/feature-timers/native";
 import { ThemeProvider } from "@nutrimero/ui";
 import { fontAssets } from "@nutrimero/ui/native";
 import { useFonts } from "expo-font";
@@ -17,6 +18,7 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { devicePreferences, homeStore, ready, session } from "../src/boot";
 import { type Shell, ShellProvider } from "../src/shell";
+import { TimersRoot } from "../src/timers-root";
 
 // Keep the native splash up until boot (the reinstall-orphan clear and session restore) has
 // settled, the bundled faces are loaded, and the root view has laid out — so no text ever paints
@@ -25,6 +27,9 @@ SplashScreen.preventAutoHideAsync();
 // DESIGN.md motion rules: 150–250 ms; a fade is not a movement, so it is acceptable
 // under reduced motion — no extra handling needed.
 SplashScreen.setOptions({ fade: true, duration: 200 });
+
+// 005 (US1-5): in the foreground the in-app completion alert replaces the banner; the sound stays.
+presentTimersInForeground();
 
 // Constitution IX: Hermes' Intl.PluralRules must give every UI locale its CLDR categories.
 // Vitest checks Node's ICU; this checks the device's, once per dev launch (001 FR-022).
@@ -51,6 +56,9 @@ export default function RootLayout() {
   // A font that fails to load must not strand the user on the splash; text then falls back,
   // which the dev build makes visible rather than hiding.
   const [fontsLoaded, fontError] = useFonts(fontAssets);
+  const [timersOpen, setTimersOpen] = useState(false);
+  const openTimers = useCallback(() => setTimersOpen(true), []);
+  const closeTimers = useCallback(() => setTimersOpen(false), []);
 
   useEffect(() => {
     // A store failure must not strand the user on the splash: reads fall back to their defaults.
@@ -87,8 +95,9 @@ export default function RootLayout() {
       deviceLocale: resolveLocale(null, deviceLanguageTags()),
       chooseLocale,
       clearData,
+      openTimers,
     }),
-    [t, locale, chooseLocale, clearData],
+    [t, locale, chooseLocale, clearData, openTimers],
   );
 
   // The native splash (the cream field) holds until the faces load; the composed cover then shows
@@ -105,7 +114,9 @@ export default function RootLayout() {
             {!booted || onboarded === null ? (
               <Cover t={t} />
             ) : onboarded ? (
-              <Stack screenOptions={{ headerShown: false }} />
+              <TimersRoot t={t} locale={locale} sheetOpen={timersOpen} onSheetClose={closeTimers}>
+                <Stack screenOptions={{ headerShown: false }} />
+              </TimersRoot>
             ) : (
               <FirstRunFlow
                 t={t}

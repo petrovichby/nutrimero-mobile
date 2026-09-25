@@ -14,6 +14,8 @@ export interface Shell {
   chooseLocale: (choice: Locale | null) => void;
   /** Home's wipe (FR-013): deletes Home's data and returns to the first question (FR-027). */
   clearData: () => Promise<void>;
+  /** Opens the timers sheet (005) — from More, and from the chip. */
+  openTimers: () => void;
 }
 
 const ShellContext = createContext<Shell | null>(null);

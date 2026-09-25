@@ -3,6 +3,7 @@
 export { useTimerKeepAwake } from "./native/keep-awake";
 export { reconcileNow, useTimersLifecycle } from "./native/lifecycle";
 export { readPermission, requestInContext } from "./native/permission";
+export { timersPlatform } from "./native/platform";
 export { useNotificationRouting } from "./native/routing";
 export {
   ensureTimersChannel,
