@@ -1,6 +1,16 @@
 import { Glyph, type GlyphName, textRole, tokens, useReduceMotion, useTheme } from "@nutrimero/ui";
-import type { ReactNode } from "react";
-import { Modal, Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native";
+import { type ReactNode, useEffect, useRef } from "react";
+import {
+  Animated,
+  Easing,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+  type ViewStyle,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
@@ -226,8 +236,10 @@ export function Refusal({ text }: { text: string }) {
 }
 
 /**
- * A bottom sheet (16, 17b, 19b, 20d): grab handle, scrim that closes it, system back closes it,
- * rises — or fades under Reduce Motion. The children own the content and actions.
+ * A bottom sheet (16, 17b, 19b, 20d): grab handle, scrim that closes it, system back closes it.
+ * The scrim fades in place and only the sheet rises (owner, T027 iPhone run: the whole overlay
+ * sliding up read wrong); under Reduce Motion it only fades. DESIGN.md motion: 150–250 ms.
+ * The children own the content and actions.
  */
 export function Sheet({
   visible,
@@ -244,11 +256,33 @@ export function Sheet({
   const { color } = theme;
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
+  const { height } = useWindowDimensions();
+  // Starts below the screen so no frame shows it in place before it rises.
+  const rise = useRef(new Animated.Value(reduceMotion ? 0 : height)).current;
+  useEffect(() => {
+    if (visible) return;
+    // Back below the screen once the fade-out has finished, ready for the next rise.
+    const id = setTimeout(() => rise.setValue(reduceMotion ? 0 : height), 300);
+    return () => clearTimeout(id);
+  }, [visible, reduceMotion, height, rise]);
+  const onShow = () => {
+    if (reduceMotion) {
+      rise.setValue(0);
+      return;
+    }
+    Animated.timing(rise, {
+      toValue: 0,
+      duration: 240,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start();
+  };
   return (
     <Modal
       visible={visible}
       transparent
-      animationType={reduceMotion ? "fade" : "slide"}
+      animationType="fade"
+      onShow={onShow}
       onRequestClose={onClose}
       statusBarTranslucent
     >
@@ -259,7 +293,7 @@ export function Sheet({
           onPress={onClose}
           style={[StyleSheet.absoluteFill, { backgroundColor: color.sheetScrim }]}
         />
-        <View
+        <Animated.View
           accessibilityViewIsModal
           style={[
             styles.sheet,
@@ -267,12 +301,13 @@ export function Sheet({
               backgroundColor: color.surface,
               shadowColor: color.shadowColor,
               paddingBottom: Math.max(insets.bottom, tokens.spacing.sectionGap) + 2,
+              transform: [{ translateY: rise }],
             },
           ]}
         >
           <View style={[styles.grab, { backgroundColor: color.outlineStrong }]} />
           {children}
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
