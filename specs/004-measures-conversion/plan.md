@@ -100,7 +100,8 @@ landing them).
      the pound, the **imperial fluid ounce and pint**, and the butter stick if it becomes a platform unit;
    - **set membership per market**: the core, US-only and DE/AT/CH entries of `curated-set.md`;
    - **egg grading per market**: EU grades, and **UK grades** (small, medium, large, very large, from the UK's
-     retained standard). None yet, so no size weights (FR-007a);
+     retained standard) on the same in-shell bands; plus the ruled recipe weights without shell — medium ≈ 51 g,
+     large ≈ 57 g, from the UK DoH/IFR sampling report — and none for small and very large (FR-007a);
    - **en-GB ingredient names**, sourced (FID has none), and an en-GB name for `631E984` before it returns to the
      UK set (FR-031);
    - **chosen density** per ingredient, form and state, with its recorded sources. This includes values that are
@@ -160,7 +161,8 @@ gaps (FID gaps and duplicates, HU/PL/LT flour classes, Type-flour defects), all 
 - Through `impeccable`, faithful to the eight approved stops:
   - the list and search, filtered by market;
   - the ingredient view with "Kitchen measures / Exact by weight" (FR-030), variants, and the ruled pieces
-    (FR-007a: egg size ranges in shell, banana medium peeled, pear large);
+    (FR-007a: egg size classes in shell, with medium ≈ 51 g and large ≈ 57 g without shell; banana
+    medium peeled; pear large);
   - the converter with the "just this time" switch (FR-029): screen-local state that names the default, returns
     in one tap, and never writes the setting;
   - the provenance sheet.
