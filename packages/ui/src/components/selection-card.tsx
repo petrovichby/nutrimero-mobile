@@ -17,6 +17,7 @@ export function SelectionCard({
   sample,
   selected,
   onPress,
+  dense = false,
 }: {
   title: string;
   description?: string;
@@ -24,6 +25,11 @@ export function SelectionCard({
   sample?: ReactNode;
   selected: boolean;
   onPress: () => void;
+  /**
+   * 12pt top and bottom instead of 16, to make room for the region row below the cards
+   * (07-onboarding-units at design 93cf290a); the 76pt tile is kept.
+   */
+  dense?: boolean;
 }) {
   const theme = useTheme();
   const { color } = theme;
@@ -35,6 +41,7 @@ export function SelectionCard({
       onPress={onPress}
       style={({ pressed }) => [
         styles.card,
+        dense && styles.dense,
         {
           borderColor: selected ? color.selectedLine : color.outline,
           backgroundColor: selected ? color.surface1 : color.surface,
@@ -70,6 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: tokens.radius.xl,
     minHeight: tokens.touchTarget.minimum,
   },
+  dense: { paddingVertical: 12 },
   pressed: { opacity: 0.9 },
   sample: {
     width: 76,

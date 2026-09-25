@@ -184,6 +184,32 @@
           "metricUnit": "g",
           "imperialValue": "3¼",
           "imperialUnit": "cups"
+        },
+        "choice": {
+          "body": "Every recipe converts instantly — you can change this anytime.",
+          "imperialUnits": "ounces · pounds · °F",
+          "imperialUnitsUk": "ounces · pounds · fluid ounces · pints · °F",
+          "sample": {
+            "imperialValue": "14¾",
+            "imperialUnit": "oz"
+          },
+          "region": {
+            "label": "Your measures come from",
+            "optional": "· optional",
+            "device": "My device",
+            "uk": "UK",
+            "us": "US",
+            "europe": "Europe",
+            "asia": "Asia",
+            "later": "· later",
+            "deviceA11y": "Follow my device's region, {region}",
+            "asiaA11y": "Asia, later — not available yet"
+          },
+          "preview": {
+            "flour": "flour",
+            "butter": "butter",
+            "milk": "milk"
+          }
         }
       },
       "diet": {

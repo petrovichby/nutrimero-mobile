@@ -91,10 +91,51 @@ describe("the Home store (001 data-model)", () => {
     expect(await preferences.uiLocale()).toBe("lt");
   });
 
+  it("reads the units choice as the system plus a region (004 FR-028)", async () => {
+    const home = createHomeStore(createMemoryAdapter());
+    expect(await home.unitsChoice()).toEqual({ system: "metric", region: "device" });
+    await home.setUnitsChoice({ system: "imperial", region: "europe" });
+    expect(await home.unitsChoice()).toEqual({ system: "imperial", region: "europe" });
+    expect(await home.units()).toBe("imperial");
+  });
+
+  it("reads 001's stored imperial as Imperial with region US (owner ruling, 2026-09-25)", async () => {
+    const adapter = createMemoryAdapter({ [HOME_KEYS.units]: JSON.stringify("imperial") });
+    const home = createHomeStore(adapter);
+    expect(await home.unitsChoice()).toEqual({ system: "imperial", region: "us" });
+    // Idempotent: reading writes nothing.
+    expect(adapter.snapshot()).toEqual({ [HOME_KEYS.units]: JSON.stringify("imperial") });
+    // A stored metric reads as Metric with My device.
+    const metric = createHomeStore(
+      createMemoryAdapter({ [HOME_KEYS.units]: JSON.stringify("metric") }),
+    );
+    expect(await metric.unitsChoice()).toEqual({ system: "metric", region: "device" });
+  });
+
+  it("never reads an explicit Imperial + My device as the legacy value", async () => {
+    const home = createHomeStore(createMemoryAdapter());
+    await home.setUnitsChoice({ system: "imperial", region: "device" });
+    expect(await home.unitsChoice()).toEqual({ system: "imperial", region: "device" });
+  });
+
+  it("reads a corrupt region as absent, and Clear my data resets the choice (FR-022)", async () => {
+    const adapter = createMemoryAdapter({
+      [HOME_KEYS.units]: JSON.stringify("metric"),
+      [HOME_KEYS.measuresRegion]: JSON.stringify("asia"),
+    });
+    const home = createHomeStore(adapter);
+    expect(await home.unitsChoice()).toEqual({ system: "metric", region: "device" });
+    await home.setUnitsChoice({ system: "imperial", region: "uk" });
+    await home.wipeAll();
+    expect(await home.unitsChoice()).toEqual({ system: "metric", region: "device" });
+    expect(adapter.snapshot()).toEqual({});
+  });
+
   it("keeps every Home key's maximal value inside the 2,048-byte budget (ADR 0001 condition 5)", () => {
     // 14 staples; FID ids are short strings — 64 characters each is a generous ceiling.
     const maximal = {
       [HOME_KEYS.units]: JSON.stringify("imperial"),
+      [HOME_KEYS.measuresRegion]: JSON.stringify("europe"),
       [HOME_KEYS.dietaryProfile]: JSON.stringify(DIETARY_OPTIONS),
       [HOME_KEYS.pantrySeed]: JSON.stringify(Array.from({ length: 14 }, () => "x".repeat(64))),
       [HOME_KEYS.onboarding]: JSON.stringify({

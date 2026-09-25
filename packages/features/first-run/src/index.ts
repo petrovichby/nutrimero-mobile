@@ -5,4 +5,5 @@ export { currentStep, recordStep } from "./flow-state";
 export { LanguageScreen } from "./language-screen";
 export { ONBOARDING_STEPS_TOTAL, OnboardingFrame, StepHeading } from "./onboarding-frame";
 export { PantryStep } from "./pantry-step";
+export { UnitsChoiceStep, type UnitsPreviewRow } from "./units-choice-step";
 export { UnitsStep } from "./units-step";
