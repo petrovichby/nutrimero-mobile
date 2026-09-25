@@ -431,13 +431,18 @@ onboarding with region DE: the US cup and the stick appear.
   for.
 - **FR-007**: A volume ↔ mass or piece ↔ mass conversion MUST NOT be offered for an ingredient the
   snapshot gives no chosen density or piece weight for; the app says the measure is not known.
-- **FR-007a** *(confirmed by the owner's F23 walk, 2026-09-25)*: A piece weight MUST NOT be shown unless it is verified against its named published record or
-  confirmed by two independent published sources within 5 % (`density-evidence.md` §D). Egg sizes follow the
-  classes the user buys by: FID's current classes are US/Canadian minimums, which name EU eggs one grade too
-  large, so eggs show no size-classed weight until the platform defines EU-graded values.
-
-**Units**
-
+- **FR-007a** *(confirmed by the owner's F23 walk; piece weights ruled by the owner 2026-09-25, "pieces as
+  recommended")*: A piece weight MUST NOT be shown unless it is verified against its named published record or
+  confirmed by two independent published sources within 5 % (`density-evidence.md` §D, §G). The pieces shown in
+  004 are exactly:
+  - **Eggs**: the market's **statutory size ranges, in shell**, with no single egg weight. EU: S < 53, M 53–63,
+    L 63–73, XL ≥ 73 g. UK: small, medium, large and very large, on the same bands. The grading comes from the api
+    per market (FR-025, FR-031); markets without grades show none.
+  - **Banana, medium, peeled**: about **120 g** (USDA 118 g, Norway 120 g net), labelled as peeled.
+  - **Pear, large**: **230 g** (USDA 230 g, KTL 240 g).
+  - **Nothing else** — lemons, apples and every other piece stay out until two sources verify them.
+  Research into a sourced typical *cracked* egg weight per EU and UK grade continues; any result reaches the app
+  only by a later ruling.
 - **FR-008**: Every cup, spoon and fluid measure MUST be labelled with its unit's name wherever it appears
   ("cup (250 ml)", "US cup (236.59 ml)", "imp fl oz", "pint (568 ml)", "tsp", "tbsp").
 - **FR-009**: The household units shown MUST follow the user's units system (FR-028), with definitions from the
