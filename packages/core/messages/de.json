@@ -25,7 +25,7 @@
     "readiness": {
       "ready": "Bereit",
       "incomplete": "{count, plural, one {# Kategorie fehlt} other {# Kategorien fehlen}}",
-      "notIssuable": "Noch nicht ausstellbar — Zusatzstoffe lassen sich in Nutrimero noch nicht erfassen",
+      "notIssuable": "Noch nicht ausstellbar — Zusatzstoffe lassen sich in nutrimero noch nicht erfassen",
       "noLabelTypes": "Keine Etikettenarten zugewiesen"
     },
     "category": {
@@ -47,7 +47,7 @@
         "cannot_be_held": "Diese Art von Eintrag kann das nicht enthalten",
         "mass_unresolvable": "Gewicht lässt sich nicht ermitteln"
       },
-      "systemCannotBeHeld": "In Nutrimero noch nicht möglich",
+      "systemCannotBeHeld": "In nutrimero noch nicht möglich",
       "where": "{what} — für {where}",
       "occurrences": "{count, plural, one {an # Stelle} other {an # Stellen}}",
       "datum": {
@@ -88,7 +88,7 @@
         "purchased_item": "Einkaufsartikel {name}",
         "recipe": "Rezept {name}",
         "product": "Produkt {name}",
-        "system": "die Nutrimero-Plattform",
+        "system": "die nutrimero-Plattform",
         "other": "{type} {name} (Objekt)"
       }
     },

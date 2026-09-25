@@ -88,7 +88,7 @@
         "purchased_item": "{name} beszerzett tétel",
         "recipe": "{name} recept",
         "product": "{name} termék",
-        "system": "a Nutrimero platform",
+        "system": "a nutrimero platform",
         "other": "{type} {name} (objektum)"
       }
     },

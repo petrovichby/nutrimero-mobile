@@ -25,7 +25,7 @@
     "readiness": {
       "ready": "Ready",
       "incomplete": "{count, plural, one {# category missing} other {# categories missing}}",
-      "notIssuable": "Not issuable yet — additives can't be recorded in Nutrimero yet",
+      "notIssuable": "Not issuable yet — additives can't be recorded in nutrimero yet",
       "noLabelTypes": "No label types assigned"
     },
     "category": {
@@ -47,7 +47,7 @@
         "cannot_be_held": "This kind of record can't hold it",
         "mass_unresolvable": "Weight can't be worked out"
       },
-      "systemCannotBeHeld": "Not yet possible in Nutrimero",
+      "systemCannotBeHeld": "Not yet possible in nutrimero",
       "where": "{what} — for {where}",
       "occurrences": "{count, plural, one {in # place} other {in # places}}",
       "datum": {
@@ -88,7 +88,7 @@
         "purchased_item": "purchased item {name}",
         "recipe": "recipe {name}",
         "product": "product {name}",
-        "system": "the Nutrimero platform",
+        "system": "the nutrimero platform",
         "other": "{type} {name}"
       }
     },

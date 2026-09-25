@@ -25,7 +25,7 @@
     "readiness": {
       "ready": "Готово",
       "incomplete": "{count, plural, one {Бракує категорій: #} few {Бракує категорій: #} many {Бракує категорій: #} other {Бракує категорій: #}}",
-      "notIssuable": "Поки не можна видати — добавки в Nutrimero ще не можна записати",
+      "notIssuable": "Поки не можна видати — добавки в nutrimero ще не можна записати",
       "noLabelTypes": "Типи етикеток не призначено"
     },
     "category": {
@@ -47,7 +47,7 @@
         "cannot_be_held": "Такий тип запису не може цього містити",
         "mass_unresolvable": "Вагу неможливо визначити"
       },
-      "systemCannotBeHeld": "У Nutrimero поки неможливо",
+      "systemCannotBeHeld": "У nutrimero поки неможливо",
       "where": "{what} — для: {where}",
       "occurrences": "{count, plural, one {Місць: #} few {Місць: #} many {Місць: #} other {Місць: #}}",
       "datum": {
@@ -88,7 +88,7 @@
         "purchased_item": "придбаний товар {name}",
         "recipe": "рецепт {name}",
         "product": "продукт {name}",
-        "system": "платформа Nutrimero",
+        "system": "платформа nutrimero",
         "other": "{type} {name} (об'єкт)"
       }
     },

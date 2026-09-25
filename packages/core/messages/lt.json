@@ -25,7 +25,7 @@
     "readiness": {
       "ready": "Paruošta",
       "incomplete": "{count, plural, one {Trūkstamos kategorijos: #} few {Trūkstamos kategorijos: #} many {Trūkstamos kategorijos: #} other {Trūkstamos kategorijos: #}}",
-      "notIssuable": "Kol kas negalima išduoti — priedų Nutrimero dar negalima įrašyti",
+      "notIssuable": "Kol kas negalima išduoti — priedų nutrimero dar negalima įrašyti",
       "noLabelTypes": "Etikečių tipai nepriskirti"
     },
     "category": {
@@ -47,7 +47,7 @@
         "cannot_be_held": "Tokio tipo įrašas to negali turėti",
         "mass_unresolvable": "Svorio nustatyti negalima"
       },
-      "systemCannotBeHeld": "Nutrimero dar negalima",
+      "systemCannotBeHeld": "nutrimero dar negalima",
       "where": "{what} — kam: {where}",
       "occurrences": "{count, plural, one {Vietų: #} few {Vietų: #} many {Vietų: #} other {Vietų: #}}",
       "datum": {
@@ -88,7 +88,7 @@
         "purchased_item": "pirktas produktas {name}",
         "recipe": "receptas {name}",
         "product": "produktas {name}",
-        "system": "Nutrimero platforma",
+        "system": "nutrimero platforma",
         "other": "{type} {name} (objektas)"
       }
     },

@@ -181,3 +181,19 @@ describe("device, never phone", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+/**
+ * The brand is lowercase in every string, in every language, even at the start of a sentence
+ * (DESIGN.md D-6). The Pro label keys carried a capital N until 2026-09-25.
+ */
+describe("the brand is lowercase (D-6)", () => {
+  it("no catalog value in any language writes the brand with a capital", () => {
+    const offenders: string[] = [];
+    for (const locale of LOCALES) {
+      for (const [key, message] of Object.entries(flatten(messages[locale]))) {
+        if (/NUTRIMERO|Nutrimero/.test(message)) offenders.push(`${locale} ${key}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
