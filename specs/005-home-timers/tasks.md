@@ -178,6 +178,17 @@ and asks for permission in context.
 
 - [ ] T026 [P] Owner's review of the lane-authored translations of `home.timers.*` in de, hu, lt, be, pl and uk (a release item). Run a 1.3× stress pass on all 10 surfaces across the seven languages, including German long words and Cyrillic be/uk in Onest.
 - [ ] T027 On devices, a development build: quickstart M1–M9 on iOS, plus **C3 and C4** on iOS.
+  > **Simulator run, 2026-09-25** (iPhone 18 Pro, iOS 27, fresh dev build of #47, driven over Metro's CDP; not yet a real
+  > iPhone). **Pass:** M1 (reason sheet, then the system prompt, at the first start only), M3 (kill and relaunch: `endAt`
+  > unchanged, one pending notification kept), M4 as far as a simulator goes (stage 1 notifies "Bulk ferment done: shape
+  > next"; the in-app alert starts the next stage; nothing is pending during the hands-on stage; stage 3 notifies), M7 (a
+  > language switch re-schedules the pending text in German at the same fire time), M8 (Clear my data: no items, no saved
+  > routines, no pending notification; the language is kept), C3 (delivered after a simulator restart with the app not
+  > running), C4 (10 at once: 10 pending, 10 delivered). Also checked: 17c, 19d, and screens 15b–22 against the drawings.
+  > **Found and fixed in #47:** iOS fired up to 0.9 s *early* (on a whole-second boundary at or before the date); the
+  > scheduler now rounds up (`notBefore`), re-measured at +0.04 to +0.96 s. A done item's "ago" froze (the refresh ticked
+  > only while counting down); the sheet's done row was clipped, not full-bleed. **Still owed on a real iPhone:** M2
+  > (locked device), M5 (deny), M6 (auto-lock), M9 (VoiceOver, 1.3×).
 - [ ] T028 **Android, on a real device (owed; say so on every PR until done)**: C1 (lateness against FR-013's wording), C2 (force-stop), C5 (the bake-stage notice), and M1–M9 on Android. **A C1 or C2 disagreement goes to the owner before release.**
 - [ ] T029 VoiceOver and TalkBack walkthroughs of every surface in the seven languages (SC-007). Record the findings in the PR.
 
