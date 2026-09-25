@@ -30,7 +30,7 @@ classes; every market-scoped value will come from the api's units-and-density ch
 | **DE, AT, CH** | core **+ the 13 German Type flours** (below) | cup 250 ml, tsp 5, tbsp 15 | EU grades once the api defines them (FR-007a) |
 | **HU, PL, LT** | core; national flour classes are **api-lane gaps** (below) — no equivalences | cup 250 ml, tsp 5, tbsp 15 | EU grades once defined |
 | **US** (later) | core **+ US flour names** (all-purpose, bread, cake, self-rising, high-gluten — marked **US market only** in the tables) | US cup 236.59 ml, stick | US classes (FID's current values are minimums, §D) |
-| any other region | per QM1 (recommended: the EU default — core only) | cup 250 ml | — |
+| any other region, or none | core only (QM1) | cup 250 ml, tsp 5, tbsp 15 | **no egg grades** (QM1 — e.g. BY and UA grade eggs differently) |
 
 The **core** is the 183 draft ingredients below minus the five US flour names: **178**. US units chosen in
 onboarding switch on the US cup and the stick in any market but do not change the set.

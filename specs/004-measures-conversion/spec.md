@@ -4,10 +4,9 @@
 
 **Created**: 2026-09-24
 
-**Status**: **Back at gate 1 (2026-09-25) — market-aware.** Gate 1 passed 2026-09-24 and was corrected
-the same day; the owner's 2026-09-25 ruling ("take remediation action for market-specific components")
-changes the feature materially. Three questions for gate 1 are in *Gate 1 — market questions*. The build
-still waits for the api's units-and-density change, which now carries the market dimension.
+**Status**: **Gate 1 PASSED (market-aware) at `7d3f486`, 2026-09-25** — rulings QM1–QM3 below. Next:
+the plan update to gate 2 once the owner has ruled the ten picks and confirmed the per-market set; the build
+still waits for the api's units-and-density change (with the market dimension).
 
 **Input**: Coordinator assignment "004 — F23 measures and conversion": the ledger entry F23
 (`nutrimero-docs` `f7756e1`, `mobile/FEATURES.md`, accepted 2026-09-24, **free tier**). A
@@ -87,7 +86,17 @@ correction governs.
 - **Everything market-scoped reads from the api's units-and-density change**, which now carries the market
   dimension; the app holds no market table of its own.
 
-## Gate 1 — market questions
+## Gate 1 — market questions (ruled 2026-09-25)
+
+- **QM1 → regions outside the launch markets** get the **core set with metric** (250 ml cup, 5/15 ml spoons)
+  and **no egg grades** — BY and UA grade eggs differently, so EU grades would be wrong there (FR-024).
+- **QM2 → the region decides in 004**; the units choice stays separate. Revisit only on user feedback.
+- **QM3 → yes**: "Imperial" becomes **"US" (US customary)** on the Units step, in all seven catalogs; no user
+  loses a stored choice — the stored value is mapped on read or migrated, tested (FR-028); design-mobile
+  relabels the drawing.
+
+The questions as put:
+
 
 - **QM1 — Regions outside the launch markets.** A device whose region is not DE, AT, CH, HU, LT, PL or US
   (e.g. GB, BY, UA, or no region at all): which market does Measures use?
@@ -302,7 +311,7 @@ onboarding with region DE: the US cup and the stick appear.
   names follow the UI language.
 - **The region changes while the app runs** (travel, settings): the market is re-read on return to the
   foreground; nothing is stored, so nothing goes stale.
-- **No region reported** (possible on some devices): resolved per QM1.
+- **No region reported** (possible on some devices): core set, metric, no egg grades (QM1).
 - **A US-units baker in an EU market**: sees the US cup and the stick (QM3) but keeps the EU market's flour
   set — units and set membership are separate market components.
 
@@ -394,7 +403,8 @@ onboarding with region DE: the US cup and the stick appear.
 
 - **FR-024**: The market MUST be derived from the device's region setting (read on the device through the
   already-admitted localisation module), never from the UI language; it is re-read when the app returns to
-  the foreground. A region outside the known markets resolves per QM1. The market is not stored and not sent
+  the foreground. A region outside the known markets — or no region — resolves to the core set with metric units and no egg
+  grades (QM1). The market is not stored and not sent
   anywhere.
 - **FR-025**: Every market-scoped component — default units, the household units shown (FR-009), the egg
   grading (FR-007a), the curated set's membership (FR-026), the onboarding sample (FR-023) — MUST read from
@@ -409,6 +419,11 @@ onboarding with region DE: the US cup and the stick appear.
   other row (FR-004a): FID's current values for the Weizenmehl types are US proxies ("mapped to all-purpose /
   whole wheat flour") and do not count; until a type-specific value is verified, the type shows by weight
   only.
+
+- **FR-028**: 001's Units step MUST label its non-metric choice **"US"** (US customary: cups · ounces · °F) in
+  all seven catalogs (owner string review), not "Imperial". A choice already stored as imperial MUST read as
+  US — mapped on read or migrated once — so no user loses it; a test covers the stored legacy value. That
+  choice switches on the US cup and the butter stick in any market (FR-009) and does not change the set.
 
 **Search**
 
