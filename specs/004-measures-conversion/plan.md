@@ -5,7 +5,10 @@
 **Input**: Feature specification from `specs/004-measures-conversion/spec.md` (gate 1 passed
 2026-09-24 with rulings Q1–Q3).
 
-**Status**: At gate 2 — items below for the coordinator and the owner.
+**Status**: **Reopened — the spec is back at gate 1 (2026-09-25, market-aware).** This plan predates the
+market ruling; it is revised after gate 1 closes (QM1–QM3). Already known: the market is the device region
+(research R17, no new dependency); set membership, household units, egg grading and the onboarding sample
+become market-scoped reads from the api's change; the snapshot gains the market dimension.
 
 ## Summary
 

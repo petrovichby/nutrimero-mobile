@@ -33,7 +33,10 @@ Airplane mode on, fresh install, complete first run, open Measures.
 |---|---|
 | List | the curated set, names in the UI language (English for lt/pl/be/uk until FID has them) |
 | An ingredient the api has not settled (no chosen density) | no volume conversion, the "not settled yet" wording; pieces (if any) still shown |
-| A settled ingredient | grams for the standard cup (250 ml) and the US cup (236.59 ml) side by side, tsp 5 ml, tbsp 15 ml, **each labelled** |
+| A settled ingredient, region DE | grams for the cup (250 ml), tsp 5 ml, tbsp 15 ml, **each labelled**; no US cup, no stick |
+| Region DE / AT / CH | the 13 German Type flours listed; no US flour names |
+| Region LT (German UI) | market LT: no Type flours, no US flour names; names in German |
+| US units chosen, region DE | the US cup (236.59 ml) and the stick appear; the set is still DE's |
 | Provenance on a number | the sources the api records for the chosen value |
 | Egg | extra small … extra large with grams; no volume/piece mixing |
 | Converter: 250 g butter → US cups → flip | fraction + exact decimal; flip returns 250 g within rounding |

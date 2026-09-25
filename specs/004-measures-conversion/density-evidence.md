@@ -461,6 +461,39 @@ syrup except honey, maple and agave; the fruit jams; the ground spices; oats; qu
 kosher salt; cream of tartar; xanthan; rose and orange-blossom water), **15 no volume data**. Where an
 ingredient has several passing rows for one form, they agree within 5 % — no new inconsistency arose.
 
+## F. German Type flours (DE/AT/CH, FR-026/FR-027)
+
+FID holds all 13 (`19D72A1` Weizenmehl Type 405, `7A62E03` 550, `0F6655E` 812, `03C3B96` 1050, `92CF3A9`
+1600; `4E14641` Dinkelmehl Type 630, `3FB1F22` 812, `0B1DE1B` 1050; `0CD2A0C` Roggenmehl Type 815, `45A9FD5`
+997, `856BFDD` 1150, `2EA1812` 1370, `043D35E` 1740). Only the five Weizen types carry a volume row each, and
+every one is a **US proxy** — "USDA FDC via iForge", *"1 US cup, mapped to all-purpose flour"* (405, 550: 125 g
+→ 0.528) or *"mapped to whole wheat flour"* (812, 1050, 1600: 128 g → 0.541). Those are the invented
+equivalences FR-026 forbids; they do not count. The Dinkel and Roggen types carry no volume row.
+
+**Type-specific research (2026-09-25): none of the 13 is confirmed.** No published source measured a
+household volume (Tasse, EL, TL, dl) for a *named* German Type:
+
+| Type | Type-specific sources found | Verdict |
+|---|---|---|
+| Weizen 405, 550 | MOLLET silo bulk-density table (silo.tips … mollet-schuettgueter), "Weizenmehl (405-630) 0,55 – 0,60 kg/l" — industrial bulk density for a *range* of Types, not a household measure; herdheld.de "Type 405/550: 120–125 g pro Cup" — a US-recipe mapping (the forbidden equivalence); streusel.ch "Weissmehl Type 400 und 550, 1 EL gestrichen 7 g" — the *Swiss* Type 550 | UNCONFIRMED (sources ≈ 11 % apart, neither a household measure) |
+| Weizen 812, 1050 | MOLLET "Weizenmehl (812-1200) 0,45 – 0,55"; herdheld "Type 1050 ≈ US bread flour" (forbidden mapping) | UNCONFIRMED |
+| Weizen 1600 | none naming the Type | UNCONFIRMED |
+| Dinkel 630 | fddb.info portion list "gestr. EL (10 g)" — a template default fddb applies to every flour | UNCONFIRMED |
+| Dinkel 812, 1050 | none | UNCONFIRMED |
+| Roggen 815, 997, 1150, 1370, 1740 | MOLLET "Roggenmehl 0,47 – 0,55" (no Type); fddb template defaults | UNCONFIRMED |
+
+**Generic German, Austrian and Swiss household values** (they name no Type, so they cannot confirm one — and they
+disagree with each other): Verband Deutscher Mühlen (mein-mehl.de, "Maße, Einheiten und Messhilfen") Mehl TL
+4 g, EL 12 g → 0.80; Dr. Oetker (oetker.de, "Mengenangaben beim Backen umrechnen") level EL 7 g → 0.47; Swissmilk
+TL 3 g, level EL 10 g → 0.60–0.67; gutekueche.at 250 ml Becher 140 g → 0.56; Fini's Feinstes (AT) 1 cup 130 g →
+0.55. A level Esslöffel of Mehl ranges from 7 g to 12 g across these tables.
+
+**Consequence.** In DE/AT/CH the 13 Type flours are in the set and show **by weight only** (FR-027) until a
+mill, the Verband Deutscher Mühlen or a documented measurement protocol publishes Type-specific volume
+weights, and the api admits them. For the api lane: drop the US-proxy rows for the Weizen types; fix
+`3FB1F22`'s base name ("Dinkelmehl Type plant1brand", no English name) and the Hungarian Weizen names written
+with underscores ("búzaliszt_405_típus").
+
 ## C. For the api lane — data problems the research found
 
 1. **Mislabelled provenance.** Potato starch's "USDA FDC via iForge" 152 g/cup is King Arthur's
@@ -479,6 +512,12 @@ ingredient has several passing rows for one form, they agree within 5 % — no n
 7. **"USDA FDC via iForge" is not USDA** (§A2): about ten values are King Arthur's; some come from the wrong
    USDA food (dark molasses = dark corn syrup); 17 carry numbers no USDA record contains; "proxy" labels
    are both over- and under-applied.
+9. **German Type flours** (§F): the five Weizen values are US proxies (forbidden equivalences); the Dinkel and
+   Roggen types have no volume row; no Type-specific published volume weight exists — the types show by
+   weight only. Name defects: `3FB1F22` "Dinkelmehl Type plant1brand"; Hungarian Weizen names with
+   underscores. **HU, PL, LT flour classes are absent from FID** — listed per country in
+   `curated-set-draft.md`, with their standards (MÉ 2-201/2020; PN-A-74022:2003, PN-A-74032:2002;
+   LST 1133:2003), and no equivalences.
 8. **Mappings** (§A3): CNF and Fineli values are genuine, but eight rows are mapped from another variant
    (light sour cream, semi-coarse flour, raw 4.4 % milk, blackstrap molasses, natural peanut butter, lean
    quark, low-lactose yogurt, generic olive oil for extra virgin).

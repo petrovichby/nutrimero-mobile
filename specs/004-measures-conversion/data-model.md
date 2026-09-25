@@ -65,6 +65,12 @@ One table row per **AI-derived FID volume row in the curated set**:
 
 Parsed by a test. It **feeds the api's overlays**; the app shows the api's choice, not the file's.
 
+## Market (run time, not stored)
+
+`market` = the api's market for the device region (`regionCode`), resolved per QM1 for unknown regions.
+Every list, household unit, egg grade and onboarding sample is filtered by it (FR-024–FR-026). The snapshot's
+`MeasuresIngredient` gains `markets` (from the api); `units` gain the markets they are shown in.
+
 ## At run time
 
 ```text

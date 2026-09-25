@@ -107,7 +107,8 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
   unit table says 28.35, so the two differ in the fourth decimal; `change/002` decides which is the
   platform's ounce, and 001's units card follows it.
 - **Temperature** (°C ↔ °F) is a formula, not a unit definition; it stays in core.
-- **No setting**: both cups are always shown, labelled (FR-009). UK and Australian measures are
+- **No setting**: the market's cups are shown, labelled (FR-009 — the 250 ml cup in EU markets; the US
+  cup and stick only for the US market or US units, R17). UK and Australian measures are
   not in the platform's definitions today (an AU tablespoon of 20 ml would contradict M34's
   15 ml); they enter only if the api defines them.
 - **Superseded**: the first plan's `MEASURING_STANDARDS` table (US customary 14.79 / 4.93 ml
@@ -207,6 +208,25 @@ seeds at nutrimero-api `4a4356b` (= `contract/SOURCE`), surveyed 2026-09-24.
 - **Device**: quickstart walkthrough, VoiceOver/TalkBack, Hermes `normalize` check, both
   platforms (Android still owed from 001).
 - No component-test harness (as 001, R11 there).
+
+## R17 — The market model (owner's ruling, 2026-09-25)
+
+- **Decision**: the market is the device **region** — `getLocales()[0].regionCode` from `expo-localization`
+  (already admitted, ADR 0001), documented as "the region code for your device that comes from the Region
+  setting under Language & Region on iOS, Region settings on Android". It is independent of the UI
+  language (`languageCode`) and of the locale's `measurementSystem`. Read at launch and on return to the
+  foreground; never stored, never sent.
+- **Mapping region → market**: DE, AT, CH, HU, LT, PL (launch), US (later); anything else per QM1
+  (recommended: the EU default profile). The mapping itself, and every market-scoped value (units shown,
+  egg grading, set membership, onboarding sample), comes from the api's units-and-density change with the
+  market dimension — the app holds no market table (FR-025).
+- **Set per market** (FR-026): the snapshot carries, per ingredient, the markets it belongs to (from the api);
+  the list and search filter by the current market. The market-neutral core is the draft's 183 minus the US
+  flour names; DE/AT/CH add the 13 Type flours.
+- **Units vs market**: the user's units choice (001; QM3) and the market are separate components — US units
+  switch on the US cup and the stick in any market; they do not change the set.
+- **Alternatives**: the UI language (rejected by the ruling — a German speaker in Vilnius is in the LT
+  market); `measurementSystem` (kept only as a QM1 option); a stored market choice (QM2).
 
 ## R16 — Dependencies
 
