@@ -1,4 +1,4 @@
-import { Button, Glyph, PageTitle, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
+import { Button, Glyph, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
 import { useRef, useState } from "react";
 import {
   type AccessibilityActionEvent,
@@ -16,7 +16,7 @@ import { dropIndex, moveEntry, stepAside } from "../model/editing";
 import { atSavedLimit, MAX_SAVED_ROUTINES } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_STAGES, type Stage, validName } from "../model/stage";
 import { routineFits } from "../store/timer-store";
-import { BackBar, styles as parts, Refusal } from "./parts";
+import { BackBar, DetailTitle, styles as parts, Refusal } from "./parts";
 import { StagePicker } from "./stage-picker";
 import { useTimers } from "./timers-context";
 
@@ -94,13 +94,13 @@ export function RoutineEditorScreen({
         keyboardShouldPersistTaps="handled"
         scrollEnabled={drag === null}
       >
-        <PageTitle>
+        <DetailTitle>
           {t(
             existing === null
               ? "home.timers.ui.editor.newTitle"
               : "home.timers.ui.editor.editTitle",
           )}
-        </PageTitle>
+        </DetailTitle>
         <Text style={[textRole(theme, "labelMd"), styles.label, { color: color.ink2 }]}>
           {t("home.timers.ui.newTimer.nameLabel")}
         </Text>
@@ -358,7 +358,8 @@ function StageRow({
           style={[
             textRole(theme, "bodyMd", duration === null ? "500" : "600"),
             duration === null
-              ? { color: color.ink2, fontStyle: "italic" }
+              ? // Upright, set apart by colour and weight: the face has no italic (ff47b350).
+                { color: color.ink2 }
               : { color: color.heading, fontVariant: ["tabular-nums"] },
           ]}
         >
