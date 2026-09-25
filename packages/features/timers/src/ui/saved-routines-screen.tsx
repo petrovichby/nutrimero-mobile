@@ -13,9 +13,10 @@ import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { formatDuration } from "../model/duration";
 import { timedSeconds } from "../model/format";
+import { atActiveLimit, MAX_ACTIVE_ITEMS } from "../model/limits";
 import { MAX_NAME_LENGTH, validName } from "../model/stage";
 import type { SavedRoutine } from "../store/timer-store";
-import { BackBar, Pill, styles as parts, Sheet, SheetHead } from "./parts";
+import { BackBar, Pill, styles as parts, Refusal, Sheet, SheetHead } from "./parts";
 import { useTimers } from "./timers-context";
 
 /**
@@ -54,6 +55,8 @@ export function SavedRoutinesScreen({
     if (result.ok && result.id !== undefined) onStarted(result.id);
   };
   const renamed = validName(newName);
+  // 21b (f7b75e5f): at 10 on the list every Start is off, and the refusal is said once above it.
+  const listFull = atActiveLimit(timers.items.length);
 
   return (
     <Screen edges={["top", "left", "right", "bottom"]}>
@@ -64,6 +67,11 @@ export function SavedRoutinesScreen({
       />
       <ScrollView contentContainerStyle={styles.content}>
         <PageTitle>{t("home.timers.ui.saved.title")}</PageTitle>
+        {listFull && saved.length > 0 && (
+          <View style={styles.refusal}>
+            <Refusal text={t("home.timers.ui.newTimer.limit", { count: MAX_ACTIVE_ITEMS })} />
+          </View>
+        )}
         <View>
           {saved.length === 0 ? (
             <Text style={[textRole(theme, "bodyMd"), styles.empty, { color: color.ink2 }]}>
@@ -103,6 +111,7 @@ export function SavedRoutinesScreen({
                     label={t("home.timers.ui.saved.start")}
                     a11yLabel={`${t("home.timers.ui.saved.start")}: ${routine.name}`}
                     onPress={() => void start(routine)}
+                    disabled={listFull}
                   />
                   <Pressable
                     accessibilityRole="button"
@@ -281,6 +290,7 @@ function MenuItem({
 const styles = StyleSheet.create({
   content: { paddingHorizontal: tokens.spacing.screenMargin, paddingBottom: 24 },
   empty: { marginTop: 8 },
+  refusal: { marginTop: 4, marginBottom: 12 },
   card: { borderRadius: tokens.radius.xl, paddingHorizontal: 12 },
   row: { flexDirection: "row", alignItems: "center", gap: 12, minHeight: 76, paddingVertical: 10 },
   more: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },

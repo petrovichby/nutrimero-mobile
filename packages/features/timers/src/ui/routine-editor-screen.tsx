@@ -13,7 +13,7 @@ import {
 import { stageLabel } from "../model/content";
 import { formatDuration } from "../model/duration";
 import { dropIndex, moveEntry, stepAside } from "../model/editing";
-import { atSavedLimit, MAX_SAVED_ROUTINES } from "../model/limits";
+import { atActiveLimit, atSavedLimit, MAX_ACTIVE_ITEMS, MAX_SAVED_ROUTINES } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_STAGES, type Stage, validName } from "../model/stage";
 import { routineFits } from "../store/timer-store";
 import { BackBar, styles as parts, Refusal } from "./parts";
@@ -68,6 +68,8 @@ export function RoutineEditorScreen({
   // 19d: a new routine past the twentieth is refused here, not by a failed write.
   const savedFull = atSavedLimit(timers.saved.length, existing !== null);
   const canSave = rows.length > 0 && fits && !savedFull && !busy;
+  // 19e (f7b75e5f): at 10 on the list, only "Save and start" is refused — saving adds nothing.
+  const listFull = atActiveLimit(timers.items.length);
   const target =
     drag === null ? null : dropIndex(drag.from, drag.dy, rowHeight.current, rows.length);
   const editing = picking?.index ?? null;
@@ -197,6 +199,9 @@ export function RoutineEditorScreen({
           <Refusal text={t("home.timers.ui.editor.savedLimit", { count: MAX_SAVED_ROUTINES })} />
         )}
         {!fits && <Refusal text={t("home.timers.ui.editor.tooLong")} />}
+        {listFull && (
+          <Refusal text={t("home.timers.ui.newTimer.limit", { count: MAX_ACTIVE_ITEMS })} />
+        )}
         <View style={styles.saves}>
           <Button
             label={t("home.timers.ui.editor.save")}
@@ -211,7 +216,7 @@ export function RoutineEditorScreen({
           />
           <Button
             label={t("home.timers.ui.editor.saveAndStart")}
-            disabled={!canSave}
+            disabled={!canSave || listFull}
             onPress={() => {
               void save().then(async (id) => {
                 if (id === null) return;

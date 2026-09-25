@@ -75,21 +75,27 @@ export function Pill({
   label,
   onPress,
   a11yLabel,
+  disabled = false,
 }: {
   label: string;
   onPress: () => void;
   a11yLabel?: string;
+  /** 21b: off at the limit; the refusal above the list says why. */
+  disabled?: boolean;
 }) {
   const theme = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={a11yLabel ?? label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.pill,
         { backgroundColor: theme.color.action },
         pressed && styles.pressed,
+        disabled && styles.disabled,
       ]}
     >
       <Text style={[textRole(theme, "bodyMd", "700"), { color: theme.color.onAction }]}>
