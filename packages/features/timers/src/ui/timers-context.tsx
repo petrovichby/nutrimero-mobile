@@ -33,6 +33,7 @@ import {
   type SaveResult,
   type TimerStore,
 } from "../store/timer-store";
+import { alertsFor } from "./alerts";
 
 /** The platform half, injected by the app at wiring time (`@nutrimero/feature-timers/native`). */
 export interface TimersPlatform {
@@ -57,6 +58,8 @@ export interface TimersValue {
   /** Items that ended while the app was open, oldest first (22-timer-alert). */
   readonly alerts: readonly View[];
   dismissAlert(id: string): void;
+  /** 18c: the item whose own screen is open, if any — its ending raises no alert. */
+  setOnScreen(id: string | null): void;
   /** FR-016: true when the next start must show the reason and the system prompt first. */
   needsPermissionMoment(): boolean;
   askPermission(): Promise<Permission>;
@@ -128,6 +131,7 @@ export function TimersProvider({
   const [alerts, setAlerts] = useState<readonly View[]>([]);
   const [active, setActive] = useState(AppState.currentState === "active");
   const running = useRef(new Set<string>());
+  const onScreen = useRef<string | null>(null);
 
   const reload = useCallback(async () => {
     const [nextItems, nextSaved, nextPrefs] = await Promise.all([
@@ -175,11 +179,22 @@ export function TimersProvider({
     }
     running.current = nowRunning;
     if (ended.length === 0 || !active) return;
-    setAlerts((current) => [...current, ...ended]);
+    const alerting = alertsFor(ended, onScreen.current);
+    if (alerting.length > 0) setAlerts((current) => [...current, ...alerting]);
     Vibration.vibrate([0, 400, 200, 400]);
     for (const view of ended)
       AccessibilityInfo.announceForAccessibility(doneTitle(view, t, locale));
   }, [items, now, active, t, locale]);
+
+  // Stable, so a screen's effect runs only when its own focus changes, not on every tick.
+  const setOnScreen = useCallback((id: string | null) => {
+    onScreen.current = id;
+    if (id === null) return;
+    // Its screen does the alert's job now; an alert already raised for it goes.
+    setAlerts((current) =>
+      current.some((view) => view.id === id) ? current.filter((view) => view.id !== id) : current,
+    );
+  }, []);
 
   const apply = useCallback(
     async (outcome: Outcome, removedId?: string): Promise<SaveResult> => {
@@ -219,6 +234,7 @@ export function TimersProvider({
       isAndroid: platform.isAndroid,
       alerts,
       dismissAlert: (id) => setAlerts((current) => current.filter((view) => view.id !== id)),
+      setOnScreen,
       needsPermissionMoment: () => shouldAskInContext(prefs, permission),
       askPermission: async () => {
         const answer = await platform.requestInContext(store);
@@ -276,6 +292,7 @@ export function TimersProvider({
       prefs,
       reload,
       saved,
+      setOnScreen,
       store,
       t,
     ],

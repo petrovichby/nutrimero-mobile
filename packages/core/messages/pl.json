@@ -333,6 +333,7 @@
           "open": "Otwórz minutniki"
         },
         "agoShort": "{duration} temu",
+        "justNow": "przed chwilą",
         "endsAt": "koniec o {time}",
         "endedAt": "zakończono o {time}",
         "doneAt": "{ago}, o {time}",

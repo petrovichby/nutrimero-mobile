@@ -333,6 +333,7 @@
           "open": "Időzítők megnyitása"
         },
         "agoShort": "{duration} ezelőtt",
+        "justNow": "épp most",
         "endsAt": "vége: {time}",
         "endedAt": "véget ért: {time}",
         "doneAt": "{ago}, {time}-kor",
