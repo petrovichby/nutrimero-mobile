@@ -1,6 +1,6 @@
 import { Button, Glyph, PageTitle, Screen, textRole, tokens, useTheme } from "@nutrimero/ui";
 import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { formatDuration } from "../model/duration";
 import { atActiveLimit, MAX_ACTIVE_ITEMS } from "../model/limits";
 import { MAX_NAME_LENGTH, MAX_SECONDS, MIN_SECONDS, validName } from "../model/stage";
@@ -10,9 +10,10 @@ import { useTimers } from "./timers-context";
 const QUICK = [300, 600, 1200, 2700, 3600, 5400, 7200, 43_200] as const;
 
 /**
- * New timer (17) and the permission moment over it (17b): a name, a duration from 5 s to 48 h
- * (steppers, quick picks, or typed h / min / s after tapping the readout — coordinator,
- * 2026-09-25), then Start. The first start ever shows one reason before the system prompt; the
+ * New timer (17) and the permission moment over it (17b): a name, a duration from 5 s to 48 h,
+ * then Start. The duration is typed straight into hours / minutes / seconds, stepped by one hour
+ * or one minute, or picked from the quick durations (owner, 2026-09-25, from the T027 iPhone run:
+ * the drawn ±5 min steps and the tap-to-type readout couldn't set 2 minutes). The first start ever shows one reason before the system prompt; the
  * timer starts either way (FR-016, MA-27).
  */
 export function NewTimerScreen({
@@ -31,7 +32,6 @@ export function NewTimerScreen({
   });
   const [name, setName] = useState("");
   const [seconds, setSeconds] = useState(5400);
-  const [typing, setTyping] = useState(false);
   const [asking, setAsking] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -41,7 +41,6 @@ export function NewTimerScreen({
   const valid = seconds >= MIN_SECONDS && seconds <= MAX_SECONDS;
   // 17c: ten timers and routines running is the most; the eleventh is refused in words.
   const full = atActiveLimit(items.length);
-  const spoken = formatDuration(seconds, t).spoken;
   const clamp = (value: number) => Math.min(MAX_SECONDS, Math.max(0, value));
 
   const start = async () => {
@@ -81,56 +80,39 @@ export function NewTimerScreen({
           ]}
         />
 
-        {typing ? (
-          <View style={styles.readout}>
-            {(
-              [
-                ["hours", h, (v: number) => clamp(v * 3600 + m * 60 + s)],
-                ["minutes", m, (v: number) => clamp(h * 3600 + Math.min(59, v) * 60 + s)],
-                ["seconds", s, (v: number) => clamp(h * 3600 + m * 60 + Math.min(59, v))],
-              ] as const
-            ).map(([unit, value, next]) => (
-              <View key={unit} style={styles.typed}>
-                <TextInput
-                  accessibilityLabel={t(`home.timers.ui.newTimer.${unit}`)}
-                  keyboardType="number-pad"
-                  value={String(value)}
-                  selectTextOnFocus
-                  onChangeText={(text) =>
-                    setSeconds(next(Number.parseInt(text.replace(/\D/g, "") || "0", 10)))
-                  }
-                  style={[
-                    textRole(theme, "headlineLg", "700"),
-                    styles.typedInput,
-                    {
-                      color: color.heading,
-                      borderColor: color.outlineStrong,
-                      fontVariant: ["tabular-nums"],
-                    },
-                  ]}
-                />
-                <Text style={[textRole(theme, "bodySm", "600"), { color: color.ink2 }]}>
-                  {t(`home.timers.ui.newTimer.${unit}`)}
-                </Text>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={spoken}
-            accessibilityHint={t("home.timers.ui.newTimer.help")}
-            onPress={() => setTyping(true)}
-            style={styles.readout}
-          >
-            <Text
-              accessibilityLiveRegion="polite"
-              style={[textRole(theme, "headlineLg", "700"), styles.big, { color: color.heading }]}
-            >
-              {formatDuration(seconds, t).text}
-            </Text>
-          </Pressable>
-        )}
+        <View style={styles.readout}>
+          {(
+            [
+              ["hours", h, (v: number) => clamp(v * 3600 + m * 60 + s)],
+              ["minutes", m, (v: number) => clamp(h * 3600 + Math.min(59, v) * 60 + s)],
+              ["seconds", s, (v: number) => clamp(h * 3600 + m * 60 + Math.min(59, v))],
+            ] as const
+          ).map(([unit, value, next]) => (
+            <View key={unit} style={styles.typed}>
+              <TextInput
+                accessibilityLabel={t(`home.timers.ui.newTimer.${unit}`)}
+                keyboardType="number-pad"
+                value={String(value)}
+                selectTextOnFocus
+                onChangeText={(text) =>
+                  setSeconds(next(Number.parseInt(text.replace(/\D/g, "") || "0", 10)))
+                }
+                style={[
+                  textRole(theme, "headlineLg", "700"),
+                  styles.typedInput,
+                  {
+                    color: color.heading,
+                    borderColor: color.outlineStrong,
+                    fontVariant: ["tabular-nums"],
+                  },
+                ]}
+              />
+              <Text style={[textRole(theme, "bodySm", "600"), { color: color.ink2 }]}>
+                {t(`home.timers.ui.newTimer.${unit}`)}
+              </Text>
+            </View>
+          ))}
+        </View>
 
         <View style={styles.steppers}>
           <View style={[styles.stepper, { backgroundColor: color.surface1 }]}>
@@ -152,7 +134,7 @@ export function NewTimerScreen({
             <RoundButton
               glyph="minusCircle"
               label={t("home.timers.ui.newTimer.minutesLess")}
-              onPress={() => setSeconds(clamp(seconds - 300))}
+              onPress={() => setSeconds(clamp(seconds - 60))}
             />
             <Text style={[textRole(theme, "bodyMd", "600"), { color: color.ink2 }]}>
               {t("home.timers.ui.newTimer.minutes")}
@@ -160,7 +142,7 @@ export function NewTimerScreen({
             <RoundButton
               glyph="plus"
               label={t("home.timers.ui.newTimer.minutesMore")}
-              onPress={() => setSeconds(clamp(seconds + 300))}
+              onPress={() => setSeconds(clamp(seconds + 60))}
             />
           </View>
         </View>
@@ -171,10 +153,7 @@ export function NewTimerScreen({
               key={value}
               label={formatDuration(value, t).text}
               selected={seconds === value}
-              onPress={() => {
-                setTyping(false);
-                setSeconds(value);
-              }}
+              onPress={() => setSeconds(value)}
             />
           ))}
         </View>
@@ -242,7 +221,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     minHeight: 64,
   },
-  big: { fontSize: 48, lineHeight: 60, fontVariant: ["tabular-nums"] },
   typed: { alignItems: "center", gap: 4 },
   typedInput: { minWidth: 72, minHeight: 56, textAlign: "center", borderBottomWidth: 2 },
   steppers: { flexDirection: "row", gap: 10 },
