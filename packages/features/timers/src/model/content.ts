@@ -1,4 +1,5 @@
 import type { Translator } from "@nutrimero/core";
+import { capitalizeFirst } from "./format";
 import type { Item } from "./item";
 import type { Stage } from "./stage";
 
@@ -25,7 +26,11 @@ export interface NotificationContent {
  * stage names the stage that ended and the next one ("Bulk ferment done: shape next"), or says it
  * was the last. Null when the item has nothing to notify (paused, hands-on).
  */
-export function notificationContent(item: Item, t: Translator): NotificationContent | null {
+export function notificationContent(
+  item: Item,
+  t: Translator,
+  locale: string,
+): NotificationContent | null {
   if (item.clock.status !== "running") return null;
   const at = item.clock.endAt;
   if (item.kind === "timer") {
@@ -42,13 +47,19 @@ export function notificationContent(item: Item, t: Translator): NotificationCont
   const stage = stageLabel(current, t);
   return next === undefined
     ? {
-        title: t("home.timers.notification.lastStageDone.title", { stage }),
+        title: capitalizeFirst(
+          t("home.timers.notification.lastStageDone.title", { stage }),
+          locale,
+        ),
         body: t("home.timers.notification.lastStageDone.body"),
         data: { kind: "stage", itemId: item.id },
         at,
       }
     : {
-        title: t("home.timers.notification.stageDone.title", { stage, next: stageLabel(next, t) }),
+        title: capitalizeFirst(
+          t("home.timers.notification.stageDone.title", { stage, next: stageLabel(next, t) }),
+          locale,
+        ),
         body: t("home.timers.notification.stageDone.body"),
         data: { kind: "stage", itemId: item.id },
         at,

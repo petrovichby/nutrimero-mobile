@@ -33,6 +33,7 @@ describe("performing intents (research R1)", () => {
       store,
       scheduler,
       t,
+      locale: "en",
       permitted: true,
     });
     expect(scheduler.schedule).toHaveBeenCalledWith(
@@ -50,7 +51,7 @@ describe("performing intents (research R1)", () => {
         { type: "schedule", itemId: "a" },
         { type: "cancel", notificationId: "old" },
       ],
-      { store, scheduler, t, permitted: false },
+      { store, scheduler, t, locale: "en", permitted: false },
     );
     expect(scheduler.schedule).not.toHaveBeenCalled();
     expect(scheduler.cancel).toHaveBeenCalledWith("old");

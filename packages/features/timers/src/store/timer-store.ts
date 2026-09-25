@@ -28,6 +28,26 @@ export const MAX_SAVED_ROUTINES = 20;
  */
 export const VALUE_CEILING_BYTES = 1900;
 
+/**
+ * Whether a routine of these stages can be saved **and** run (19c): the larger of the two values
+ * is its run, which also carries ids, a clock and a notification id, so it is measured at their
+ * longest. The editor refuses at the save action rather than after a write fails.
+ */
+export function routineFits(name: string, stages: readonly Stage[]): boolean {
+  const longId = "z".repeat(24);
+  const run: RoutineRun = {
+    id: longId,
+    kind: "routine",
+    name,
+    savedRoutineId: longId,
+    stages,
+    index: MAX_STAGES - 1,
+    clock: { status: "running", endAt: 9_999_999_999_999, total: 172_800 },
+    notificationId: "z".repeat(40),
+  };
+  return utf8ByteLength(JSON.stringify(run)) <= VALUE_CEILING_BYTES;
+}
+
 export interface SavedRoutine {
   readonly id: string;
   readonly name: string;
@@ -93,14 +113,19 @@ function ids(value: unknown): string[] {
 
 function parseClock(value: unknown, allowWaiting: boolean): Clock | { status: "waiting" } | null {
   const status = field(value, "status");
+  const rawTotal = field(value, "total");
+  const total =
+    typeof rawTotal === "number" && Number.isInteger(rawTotal) && rawTotal > 0
+      ? { total: rawTotal }
+      : {};
   if (status === "running") {
     const endAt = field(value, "endAt");
-    return typeof endAt === "number" && Number.isFinite(endAt) ? { status, endAt } : null;
+    return typeof endAt === "number" && Number.isFinite(endAt) ? { status, endAt, ...total } : null;
   }
   if (status === "paused") {
     const remaining = field(value, "remaining");
     return typeof remaining === "number" && Number.isInteger(remaining) && remaining >= 0
-      ? { status, remaining }
+      ? { status, remaining, ...total }
       : null;
   }
   return allowWaiting && status === "waiting" ? { status } : null;

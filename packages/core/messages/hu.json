@@ -278,17 +278,17 @@
     },
     "timers": {
       "stage": {
-        "mix": "Összekeverés",
-        "autolyse": "Autolízis",
-        "bulkFerment": "Első kelesztés",
-        "stretchAndFold": "Nyújtás és hajtogatás",
-        "preShape": "Előformázás",
-        "shape": "Formázás",
-        "proof": "Kelesztés",
-        "coldProof": "Hideg kelesztés",
-        "preheat": "Előmelegítés",
-        "bake": "Sütés",
-        "cool": "Hűtés"
+        "mix": "összekeverés",
+        "autolyse": "autolízis",
+        "bulkFerment": "első kelesztés",
+        "stretchAndFold": "nyújtás és hajtogatás",
+        "preShape": "előformázás",
+        "shape": "formázás",
+        "proof": "kelesztés",
+        "coldProof": "hideg kelesztés",
+        "preheat": "előmelegítés",
+        "bake": "sütés",
+        "cool": "hűtés"
       },
       "unit": {
         "hours": "{value} óra",
@@ -320,20 +320,134 @@
         }
       },
       "help": {
-        "androidLate": "Androidon az értesítés késhet, amíg az eszköz tétlen – jellemzően legfeljebb kb. 10 percet, de sosem érkezik korábban.",
-        "forceStop": "Ha kényszerítve leállítod az alkalmazást, az értesítések szünetelnek, amíg újra meg nem nyitod."
-      },
-      "notice": {
-        "androidBake": "Androidon ennek a lépésnek az értesítése késhet, amíg az eszközöd tétlen. Hagyd nyitva ezt a képernyőt, és az eszközöd ébren marad."
-      },
-      "permission": {
-        "reason": "Értesíthetünk, ha lejár egy időzítő, akkor is, ha az alkalmazás be van zárva?"
+        "androidForceStop": "Ha Androidon kényszerítve leállítod az alkalmazást, az értesítések szünetelnek, amíg újra meg nem nyitod."
       },
       "refused": {
-        "note": "Értesítés csak nyitott alkalmazásnál van. Az időzítők így is jeleznek a képernyőn és rezegnek, hang nélkül.",
         "openSettings": "Beállítások megnyitása"
       },
-      "clearDataLine": "az időzítőid és mentett menetrendjeid"
+      "clearDataLine": "az időzítőid és mentett menetrendjeid",
+      "ui": {
+        "chip": {
+          "others": "{count, plural, one {és még # időzítő} other {és még # időzítő}}",
+          "open": "Időzítők megnyitása"
+        },
+        "agoShort": "{duration} ezelőtt",
+        "endsAt": "vége: {time}",
+        "endedAt": "véget ért: {time}",
+        "doneAt": "{ago}, {time}-kor",
+        "back": "Vissza ide: {place}",
+        "close": "Bezárás",
+        "cancel": "Mégse",
+        "dismiss": "Elvetés",
+        "done": "Kész",
+        "pause": "Szünet",
+        "resume": "Folytatás",
+        "addA11y": "{duration} hozzáadása",
+        "awake": "A képernyőd bekapcsolva marad, amíg ez nyitva van",
+        "leftA11y": "még {duration}",
+        "sheet": {
+          "title": "Időzítők",
+          "done": "kész · {ago}",
+          "paused": "szünetel",
+          "routineLine": "{position} / {total} · {stage} · következik: {next}",
+          "routineLineLast": "{position} / {total} · {stage} · utolsó lépés",
+          "pauseA11y": "{name} szüneteltetése",
+          "resumeA11y": "{name} folytatása",
+          "openA11y": "{name} megnyitása",
+          "newTimer": "Új időzítő",
+          "newRoutine": "Új menetrend",
+          "savedRoutines": "Mentett menetrendek"
+        },
+        "newTimer": {
+          "nameLabel": "Név",
+          "hours": "óra",
+          "minutes": "perc",
+          "seconds": "másodperc",
+          "hourLess": "Egy órával kevesebb",
+          "hourMore": "Egy órával több",
+          "minutesLess": "Öt perccel kevesebb",
+          "minutesMore": "Öt perccel több",
+          "quick": "Gyors időtartamok",
+          "help": "5 másodperctől 48 óráig. Koppints a számokra a beírásukhoz.",
+          "start": "Időzítő indítása"
+        },
+        "permission": {
+          "title": "Szóljunk, ha kész?",
+          "body": "Engedélyezd az értesítéseket, és az időzítőid szólnak, amikor lejárnak, akkor is, ha az eszközöd zárolva van.",
+          "continue": "Tovább",
+          "either": "Az időzítőd mindenképp elindul."
+        },
+        "refused": {
+          "title": "Értesítés csak nyitott alkalmazásnál.",
+          "body": "Az értesítések ki vannak kapcsolva a nutrimero számára ezen az eszközön, így az időzítők a képernyőn, rezgéssel és hang nélkül jeleznek."
+        },
+        "timer": {
+          "cancel": "Időzítő törlése",
+          "doneA11y": "{name} kész, {ago}"
+        },
+        "editor": {
+          "newTitle": "Új menetrend",
+          "editTitle": "Menetrend szerkesztése",
+          "stagesHeader": "Lépések · húzd az átrendezéshez",
+          "stagesCount": "Lépések · {current} / 12",
+          "handsOn": "kézi munka",
+          "removeA11y": "{stage} eltávolítása",
+          "moveUp": "Feljebb",
+          "moveDown": "Lejjebb",
+          "durationA11y": "{stage} időtartama: {duration}",
+          "addStage": "Lépés hozzáadása",
+          "maxStages": "Egy menetrendben legfeljebb 12 lépés lehet",
+          "save": "Mentés",
+          "saveAndStart": "Mentés és indítás",
+          "tooLong": "Ez a menetrend túl hosszú a mentéshez – rövidíts egy lépésnevet, vagy távolíts el egy lépést."
+        },
+        "picker": {
+          "common": "Gyakori lépések",
+          "orOwn": "Vagy adj saját nevet",
+          "ownPlaceholder": "pl. hajtogatás vajjal",
+          "howLong": "Mennyi ideig?",
+          "other": "más…",
+          "add": "{stage} hozzáadása"
+        },
+        "routine": {
+          "positionA11y": "{position}. lépés a {total}-ből",
+          "next": "Következik",
+          "takeYourTime": "kézi munka · nem kell sietni",
+          "nextTimed": "{duration} · kapsz értesítést",
+          "doneEarly": "Hamarabb kész",
+          "cancel": "Menetrend törlése",
+          "stageDone": "{stage}: kész",
+          "whenReady": "amikor készen állsz",
+          "startNext": "Következő lépés indítása: {stage}",
+          "doneNext": "Kész – következő lépés",
+          "finish": "Menetrend befejezése"
+        },
+        "android": {
+          "title": "Egy dolog az Androidról",
+          "late": "Androidon az értesítés késhet, amíg az eszközöd tétlen – jellemzően legfeljebb kb. 10 percet, de sosem korábban.",
+          "keepOpen": "Sütésnél hagyd nyitva ezt a képernyőt: az eszközöd ébren marad, és a képernyőn lévő időzítő pontos.",
+          "gotIt": "Értem",
+          "once": "Ezt csak egyszer mondjuk el."
+        },
+        "saved": {
+          "title": "Menetrendek",
+          "summary": "{count, plural, one {# lépés · {duration} időzítve} other {# lépés · {duration} időzítve}}",
+          "start": "Indítás",
+          "moreA11y": "Továbbiak: {name}",
+          "edit": "Lépések szerkesztése",
+          "rename": "Átnevezés",
+          "delete": "Törlés",
+          "empty": "Ments el egy menetrendet, és itt vár a következő alkalomra.",
+          "deleteTitle": "Törlöd ezt a menetrendet?",
+          "deleteBody": "A(z) {name} és a lépései törlődnek erről az eszközről.",
+          "renameTitle": "Menetrend átnevezése"
+        },
+        "alert": {
+          "routineSub": "{routine} · következik: {next}",
+          "later": "Később",
+          "startNext": "Következő lépés"
+        }
+      }
     }
   }
 }

@@ -20,6 +20,7 @@ export async function performIntents(
     readonly store: Pick<TimerStore, "items" | "saveItem">;
     readonly scheduler: SchedulerPort;
     readonly t: Translator;
+    readonly locale: string;
     readonly permitted: boolean;
   },
 ): Promise<void> {
@@ -32,7 +33,7 @@ export async function performIntents(
     if (!deps.permitted) continue;
     items ??= await deps.store.items();
     const item: Item | undefined = items.find((entry) => entry.id === intent.itemId);
-    const content = item === undefined ? null : notificationContent(item, deps.t);
+    const content = item === undefined ? null : notificationContent(item, deps.t, deps.locale);
     if (item === undefined || content === null) continue;
     const notificationId = await deps.scheduler.schedule(content);
     const updated: Item = { ...item, notificationId };

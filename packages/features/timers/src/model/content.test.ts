@@ -23,8 +23,8 @@ const run: RoutineRun = {
 
 describe("notification content (FR-010, gate 1 Q1)", () => {
   it("names the stage that ended and the next one", () => {
-    expect(notificationContent(run, en)).toEqual({
-      title: "Bulk ferment done: Shape next",
+    expect(notificationContent(run, en, "en")).toEqual({
+      title: "Bulk ferment done: shape next",
       body: "Tap when you're ready to start the next stage.",
       data: { kind: "stage", itemId: "r1" },
       at: T0,
@@ -33,7 +33,9 @@ describe("notification content (FR-010, gate 1 Q1)", () => {
 
   it("says when it was the last stage, and uses the baker's own stage names", () => {
     const last: RoutineRun = { ...run, index: 2 };
-    expect(notificationContent(last, en)?.title).toBe("Levain check done: that was the last stage");
+    expect(notificationContent(last, en, "en")?.title).toBe(
+      "Levain check done: that was the last stage",
+    );
   });
 
   it("names a timer, and notifies nothing for a paused or hands-on item", () => {
@@ -44,14 +46,17 @@ describe("notification content (FR-010, gate 1 Q1)", () => {
       clock: { status: "running", endAt: T0 },
       notificationId: null,
     };
-    expect(notificationContent(timer, en)?.title).toBe("Final proof is done");
+    expect(notificationContent(timer, en, "en")?.title).toBe("Final proof is done");
     expect(
-      notificationContent({ ...timer, clock: { status: "paused", remaining: 5 } }, en),
+      notificationContent({ ...timer, clock: { status: "paused", remaining: 5 } }, en, "en"),
     ).toBeNull();
-    expect(notificationContent({ ...run, index: 1, clock: { status: "waiting" } }, en)).toBeNull();
+    expect(
+      notificationContent({ ...run, index: 1, clock: { status: "waiting" } }, en, "en"),
+    ).toBeNull();
   });
 
   it("localizes picked stage names", () => {
+    expect(stageLabel({ name: { key: "coldProof" }, seconds: 1 }, en)).toBe("cold proof");
     expect(stageLabel({ name: { key: "coldProof" }, seconds: 1 }, createTranslator("de"))).toBe(
       "Kalte Gare",
     );

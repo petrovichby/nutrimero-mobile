@@ -42,6 +42,26 @@ describe("the owned glyph sets (DESIGN.md *Imagery*)", () => {
     }
   });
 
+  it("carries the timers glyphs (spec 005, MA-27), in the family each is drawn in", () => {
+    for (const name of [
+      "timer",
+      "routine",
+      "close",
+      "pause",
+      "play",
+      "bell",
+      "sun",
+      "grip",
+      "moreVertical",
+      "pencil",
+    ] as const) {
+      expect(FILLED_GLYPHS[name].length).toBeGreaterThan(0);
+    }
+    for (const name of ["bellOff", "minusCircle", "info"] as const) {
+      expect(STROKE_GLYPHS[name].length).toBeGreaterThan(0);
+    }
+  });
+
   it("every glyph draws on the 24-unit grid", () => {
     for (const shapes of [...Object.values(FILLED_GLYPHS), ...Object.values(STROKE_GLYPHS)]) {
       for (const shape of shapes) {

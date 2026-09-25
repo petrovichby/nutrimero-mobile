@@ -320,20 +320,134 @@
         }
       },
       "help": {
-        "androidLate": "Auf Android kann eine Benachrichtigung verspätet ankommen, während das Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
-        "forceStop": "Wenn du die App zwangsweise beendest, pausieren die Hinweise, bis du sie wieder öffnest."
-      },
-      "notice": {
-        "androidBake": "Auf Android kann der Hinweis für diesen Schritt verspätet kommen, während dein Gerät ruht. Lass diesen Bildschirm offen, dann bleibt dein Gerät wach."
-      },
-      "permission": {
-        "reason": "Dürfen wir dich benachrichtigen, wenn ein Timer abläuft – auch bei geschlossener App?"
+        "androidForceStop": "Wenn du die App auf Android zwangsweise beendest, pausieren die Hinweise, bis du sie wieder öffnest."
       },
       "refused": {
-        "note": "Hinweise gibt es nur bei geöffneter App. Timer enden trotzdem auf dem Bildschirm und vibrieren – ohne Ton.",
         "openSettings": "Einstellungen öffnen"
       },
-      "clearDataLine": "deine Timer und gespeicherten Abläufe"
+      "clearDataLine": "deine Timer und gespeicherten Abläufe",
+      "ui": {
+        "chip": {
+          "others": "{count, plural, one {und # weiterer Timer} other {und # weitere Timer}}",
+          "open": "Timer öffnen"
+        },
+        "agoShort": "vor {duration}",
+        "endsAt": "endet um {time}",
+        "endedAt": "endete um {time}",
+        "doneAt": "{ago}, um {time}",
+        "back": "Zurück zu {place}",
+        "close": "Schließen",
+        "cancel": "Abbrechen",
+        "dismiss": "Ausblenden",
+        "done": "Fertig",
+        "pause": "Anhalten",
+        "resume": "Fortsetzen",
+        "addA11y": "{duration} dazugeben",
+        "awake": "Dein Bildschirm bleibt an, solange das hier offen ist",
+        "leftA11y": "noch {duration}",
+        "sheet": {
+          "title": "Timer",
+          "done": "fertig · {ago}",
+          "paused": "angehalten",
+          "routineLine": "{position} / {total} · {stage} · als Nächstes: {next}",
+          "routineLineLast": "{position} / {total} · {stage} · letzter Schritt",
+          "pauseA11y": "{name} anhalten",
+          "resumeA11y": "{name} fortsetzen",
+          "openA11y": "{name} öffnen",
+          "newTimer": "Neuer Timer",
+          "newRoutine": "Neuer Ablauf",
+          "savedRoutines": "Gespeicherte Abläufe"
+        },
+        "newTimer": {
+          "nameLabel": "Bezeichnung",
+          "hours": "Stunden",
+          "minutes": "Minuten",
+          "seconds": "Sekunden",
+          "hourLess": "Eine Stunde weniger",
+          "hourMore": "Eine Stunde mehr",
+          "minutesLess": "Fünf Minuten weniger",
+          "minutesMore": "Fünf Minuten mehr",
+          "quick": "Schnellauswahl",
+          "help": "Von 5 Sekunden bis 48 Stunden. Tippe auf die Zahlen, um sie einzugeben.",
+          "start": "Timer starten"
+        },
+        "permission": {
+          "title": "Soll ich dich erinnern, wenn es fertig ist?",
+          "body": "Erlaube Benachrichtigungen, dann melden sich deine Timer, wenn sie ablaufen – auch bei gesperrtem Gerät.",
+          "continue": "Weiter",
+          "either": "Dein Timer startet so oder so."
+        },
+        "refused": {
+          "title": "Hinweise nur bei geöffneter App.",
+          "body": "Benachrichtigungen für nutrimero sind auf diesem Gerät aus. Timer enden auf dem Bildschirm mit Vibration, ohne Ton."
+        },
+        "timer": {
+          "cancel": "Timer abbrechen",
+          "doneA11y": "{name} ist fertig, {ago}"
+        },
+        "editor": {
+          "newTitle": "Neuer Ablauf",
+          "editTitle": "Ablauf bearbeiten",
+          "stagesHeader": "Schritte · zum Sortieren ziehen",
+          "stagesCount": "Schritte · {current} von 12",
+          "handsOn": "von Hand",
+          "removeA11y": "{stage} entfernen",
+          "moveUp": "Nach oben",
+          "moveDown": "Nach unten",
+          "durationA11y": "Dauer von {stage}: {duration}",
+          "addStage": "Schritt hinzufügen",
+          "maxStages": "Ein Ablauf hat höchstens 12 Schritte",
+          "save": "Speichern",
+          "saveAndStart": "Speichern und starten",
+          "tooLong": "Dieser Ablauf ist zu lang zum Speichern – kürze einen Schrittnamen oder entferne einen Schritt."
+        },
+        "picker": {
+          "common": "Übliche Schritte",
+          "orOwn": "Oder gib ihm einen eigenen Namen",
+          "ownPlaceholder": "z. B. tourieren",
+          "howLong": "Wie lange?",
+          "other": "andere…",
+          "add": "{stage} hinzufügen"
+        },
+        "routine": {
+          "positionA11y": "Schritt {position} von {total}",
+          "next": "Als Nächstes",
+          "takeYourTime": "von Hand · lass dir Zeit",
+          "nextTimed": "{duration} · du bekommst eine Benachrichtigung",
+          "doneEarly": "Früher fertig",
+          "cancel": "Ablauf abbrechen",
+          "stageDone": "{stage} ist fertig",
+          "whenReady": "wenn du so weit bist",
+          "startNext": "Nächsten Schritt starten: {stage}",
+          "doneNext": "Fertig – nächster Schritt",
+          "finish": "Ablauf beenden"
+        },
+        "android": {
+          "title": "Eine Sache zu Android",
+          "late": "Auf Android kann eine Benachrichtigung verspätet kommen, während dein Gerät ruht – meist um bis zu etwa 10 Minuten, aber nie zu früh.",
+          "keepOpen": "Lass beim Backen diesen Bildschirm offen: Dein Gerät bleibt wach, und der Timer auf dem Bildschirm ist genau.",
+          "gotIt": "Verstanden",
+          "once": "Wir sagen das nur einmal."
+        },
+        "saved": {
+          "title": "Abläufe",
+          "summary": "{count, plural, one {# Schritt · {duration} mit Timer} other {# Schritte · {duration} mit Timer}}",
+          "start": "Starten",
+          "moreA11y": "Mehr zu {name}",
+          "edit": "Schritte bearbeiten",
+          "rename": "Umbenennen",
+          "delete": "Löschen",
+          "empty": "Speichere einen Ablauf, dann wartet er hier auf das nächste Mal.",
+          "deleteTitle": "Diesen Ablauf löschen?",
+          "deleteBody": "{name} und seine Schritte werden von diesem Gerät entfernt.",
+          "renameTitle": "Ablauf umbenennen"
+        },
+        "alert": {
+          "routineSub": "{routine} · als Nächstes: {next}",
+          "later": "Später",
+          "startNext": "Nächsten Schritt starten"
+        }
+      }
     }
   }
 }

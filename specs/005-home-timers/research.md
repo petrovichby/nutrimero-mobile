@@ -71,8 +71,10 @@ AlarmManager, and the Expo docs don't address it. Verify:
 - after Settings → Force stop, no notification fires;
 - on the next launch the timer is correct (FR-004), and running items are re-scheduled.
 
-The timer help states it: "If you force-stop the app, alerts pause until you open it again."
-The catalog wording is reviewed with the owner.
+The timer help states it, for Android only (`home.timers.help.androidForceStop`): "On Android, if
+you force-stop the app, alerts pause until you open it again." On iOS a force-quit does not stop
+scheduled local notifications, so the line is never shown there (coordinator, 2026-09-25). No
+walked surface carries it yet; the catalog wording is reviewed with the owner.
 
 **Check C3 — iOS restart (real device)**: pending local notifications survive a restart. This is
 expected from iOS behavior, and verified once.

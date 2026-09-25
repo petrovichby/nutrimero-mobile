@@ -210,6 +210,10 @@ asks again on its own.
 - **FR-001**: The baker MUST be able to start a timer with a name and a duration (5 s to 48 h),
   pause and resume it, add time to it, cancel it, and dismiss it once done. A name defaults to a
   localized "Timer" plus its number when left empty.
+- **FR-001a (amendment, 2026-09-25, coordinator)**: A running or paused timed stage or timer MUST
+  offer **"Done early"** (`finishEarly`). Its end time becomes now and its pending notification is
+  cancelled. A routine stage then offers "Start next stage" (FR-008), and a timer offers Dismiss.
+  This comes from the walked drawings (MA-27, `20-routine`).
 - **FR-002**: Several timers and routines MUST be able to run at the same time (at least 10).
 - **FR-003**: A running timer's truth MUST be its **end time**, an absolute instant persisted in
   the device store. The time left is always computed as end time minus now. Nothing counts time by
