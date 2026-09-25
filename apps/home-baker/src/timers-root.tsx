@@ -6,8 +6,9 @@ import {
   useTimersLifecycle,
 } from "@nutrimero/feature-timers/native";
 import { CompletionAlert, TimersProvider, TimersSheet } from "@nutrimero/feature-timers/screens";
+import { deactivateKeepAwake, ExpoKeepAwakeTag } from "expo-keep-awake";
 import { router } from "expo-router";
-import { type ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback, useEffect } from "react";
 import { timerStore } from "./boot";
 
 /** Where each timers surface lives in the router (005 wiring). */
@@ -39,6 +40,7 @@ export function TimersRoot({
   children: ReactNode;
 }) {
   useTimersLifecycle(timerStore, t, locale);
+  useReleaseDevKeepAwake();
   const openItem = useCallback((route: NotificationData) => {
     router.push(timersRoutes.item(route.itemId));
   }, []);
@@ -63,4 +65,20 @@ export function TimersRoot({
       <CompletionAlert onOpen={(id) => router.push(timersRoutes.item(id))} />
     </TimersProvider>
   );
+}
+
+/**
+ * F37 in development builds (T027, owner's iPhone run 2026-09-25: the phone never dimmed on any
+ * screen). In development Expo keeps the whole app awake — `expo/src/launch/withDevTools`
+ * activates `ExpoKeepAwakeTag` at the root whenever `expo-keep-awake` is installed, which 005
+ * added. That hid the real behaviour: only a focused timer or routine screen may hold the screen.
+ * Release Expo's dev tag once the timers layer is up, so a dev build dims like a release build
+ * (where the dev wrapper and this hook's work are both absent). Runs after the root's effect:
+ * this layer mounts only after boot and first run, in a later commit.
+ */
+function useReleaseDevKeepAwake(): void {
+  useEffect(() => {
+    if (!__DEV__) return;
+    void deactivateKeepAwake(ExpoKeepAwakeTag);
+  }, []);
 }
