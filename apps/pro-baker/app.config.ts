@@ -3,14 +3,15 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 import entitlements from "../../packages/core/src/entitlements/source.json";
 
 /**
- * 002 G2-Q1: the release block is mechanical. The store profile cannot evaluate this config while
- * the entitlement adapter is the stub — store release waits for the api's entitlements (ask B8).
+ * 002 G2-Q1: the release block is mechanical. The production (store) profile cannot evaluate this
+ * config while the entitlement adapter is the stub — store release waits for the api's
+ * entitlements (ask B8).
  */
 export function assertReleasable(
   buildProfile: string | undefined,
   entitlementSource: string,
 ): void {
-  if (buildProfile === "store" && entitlementSource !== "server") {
+  if (buildProfile === "production" && entitlementSource !== "server") {
     throw new Error(
       "Store build refused: the entitlement adapter is the stub (packages/core/src/entitlements/source.json). " +
         "Pro Baker ships to stores only once the api serves entitlements (spec 002 FR-023, ask B8).",
@@ -24,16 +25,19 @@ export default function config({ config }: ConfigContext): ExpoConfig {
     ...config,
     name: "nutrimero Pro Baker",
     slug: "nutrimero-pro-baker",
-    version: "0.1.0",
     orientation: "default",
     icon: "./assets/icon.png",
     scheme: "nutrimero-pro-baker",
     userInterfaceStyle: "automatic",
+    // expo.version, ios.buildNumber and android.versionCode come from app.json (the static config
+    // Expo hands in as `config`), the local version source that `version:bump` raises.
     ios: {
+      ...config.ios,
       bundleIdentifier: "org.nutrimero.probaker",
       supportsTablet: true,
     },
     android: {
+      ...config.android,
       package: "org.nutrimero.probaker",
       // ADR 0001 condition 2: no Auto Backup — restored SecureStore entries cannot be decrypted.
       allowBackup: false,
