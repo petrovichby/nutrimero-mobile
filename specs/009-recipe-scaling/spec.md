@@ -158,7 +158,8 @@ small change may round to the same measure. Every scaled amount shows its origin
 **Why this priority**: Without it, scaling produces numbers nobody can weigh ("377.6 g", "0.37 cup").
 
 **Independent Test**: Scale the MA-32 fixture (02's eight ingredients) by 0.9 in Metric and in US units. Check the
-metric column against 02c exactly. Check the US column against F23's measures (see O-4 for two drawn values).
+metric column against 02c exactly. Check the US column against F23's measures, scaled from the exact stored
+amounts (FR-007a). 02g itself becomes a test only once design-mobile computes it from the stated US rule.
 
 **Acceptance Scenarios**:
 
@@ -236,6 +237,10 @@ metric column against 02c exactly. Check the US column against F23's measures (s
 - **FR-007**: Every scalable amount MUST be scaled as its exact quantity × factor. This covers the ingredient list
   and the per-step amounts. "To taste" (0) and unknown (NULL) lines pass through unchanged and are marked as not
   scaled.
+- **FR-007a — From the exact, never from the display** (the coordinator, 2026-09-26): scaling MUST always start
+  from the **exact stored amount**, never from a displayed or rounded value. The stored 120 g reads "4¼ oz" in US
+  units (4.233 oz exact); × 0.9 is 108 g = 3.810 oz, which rounds to the eighth as "3¾ oz", not the 3⅞ that
+  4¼ × 0.9 = 3.825 would give.
 - **FR-008 — Rounding a scaled amount (MA-32)**: each scaled amount MUST be rounded to what the baker can weigh or
   measure, in their units system (004):
   - **Metric**: to **0.5 g under 10 g**, to **1 g up to 1 kg**, and to **5 g above**. Halves round up.
@@ -417,10 +422,11 @@ Built only from these frames. Each has a dark twin unless noted.
 - **O-3 — A converted amount, then scaled.** If an amount was converted from a volume to a weight through a
   density and is then scaled, whether MA-32's rounding or 004 FR-013 applies is not picked.
 - **O-4 — US steps.** `gen_scaling.py` lists its US steps as cups ¼ ⅓ ½ ⅔ ¾, ⅛ tsp and ½ tbsp. 004 FR-013 has cups
-  to ⅛ and ⅓, spoons to ¼, and ounces to the eighth. Two drawn values in 02g fit neither exactly: honey, 1 tbsp ×
-  0.9 = 2.7 tsp, reads "2½ tsp"; chocolate, 4¼ oz × 0.9 = 3.825 oz, reads "3¾ oz" (the eighth gives 3⅞). When a
-  spoon amount steps down from tablespoons to teaspoons is also not drawn as a rule. The frames' values are
-  typed into the generator, not computed. Which steps are the rule is not picked; tests follow the ruling.
+  to ⅛ and ⅓, spoons to ¼, and ounces to the eighth. The frames' values are typed into the generator, not
+  computed. **Open:** honey, 1 tbsp × 0.9 = 2.7 tsp, reads "2½ tsp", which fits neither step set, and when a spoon
+  amount steps down from tablespoons to teaspoons is not drawn as a rule. Which steps are the rule is not
+  picked; tests follow the ruling. **Settled:** chocolate's "3¾ oz" is right once scaling starts from the exact
+  stored 120 g (FR-007a).
 - **O-5 — Display precision of the factor and percent.** 02e reads "×0.9 … (89.6%)" for 1000/1116; 02f reads
   "×0.83 … (83%)" for 5/6. Both precisions are drawn, and no rule is picked.
 - **O-6 — Units the frames do not draw.** Metric volumes (millilitres), and imperial with the UK or Europe region
@@ -435,7 +441,11 @@ Built only from these frames. Each has a dark twin unless noted.
 - **SC-001**: For every fixture and every mode, each scaled exact amount equals the original × the factor, to
   within a millionth of the amount.
 - **SC-002**: The MA-32 fixture scaled to 90 % in Metric reproduces 02c's eight amounts and "≈11" exactly, and
-  1,000 g of dough and 100 g of chocolate reproduce 02e's and 02f's factors, percents and yields.
+  1,000 g of dough and 100 g of chocolate reproduce 02e's and 02f's factors, percents and yields. The same check
+  for 02g's US column waits until design-mobile computes 02g from the stated US rule; today its values are typed.
+- **SC-002a — Scaled from the exact, not from the display**: the stored 120 g (displayed "4¼ oz") scaled by 0.9
+  reads "3¾ oz" in US units, never "3⅞ oz" (FR-007a). For every fixture, a scaled display equals the rounding of
+  the exact stored amount × the factor, and never the rounding of a displayed amount × the factor.
 - **SC-003**: Every displayed amount differs from its exact value by no more than one rounding step (FR-008), and
   **no present ingredient ever reads as 0**.
 - **SC-004**: In "What I have", **the short ingredient's displayed amount never exceeds** what the baker typed,
