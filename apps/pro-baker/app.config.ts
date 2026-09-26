@@ -1,8 +1,6 @@
 import type { ConfigContext, ExpoConfig } from "expo/config";
 // A JSON file, not the TypeScript module, so this build-time config needs no transpiler for it.
 import entitlements from "../../packages/core/src/entitlements/source.json";
-// The local version source (eas.json appVersionSource "local"), raised by `version:bump`.
-import appVersion from "./version.json";
 
 /**
  * 002 G2-Q1: the release block is mechanical. The production (store) profile cannot evaluate this
@@ -27,19 +25,20 @@ export default function config({ config }: ConfigContext): ExpoConfig {
     ...config,
     name: "nutrimero Pro Baker",
     slug: "nutrimero-pro-baker",
-    version: appVersion.version,
     orientation: "default",
     icon: "./assets/icon.png",
     scheme: "nutrimero-pro-baker",
     userInterfaceStyle: "automatic",
+    // expo.version, ios.buildNumber and android.versionCode come from app.json (the static config
+    // Expo hands in as `config`), the local version source that `version:bump` raises.
     ios: {
+      ...config.ios,
       bundleIdentifier: "org.nutrimero.probaker",
       supportsTablet: true,
-      buildNumber: String(appVersion.build),
     },
     android: {
+      ...config.android,
       package: "org.nutrimero.probaker",
-      versionCode: appVersion.build,
       // ADR 0001 condition 2: no Auto Backup — restored SecureStore entries cannot be decrypted.
       allowBackup: false,
       adaptiveIcon: {
