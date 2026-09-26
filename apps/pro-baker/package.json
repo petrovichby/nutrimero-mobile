@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "typecheck": "tsc --noEmit",
-    "bundle": "expo export --platform ios --platform android --output-dir dist"
+    "bundle": "expo export --platform ios --platform android --output-dir dist",
+    "version:bump": "node scripts/version-bump.mts"
   },
   "dependencies": {
     "@nutrimero/core": "workspace:*",
