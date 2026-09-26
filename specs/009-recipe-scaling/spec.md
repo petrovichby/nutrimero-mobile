@@ -240,7 +240,9 @@ amounts (FR-007a). 02g itself becomes a test only once design-mobile computes it
 - **FR-007a — From the exact, never from the display** (the coordinator, 2026-09-26): scaling MUST always start
   from the **exact stored amount**, never from a displayed or rounded value. The stored 120 g reads "4¼ oz" in US
   units (4.233 oz exact); × 0.9 is 108 g = 3.810 oz, which rounds to the eighth as "3¾ oz", not the 3⅞ that
-  4¼ × 0.9 = 3.825 would give.
+  4¼ × 0.9 = 3.825 would give. Likewise honey, stored as 20 g and shown "1 tbsp": × 0.9 is 18 g, which through
+  honey's density from the api (about 1.42 g/ml, an illustration, never a value the engine holds) is ≈12.7 ml
+  ≈ 2.5 tsp, never 1 tbsp × 0.9.
 - **FR-008 — Rounding a scaled amount (MA-32)**: each scaled amount MUST be rounded to what the baker can weigh or
   measure, in their units system (004):
   - **Metric**: to **0.5 g under 10 g**, to **1 g up to 1 kg**, and to **5 g above**. Halves round up.
@@ -423,10 +425,10 @@ Built only from these frames. Each has a dark twin unless noted.
   density and is then scaled, whether MA-32's rounding or 004 FR-013 applies is not picked.
 - **O-4 — US steps.** `gen_scaling.py` lists its US steps as cups ¼ ⅓ ½ ⅔ ¾, ⅛ tsp and ½ tbsp. 004 FR-013 has cups
   to ⅛ and ⅓, spoons to ¼, and ounces to the eighth. The frames' values are typed into the generator, not
-  computed. **Open:** honey, 1 tbsp × 0.9 = 2.7 tsp, reads "2½ tsp", which fits neither step set, and when a spoon
-  amount steps down from tablespoons to teaspoons is not drawn as a rule. Which steps are the rule is not
-  picked; tests follow the ruling. **Settled:** chocolate's "3¾ oz" is right once scaling starts from the exact
-  stored 120 g (FR-007a).
+  computed. **Settled** once scaling starts from the exact stored amount (FR-007a): chocolate's "3¾ oz" (120 g ×
+  0.9) and honey's "2½ tsp" (20 g × 0.9 = 18 g ≈ 12.7 ml ≈ 2.5 tsp, which fits spoons to ¼). **Open, only the
+  step-down:** whether an amount of about 0.85 tbsp reads "¾ tbsp" or steps down to "2½ tsp". It is not picked;
+  tests follow the ruling.
 - **O-5 — Display precision of the factor and percent.** 02e reads "×0.9 … (89.6%)" for 1000/1116; 02f reads
   "×0.83 … (83%)" for 5/6. Both precisions are drawn, and no rule is picked.
 - **O-6 — Units the frames do not draw.** Metric volumes (millilitres), and imperial with the UK or Europe region
