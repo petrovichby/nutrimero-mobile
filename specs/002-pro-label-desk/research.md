@@ -208,10 +208,10 @@ full rendering and structure.
 **Release rule: mechanical, not a checklist (gate 2).**
 - The entitlement adapter exports its source (`stub | server`).
 - `apps/pro-baker` moves from `app.json` to `app.config.ts`. It **throws at config evaluation**
-  when the build profile is `store` (`EAS_BUILD_PROFILE === 'store'`, defined in a new
-  `apps/pro-baker/eas.json`) and the source is `stub`, so the store build fails before any
-  native step.
-- A Vitest test evaluates the config under a simulated `store` profile and asserts that it
+  when the build profile is `production`, the store build (`EAS_BUILD_PROFILE === 'production'`,
+  defined in a new `apps/pro-baker/eas.json`), and the source is `stub`, so the store build fails
+  before any native step. *(Profiles renamed 2026-09-26, #61: `development` and `production` only; `internal` is gone and `store` is now `production`.)*
+- A Vitest test evaluates the config under a simulated `production` profile and asserts that it
   throws.
 - Q2-B (a pilot) is not planned.
 

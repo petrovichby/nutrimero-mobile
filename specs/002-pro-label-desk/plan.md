@@ -134,12 +134,12 @@ apps/pro-baker/src/
 | Phase | Content | Blocked by |
 |---|---|---|
 | **0** | Nothing to build. PR #5 is merged (`fab871e`, T001 done); wait for PR #4 with ADR 0001 `Accepted` | coordinator |
-| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port (+ exported source), the P1–P6 contract tests, `apps/pro-baker/app.config.ts` + `eas.json` with the **store-profile build failure** and its test. The seam announcement is sent before the PR opens | PR #4 (ADR 0001 Accepted) |
+| **1** | `packages/core`: middleware, error classifier, session state machine, wipe sequence, company context, entitlement port (+ exported source), the P1–P6 contract tests, `apps/pro-baker/app.config.ts` + `eas.json` with the **production (store) profile build failure** and its test. The seam announcement is sent before the PR opens | PR #4 (ADR 0001 Accepted) |
 | **2** | `packages/features/labels/model`: readiness, gap sentences, rendering view model, language set, bounded filter, with fixture tests (SC-002/003) | phase 1 types |
 | **3** | Saved-labels store, purge rules, and status refresh on foreground/reconnect | ADR 0002 (**Accepted**) |
 | **4** | Screens 1–9 per the approved design; navigation shell; wiring | the design pass + ADR 0001 (expo-router) |
 | **5** | Accessibility audit (VoiceOver/TalkBack, 1.3×, keyboard), review of the six non-English catalogs (be/uk after the Cyrillic font ruling), quickstart Q1–Q16 on tablet and phone | phase 4 |
-| **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. Enforced mechanically: the store profile fails to build while the adapter is the stub | api B8 |
+| **Release** | Store release waits for api B8 (entitlements) and a server-backed entitlement adapter. Enforced mechanically: the production (store) profile fails to build while the adapter is the stub | api B8 |
 
 ## Gate 2 rulings (coordinator, 2026-09-23)
 

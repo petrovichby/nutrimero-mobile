@@ -181,7 +181,7 @@ it. **No user-story work starts before this checkpoint.**
   - a port returning `included | not_included | unavailable`
   - the stub adapter always returns `unavailable`
   - `ENTITLEMENT_SOURCE` is exported as `'stub'`
-- [x] T013 Convert `apps/pro-baker/app.json` to `apps/pro-baker/app.config.ts` (same values). Add `apps/pro-baker/eas.json` with `development`, `internal` and `store` profiles. The config **throws at evaluation** when `process.env.EAS_BUILD_PROFILE === 'store'` and `ENTITLEMENT_SOURCE === 'stub'` (G2-Q1, mechanical block). Add `apps/pro-baker/src/app-config.test.ts`, which asserts that it throws under a simulated store profile and evaluates cleanly otherwise *(Done in PR A. Verified with the real Expo CLI: `EAS_BUILD_PROFILE=store npx expo config` refuses.)*
+- [x] T013 Convert `apps/pro-baker/app.json` to `apps/pro-baker/app.config.ts` (same values). Add `apps/pro-baker/eas.json` with `development` and `production` profiles. The config **throws at evaluation** when `process.env.EAS_BUILD_PROFILE === 'production'` and `ENTITLEMENT_SOURCE === 'stub'` (G2-Q1, mechanical block). Add `apps/pro-baker/src/app-config.test.ts`, which asserts that it throws under a simulated production profile and evaluates cleanly otherwise *(Done in PR A with the profiles then named `internal` and `store`. Verified with the real Expo CLI: `EAS_BUILD_PROFILE=store npx expo config` refused then, and `EAS_BUILD_PROFILE=production npx expo config` refuses since #61.)* *(Profiles renamed 2026-09-26, #61: `development` and `production` only; `internal` is gone and `store` is now `production`.)*
 - [x] T014 [P] Write `packages/core/src/api/contract-facts.test.ts`: the type-level and fixture assertions for pinned facts: *(Done in PR A. P1–P4 are type-level and negative-controlled; P5 is the exhaustive `Record` in `errors.ts`.)*
   - P1: O9's `language` is a free string
   - P2: no O5–O11 response references `declarationsEnabled`, and the desk never calls `companies/current`
@@ -365,8 +365,8 @@ switch and membership loss.
 
 ## Implementation strategy
 
-1. **MVP = Phase 1 + Phase 2 + US1** (readiness and grid). This is shippable to internal builds
-   under the `unavailable` banner. The store profile cannot build (T013), by design.
+1. **MVP = Phase 1 + Phase 2 + US1** (readiness and grid). This is shippable to development builds
+   under the `unavailable` banner. The production (store) profile cannot build (T013), by design.
 2. Add US2 (preview), then US3 (match check). Each is demonstrable on its own.
 3. US4 follows (ADR 0002 is accepted). US5's wipe tests close the feature.
 4. **PR slicing** (proposed):
