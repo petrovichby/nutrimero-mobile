@@ -56,6 +56,41 @@ without the owner.
    on this runtime), so it must load before i18n starts — `labels.incomplete` and
    `labels.occurrences` are plural messages. Plural arguments are whole-number `count`s only
    (the polyfill diverges from CLDR on fractions in hu/lt/be; guarded by `catalogs.test.ts`).
+   *(Done early by the coordinator's ruling of 2026-09-26: #62, together with Pro's native peers
+   of `packages/ui`, `react-native-svg` and `react-native-safe-area-context`.)*
+
+### Restart reconcile (coordinator's ruling, 2026-09-26)
+
+These items went stale while 002 was on hold. Each is done at the restart, before PR C starts,
+and none of them earlier.
+
+1. **Brand fonts, locale resolution and the splash (PR C scope).** Add `expo-font`,
+   `expo-localization` and `expo-splash-screen` to `apps/pro-baker`, at Home's pins. All three
+   are already admitted by ADR 0001, so extend those rows to name Pro rather than adding rows.
+   - Load the vendored faces from `packages/ui` (`FONT_FILES`).
+   - Resolve the interface language the way Home does (the saved language decides first, #29).
+   - Replace the placeholder's hardwired `messages.en`.
+   - Configure the splash. `assets/splash-icon.png` is unused today.
+2. **Reconcile PR C/D/E and the carried follow-ups with core's #28, #29 and #40.** The plan and
+   tasks were written against core as of PR B (`136bf4d`). Since then:
+   - #28 added fresh-install-only keys, cleared by the reinstall-orphan clear and never by
+     sign-out.
+   - #29 made the saved interface language decide first and made device preferences
+     reinstall-only.
+   - #40 added `WipeSequence.runData` / `isDataPending`, `Session.clearDeviceData` and
+     `SESSION_KEYS.pendingDataWipe`, plus a fourth parameter to `createWipeSequence`
+     (`dataPendingKey`). `restore()` now also resumes an interrupted data clear.
+
+   Re-read T025 (wipers before `restore()`, follow-up 1), T037/T042 (`emitLoss` isolation,
+   follow-up 2) and PR E's wipe flows (T040–T047) against that API. Decide whether the saved-label
+   store's wiper also runs on a data-only clear.
+3. **Re-sync the contract.** `contract/` is still at `nutrimero-api` `4a4356b` (#5), and the api
+   has moved a long way since. Run `pnpm contract:sync` to current api `main`, then
+   `pnpm contract:generate`. Re-check the labels loaders and the recorded fixtures (T005)
+   against the new schema, and re-record the fixtures if `contract/SOURCE` moved.
+4. **`@nutrimero/feature-labels` is declared but unused.** `apps/pro-baker` depends on it, but
+   nothing imports it until the desk is mounted in PR C. It is tested then, through the app,
+   and not before.
 
 ### Resume, exactly
 
