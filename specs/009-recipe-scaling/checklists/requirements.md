@@ -13,9 +13,8 @@
 
 ## Requirement Completeness
 
-- [x] No [NEEDS CLARIFICATION] markers remain — gate 1's rulings replaced them (2026-09-26). Q2, Q5 and the
-      note's second half are pending the owner's follow-up walk with defaults kept; O-1 to O-7 are named open
-      items, deliberately not picked
+- [x] No [NEEDS CLARIFICATION] markers remain — gate 1 and the owner's follow-up walk (MA-32 amendment,
+      design `6dcd2da2`) ruled every question; one named open item remains (O-1, the below-one size phrase)
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -36,5 +35,5 @@
 - The engine requirements (FR-017–FR-019) name the platform's recipe fields (api 013 / `.rex`). That is the
   domain model the owner's "shared engine" ruling depends on, not an implementation choice; where the engine lives
   is left to the plan.
-- Gate 1 passed on structure (2026-09-26). The spec is aligned to MA-32 (design `main` at `fe262b49`): Q1, Q3 and
-  Q4 ruled; Q2 and Q5 pending the owner's follow-up walk; undrawn parts listed in the Screen inventory.
+- Gate 1 passed (2026-09-26). The spec records MA-32 and its walk amendment (design `main` at `6dcd2da2`).
+  009 is parked (the coordinator, 2026-09-26): no plan and no tasks until the owner names a lane and a time.
